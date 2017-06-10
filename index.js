@@ -1,18 +1,20 @@
 var forever = require('forever-monitor');
+var log4js  = require('log4js');
 
-const TAG = "Flamebase Database";
+const TAG   = "Flamebase Database";
+var logger  = log4js.getLogger(TAG);
 
 function FlamebaseDatabaseCluster(database) {
 
     // object reference
     var object = this;
 
-    this.start = function (callback, force) {
+    this.initCluster = function (callback, force) {
         var forever_config = require('./config/debug.json');
         var child = forever.start('./server.js', forever_config);
 
-        child.on('exit:code', function(code) {
-            console.error('Forever detected script exited with code ' + code);
+        child.on('start', function(code) {
+            callback.start();
         });
     }
 

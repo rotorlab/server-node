@@ -10,3 +10,16 @@ var FSC = new FlamebaseDatabaseCluster(null);
 FSC.start(null, null);
 ```
 
+#### Response errors
+Common errors on server cluster connection
+
+-------
+Empty request body:
+```json
+{
+    "status": "KO",
+    "data": null,
+    "error": "missing_params"
+}
+```
+-------
