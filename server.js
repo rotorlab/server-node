@@ -5,38 +5,62 @@ var cluster =               require('cluster');
 var http =                  require('http');
 var numCPUs =               require('os').cpus().length;
 var HashMap =               require('hashmap');
+var FlamebaseDatabase =     require("flamebase-database-node");
 
 var TAG =                   "SERVER CLUSTER";
 var logger =                log4js.getLogger(TAG);
 
+//
+var chats = new FlamebaseDatabase("paths", "/");
+
 var action = {
-    response: function (connection, data, error) {
+    response: function (connection, data, error, pId) {
         var result = {status: (data === null || error !== null ? "KO" : "OK"), data: data, error: error};
+        logger.info("worker: " + pId);
+        logger.info("response: " + JSON.stringify(result));
         connection.response.contentType('application/json');
         connection.response.send(JSON.stringify(result));
     },
-    addSingleListener: function (connection) {
-        // TODO great listener and remove after respond
+    addSingleListener: function (connection, pId) {
+        this.addGreatListener(connection);
     },
-    addGreatListener: function (connection) {
+    addGreatListener: function (connection, pId) {
+        chats.syncFromDatabase();
         // TODO great listener
+        if (chats.ref === undefined) {
+            chats.ref = {}
+        }
+        logger.debug("ref");
+        if (chats.ref[connection.path] === undefined) {
+            chats.ref[connection.path] = {}
+        }
+        if (chats.ref[connection.path].tokens === undefined) {
+            chats.ref[connection.path].tokens = {};
+        }
+        logger.debug("ref 2");
+        if (chats.ref[connection.path].tokens[connection.token] === undefined) {
+            chats.ref[connection.path].tokens[connection.token] = {};
+        }
 
+        logger.debug("ref 4");
+        chats.ref[connection.path].tokens[connection.token].time = new Date().getTime();
+
+        logger.debug("ref 3");
+
+        chats.syncToDatabase();
+
+        this.response(connection, "listener_added", null, pId);
     }
 };
 
 if (cluster.isMaster) {
     logger.info("Master " + process.pid + " is running");
 
-    // Fork workers.
     for (var i = 0; i < numCPUs; i++) {
         cluster.fork();
     }
 
-    // Listen for dying workers
     cluster.on('exit', function (worker) {
-
-        // Replace the dead worker,
-        // we're not sentimental
         console.log('Worker %d died :(', worker.id);
         cluster.fork();
     });
@@ -126,17 +150,19 @@ function parseRequest(req, res, worker) {
         switch (connection.method) {
             case "single_listener":
                 try {
-                    action.addSingleListener(connection);
+                    action.addSingleListener(connection, worker);
                 } catch (e) {
-                    action.response(connection, null, "error_adding_single");
+                    logger.error("there was an error parsing request from addSingleListener: " + e.toString());
+                    action.response(connection, null, "error_adding_single", worker);
                 }
                 break;
 
             case "great_listener":
                 try {
-                    action.addGreatListener(connection);
+                    action.addGreatListener(connection, worker);
                 } catch (e) {
-                    action.response(connection, null, "error_adding_great");
+                    logger.error("there was an error parsing request from addGreatListener: " + e.toString());
+                    action.response(connection, null, "error_adding_great", worker);
                 }
                 break;
 
@@ -149,6 +175,7 @@ function parseRequest(req, res, worker) {
     } catch (e) {
         logger.error("there was an error parsing request: " + e.toString());
         var result = {status: "KO", data: null, error: "missing_or_wrong_params"};
+
         res.contentType('application/json');
         res.send(JSON.stringify(result));
     }
