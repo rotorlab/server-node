@@ -4,9 +4,25 @@ var log4js =                require('log4js');
 var cluster =               require('cluster');
 var http =                  require('http');
 var numCPUs =               require('os').cpus().length;
+var HashMap =               require('hashmap');
 
 var TAG =                   "SERVER CLUSTER";
 var logger =                log4js.getLogger(TAG);
+
+var action = {
+    response: function (connection, data, error) {
+        var result = {status: (data === null || error !== null ? "KO" : "OK"), data: data, error: error};
+        connection.response.contentType('application/json');
+        connection.response.send(JSON.stringify(result));
+    },
+    addSingleListener: function (connection) {
+        // TODO great listener and remove after respond
+    },
+    addGreatListener: function (connection) {
+        // TODO great listener
+
+    }
+};
 
 if (cluster.isMaster) {
     logger.info("Master " + process.pid + " is running");
@@ -38,10 +54,10 @@ if (cluster.isMaster) {
 
     app.route('/')
         .get(function (req, res) {
-            parseRequest(req, res)
+            parseRequest(req, res, cluster.worker.id)
         })
         .post(function (req, res) {
-            parseRequest(req, res)
+            parseRequest(req, res, cluster.worker.id)
         });
 
     app.listen(port, function () {
@@ -50,14 +66,15 @@ if (cluster.isMaster) {
 
 }
 
-function parseRequest(req, res) {
+function parseRequest(req, res, worker) {
     var response = res;
 
     try {
-        var message = req.body.message;
+        var message = req.body;
         var connection = {};     // connection element
 
         logger.debug("user-agent: " + req.headers['user-agent']);
+        logger.debug("worker: " + worker);
 
 
         if (message === undefined || message === null) {
@@ -90,7 +107,6 @@ function parseRequest(req, res) {
                 case "os":
                     connection[key] = message[key];
                     logger.debug("os: " + connection[key]);
-
                     break;
 
                 default:
@@ -110,17 +126,17 @@ function parseRequest(req, res) {
         switch (connection.method) {
             case "single_listener":
                 try {
-                    addSingleListener(connection);
+                    action.addSingleListener(connection);
                 } catch (e) {
-                    response(connection, null, "error_adding_single");
+                    action.response(connection, null, "error_adding_single");
                 }
                 break;
 
             case "great_listener":
                 try {
-                    addGreatListener(connection);
+                    action.addGreatListener(connection);
                 } catch (e) {
-                    response(connection, null, "error_adding_great");
+                    action.response(connection, null, "error_adding_great");
                 }
                 break;
 
@@ -138,11 +154,6 @@ function parseRequest(req, res) {
     }
 }
 
-function response(connection, data, error) {
-    var result = {status: (data === null || error !== null ? "KO" : "OK"), data: data, error: error};
-    connection.response.contentType('application/json');
-    connection.response.send(JSON.stringify(result));
-}
 
 
 
