@@ -1,26 +1,21 @@
-var exec = require('child_process').spawn;
+var forever = require('forever-monitor');
 
 const TAG = "Flamebase Database";
 
-function FlamebaseDatabaseServerCluster(database) {
+function FlamebaseDatabaseCluster(database) {
 
     // object reference
     var object = this;
 
     this.start = function (callback, force) {
-        var child = exec('node ./server.js');
+        var forever_config = require('./config/debug.json');
+        var child = forever.start('./server.js', forever_config);
 
-        child.stdout.on('data', function(data) {
-            console.log('stdout: ' + data);
-        });
-        child.stderr.on('data', function(data) {
-            console.log('stdout: ' + data);
-        });
-        child.on('close', function(code) {
-            console.log('closing code: ' + code);
+        child.on('exit:code', function(code) {
+            console.error('Forever detected script exited with code ' + code);
         });
     }
 
 }
 
-module.exports = FlamebaseDatabaseServerCluster;
+module.exports = FlamebaseDatabaseCluster;

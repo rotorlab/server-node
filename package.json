@@ -10,6 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/flamebase/flamebase-database-server-cluster.git"
   },
+  "dependencies": {
+    "body-parser": "latest",
+    "express": "latest",
+    "flamebase-database-node": "^1.0.1",
+    "forever-monitor": "^1.7.1",
+    "log4js": "latest"
+  },
   "keywords": [
     "server",
     "cluster",
