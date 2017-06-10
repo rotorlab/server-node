@@ -4,7 +4,6 @@ var log4js =                require('log4js');
 var cluster =               require('cluster');
 var http =                  require('http');
 var numCPUs =               require('os').cpus().length;
-var HashMap =               require('hashmap');
 var FlamebaseDatabase =     require("flamebase-database-node");
 
 var TAG =                   "SERVER CLUSTER";
@@ -22,30 +21,28 @@ var action = {
         connection.response.send(JSON.stringify(result));
     },
     addSingleListener: function (connection, pId) {
-        this.addGreatListener(connection);
+        this.addGreatListener(connection, pId);
     },
     addGreatListener: function (connection, pId) {
         chats.syncFromDatabase();
-        // TODO great listener
+
         if (chats.ref === undefined) {
             chats.ref = {}
         }
-        logger.debug("ref");
+
         if (chats.ref[connection.path] === undefined) {
             chats.ref[connection.path] = {}
         }
+
         if (chats.ref[connection.path].tokens === undefined) {
             chats.ref[connection.path].tokens = {};
         }
-        logger.debug("ref 2");
+
         if (chats.ref[connection.path].tokens[connection.token] === undefined) {
             chats.ref[connection.path].tokens[connection.token] = {};
         }
 
-        logger.debug("ref 4");
         chats.ref[connection.path].tokens[connection.token].time = new Date().getTime();
-
-        logger.debug("ref 3");
 
         chats.syncToDatabase();
 
@@ -144,8 +141,6 @@ function parseRequest(req, res, worker) {
         connection.id = new Date().getTime();
         connection.request = req;
         connection.response = response;
-
-        console.log("* connection: " + connection.id);
 
         switch (connection.method) {
             case "single_listener":

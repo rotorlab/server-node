@@ -15,7 +15,6 @@
     "express": "latest",
     "flamebase-database-node": "^1.0.1",
     "forever-monitor": "^1.7.1",
-    "hashmap": "^2.1.0",
     "log4js": "latest"
   },
   "keywords": [
