@@ -4,7 +4,7 @@ var log4js  = require('log4js');
 const TAG   = "Flamebase Database";
 var logger  = log4js.getLogger(TAG);
 
-function FlamebaseDatabaseCluster(database) {
+function FlamebaseDatabaseCluster(database, port) {
 
     var object = this;
 
@@ -22,7 +22,7 @@ function FlamebaseDatabaseCluster(database) {
 
             sourceDir: "./",
 
-            args:    ['DATABASE_NAME=draco'],
+            args:    ['DATABASE_NAME=draco', 'DATABASE_PORT=' + port],
 
             watch: false,
             watchIgnoreDotFiles: null,

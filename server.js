@@ -13,11 +13,16 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
 var expectedDBNEnvVar = "DATABASE_NAME";
+var expectedPORTNEnvVar = "DATABASE_PORT";
 var dbMaster = null;
+var port = null;
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
         dbMaster = val.replaceAll(expectedDBNEnvVar + "=", "");
+    }
+    if (val.indexOf(expectedPORTNEnvVar) > -1) {
+        port = val.replaceAll(expectedPORTNEnvVar + "=", "");
     }
 });
 
@@ -66,11 +71,35 @@ var action = {
 
         paths.syncToDatabase();
 
-        if (holder[key] === undefined) {
-            holder[key] = new Path(paths.ref[key], dbMaster, connection.path);
+        if (holder[connection.path] === undefined) {
+            holder[connection.path] = new Path(paths.ref[key], dbMaster, connection.path);
             this.response(connection, "listener_added", null, pId);
         } else {
             this.response(connection, "listener_already_added", null, pId);
+        }
+    },
+    updateData: function (holder, connection, pId) {
+
+        if (holder[connection.path] !== undefined) {
+            logger.debug("test 1");
+            holder[connection.path].FD.syncFromDatabase();
+            logger.debug("test 2");
+
+            var differences = JSON.parse(connection.differences);
+            if (differences["$set"] !== undefined) {
+                var keys = Object.keys(differences["$set"]);
+                for (var i = 0; i < keys.length; i++) {
+                    holder[connection.path].FD.ref[keys[i]] = differences["$set"][keys[i]];
+                }
+            }
+            logger.debug("test 3");
+
+            holder[connection.path].FD.syncToDatabase();
+            logger.debug("test 4");
+
+            this.response(connection, "data_updated", null, pId);
+        } else {
+            this.response(connection, null, "holder_not_located", pId);
         }
     }
 };
@@ -91,7 +120,6 @@ if (cluster.isMaster) {
 } else {
 
     var app = express();
-    var port = 1507;
     var holder = {};
 
     app.use(bodyParser.urlencoded({
@@ -114,7 +142,7 @@ if (cluster.isMaster) {
         var keys = Object.keys(paths.ref);
         if (keys.length > 0) {
             for (var i = keys.length - 1; i >= 0; i--) {
-                holder[keys[i]] = new Path(paths.ref[keys[i]], dbMaster, paths.ref[keys[i]].path);
+                holder[paths.ref[keys[i]].path] = new Path(paths.ref[keys[i]], dbMaster, paths.ref[keys[i]].path);
             }
         }
 
@@ -160,6 +188,11 @@ function parseRequest(holder, req, res, worker) {
                     logger.debug("token: " + connection[key]);
                     break;
 
+                case "differences":
+                    connection[key] = message[key];
+                    logger.debug("differences: " + connection[key]);
+                    break;
+
                 case "os":
                     connection[key] = message[key];
                     logger.debug("os: " + connection[key]);
@@ -193,6 +226,15 @@ function parseRequest(holder, req, res, worker) {
                 } catch (e) {
                     logger.error("there was an error parsing request from addGreatListener: " + e.toString());
                     action.response(connection, null, "error_adding_great", worker);
+                }
+                break;
+
+            case "update_data":
+                try {
+                    action.updateData(holder, connection, worker);
+                } catch (e) {
+                    logger.error("there was an error parsing request from updateData: " + e.toString());
+                    action.response(connection, null, "error_updating_data", worker);
                 }
                 break;
 

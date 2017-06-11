@@ -25,7 +25,7 @@ function Path(databasePath, database, path) {
      * server API key for firebase cloud messaging
      */
     config.APIKey = function() {
-        return "AAAAgVIM4t0:APA91bHz-S5ZvTSJGDcNPePnDGwcpPsnC2QAzHGrZTKu2AkbChb8DTgQJxF3gd7UXcwB4C2DXR5K89v3oc7uwYyONjmRLIfjqaYQFgkWAQyWXZ-D7AmX8sOJUrV5Hjk9eSPKUShQqp9K"; // server key - FCM
+        return "AIzaSyDhzzf2kkKuknAdiB_ak-KJ0a3XgaBDO4A";
     };
 
     /**

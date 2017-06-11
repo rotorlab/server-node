@@ -6,7 +6,7 @@ Create a server cluster to hold all realtime changes.
 ```javascript
 var FlamebaseDatabaseCluster = require('flamebase-database-server-cluster');
 
-var FSC = new FlamebaseDatabaseCluster("draco");
+var FSC = new FlamebaseDatabaseCluster("draco", 1507);
 FSC.initCluster({
     start: function () {
         console.log("start!!")
