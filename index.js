@@ -6,12 +6,34 @@ var logger  = log4js.getLogger(TAG);
 
 function FlamebaseDatabaseCluster(database) {
 
-    // object reference
     var object = this;
 
     this.initCluster = function (callback, force) {
         var forever_config = require('./config/debug.json');
-        var child = forever.start('./server.js', forever_config);
+        var child = forever.start('./server.js', {
+            silent: false,
+            uid: "flamebase-database",
+            pidFile: "./flamebase-database.pid",
+            max: 10,
+            killTree: true,
+
+            minUptime: 2000,
+            spinSleepTime: 1000,
+
+            sourceDir: "./",
+
+            args:    ['DATABASE_NAME=draco'],
+
+            watch: false,
+            watchIgnoreDotFiles: null,
+            watchIgnorePatterns: null,
+            watchDirectory: null,
+
+
+            logFile: "./logs/logFile.log",
+            outFile: "./logs/outFile.log",
+            errFile: "./logs/errFile.log"
+        });
 
         child.on('start', function(code) {
             callback.start();

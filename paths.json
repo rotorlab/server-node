@@ -1,10 +1,11 @@
 {
-    "/contacts/fff@ggg.com": {
+    ".contacts.fff@ggg.com": {
         "tokens": {
             "egim4I2L7mE:APA91bEgpXED3efU6CXLH324-phmk5izQZ93AUmJgQBtKNCyf34LV1Cuv2kXtDHooxI3QhWgJsvFvJR9pzAwZB7kAClwiNm4JsTf-JdYqdtDt8qW7ZmSCCGiaT7VKfm_MHBzQe8itVm0": {
-                "time": 1497150693924,
+                "time": 1497186728321,
                 "os": "android"
             }
-        }
+        },
+        "path": "/contacts/fff@ggg.com"
     }
 }

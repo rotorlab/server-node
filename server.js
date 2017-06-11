@@ -7,9 +7,25 @@ var numCPUs =               require('os').cpus().length;
 var FlamebaseDatabase =     require("flamebase-database-node");
 var Path =                  require("./model/path.js");
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+var expectedDBNEnvVar = "DATABASE_NAME";
+var databaseName = null;
+
+process.argv.forEach(function (val, index, array) {
+    if (val.indexOf(expectedDBNEnvVar) > -1) {
+        databaseName = val.replaceAll(expectedDBNEnvVar + "=", "");
+    }
+});
+
+
 var TAG =                   "SERVER CLUSTER";
 var logger =                log4js.getLogger(TAG);
 
+logger.debug(databaseName);
 var db = "paths";
 var paths = new FlamebaseDatabase(db, "/");
 
@@ -21,38 +37,47 @@ var action = {
         connection.response.contentType('application/json');
         connection.response.send(JSON.stringify(result));
     },
-    addSingleListener: function (connection, pId) {
+    addSingleListener: function (holder, connection, pId) {
         this.addGreatListener(connection, pId);
     },
-    addGreatListener: function (connection, pId) {
+    addGreatListener: function (holder, connection, pId) {
         paths.syncFromDatabase();
 
         if (paths.ref === undefined) {
             paths.ref = {}
         }
 
-        if (paths.ref[connection.path] === undefined) {
-            paths.ref[connection.path] = {}
+        var key = connection.path.replaceAll("/","\.");
+
+        if (paths.ref[key] === undefined) {
+            paths.ref[key] = {}
         }
 
-        if (paths.ref[connection.path].tokens === undefined) {
-            paths.ref[connection.path].tokens = {};
+        if (paths.ref[key].tokens === undefined) {
+            paths.ref[key].tokens = {};
         }
 
-        if (paths.ref[connection.path].tokens[connection.token] === undefined) {
-            paths.ref[connection.path].tokens[connection.token] = {};
+        if (paths.ref[key].tokens[connection.token] === undefined) {
+            paths.ref[key].tokens[connection.token] = {};
         }
 
-        paths.ref[connection.path].tokens[connection.token].time = new Date().getTime();
-        paths.ref[connection.path].tokens[connection.token].os = connection.os;
+        paths.ref[key].tokens[connection.token].time = new Date().getTime();
+        paths.ref[key].tokens[connection.token].os = connection.os;
+        paths.ref[key].path = connection.path;
 
         paths.syncToDatabase();
 
-        this.response(connection, "listener_added", null, pId);
+        if (holder[key] === undefined) {
+            holder[key] = new Path(paths.ref[key], db, key);
+            this.response(connection, "listener_added", null, pId);
+        } else {
+            this.response(connection, "listener_already_added", null, pId);
+        }
     }
 };
 
 if (cluster.isMaster) {
+
     logger.info("Master " + process.pid + " is running");
 
     for (var i = 0; i < numCPUs; i++) {
@@ -78,24 +103,27 @@ if (cluster.isMaster) {
 
     app.route('/')
         .get(function (req, res) {
-            parseRequest(req, res, cluster.worker.id)
+            parseRequest(holder, req, res, cluster.worker.id)
         })
         .post(function (req, res) {
-            parseRequest(req, res, cluster.worker.id)
+            parseRequest(holder, req, res, cluster.worker.id)
         });
 
     app.listen(port, function () {
+        paths.syncFromDatabase();
         logger.info("server cluster started on port " + port + " on " + cluster.worker.id + " worker");
-        var keys = Object.keys(paths);
-        for (var i = keys.length - 1; i <= 0; i--) {
-            holder[keys[i]] = new Path(paths[keys[i]], db, keys[i]);
-            holder[keys[i]].syncFromDatabase();
+        var keys = Object.keys(paths.ref);
+        if (keys.length > 0) {
+            for (var i = keys.length - 1; i >= 0; i--) {
+                holder[keys[i]] = new Path(paths.ref[keys[i]], db, keys[i]);
+            }
         }
+
     });
 
 }
 
-function parseRequest(req, res, worker) {
+function parseRequest(holder, req, res, worker) {
     var response = res;
 
     try {
@@ -153,7 +181,7 @@ function parseRequest(req, res, worker) {
         switch (connection.method) {
             case "single_listener":
                 try {
-                    action.addSingleListener(connection, worker);
+                    action.addSingleListener(holder, connection, worker);
                 } catch (e) {
                     logger.error("there was an error parsing request from addSingleListener: " + e.toString());
                     action.response(connection, null, "error_adding_single", worker);
@@ -162,7 +190,7 @@ function parseRequest(req, res, worker) {
 
             case "great_listener":
                 try {
-                    action.addGreatListener(connection, worker);
+                    action.addGreatListener(holder, connection, worker);
                 } catch (e) {
                     logger.error("there was an error parsing request from addGreatListener: " + e.toString());
                     action.response(connection, null, "error_adding_great", worker);

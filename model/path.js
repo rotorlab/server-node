@@ -1,3 +1,4 @@
+var FlamebaseDatabase =   require("flamebase-database-node");
 
 function Path(databasePath, database, path) {
 
@@ -7,7 +8,10 @@ function Path(databasePath, database, path) {
     this.path = path;
     this.database = database;
     this.databasePath = databasePath;
-    this.chats = new FlamebaseDatabase(this.database, this.path);
+    this.FD = new FlamebaseDatabase(this.database, this.path);
+
+    this.FD.syncFromDatabase();
+
     var config = {};
 
     /**
@@ -58,8 +62,7 @@ function Path(databasePath, database, path) {
         return null;
     };
 
-    this.chats.setSyncConfig(config);
-
+    this.FD.setSyncConfig(config);
 
     this.start = function () {
 
