@@ -1,4 +1,8 @@
-var FlamebaseDatabase =   require("flamebase-database-node");
+var FlamebaseDatabase =     require("flamebase-database-node");
+var log4js =                require('log4js');
+
+var TAG =                   "PATH CLUSTER";
+var logger =                log4js.getLogger(TAG);
 
 function Path(databasePath, database, path) {
 
@@ -11,6 +15,9 @@ function Path(databasePath, database, path) {
     this.FD = new FlamebaseDatabase(this.database, this.path);
 
     this.FD.syncFromDatabase();
+
+    logger.debug("created reference listener for " + this.database + " - " + this.path + ": " + JSON.stringify(this.FD.ref));
+
 
     var config = {};
 

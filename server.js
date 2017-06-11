@@ -13,11 +13,11 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
 var expectedDBNEnvVar = "DATABASE_NAME";
-var databaseName = null;
+var dbMaster = null;
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
-        databaseName = val.replaceAll(expectedDBNEnvVar + "=", "");
+        dbMaster = val.replaceAll(expectedDBNEnvVar + "=", "");
     }
 });
 
@@ -25,9 +25,8 @@ process.argv.forEach(function (val, index, array) {
 var TAG =                   "SERVER CLUSTER";
 var logger =                log4js.getLogger(TAG);
 
-logger.debug(databaseName);
-var db = "paths";
-var paths = new FlamebaseDatabase(db, "/");
+var dbPaths = "paths";
+var paths = new FlamebaseDatabase(dbPaths, "/");
 
 var action = {
     response: function (connection, data, error, pId) {
@@ -68,7 +67,7 @@ var action = {
         paths.syncToDatabase();
 
         if (holder[key] === undefined) {
-            holder[key] = new Path(paths.ref[key], db, key);
+            holder[key] = new Path(paths.ref[key], dbMaster, connection.path);
             this.response(connection, "listener_added", null, pId);
         } else {
             this.response(connection, "listener_already_added", null, pId);
@@ -115,7 +114,7 @@ if (cluster.isMaster) {
         var keys = Object.keys(paths.ref);
         if (keys.length > 0) {
             for (var i = keys.length - 1; i >= 0; i--) {
-                holder[keys[i]] = new Path(paths.ref[keys[i]], db, keys[i]);
+                holder[keys[i]] = new Path(paths.ref[keys[i]], dbMaster, paths.ref[keys[i]].path);
             }
         }
 
