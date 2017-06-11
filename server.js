@@ -5,12 +5,13 @@ var cluster =               require('cluster');
 var http =                  require('http');
 var numCPUs =               require('os').cpus().length;
 var FlamebaseDatabase =     require("flamebase-database-node");
+var Path =                  require("./model/path.js");
 
 var TAG =                   "SERVER CLUSTER";
 var logger =                log4js.getLogger(TAG);
 
-//
-var chats = new FlamebaseDatabase("paths", "/");
+var db = "paths";
+var paths = new FlamebaseDatabase(db, "/");
 
 var action = {
     response: function (connection, data, error, pId) {
@@ -24,27 +25,28 @@ var action = {
         this.addGreatListener(connection, pId);
     },
     addGreatListener: function (connection, pId) {
-        chats.syncFromDatabase();
+        paths.syncFromDatabase();
 
-        if (chats.ref === undefined) {
-            chats.ref = {}
+        if (paths.ref === undefined) {
+            paths.ref = {}
         }
 
-        if (chats.ref[connection.path] === undefined) {
-            chats.ref[connection.path] = {}
+        if (paths.ref[connection.path] === undefined) {
+            paths.ref[connection.path] = {}
         }
 
-        if (chats.ref[connection.path].tokens === undefined) {
-            chats.ref[connection.path].tokens = {};
+        if (paths.ref[connection.path].tokens === undefined) {
+            paths.ref[connection.path].tokens = {};
         }
 
-        if (chats.ref[connection.path].tokens[connection.token] === undefined) {
-            chats.ref[connection.path].tokens[connection.token] = {};
+        if (paths.ref[connection.path].tokens[connection.token] === undefined) {
+            paths.ref[connection.path].tokens[connection.token] = {};
         }
 
-        chats.ref[connection.path].tokens[connection.token].time = new Date().getTime();
+        paths.ref[connection.path].tokens[connection.token].time = new Date().getTime();
+        paths.ref[connection.path].tokens[connection.token].os = connection.os;
 
-        chats.syncToDatabase();
+        paths.syncToDatabase();
 
         this.response(connection, "listener_added", null, pId);
     }
@@ -66,6 +68,7 @@ if (cluster.isMaster) {
 
     var app = express();
     var port = 1507;
+    var holder = {};
 
     app.use(bodyParser.urlencoded({
         extended: true
@@ -83,6 +86,11 @@ if (cluster.isMaster) {
 
     app.listen(port, function () {
         logger.info("server cluster started on port " + port + " on " + cluster.worker.id + " worker");
+        var keys = Object.keys(paths);
+        for (var i = keys.length - 1; i <= 0; i--) {
+            holder[keys[i]] = new Path(paths[keys[i]], db, keys[i]);
+            holder[keys[i]].syncFromDatabase();
+        }
     });
 
 }
