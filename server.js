@@ -85,22 +85,53 @@ var action = {
             holder[connection.path].FD.syncFromDatabase();
             logger.debug("test 2");
 
-            var differences = JSON.parse(connection.differences);
-            if (differences["$set"] !== undefined) {
-                var keys = Object.keys(differences["$set"]);
-                for (var i = 0; i < keys.length; i++) {
-                    holder[connection.path].FD.ref[keys[i]] = differences["$set"][keys[i]];
+            var differences = this.getObjectToReplace(connection);
+            if (differences !== null) {
+                logger.debug(JSON.stringify(differences));
+                if (differences !== null) {
+                    logger.debug(JSON.stringify(differences));
+                    var keys = Object.keys(differences);
+                    for (var i = 0; i < keys.length; i++) {
+                        holder[connection.path].FD.ref[keys[i]] = differences[keys[i]];
+                    }
                 }
+
+                logger.debug("test 3");
+
+                holder[connection.path].FD.syncToDatabase();
+                logger.debug("test 4");
+
+                this.response(connection, "data_updated", null, pId);
+            } else {
+                this.response(connection, "no_diff_updated", null, pId);
             }
-            logger.debug("test 3");
 
-            holder[connection.path].FD.syncToDatabase();
-            logger.debug("test 4");
-
-            this.response(connection, "data_updated", null, pId);
         } else {
             this.response(connection, null, "holder_not_located", pId);
         }
+    },
+    getObjectToReplace: function (connection) {
+        var pathParts = connection.path.split("/");
+        var diff = JSON.parse(connection.differences)["$set"];
+        if (diff === undefined || JSON.stringify(diff) === "{}") {
+            return null;
+        }
+
+        logger.debug("test 45: " + JSON.stringify(diff));
+        var aux = null;
+        for (var h = 0; h < pathParts.length; h++) {
+            if (pathParts[h].length === 0) {
+                continue;
+            }
+            if (aux === null) {
+                aux = diff[pathParts[h]];
+            } else {
+                aux = aux[pathParts[h]];
+            }
+        }
+        logger.debug("test 453: " + JSON.stringify(aux));
+
+        return aux;
     }
 };
 
