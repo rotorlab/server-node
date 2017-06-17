@@ -70,6 +70,7 @@ function Path(databasePath, database, path) {
     };
 
     this.FD.setSyncConfig(config);
+    this.FD.debug(true);
 
     this.start = function () {
 

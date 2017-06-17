@@ -6,6 +6,9 @@ var http =                  require('http');
 var numCPUs =               require('os').cpus().length;
 var FlamebaseDatabase =     require("flamebase-database-node");
 var Path =                  require("./model/path.js");
+var apply =                 require('rus-diff').apply;
+var clone =                 require('rus-diff').clone;
+
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
@@ -73,8 +76,10 @@ var action = {
 
         if (holder[connection.path] === undefined) {
             holder[connection.path] = new Path(paths.ref[key], dbMaster, connection.path);
+            holder[connection.path].FD.syncToDatabase();
             this.response(connection, "listener_added", null, pId);
         } else {
+            holder[connection.path].FD.syncToDatabase(true);
             this.response(connection, "listener_already_added", null, pId);
         }
     },
@@ -85,18 +90,17 @@ var action = {
             holder[connection.path].FD.syncFromDatabase();
             logger.debug("test 2");
 
-            var differences = this.getObjectToReplace(connection);
-            if (differences !== null) {
-                logger.debug(JSON.stringify(differences));
-                if (differences !== null) {
-                    logger.debug(JSON.stringify(differences));
-                    var keys = Object.keys(differences);
-                    for (var i = 0; i < keys.length; i++) {
-                        holder[connection.path].FD.ref[keys[i]] = differences[keys[i]];
-                    }
-                }
+            var differences = connection.differences;
 
-                logger.debug("test 3");
+            if (differences !== undefined) {
+                logger.debug(JSON.stringify(differences));
+
+                logger.debug("test 2 1 : " + JSON.stringify(differences));
+                logger.debug("test 2 2 : " + JSON.stringify(holder[connection.path].FD.ref));
+
+                apply(holder[connection.path].FD.ref, JSON.parse(differences));
+
+                logger.debug("test 3: " + JSON.stringify(holder[connection.path].FD.ref));
 
                 holder[connection.path].FD.syncToDatabase();
                 logger.debug("test 4");
