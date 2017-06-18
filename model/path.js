@@ -73,9 +73,10 @@ function Path(databasePath, database, path) {
     this.FD.debug(true);
 
     this.start = function () {
+        this.FD.syncToDatabase(true);
+    };
 
-    }
-
+    this.start();
 }
 
 module.exports = Path;

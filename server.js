@@ -76,10 +76,9 @@ var action = {
 
         if (holder[connection.path] === undefined) {
             holder[connection.path] = new Path(paths.ref[key], dbMaster, connection.path);
-            holder[connection.path].FD.syncToDatabase();
             this.response(connection, "listener_added", null, pId);
         } else {
-            holder[connection.path].FD.syncToDatabase(true);
+            holder[connection.path].start();
             this.response(connection, "listener_already_added", null, pId);
         }
     },
@@ -113,29 +112,6 @@ var action = {
         } else {
             this.response(connection, null, "holder_not_located", pId);
         }
-    },
-    getObjectToReplace: function (connection) {
-        var pathParts = connection.path.split("/");
-        var diff = JSON.parse(connection.differences)["$set"];
-        if (diff === undefined || JSON.stringify(diff) === "{}") {
-            return null;
-        }
-
-        logger.debug("test 45: " + JSON.stringify(diff));
-        var aux = null;
-        for (var h = 0; h < pathParts.length; h++) {
-            if (pathParts[h].length === 0) {
-                continue;
-            }
-            if (aux === null) {
-                aux = diff[pathParts[h]];
-            } else {
-                aux = aux[pathParts[h]];
-            }
-        }
-        logger.debug("test 453: " + JSON.stringify(aux));
-
-        return aux;
     }
 };
 

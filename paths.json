@@ -2,19 +2,10 @@
     ".contacts": {
         "tokens": {
             "eAU-TVm0n4g:APA91bHhQc6mZSz-ab6Rj1pZ5Zfbce3n4iAjVBa2wNzZrEDwpTCb-5p0ZpDzQJavz1uc11ZnLevMjqfIM3pPLgXDqvIpISsN7U-vFgJMs7Sw_NcXwv0X35JS6A0Hja6ildcSMM4jb6e5": {
-                "time": 1497730310766,
+                "time": 1497752447253,
                 "os": "android"
             }
         },
         "path": "/contacts"
-    },
-    ".chats.1497730307161": {
-        "tokens": {
-            "eAU-TVm0n4g:APA91bHhQc6mZSz-ab6Rj1pZ5Zfbce3n4iAjVBa2wNzZrEDwpTCb-5p0ZpDzQJavz1uc11ZnLevMjqfIM3pPLgXDqvIpISsN7U-vFgJMs7Sw_NcXwv0X35JS6A0Hja6ildcSMM4jb6e5": {
-                "time": 1497730307389,
-                "os": "android"
-            }
-        },
-        "path": "/chats/1497730307161"
     }
 }
