@@ -27,7 +27,7 @@ Returns JSON differences every time path's object changes.
 }
 ```
 
-####Simple listener for token
+#### Simple listener for token
 
 Returns JSON differences only once and dies.
 ```json
@@ -39,7 +39,7 @@ Returns JSON differences only once and dies.
 }
 ```
 
-####Update data
+#### Update data
 
 Updates data.
 ```json
