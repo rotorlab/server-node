@@ -21,7 +21,7 @@ Returns JSON differences every time path's object changes.
 ```json
 {
     "method": "long_life_listener",
-    "path":   ":varA",
+    "path":   ".varA",
     "token":  "jhdfskdjfgSDFgdFfFdfgDFgasfdGsdfbf",
     "os":     "android"
 }
@@ -33,7 +33,7 @@ Returns JSON differences only once and dies.
 ```json
 {
     "method": "simple_listener",
-    "path":   ":varA",
+    "path":   ".varA",
     "token":  "jhdfskdjfgSDFgdFfFdfgDFgasfdGsdfbf",
     "os":     "android"
 }
@@ -45,7 +45,7 @@ Updates data.
 ```json
 {
     "method": "update_data",
-    "path":   ":varA:varB",
+    "path":   ".varA.varB",
     "differences":  {
         "$set": {
             "varC": {},

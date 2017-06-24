@@ -1,146 +1,146 @@
 {
-    ".chats.1497801900716": {
+    "contacts": {
+        "path": "/contacts",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742070,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417712
             }
-        },
-        "path": "/chats/1497801900716"
+        }
     },
-    ".contacts": {
+    "chats.1497801900716": {
+        "path": "/chats/1497801900716",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742370,
-                "os": "android"
+                "os": "android",
+                "time": 1498317416981
             }
-        },
-        "path": "/contacts"
+        }
     },
-    ".chats.1497801942633": {
+    "chats.1497801942633": {
+        "path": "/chats/1497801942633",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742098,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417422
             }
-        },
-        "path": "/chats/1497801942633"
+        }
     },
-    ".chats.1497805038347": {
+    "chats.1497801988077": {
+        "path": "/chats/1497801988077",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742350,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417445
             }
-        },
-        "path": "/chats/1497805038347"
+        }
     },
-    ".chats.1497801988077": {
+    "chats.1497801994305": {
+        "path": "/chats/1497801994305",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742117,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417476
             }
-        },
-        "path": "/chats/1497801988077"
+        }
     },
-    ".chats.1497801994305": {
+    "chats.1497802116890": {
+        "path": "/chats/1497802116890",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742137,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417486
             }
-        },
-        "path": "/chats/1497801994305"
+        }
     },
-    ".chats.1497802116890": {
+    "chats.1497802136285": {
+        "path": "/chats/1497802136285",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742147,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417512
             }
-        },
-        "path": "/chats/1497802116890"
+        }
     },
-    ".chats.1497802136285": {
+    "chats.1497802335148": {
+        "path": "/chats/1497802335148",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742156,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417526
             }
-        },
-        "path": "/chats/1497802136285"
+        }
     },
-    ".chats.1497802335148": {
+    "chats.1497802457040": {
+        "path": "/chats/1497802457040",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742177,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417546
             }
-        },
-        "path": "/chats/1497802335148"
+        }
     },
-    ".chats.1497802457040": {
+    "chats.1497802468426": {
+        "path": "/chats/1497802468426",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742200,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417561
             }
-        },
-        "path": "/chats/1497802457040"
+        }
     },
-    ".chats.1497802468426": {
+    "chats.1497802473075": {
+        "path": "/chats/1497802473075",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742219,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417576
             }
-        },
-        "path": "/chats/1497802468426"
+        }
     },
-    ".chats.1497802473075": {
+    "chats.1497802478059": {
+        "path": "/chats/1497802478059",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742236,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417596
             }
-        },
-        "path": "/chats/1497802473075"
+        }
     },
-    ".chats.1497802478059": {
+    "chats.1497802505415": {
+        "path": "/chats/1497802505415",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742267,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417616
             }
-        },
-        "path": "/chats/1497802478059"
+        }
     },
-    ".chats.1497802505415": {
+    "chats.1497804765453": {
+        "path": "/chats/1497804765453",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742288,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417625
             }
-        },
-        "path": "/chats/1497802505415"
+        }
     },
-    ".chats.1497804765453": {
+    "chats.1497804827243": {
+        "path": "/chats/1497804827243",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742309,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417638
             }
-        },
-        "path": "/chats/1497804765453"
+        }
     },
-    ".chats.1497804827243": {
+    "chats.1497805038347": {
+        "path": "/chats/1497805038347",
         "tokens": {
             "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28": {
-                "time": 1497807742327,
-                "os": "android"
+                "os": "android",
+                "time": 1498317417664
             }
-        },
-        "path": "/chats/1497804827243"
+        }
     }
 }

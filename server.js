@@ -40,50 +40,17 @@ if (cluster.isMaster) {
 
     var workers = {};
 
-    /**
-     * dispatcher for new references
-     * @param w
-     */
-    function initWorker(w) {
-        workers[w.pid] = w;
-
-        w.on('message', function(msg) {
-            logger.debug('Master ' + process.pid + ' received message from worker ' + this.pid + '.', msg);
-            var msg_parts = msg.split("_");
-            var method = msg_parts[0];
-            var path = msg_parts[1];
-            switch (method) {
-                case "new_ref":
-                    var pids = Object.keys(workers);
-                    for (var i = 0; i < pids.length; i++) {
-                        var wor = workers[pids[i]];
-                        var msg = {};
-                        msg.method = method;
-                        msg.path = path;
-                        wor.send(msg);
-                    }
-                    break;
-
-                default:
-
-                    // nothing to do here
-                    break;
-            }
-        });
-    }
-
     logger.info("Master " + process.pid + " is running");
 
     for (var i = 0; i < numCPUs; i++) {
         var worker = cluster.fork();
-        initWorker(worker);
-
+        workers[worker.pid] = worker;
     }
 
     cluster.on('exit', function (worker) {
         console.log('Worker %d died :(', worker.id);
         var w = cluster.fork();
-        initWorker(w);
+        workers[w.pid] = w;
     });
 
 } else {
@@ -96,49 +63,51 @@ if (cluster.isMaster) {
             connection.response.contentType('application/json');
             connection.response.send(JSON.stringify(result));
         },
-        addSingleListener: function (holder, connection, pId) {
+        addSingleListener: function (connection, pId) {
             this.addGreatListener(connection, pId);
         },
-        addGreatListener: function (holder, connection, pId) {
+        addGreatListener: function (connection, pId) {
             paths.syncFromDatabase();
 
             if (paths.ref === undefined) {
                 paths.ref = {}
             }
 
-            var key = connection.path.replaceAll("/", "\.");
+            if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
+                var key = connection.path.replaceAll("/", "\.");
+                key = key.substr(1, key.length - 1);
 
-            if (paths.ref[key] === undefined) {
-                paths.ref[key] = {}
-            }
+                if (paths.ref[key] === undefined) {
+                    paths.ref[key] = {};
+                    paths.ref[key].path = connection.path;
+                }
 
-            if (paths.ref[key].tokens === undefined) {
-                paths.ref[key].tokens = {};
-            }
+                if (paths.ref[key].tokens === undefined) {
+                    paths.ref[key].tokens = {};
+                }
 
-            if (paths.ref[key].tokens[connection.token] === undefined) {
-                paths.ref[key].tokens[connection.token] = {};
-            }
+                if (paths.ref[key].tokens[connection.token] === undefined) {
+                    paths.ref[key].tokens[connection.token] = {};
+                    paths.ref[key].tokens[connection.token].os = connection.os;
+                }
 
-            paths.ref[key].tokens[connection.token].time = new Date().getTime();
-            paths.ref[key].tokens[connection.token].os = connection.os;
-            paths.ref[key].path = connection.path;
+                paths.ref[key].tokens[connection.token].time = new Date().getTime();
 
-            paths.syncToDatabase();
+                paths.syncToDatabase();
 
-            if (holder[connection.path] === undefined) {
-                holder[connection.path] = new Path(paths.ref[key], dbMaster, connection.path);
                 this.response(connection, "listener_added", null, pId);
             } else {
-                holder[connection.path].start();
-                this.response(connection, "listener_already_added", null, pId);
+                this.response(connection, null, "path_contains_dots", pId);
             }
-        },
-        updateData: function (holder, connection, pId) {
 
-            if (holder[connection.path] !== undefined) {
+        },
+        updateData: function (connection, pId) {
+            var object = this.getReference(connection, pId);
+            if (typeof object === "string") {
+                this.response(connection, null, object, pId);
+            } else {
                 logger.debug("test 1");
-                holder[connection.path].FD.syncFromDatabase();
+                object.FD.syncFromDatabase();
                 logger.debug("test 2");
 
                 var differences = connection.differences;
@@ -147,37 +116,50 @@ if (cluster.isMaster) {
                     logger.debug(JSON.stringify(differences));
 
                     logger.debug("test 2 1 : " + JSON.stringify(differences));
-                    logger.debug("test 2 2 : " + JSON.stringify(holder[connection.path].FD.ref));
+                    logger.debug("test 2 2 : " + JSON.stringify(object.FD.ref));
 
-                    apply(holder[connection.path].FD.ref, JSON.parse(differences));
+                    apply(object.FD.ref, JSON.parse(differences));
 
-                    logger.debug("test 3: " + JSON.stringify(holder[connection.path].FD.ref));
+                    logger.debug("test 3: " + JSON.stringify(object.FD.ref));
 
-                    holder[connection.path].FD.syncToDatabase();
+                    if (JSON.stringify(object.FD.ref).length < connection.len) {
+                        logger.debug("##########_inconsistency_length");
+                        this.response(connection, null, "inconsistency_length", pId);
+                        return;
+                    }
+
+                    object.FD.syncToDatabase();
+
                     logger.debug("test 4");
 
                     this.response(connection, "data_updated", null, pId);
                 } else {
                     this.response(connection, "no_diff_updated", null, pId);
                 }
-
-            } else {
-                this.response(connection, null, "holder_not_located", pId);
             }
         },
-        getReference: function (holder, connection, pId) {
+        getReference: function (connection, pId) {
             if (connection.path !== undefined) {
-                if (paths.ref[id] !== undefined) {
-                    return new Path(paths.ref[keys[i]], dbMaster, connection.path);
+                if (connection.path.indexOf("\.") === -1) {
+                    if (connection.path.indexOf("/") === 0) {
+                        var key = connection.path.replaceAll("/", "\.");
+                        key = key.substr(1, key.length - 1);
+                        if (paths.ref[key] !== undefined) {
+                            return new Path(paths.ref[key], dbMaster, connection.path, pId);
+                        } else {
+                            return "holder_not_found";
+                        }
+                    } else {
+                        return "path_not_starts_with_slash";
+                    }
                 } else {
-                    return "holder_not_found";
+                    return "path_contains_dots";
                 }
-
             } else {
                 return "json_path_not_found";
             }
         },
-        parseRequest: function (holder, req, res, worker) {
+        parseRequest: function (req, res, worker) {
             var response = res;
 
             try {
@@ -220,6 +202,11 @@ if (cluster.isMaster) {
                             logger.debug("differences: " + connection[key]);
                             break;
 
+                        case "len":
+                            connection[key] = message[key];
+                            logger.debug("len: " + connection[key]);
+                            break;
+
                         case "os":
                             connection[key] = message[key];
                             logger.debug("os: " + connection[key]);
@@ -240,7 +227,7 @@ if (cluster.isMaster) {
                 switch (connection.method) {
                     case "single_listener":
                         try {
-                            this.addSingleListener(holder, connection, worker);
+                            this.addSingleListener(connection, worker);
                         } catch (e) {
                             logger.error("there was an error parsing request from addSingleListener: " + e.toString());
                             this.response(connection, null, "cluster_" + worker + "_error_adding_single", worker);
@@ -249,7 +236,7 @@ if (cluster.isMaster) {
 
                     case "great_listener":
                         try {
-                            this.addGreatListener(holder, connection, worker);
+                            this.addGreatListener(connection, worker);
                         } catch (e) {
                             logger.error("there was an error parsing request from addGreatListener: " + e.toString());
                             this.response(connection, null, "cluster_" + worker + "_error_adding_great", worker);
@@ -258,7 +245,7 @@ if (cluster.isMaster) {
 
                     case "update_data":
                         try {
-                            this.updateData(holder, connection, worker);
+                            this.updateData(connection, worker);
                         } catch (e) {
                             logger.error("there was an error parsing request from updateData: " + e.toString());
                             this.response(connection, null, "cluster_" + worker + "_error_updating_data", worker);
@@ -283,7 +270,6 @@ if (cluster.isMaster) {
     };
 
     var app = express();
-    var holder = {};
 
     app.use(bodyParser.urlencoded({
         extended: true
@@ -293,50 +279,14 @@ if (cluster.isMaster) {
 
     app.route('/')
         .get(function (req, res) {
-            action.parseRequest(holder, req, res, cluster.worker.id)
+            action.parseRequest(req, res, cluster.worker.id)
         })
         .post(function (req, res) {
-            action.parseRequest(holder, req, res, cluster.worker.id)
+            action.parseRequest(req, res, cluster.worker.id)
         });
 
     app.listen(port, function () {
         paths.syncFromDatabase();
         logger.info("server cluster started on port " + port + " on " + cluster.worker.id + " worker");
-        var keys = Object.keys(paths.ref);
-        if (keys.length > 0) {
-            for (var i = keys.length - 1; i >= 0; i--) {
-                holder[paths.ref[keys[i]].path] = new Path(paths.ref[keys[i]], dbMaster, paths.ref[keys[i]].path);
-            }
-        }
-
     });
-
-    process.on('message', function(msg) {
-        logger.debug('Worker ' + process.pid + ' received message from master.', msg);
-
-        var method  = msg.method;
-        var path    = msg.path;
-
-        switch (method) {
-
-            case "new_ref":
-                paths.syncFromDatabase();
-                var keys = Object.keys(paths.ref);
-                if (keys.length > 0) {
-                    for (var i = keys.length - 1; i >= 0; i--) {
-                        if (holder[paths.ref[keys[i]].path] === undefined) {
-                            holder[paths.ref[keys[i]].path] = new Path(paths.ref[keys[i]], dbMaster, paths.ref[keys[i]].path);
-                        }
-                    }
-                }
-                break;
-
-
-            default:
-
-                // nothing to do here
-                break;
-        }
-    });
-
 }

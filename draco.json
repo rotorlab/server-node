@@ -1,20 +1,10 @@
 {
-    "contacts": {},
-    "chats": {
-        "1497805038347": {},
-        "1497801942633": {},
-        "1497801900716": {},
-        "1497804827243": {},
-        "1497804765453": {},
-        "1497802505415": {},
-        "1497802478059": {},
-        "1497802473075": {},
-        "1497802468426": {},
-        "1497802457040": {},
-        "1497802335148": {},
-        "1497802136285": {},
-        "1497802116890": {},
-        "1497801994305": {},
-        "1497801988077": {}
+    "contacts": {
+        "yuuuuuuuu": {
+            "email": "jijiji@jojo.com",
+            "name": "yuuuuuuuu",
+            "os": "android",
+            "token": "eyJ-SE6cbrU:APA91bHyOoenGkdL68_9zrWebVnIVCM8posdkbRkgQ7jgRWCEOOMtqlX9BhhIKke4zFD2n8Eg1VdF9RaEXTPQ_5Tt2-TNYz_L3tOCH0rBDwmI68vU8_L7fO9B4nACjBsgbWOP8g0JX28"
+        }
     }
 }
