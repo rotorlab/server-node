@@ -4,7 +4,7 @@ var log4js =                require('log4js');
 var TAG =                   "PATH CLUSTER";
 var logger =                log4js.getLogger(TAG);
 
-function Path(databasePath, database, path) {
+function Path(databasePath, database, path, pid) {
 
     // object reference
     var object = this;
@@ -70,6 +70,7 @@ function Path(databasePath, database, path) {
     };
 
     this.FD.setSyncConfig(config);
+    this.FD.debug(true);
 
     this.start = function () {
 
