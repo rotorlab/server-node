@@ -13,7 +13,7 @@
   "dependencies": {
     "body-parser": "latest",
     "express": "latest",
-    "flamebase-database-node": "^1.1.0",
+    "flamebase-database-node": "^1.1.1",
     "forever-monitor": "^1.7.1",
     "log4js": "latest",
     "rus-diff": "^1.1.0"

@@ -95,7 +95,17 @@ if (cluster.isMaster) {
 
                 paths.syncToDatabase();
 
-                this.response(connection, "listener_added", null, pId);
+                var object = this.getReference(connection, pId);
+                object.FD.syncFromDatabase();
+                var len = 0;
+                if (typeof object !== "string") {
+                    len = JSON.stringify(object.FD.ref).length;
+                }
+                var data = {};
+                data.len = len;
+                data.info = "listener_added";
+
+                this.response(connection, data, null, pId);
             } else {
                 this.response(connection, null, "path_contains_dots", pId);
             }
@@ -106,31 +116,21 @@ if (cluster.isMaster) {
             if (typeof object === "string") {
                 this.response(connection, null, object, pId);
             } else {
-                logger.debug("test 1");
                 object.FD.syncFromDatabase();
-                logger.debug("test 2");
 
                 var differences = connection.differences;
 
                 if (differences !== undefined) {
                     logger.debug(JSON.stringify(differences));
-
-                    logger.debug("test 2 1 : " + JSON.stringify(differences));
-                    logger.debug("test 2 2 : " + JSON.stringify(object.FD.ref));
-
                     apply(object.FD.ref, JSON.parse(differences));
 
-                    logger.debug("test 3: " + JSON.stringify(object.FD.ref));
-
                     if (JSON.stringify(object.FD.ref).length < connection.len) {
-                        logger.debug("##########_inconsistency_length");
+                        logger.error("##########_inconsistency_length");
                         this.response(connection, null, "inconsistency_length", pId);
                         return;
                     }
 
                     object.FD.syncToDatabase();
-
-                    logger.debug("test 4");
 
                     this.response(connection, "data_updated", null, pId);
                 } else {
