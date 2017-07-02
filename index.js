@@ -9,7 +9,6 @@ function FlamebaseDatabaseCluster(database, port) {
     var object = this;
 
     this.initCluster = function (callback, force) {
-        var forever_config = require('./config/debug.json');
         var child = forever.start('./server.js', {
             silent: false,
             uid: "flamebase-database",
