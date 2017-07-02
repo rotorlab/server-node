@@ -11,12 +11,12 @@ For now it still developing, so please be patient with errors.
 ### Libraries and packages
 Client options to connect with server cluster.
 
-- Android:
+- [Android](https://github.com/flamebase/flamebase-database-android)
 ```groovy
-compile 'com.flamebase:database:1.0.2'
+compile 'com.flamebase:database:1.1.0'
 ```
 
-- Node:
+- [Node](https://github.com/flamebase/flamebase-database-node)
 ```bash
 npm install flamebase-database-node --save
 ```
