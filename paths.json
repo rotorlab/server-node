@@ -35,7 +35,7 @@
             },
             "edYbarLcDgg:APA91bEpinFBJh9LSaecXvcjNvfgpwZ2Vv1cGnvjVF9zlUL7hV5iZF_CGDsRQLATP9eGHOFVNXneOaicml1Hlo04X4I9fTBLSYw277WeBCA7rPToUR5blQ29vLAwjcu44ue0-5423ed3": {
                 "os": "android",
-                "time": 1498978960330
+                "time": 1498981802397
             }
         }
     },
@@ -53,7 +53,16 @@
         "tokens": {
             "edYbarLcDgg:APA91bEpinFBJh9LSaecXvcjNvfgpwZ2Vv1cGnvjVF9zlUL7hV5iZF_CGDsRQLATP9eGHOFVNXneOaicml1Hlo04X4I9fTBLSYw277WeBCA7rPToUR5blQ29vLAwjcu44ue0-5423ed3": {
                 "os": "android",
-                "time": 1498979176411
+                "time": 1498981806020
+            }
+        }
+    },
+    "chats.1498981200261": {
+        "path": "/chats/1498981200261",
+        "tokens": {
+            "edYbarLcDgg:APA91bEpinFBJh9LSaecXvcjNvfgpwZ2Vv1cGnvjVF9zlUL7hV5iZF_CGDsRQLATP9eGHOFVNXneOaicml1Hlo04X4I9fTBLSYw277WeBCA7rPToUR5blQ29vLAwjcu44ue0-5423ed3": {
+                "os": "android",
+                "time": 1498981802378
             }
         }
     }
