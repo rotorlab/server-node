@@ -1,0 +1,34 @@
+{
+    "contacts": {
+        "efra": {
+            "email": "efra@gmail.com",
+            "name": "efra",
+            "os": "android",
+            "token": "dY6rVZP2cC0:APA91bHNFrFVshiWuRvBfJsZIHXUkiuN4Sa25hB1gYzmNUtcXXJN7yEPXBxU8uoBpTkPDinsxUtkfAdEsZO9nkG-gdSPvHya2slCSsumupZu8Wn3k8zVlrQ3kdgRTykiQAu6uCD0vz-X"
+        },
+        "gggttfnb": {
+            "email": "ffggggdfdfc",
+            "name": "gggttfnb",
+            "os": "android",
+            "token": "edYbarLcDgg:APA91bEpinFBJh9LSaecXvcjNvfgpwZ2Vv1cGnvjVF9zlUL7hV5iZF_CGDsRQLATP9eGHOFVNXneOaicml1Hlo04X4I9fTBLSYw277WeBCA7rPToUR5blQ29vLAwjcu44ue0-5423ed3"
+        }
+    },
+    "chats": {
+        "1498979009624": {
+            "members": [
+                "ffggggdfdfc"
+            ],
+            "messages": {
+                "1498979208967": {
+                    "author": "gggttfnb",
+                    "text": "ggggg"
+                },
+                "1498979230058": {
+                    "author": "gggttfnb",
+                    "text": "hola"
+                }
+            },
+            "name": "ggggttgf"
+        }
+    }
+}
