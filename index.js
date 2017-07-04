@@ -9,7 +9,7 @@ function FlamebaseDatabaseCluster(database, port) {
     var object = this;
 
     this.initCluster = function (callback, force) {
-        var child = forever.start('./server.js', {
+        var child = forever.start(__dirname + '/server.js', {
             silent: false,
             uid: "flamebase-database",
             pidFile: "./flamebase-database.pid",

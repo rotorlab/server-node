@@ -1,6 +1,6 @@
 {
   "name": "flamebase-database-server-cluster",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Server cluster to hold a realtime JSON database",
   "main": "index.js",
   "scripts": {

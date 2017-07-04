@@ -1,3 +1,5 @@
+[ ![flamebase/flamebase-database-server-cluster](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.1&x2=0)](https://www.npmjs.com/package/flamebase-database-server-cluster)
+
 # :fire: flamebase-database-server-cluster
 Server cluster to hold a realtime JSON database.
 
