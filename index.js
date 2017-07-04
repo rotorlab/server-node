@@ -27,9 +27,9 @@ function FlamebaseDatabaseCluster(database, port) {
             watchDirectory: null,
 
 
-            logFile: "./logs/logFile.log",
-            outFile: "./logs/outFile.log",
-            errFile: "./logs/errFile.log"
+            logFile: __dirname + "/logs/logFile.log",
+            outFile: __dirname + "/logs/outFile.log",
+            errFile: __dirname + "/logs/errFile.log"
         });
 
         child.on('start', function(code) {
