@@ -1,4 +1,4 @@
-[ ![flamebase/flamebase-database-server-cluster](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.2&x2=0)](https://www.npmjs.com/package/flamebase-database-server-cluster)
+[ ![flamebase/flamebase-database-server-cluster](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.3&x2=0)](https://www.npmjs.com/package/flamebase-database-server-cluster)
 
 # :fire: flamebase-database-server-cluster
 Server cluster to hold a realtime JSON database.
@@ -10,24 +10,11 @@ If you are doing an altruist project with Firebase, pray not to became successfu
 In this repo you can find the proper package for run a server cluster with node framework.
 For now it still developing, so please be patient with errors.
 
-### Libraries and packages
-Client options to connect with server cluster.
-
-- [Android](https://github.com/flamebase/flamebase-database-android)
-```groovy
-compile 'com.flamebase:database:1.1.0'
-```
-
-- [Node](https://github.com/flamebase/flamebase-database-node)
-```bash
-npm install flamebase-database-node --save
-```
-
 ### Setup
 
 Install package:
 ```bash
-npm install flamebase-database-server-cluster --save
+ flamebase-database-server-cluster --save
 ```
 
 Create a server cluster to hold all realtime changes.
@@ -58,4 +45,17 @@ start!!
 [2017-07-02 21:05:48.838] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 7 worker
 [2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 8 worker
 [2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 6 worker
+```
+
+### Libraries and packages
+Client options to connect with server cluster.
+
+- [Android](https://github.com/flamebase/flamebase-database-android)
+```groovy
+compile 'com.flamebase:database:1.1.0'
+```
+
+- [Node](https://github.com/flamebase/flamebase-database-node)
+```bash
+npm install flamebase-database-node --save
 ```
