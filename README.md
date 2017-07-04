@@ -14,7 +14,7 @@ For now it still developing, so please be patient with errors.
 
 Install package:
 ```bash
- flamebase-database-server-cluster --save
+npm install flamebase-database-server-cluster --save
 ```
 
 Create a server cluster to hold all realtime changes.
