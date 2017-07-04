@@ -7,7 +7,7 @@ var logger  = log4js.getLogger(TAG);
 function FlamebaseDatabaseCluster(database, port) {
 
     this.initCluster = function (callback) {
-        var child = forever.start("/" + __dirname + '/server.js', {
+        var child = forever.start('./server.js', {
             silent: false,
             uid: "flamebase-database",
             pidFile: "./flamebase-database.pid",
@@ -17,7 +17,7 @@ function FlamebaseDatabaseCluster(database, port) {
             minUptime: 2000,
             spinSleepTime: 1000,
 
-            sourceDir: "./",
+            sourceDir: __dirname,
 
             args:    ['DATABASE_NAME=' + database, 'DATABASE_PORT=' + port],
 
