@@ -52,7 +52,7 @@ Client options to connect with server cluster.
 
 - [Android](https://github.com/flamebase/flamebase-database-android)
 ```groovy
-compile 'com.flamebase:database:1.1.0'
+compile 'com.flamebase:database:1.1.3'
 ```
 
 - [Node](https://github.com/flamebase/flamebase-database-node)
