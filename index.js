@@ -4,7 +4,7 @@ var log4js  = require('log4js');
 const TAG   = "Flamebase Database";
 var logger  = log4js.getLogger(TAG);
 
-function FlamebaseDatabaseCluster(database, port) {
+function FlamebaseDatabaseCluster(database, port, APIKey) {
 
     this.initCluster = function (callback) {
         var child = forever.start('./server.js', {
@@ -19,7 +19,7 @@ function FlamebaseDatabaseCluster(database, port) {
 
             sourceDir: __dirname,
 
-            args:    ['DATABASE_NAME=' + database, 'DATABASE_PORT=' + port],
+            args:    ['DATABASE_NAME=' + database, 'DATABASE_PORT=' + port, 'API_KEY=' + APIKey],
 
             watch: false,
             watchIgnoreDotFiles: null,

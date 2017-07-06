@@ -17,16 +17,21 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
 var expectedDBNEnvVar = "DATABASE_NAME";
-var expectedPORTNEnvVar = "DATABASE_PORT";
+var expectedPORTEnvVar = "DATABASE_PORT";
+var expectedAPIKeyEnvVar = "API_KEY";
 var dbMaster = null;
 var port = null;
+var APIKey = null;
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
         dbMaster = val.replaceAll(expectedDBNEnvVar + "=", "");
     }
-    if (val.indexOf(expectedPORTNEnvVar) > -1) {
-        port = val.replaceAll(expectedPORTNEnvVar + "=", "");
+    if (val.indexOf(expectedPORTEnvVar) > -1) {
+        port = val.replaceAll(expectedPORTEnvVar + "=", "");
+    }
+    if (val.indexOf(expectedAPIKeyEnvVar) > -1) {
+        APIKey = val.replaceAll(expectedAPIKeyEnvVar + "=", "");
     }
 });
 
@@ -128,12 +133,13 @@ if (cluster.isMaster) {
                     if (JSON.stringify(object.FD.ref).length < connection.len) {
                         logger.error("##########_inconsistency_length");
                         this.response(connection, null, "inconsistency_length", pId);
-                        return;
+                    } else if (JSON.stringify(object.FD.ref).length > connection.len) {
+                        object.FD.syncToDatabase(true);
+                        this.response(connection, "data_updated", null, pId);
+                    } else {
+                        object.FD.syncToDatabase();
+                        this.response(connection, "data_updated", null, pId);
                     }
-
-                    object.FD.syncToDatabase();
-
-                    this.response(connection, "data_updated", null, pId);
                 } else {
                     this.response(connection, "no_diff_updated", null, pId);
                 }
@@ -146,7 +152,7 @@ if (cluster.isMaster) {
                         var key = connection.path.replaceAll("/", "\.");
                         key = key.substr(1, key.length - 1);
                         if (paths.ref[key] !== undefined) {
-                            return new Path(paths.ref[key], dbMaster, connection.path, pId);
+                            return new Path(APIKey,paths.ref[key], dbMaster, connection.path, pId);
                         } else {
                             return "holder_not_found";
                         }
