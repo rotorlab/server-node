@@ -16,7 +16,7 @@ function Path(APIKey, databasePath, database, path, pid) {
 
     this.FD.syncFromDatabase();
 
-    logger.debug("created reference listener for " + this.database + " - " + this.path + ": " + JSON.stringify(this.FD.ref));
+    // logger.debug("created reference listener for " + this.database + " - " + this.path + ": " + JSON.stringify(this.FD.ref));
 
 
     var config = {};
@@ -72,8 +72,8 @@ function Path(APIKey, databasePath, database, path, pid) {
     this.FD.setSyncConfig(config);
     this.FD.debug(true);
 
-    this.start = function () {
-
+    this.sendUpdateFor = function (before, device) {
+        this.FD.sendDifferencesForClient(before, device);
     }
 
 }

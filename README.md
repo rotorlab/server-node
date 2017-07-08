@@ -1,4 +1,4 @@
-[ ![flamebase/flamebase-database-server-cluster](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.5&x2=0)](https://www.npmjs.com/package/flamebase-database-server-cluster)
+[ ![flamebase/flamebase-database-server-cluster](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.2.0&x2=0)](https://www.npmjs.com/package/flamebase-database-server-cluster)
 
 # :fire: flamebase-database-server-cluster
 Server cluster to hold a realtime JSON database.
@@ -22,7 +22,9 @@ Create a server cluster to hold all realtime changes.
 ```javascript
 var FlamebaseDatabaseCluster = require('flamebase-database-server-cluster');
 
-var FSC = new FlamebaseDatabaseCluster("draco", 1507);
+var serverKey = 'AIzafvwsdfmvsdfv-fdvwsdfgweFGfdAsfwefgw-z1JI';
+
+var FSC = new FlamebaseDatabaseCluster("myDatabase", 1507, serverKey);
 FSC.initCluster({
     start: function () {
         console.log("start!!")
@@ -52,7 +54,7 @@ Client options to connect with server cluster.
 
 - [Android](https://github.com/flamebase/flamebase-database-android)
 ```groovy
-compile 'com.flamebase:database:1.1.3'
+compile 'com.flamebase:database:1.2.0'
 ```
 
 - [Node](https://github.com/flamebase/flamebase-database-node)
