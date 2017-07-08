@@ -373,7 +373,7 @@ if (cluster.isMaster) {
         extended: true
     }));
 
-    app.use(bodyParser.json());
+    app.use(bodyParser.json({limit: '50mb'}));
 
     app.route('/')
         .get(function (req, res) {
