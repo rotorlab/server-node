@@ -4,7 +4,7 @@ var log4js =                require('log4js');
 var TAG =                   "PATH CLUSTER";
 var logger =                log4js.getLogger(TAG);
 
-function Path(databasePath, database, path, pid) {
+function Path(APIKey, databasePath, database, path, pid) {
 
     // object reference
     var object = this;
@@ -16,7 +16,7 @@ function Path(databasePath, database, path, pid) {
 
     this.FD.syncFromDatabase();
 
-    logger.debug("created reference listener for " + this.database + " - " + this.path + ": " + JSON.stringify(this.FD.ref));
+    // logger.debug("created reference listener for " + this.database + " - " + this.path + ": " + JSON.stringify(this.FD.ref));
 
 
     var config = {};
@@ -25,7 +25,7 @@ function Path(databasePath, database, path, pid) {
      * server API key for firebase cloud messaging
      */
     config.APIKey = function() {
-        return "AIzaSyDhzzf2kkKuknAdiB_ak-KJ0a3XgaBDO4A";
+        return APIKey;
     };
 
     /**
@@ -72,8 +72,8 @@ function Path(databasePath, database, path, pid) {
     this.FD.setSyncConfig(config);
     this.FD.debug(true);
 
-    this.start = function () {
-
+    this.sendUpdateFor = function (before, device) {
+        this.FD.sendDifferencesForClient(before, device);
     }
 
 }
