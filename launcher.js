@@ -1,9 +1,10 @@
-var FlamebaseDatabaseCluster = require('./index.js');
+var FlamebaseDatabaseCluster = require('flamebase-database-server-cluster');
 
-var FDC = new FlamebaseDatabaseCluster("draco", 1507);
+var serverKey = "...";
+var FDC = new FlamebaseDatabaseCluster("myDatabase", 1507, serverKey, true);
 FDC.initCluster({
     start: function () {
         console.log("start!!")
     }
-}, null);
+});
 

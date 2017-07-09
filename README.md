@@ -1,4 +1,4 @@
-[ ![flamebase/flamebase-database-server-cluster](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.2.1&x2=0)](https://www.npmjs.com/package/flamebase-database-server-cluster)
+[ ![flamebase/flamebase-database-server-cluster](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.3.0&x2=0)](https://www.npmjs.com/package/flamebase-database-server-cluster)
 
 # :fire: flamebase-database-server-cluster
 Server cluster to hold a realtime JSON database.
@@ -24,12 +24,18 @@ var FlamebaseDatabaseCluster = require('flamebase-database-server-cluster');
 
 var serverKey = 'AIzafvwsdfmvsdfv-fdvwsdfgweFGfdAsfwefgw-z1JI';
 
-var FSC = new FlamebaseDatabaseCluster("myDatabase", 1507, serverKey);
-FSC.initCluster({
+/**
+* - database name
+* - clusters port
+* - server key for push messages (fcm)
+* - debug logs
+*/
+var FDC = new FlamebaseDatabaseCluster("myDatabase", 1507, serverKey, true);
+FDC.initCluster({
     start: function () {
         console.log("start!!")
     }
-}, null);
+});
 ```
 Alternatively you can start the server cluster by cloning this repo and launch on terminal:
 ```bash
@@ -54,7 +60,7 @@ Client options to connect with server cluster.
 
 - [Android](https://github.com/flamebase/flamebase-database-android)
 ```groovy
-compile 'com.flamebase:database:1.2.0'
+compile 'com.flamebase:database:1.3.0'
 ```
 
 - [Node](https://github.com/flamebase/flamebase-database-node)

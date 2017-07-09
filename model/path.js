@@ -4,7 +4,7 @@ var log4js =                require('log4js');
 var TAG =                   "PATH CLUSTER";
 var logger =                log4js.getLogger(TAG);
 
-function Path(APIKey, databasePath, database, path, pid) {
+function Path(APIKey, databasePath, database, path, pid, dbg) {
 
     // object reference
     var object = this;
@@ -15,9 +15,6 @@ function Path(APIKey, databasePath, database, path, pid) {
     this.FD = new FlamebaseDatabase(this.database, this.path);
 
     this.FD.syncFromDatabase();
-
-    // logger.debug("created reference listener for " + this.database + " - " + this.path + ": " + JSON.stringify(this.FD.ref));
-
 
     var config = {};
 
@@ -70,10 +67,10 @@ function Path(APIKey, databasePath, database, path, pid) {
     };
 
     this.FD.setSyncConfig(config);
-    this.FD.debug(true);
+    this.FD.debug(dbg === "true" ? true : false);
 
-    this.sendUpdateFor = function (before, device) {
-        this.FD.sendDifferencesForClient(before, device);
+    this.sendUpdateFor = function (before, device, callback) {
+        this.FD.sendDifferencesForClient(before, device, callback);
     }
 
 }
