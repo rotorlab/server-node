@@ -1,6 +1,6 @@
 var express =               require('express');
 var bodyParser =            require('body-parser');
-var timeout =               require('connect-timeout')
+var timeout =               require('connect-timeout');
 var log4js =                require('log4js');
 var cluster =               require('cluster');
 var http =                  require('http');
