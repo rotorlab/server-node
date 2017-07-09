@@ -1,5 +1,6 @@
 var express =               require('express');
 var bodyParser =            require('body-parser');
+var timeout =               require('connect-timeout')
 var log4js =                require('log4js');
 var cluster =               require('cluster');
 var http =                  require('http');
@@ -20,9 +21,11 @@ String.prototype.replaceAll = function(search, replacement) {
 var expectedDBNEnvVar = "DATABASE_NAME";
 var expectedPORTEnvVar = "DATABASE_PORT";
 var expectedAPIKeyEnvVar = "API_KEY";
+var expectedDebugKeyEnvVar = "DEBUG";
 var dbMaster = null;
 var port = null;
 var APIKey = null;
+var debug = null;
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
@@ -30,6 +33,9 @@ process.argv.forEach(function (val, index, array) {
     }
     if (val.indexOf(expectedPORTEnvVar) > -1) {
         port = val.replaceAll(expectedPORTEnvVar + "=", "");
+    }
+    if (val.indexOf(expectedDebugKeyEnvVar) > -1) {
+        debug = val.replaceAll(expectedDebugKeyEnvVar + "=", "") === "true" ? true : false;
     }
     if (val.indexOf(expectedAPIKeyEnvVar) > -1) {
         APIKey = val.replaceAll(expectedAPIKeyEnvVar + "=", "");
@@ -62,7 +68,7 @@ if (cluster.isMaster) {
 } else {
 
     var action = {
-        response: function (connection, data, error, pId) {
+        response:           function (connection, data, error, pId) {
             var result = {status: (data === null || error !== null ? "KO" : "OK"),
                 data: (data === null ? {} : data), error: error};
             logger.info("worker: " + pId);
@@ -70,16 +76,9 @@ if (cluster.isMaster) {
             connection.response.contentType('application/json');
             connection.response.send(result);
         },
-        addSingleListener: function (connection, pId) {
-            this.addGreatListener(connection, pId);
-        },
-        addGreatListener: function (connection, pId) {
+        addListener:   function (connection, pId) {
             var paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
-            logger.debug(JSON.stringifyAligned(paths.ref));
-            paths.syncFromDatabase();
-            logger.debug("getting");
-            logger.debug(JSON.stringifyAligned(paths.ref));
 
             if (paths.ref === undefined) {
                 paths.ref = {}
@@ -115,9 +114,9 @@ if (cluster.isMaster) {
                     }
                 }
 
-                paths.ref[key].tokens[connection.token].time = new Date().getTime();
-
                 paths.syncToDatabase();
+
+                this.updateTime(connection);
 
                 var equals = this.verifyLenght(connection, pId);
 
@@ -135,7 +134,7 @@ if (cluster.isMaster) {
                 var data = {};
                 data.len = len;
 
-                if (lastToken === connection.token && equals) {
+                if (lastToken === connection.token) {
                     data.info = "listener_up_to_date";
                 } else {
                     data.info = "listener_ready_for_refresh_client";
@@ -147,22 +146,46 @@ if (cluster.isMaster) {
             }
 
         },
-        verifyLenght: function (connection, pId) {
+        removeListener:   function (connection, pId) {
             var paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
+
+            if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
+                var key = connection.path.replaceAll("/", "\.");
+                key = key.substr(1, key.length - 1);
+
+                if (paths.ref[key] !== undefined && paths.ref[key].tokens !== undefined && paths.ref[key].tokens[connection.token] !== undefined) {
+                    delete paths.ref[key].tokens[connection.token];
+
+                    paths.syncToDatabase();
+
+                    var data = {};
+                    data.info = "listener_removed";
+
+                    this.response(connection, data, null, pId);
+                } else {
+                    if (paths.ref[key] === undefined) {
+                        this.response(connection, null, "path_not_found", pId);
+                    } else {
+                        this.response(connection, null, "token_not_found", pId);
+                    }
+                }
+            } else {
+                this.response(connection, null, "path_contains_dots", pId);
+            }
+
+        },
+        verifyLenght:       function (connection, pId) {
             var object = this.getReference(connection, pId);
-            // var len = JSON.stringify(object.FD.ref).length;
             logger.debug(sha1(JSON.stringify(object.FD.ref)).toUpperCase());
             logger.debug(connection.sha1);
 
             var hash = sha1(JSON.stringify(object.FD.ref)).toUpperCase();
             return hash === connection.sha1;
         },
-        getUpdatesFrom: function (connection, pId) {
+        getUpdatesFrom:     function (connection, pId) {
             var paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
-            logger.debug("getting");
-            logger.debug(JSON.stringifyAligned(paths.ref));
             var object = this.getReference(connection, pId);
             if (typeof object === "string") {
                 this.response(connection, null, object, pId);
@@ -171,18 +194,35 @@ if (cluster.isMaster) {
                     token: connection.token,
                     os: connection.os
                 }
-                object.sendUpdateFor(connection.content, device)
-                var data = {};
-                data.info = "updates_sent";
-                data.len = JSON.stringify(object.FD.ref).length;
-                this.response(connection, data, null, pId);
+                object.sendUpdateFor(connection.content, device, function() {
+                    var data = {};
+                    data.info = "updates_sent";
+                    data.len = JSON.stringify(object.FD.ref).length;
+                    action.response(connection, data, null, pId);
+                });
             }
         },
-        updateData: function (connection, pId) {
-            var paths = new FlamebaseDatabase(dbPaths, "/");
-            paths.syncFromDatabase();
-            logger.debug("getting");
-            logger.debug(JSON.stringifyAligned(paths.ref));
+        updateTime:         function (connection) {
+            if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
+                var key = connection.path.replaceAll("/", "\.");
+                key = key.substr(1, key.length - 1);
+
+                var paths = new FlamebaseDatabase(dbPaths, "/" + key);
+                paths.syncFromDatabase();
+
+                if (paths.ref === undefined) {
+                    paths.ref = {};
+                    paths.ref.path = connection.path;
+                }
+
+                if (paths.ref.tokens === undefined) {
+                    paths.ref.tokens = {};
+                }
+                paths.ref.tokens[connection.token].time = new Date().getTime();
+                paths.syncToDatabase();
+            }
+        },
+        updateData:         function (connection, pId) {
             var object = this.getReference(connection, pId);
             if (typeof object === "string") {
                 this.response(connection, null, object, pId);
@@ -192,22 +232,23 @@ if (cluster.isMaster) {
                 var differences = connection.differences;
 
                 if (differences !== undefined) {
-                    logger.debug(JSON.stringify(differences));
                     apply(object.FD.ref, JSON.parse(differences));
+                    this.updateTime(connection);
 
-                    if (JSON.stringify(object.FD.ref).length !== connection.len) {
-                        object.FD.syncToDatabase();
-                        this.response(connection, null, "data_updated_with_differences", pId);
-                    } else {
-                        object.FD.syncToDatabase();
-                        this.response(connection, "data_updated", null, pId);
-                    }
+                    object.FD.syncToDatabase(false, function() {
+                        if (JSON.stringify(object.FD.ref).length !== connection.len) {
+                            action.response(connection, null, "data_updated_with_differences", pId);
+                        } else {
+                            action.response(connection, "data_updated", null, pId);
+                        }
+                    });
+
                 } else {
                     this.response(connection, "no_diff_updated", null, pId);
                 }
             }
         },
-        getReference: function (connection, pId) {
+        getReference:       function (connection, pId) {
             var paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
             var error = null;
@@ -217,7 +258,7 @@ if (cluster.isMaster) {
                         var key = connection.path.replaceAll("/", "\.");
                         key = key.substr(1, key.length - 1);
                         if (paths.ref[key] !== undefined) {
-                            return new Path(APIKey,paths.ref[key], dbMaster, connection.path, pId);
+                            return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug.toString());
                         } else {
                             error = "holder_not_found";
                         }
@@ -233,7 +274,7 @@ if (cluster.isMaster) {
             logger.error(error);
             return error;
         },
-        parseRequest: function (req, res, worker) {
+        parseRequest:       function (req, res, worker) {
             var response = res;
 
             try {
@@ -314,21 +355,23 @@ if (cluster.isMaster) {
                 connection.response = response;
 
                 switch (connection.method) {
-                    case "single_listener":
+
+                    case "create_listener":
                         try {
-                            this.addSingleListener(connection, worker);
+                            this.addListener(connection, worker);
                         } catch (e) {
-                            logger.error("there was an error parsing request from addSingleListener: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_adding_single", worker);
+                            logger.error("there was an error parsing request from addGreatListener: " + e.toString());
+                            this.response(connection, null, "cluster_" + worker + "_error_creating", worker);
                         }
                         break;
 
-                    case "great_listener":
+
+                    case "remove_listener":
                         try {
-                            this.addGreatListener(connection, worker);
+                            this.removeListener(connection, worker);
                         } catch (e) {
                             logger.error("there was an error parsing request from addGreatListener: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_adding_great", worker);
+                            this.response(connection, null, "cluster_" + worker + "_error_removing_listener", worker);
                         }
                         break;
 
@@ -374,6 +417,7 @@ if (cluster.isMaster) {
     }));
 
     app.use(bodyParser.json({limit: '50mb'}));
+    app.use(timeout('60s'))
 
     app.route('/')
         .get(function (req, res) {
