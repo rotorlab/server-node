@@ -1,6 +1,6 @@
 {
   "name": "flamebase-database-server-cluster",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Server cluster to hold a realtime JSON database",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "body-parser": "latest",
+    "connect-timeout": "^1.9.0",
     "express": "latest",
     "flamebase-database-node": "^1.3.0",
     "forever-monitor": "^1.7.1",
