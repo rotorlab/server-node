@@ -3,6 +3,8 @@ var log4js  = require('log4js');
 
 const TAG   = "Flamebase Database";
 var logger  = log4js.getLogger(TAG);
+logger.level = 'all';
+
 
 function FlamebaseDatabaseCluster(database, port, APIKey, debug) {
 

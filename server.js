@@ -45,6 +45,7 @@ process.argv.forEach(function (val, index, array) {
 
 var TAG =                   "SERVER CLUSTER";
 var logger =                log4js.getLogger(TAG);
+logger.level = 'all';
 
 var dbPaths = "paths";
 
@@ -258,7 +259,7 @@ if (cluster.isMaster) {
                         var key = connection.path.replaceAll("/", "\.");
                         key = key.substr(1, key.length - 1);
                         if (paths.ref[key] !== undefined) {
-                            return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug.toString());
+                            return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug);
                         } else {
                             error = "holder_not_found";
                         }
@@ -274,7 +275,15 @@ if (cluster.isMaster) {
             logger.error(error);
             return error;
         },
-        parseRequest:       function (req, res, worker) {
+        printError: function (msg, stackMessage) {
+            logger.error(msg);
+            var messages = stackMessage.split("\n");
+            for (var i = 0; i < messages.length; i++) {
+                logger.error(messages[i]);
+            }
+            return error;
+        },
+        parseRequest: function (req, res, worker) {
             var response = res;
 
             try {
@@ -360,7 +369,7 @@ if (cluster.isMaster) {
                         try {
                             this.addListener(connection, worker);
                         } catch (e) {
-                            logger.error("there was an error parsing request from addGreatListener: " + e.toString());
+                            this.printError("there was an error parsing request from addGreatListener: " + e.stack);
                             this.response(connection, null, "cluster_" + worker + "_error_creating", worker);
                         }
                         break;

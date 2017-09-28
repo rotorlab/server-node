@@ -1,0 +1,27 @@
+{
+    "contacts": {
+        "path": "/contacts",
+        "tokens": {
+            "dNypX1zqGTU:APA91bEkw9Ru9qqJtddT2GaZI_0FN6_ahqNsq8CPlrPjgvXMye3vuAWrnMIxtDvkE3lyJNN6xDdZDGsG9Ok40QC6X81obuv8Yh7hGJACQs5TYpMAKiro8TsJFB4eKMzGmfckZDwDLtEI": {
+                "os": "android",
+                "time": 1506602025424
+            },
+            "undefined": {
+                "os": "android",
+                "time": 1506618788556
+            },
+            "dzISROz6GwY:APA91bFOYD2s_Krj_UmwXyds8Xj65oIa5D2l9zFca0_Jt41W1eQ-A15W-Gtzc20BT0a88vtHgDqZG0LkNQp4HhfO9ysED0fYNhoM9qzv4snULFYZ13Rvw1W1UJqtW1lMZTA8x7yCWXjX": {
+                "os": "android",
+                "time": 1506603148844
+            },
+            "dc1zc2-j_6g:APA91bEI4b2SFMrdPyk9A8sc4h-OFTdBSgFGdvvydhnrEO8qNemYnsbj3gSp9HWh8uTacho05dUN-Zb9Mv2j_T70bQrC_BXt-lMGaYRcRP-Q1mQhqKdGN6BWIpCzRCcg77aUth-vBMCf": {
+                "os": "android",
+                "time": 1506617848495
+            },
+            "c6debPJG3uU:APA91bGV2QRObrZ3toA1812UloS6fumb4llinPm1pVMF0tdkbtaTzUfWf04-5j0p-Gh04QKioHgNUp1e0fptA_O4psDn_jk4IqTLfvyKJFayRhkSn0E61x3yqiVY3CU8qU47WzBdY0G7": {
+                "os": "android",
+                "time": 1506618349191
+            }
+        }
+    }
+}
