@@ -1,3 +1,13 @@
 {
-    "contacts": {}
+    "contacts": {
+        "ss": {
+            "id": "hh",
+            "name": "ss",
+            "os": "android",
+            "token": "dyrSR22lKsU:APA91bFPwSuKBCvBlIHkhiy4e6VeE4KsTtsC1xY4swmtoVKMaOWZB7kn5IPVG6g0jwGiXB03UeSLUgOnOY_XkXFrPGpkrEq7HzWNcfW9EuvcdemLHQNgSXOFjK4-Wt1KRr-rPZZqw4T7"
+        }
+    },
+    "chats": {
+        "1506663333969": {}
+    }
 }
