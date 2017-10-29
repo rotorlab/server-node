@@ -45,6 +45,7 @@ process.argv.forEach(function (val, index, array) {
 
 var TAG =                   "SERVER CLUSTER";
 var logger =                log4js.getLogger(TAG);
+logger.level = 'all';
 
 var dbPaths = "paths";
 
@@ -67,8 +68,47 @@ if (cluster.isMaster) {
 
 } else {
 
+    const VARS = {
+        USER_AGENT: "user-agent",
+        APPLICATION_JSON: "application/json",
+        WORKER: "worker",
+        RESPONSE_KO: "KO"
+    };
+
+    const ERROR = {
+        MISSING_PARAMS: "there vas an error on the connection instance creation: no_params"
+    };
+
+    const ERROR_REQUEST = {
+        MISSING_PARAMS: "missing_params",
+        MISSING_WRONG_PARAMS: "missing_or_wrong_params"
+    };
+
+    const ERROR_RESPONSE = {
+        GET_UPDATES: "_error_getting_updates",
+        GET_UPDATES_MSG: "_error_getting_updates",
+        UPDATE_DATA: "_error_updating_data",
+        UPDATE_DATA_MSG: "_error_updating_data",
+        ADD_LISTENER: "_error_creating_listener",
+        ADD_LISTENER_MSG: "_error_creating_listener",
+        REMOVE_LISTENER: "_error_removing_listener"
+        REMOVE_LISTENER_MSG: "_error_removing_listener"
+    };
+
+    const KEY_REQUEST = {
+        METHOD: "method",
+        PATH:   "path",
+        SHA1:   "sha1",
+        TOKEN:  "token",
+        DIFFERENCES: "differences",
+        CONTENT: "content",
+        LEN: "len",
+        OS: "os",
+        CLEAN: "clean"
+    };
+
     var action = {
-        response:           function (connection, data, error, pId) {
+        response:       function (connection, data, error, pId) {
             var result = {status: (data === null || error !== null ? "KO" : "OK"),
                 data: (data === null ? {} : data), error: error};
             logger.info("worker: " + pId);
@@ -76,7 +116,7 @@ if (cluster.isMaster) {
             connection.response.contentType('application/json');
             connection.response.send(result);
         },
-        addListener:   function (connection, pId) {
+        addListener:    function (connection, pId) {
             var paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
 
@@ -146,7 +186,7 @@ if (cluster.isMaster) {
             }
 
         },
-        removeListener:   function (connection, pId) {
+        removeListener: function (connection, pId) {
             var paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
 
@@ -175,7 +215,7 @@ if (cluster.isMaster) {
             }
 
         },
-        verifyLenght:       function (connection, pId) {
+        verifyLenght:   function (connection, pId) {
             var object = this.getReference(connection, pId);
             logger.debug(sha1(JSON.stringify(object.FD.ref)).toUpperCase());
             logger.debug(connection.sha1);
@@ -183,7 +223,7 @@ if (cluster.isMaster) {
             var hash = sha1(JSON.stringify(object.FD.ref)).toUpperCase();
             return hash === connection.sha1;
         },
-        getUpdatesFrom:     function (connection, pId) {
+        getUpdatesFrom: function (connection, pId) {
             var paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
             var object = this.getReference(connection, pId);
@@ -202,7 +242,7 @@ if (cluster.isMaster) {
                 });
             }
         },
-        updateTime:         function (connection) {
+        updateTime:     function (connection) {
             if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
                 var key = connection.path.replaceAll("/", "\.");
                 key = key.substr(1, key.length - 1);
@@ -219,10 +259,11 @@ if (cluster.isMaster) {
                     paths.ref.tokens = {};
                 }
                 paths.ref.tokens[connection.token].time = new Date().getTime();
+                paths.ref.id = paths.ref.tokens[connection.token].time + "_" + connection.token;
                 paths.syncToDatabase();
             }
         },
-        updateData:         function (connection, pId) {
+        updateData:     function (connection, pId) {
             var object = this.getReference(connection, pId);
             if (typeof object === "string") {
                 this.response(connection, null, object, pId);
@@ -248,7 +289,7 @@ if (cluster.isMaster) {
                 }
             }
         },
-        getReference:       function (connection, pId) {
+        getReference:   function (connection, pId) {
             var paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
             var error = null;
@@ -258,7 +299,7 @@ if (cluster.isMaster) {
                         var key = connection.path.replaceAll("/", "\.");
                         key = key.substr(1, key.length - 1);
                         if (paths.ref[key] !== undefined) {
-                            return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug.toString());
+                            return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug);
                         } else {
                             error = "holder_not_found";
                         }
@@ -274,21 +315,29 @@ if (cluster.isMaster) {
             logger.error(error);
             return error;
         },
-        parseRequest:       function (req, res, worker) {
+        printError:     function (msg, stackMessage) {
+            logger.error(msg);
+            var messages = stackMessage.split("\n");
+            for (var i = 0; i < messages.length; i++) {
+                logger.error(messages[i]);
+            }
+            return error;
+        },
+        parseRequest:   function (req, res, worker) {
             var response = res;
 
             try {
                 var message = req.body;
                 var connection = {};     // connection element
 
-                logger.debug("user-agent: " + req.headers['user-agent']);
-                logger.debug("worker: " + worker);
+                logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
+                logger.debug(VARS.WORKER + ": " + worker);
 
 
                 if (message === undefined || message === null) {
-                    logger.error("there vas an error on the connection instance creation: no_params");
-                    var result = {status: "KO", data: null, error: "missing_params"};
-                    response.contentType('application/json');
+                    logger.error(ERROR.MISSING_PARAMS);
+                    var result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_PARAMS};
+                    response.contentType(VARS.APPLICATION_JSON);
                     response.send(JSON.stringify(result));
                     return null
                 }
@@ -297,49 +346,49 @@ if (cluster.isMaster) {
                 for (var i = 0; i < keys.length; i++) {
                     var key = keys[i];
                     switch (key) {
-                        case "method":
+                        case KEY_REQUEST.METHOD:
                             connection[key] = message[key];
-                            logger.debug("method: " + connection[key]);
+                            logger.debug(KEY_REQUEST.METHOD + ": " + connection[key]);
                             break;
 
-                        case "path":
+                        case KEY_REQUEST.PATH:
                             connection[key] = message[key];
-                            logger.debug("path: " + connection[key]);
+                            logger.debug(KEY_REQUEST.PATH + ": " + connection[key]);
                             break;
 
-                        case "sha1":
+                        case KEY_REQUEST.SHA1:
                             connection[key] = message[key];
-                            logger.debug("sha1: " + connection[key]);
+                            logger.debug(KEY_REQUEST.SHA1 + ": " + connection[key]);
                             break;
 
-                        case "token":
+                        case KEY_REQUEST.TOKEN:
                             connection[key] = message[key];
-                            logger.debug("token: " + connection[key]);
+                            logger.debug(KEY_REQUEST.TOKEN + ": " + connection[key]);
                             break;
 
-                        case "differences":
+                        case KEY_REQUEST.DIFFERENCES:
                             connection[key] = message[key];
-                            logger.debug("differences: " + connection[key]);
+                            logger.debug(KEY_REQUEST.DIFFERENCES + ": " + connection[key]);
                             break;
 
-                        case "content":
+                        case KEY_REQUEST.CONTENT:
                             connection[key] = message[key];
-                            logger.debug("content: " + connection[key]);
+                            logger.debug(KEY_REQUEST.CONTENT + ": " + connection[key]);
                             break;
 
-                        case "len":
+                        case KEY_REQUEST.LEN:
                             connection[key] = message[key];
-                            logger.debug("len: " + connection[key]);
+                            logger.debug(KEY_REQUEST.LEN + ": " + connection[key]);
                             break;
 
-                        case "os":
+                        case KEY_REQUEST.OS:
                             connection[key] = message[key];
-                            logger.debug("os: " + connection[key]);
+                            logger.debug(KEY_REQUEST.OS + ": " + connection[key]);
                             break;
 
-                        case "clean":
+                        case KEY_REQUEST.CLEAN:
                             connection[key] = message[key];
-                            logger.debug("clean: " + connection[key]);
+                            logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
                             break;
 
                         default:
@@ -360,8 +409,8 @@ if (cluster.isMaster) {
                         try {
                             this.addListener(connection, worker);
                         } catch (e) {
-                            logger.error("there was an error parsing request from addGreatListener: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_creating", worker);
+                            this.printError("there was an error parsing request from addGreatListener: " + e.stack);
+                            this.response(connection, null, "cluster_" + worker + ERROR_RESPONSE.ADD_LISTENER, worker);
                         }
                         break;
 
@@ -371,7 +420,7 @@ if (cluster.isMaster) {
                             this.removeListener(connection, worker);
                         } catch (e) {
                             logger.error("there was an error parsing request from addGreatListener: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_removing_listener", worker);
+                            this.response(connection, null, "cluster_" + worker + ERROR_RESPONSE.REMOVE_LISTENER, worker);
                         }
                         break;
 
@@ -380,7 +429,7 @@ if (cluster.isMaster) {
                             this.updateData(connection, worker);
                         } catch (e) {
                             logger.error("there was an error parsing request from updateData: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_updating_data", worker);
+                            this.response(connection, null, "cluster_" + worker + ERROR_RESPONSE.UPDATE_DATA, worker);
                         }
                         break;
 
@@ -389,7 +438,7 @@ if (cluster.isMaster) {
                             this.getUpdatesFrom(connection, worker);
                         } catch (e) {
                             logger.error("there was an error parsing request from getUpdatesFrom: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_getting_updates", worker);
+                            this.response(connection, null, "cluster_" + worker + ERROR_RESPONSE.GET_UPDATES, worker);
                         }
                         break;
 
@@ -402,7 +451,7 @@ if (cluster.isMaster) {
             } catch (e) {
                 logger.error("there was an error parsing request: " + e.toString());
 
-                var result = {status: "KO", data: null, error: "missing_or_wrong_params"};
+                var result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_WRONG_PARAMS};
 
                 res.contentType('application/json');
                 res.send(JSON.stringify(result));
@@ -417,7 +466,7 @@ if (cluster.isMaster) {
     }));
 
     app.use(bodyParser.json({limit: '50mb'}));
-    app.use(timeout('60s'))
+    app.use(timeout('60s'));
 
     app.route('/')
         .get(function (req, res) {
