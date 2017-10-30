@@ -91,7 +91,7 @@ if (cluster.isMaster) {
         UPDATE_DATA_MSG: "_error_updating_data",
         ADD_LISTENER: "_error_creating_listener",
         ADD_LISTENER_MSG: "_error_creating_listener",
-        REMOVE_LISTENER: "_error_removing_listener"
+        REMOVE_LISTENER: "_error_removing_listener",
         REMOVE_LISTENER_MSG: "_error_removing_listener"
     };
 

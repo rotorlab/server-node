@@ -1,10 +1,64 @@
-[32m[2017-09-27 19:11:02.153] [INFO] SERVER CLUSTER - [39mMaster 1607 is running
-Master 1607 is running
-[32m[2017-09-27 19:11:02.643] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
-[32m[2017-09-27 19:11:02.653] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
-[32m[2017-09-27 19:11:02.653] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
-[32m[2017-09-27 19:11:02.659] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
-[32m[2017-09-27 19:11:02.665] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
-[32m[2017-09-27 19:11:02.679] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
-[32m[2017-09-27 19:11:02.684] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
-[32m[2017-09-27 19:11:02.685] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
+[32m[2017-10-29 06:19:22.660] [INFO] SERVER CLUSTER - [39mMaster 17376 is running
+[32m[2017-10-29 06:19:23.034] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
+[32m[2017-10-29 06:19:23.081] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
+[32m[2017-10-29 06:19:23.086] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
+[32m[2017-10-29 06:19:23.095] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
+[32m[2017-10-29 06:19:23.130] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
+[32m[2017-10-29 06:19:23.190] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
+[32m[2017-10-29 06:19:23.203] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
+[32m[2017-10-29 06:19:23.228] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
+[36m[2017-10-29 06:19:28.184] [DEBUG] SERVER CLUSTER - [39muser-agent: Dalvik/2.1.0 (Linux; U; Android 8.0.0; Android SDK built for x86 Build/OSR1.170901.008)
+[36m[2017-10-29 06:19:28.184] [DEBUG] SERVER CLUSTER - [39mworker: 1
+[36m[2017-10-29 06:19:28.184] [DEBUG] SERVER CLUSTER - [39mmethod: great_listener
+[36m[2017-10-29 06:19:28.184] [DEBUG] SERVER CLUSTER - [39mpath: /contacts
+[36m[2017-10-29 06:19:28.184] [DEBUG] SERVER CLUSTER - [39mtoken: fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x
+[36m[2017-10-29 06:19:28.184] [DEBUG] SERVER CLUSTER - [39mos: android
+[36m[2017-10-29 06:20:28.215] [DEBUG] SERVER CLUSTER - [39muser-agent: Dalvik/2.1.0 (Linux; U; Android 8.0.0; Android SDK built for x86 Build/OSR1.170901.008)
+[36m[2017-10-29 06:20:28.215] [DEBUG] SERVER CLUSTER - [39mworker: 1
+[36m[2017-10-29 06:20:28.215] [DEBUG] SERVER CLUSTER - [39mmethod: update_data
+[36m[2017-10-29 06:20:28.215] [DEBUG] SERVER CLUSTER - [39mpath: /contacts
+[36m[2017-10-29 06:20:28.215] [DEBUG] SERVER CLUSTER - [39mdifferences: {"$set":{"efraespada":{},"efraespada.email":"efraespadagmail.com","efraespada.name":"efraespada","efraespada.os":"android","efraespada.token":"fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x"}}
+[36m[2017-10-29 06:20:28.215] [DEBUG] SERVER CLUSTER - [39mlen: 244
+[31m[2017-10-29 06:20:28.426] [ERROR] Flamebase Database - [39merror: "NotRegistered"
+[36m[2017-10-29 06:21:33.306] [DEBUG] SERVER CLUSTER - [39muser-agent: okhttp/3.8.0
+[36m[2017-10-29 06:21:33.306] [DEBUG] SERVER CLUSTER - [39mworker: 5
+[36m[2017-10-29 06:21:33.306] [DEBUG] SERVER CLUSTER - [39mlen: 62
+[36m[2017-10-29 06:21:33.306] [DEBUG] SERVER CLUSTER - [39mmethod: create_listener
+[36m[2017-10-29 06:21:33.306] [DEBUG] SERVER CLUSTER - [39mos: android
+[36m[2017-10-29 06:21:33.306] [DEBUG] SERVER CLUSTER - [39mpath: /chats/1509254379400
+[36m[2017-10-29 06:21:33.306] [DEBUG] SERVER CLUSTER - [39msha1: CE23B46CD3476F12126F000CADF347605BBDA68C
+[36m[2017-10-29 06:21:33.306] [DEBUG] SERVER CLUSTER - [39mtoken: fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x
+[36m[2017-10-29 06:21:33.311] [DEBUG] SERVER CLUSTER - [39muser-agent: okhttp/3.8.0
+[36m[2017-10-29 06:21:33.311] [DEBUG] SERVER CLUSTER - [39mworker: 3
+[36m[2017-10-29 06:21:33.311] [DEBUG] SERVER CLUSTER - [39mlen: 2
+[36m[2017-10-29 06:21:33.311] [DEBUG] SERVER CLUSTER - [39mmethod: create_listener
+[36m[2017-10-29 06:21:33.311] [DEBUG] SERVER CLUSTER - [39mos: android
+[36m[2017-10-29 06:21:33.311] [DEBUG] SERVER CLUSTER - [39mpath: /contacts
+[36m[2017-10-29 06:21:33.311] [DEBUG] SERVER CLUSTER - [39msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
+[36m[2017-10-29 06:21:33.312] [DEBUG] SERVER CLUSTER - [39mtoken: fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x
+####################### error: DataError: Can't find dataPath: /chats/1509254379400. Stopped at chats
+####################### generating {} 
+[36m[2017-10-29 06:21:33.318] [DEBUG] SERVER CLUSTER - [39mBF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
+[36m[2017-10-29 06:21:33.318] [DEBUG] SERVER CLUSTER - [39mCE23B46CD3476F12126F000CADF347605BBDA68C
+####################### error: DataError: Can't find dataPath: /chats/1509254379400. Stopped at chats
+####################### generating {} 
+####################### error: DataError: Can't find dataPath: /chats/1509254379400. Stopped at chats
+####################### generating {} 
+[32m[2017-10-29 06:21:33.321] [INFO] SERVER CLUSTER - [39mworker: 5
+[32m[2017-10-29 06:21:33.321] [INFO] SERVER CLUSTER - [39mresponse: {"status":"OK","data":{"len":2,"info":"listener_ready_for_refresh_client"},"error":null}
+[36m[2017-10-29 06:21:33.321] [DEBUG] SERVER CLUSTER - [39mF795D8FA3BA8F1C665C6BD349BBA98198AC3C7B4
+[36m[2017-10-29 06:21:33.321] [DEBUG] SERVER CLUSTER - [39mBF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
+[32m[2017-10-29 06:21:33.322] [INFO] SERVER CLUSTER - [39mworker: 3
+[32m[2017-10-29 06:21:33.322] [INFO] SERVER CLUSTER - [39mresponse: {"status":"OK","data":{"len":244,"info":"listener_ready_for_refresh_client"},"error":null}
+[36m[2017-10-29 06:21:33.444] [DEBUG] SERVER CLUSTER - [39muser-agent: okhttp/3.8.0
+[36m[2017-10-29 06:21:33.445] [DEBUG] SERVER CLUSTER - [39mworker: 4
+[36m[2017-10-29 06:21:33.445] [DEBUG] SERVER CLUSTER - [39mcontent: {"members":["efraespadagmail.com"],"messages":{},"name":"hhh"}
+[36m[2017-10-29 06:21:33.445] [DEBUG] SERVER CLUSTER - [39mlen: 62
+[36m[2017-10-29 06:21:33.445] [DEBUG] SERVER CLUSTER - [39mmethod: get_updates
+[36m[2017-10-29 06:21:33.445] [DEBUG] SERVER CLUSTER - [39mos: android
+[36m[2017-10-29 06:21:33.445] [DEBUG] SERVER CLUSTER - [39mpath: /chats/1509254379400
+[36m[2017-10-29 06:21:33.445] [DEBUG] SERVER CLUSTER - [39mtoken: fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x
+####################### error: DataError: Can't find dataPath: /chats/1509254379400. Stopped at chats
+####################### generating {} 
+[32m[2017-10-29 06:21:33.588] [INFO] SERVER CLUSTER - [39mworker: 4
+[32m[2017-10-29 06:21:33.588] [INFO] SERVER CLUSTER - [39mresponse: {"status":"OK","data":{"info":"updates_sent","len":2},"error":null}
