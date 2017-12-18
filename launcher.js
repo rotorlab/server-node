@@ -1,10 +1,11 @@
 var FlamebaseDatabaseCluster = require('./index.js');
 var config = require("./config.json");
 
-var FDC = new FlamebaseDatabaseCluster("myDatabase", 1507, config.serverKey, true);
+var port = 1507;
+var FDC = new FlamebaseDatabaseCluster("myDatabase", port, config.serverKey, true);
 FDC.initCluster({
     start: function () {
-        console.log("start!!")
+        console.log("started on port " + port)
     }
 });
 
