@@ -1,9 +1,9 @@
-[32m[2017-12-17 00:35:01.466] [INFO] SERVER CLUSTER - [39mMaster 5092 is running
-[32m[2017-12-17 00:35:02.167] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
-[32m[2017-12-17 00:35:02.168] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
-[32m[2017-12-17 00:35:02.169] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
-[32m[2017-12-17 00:35:02.169] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
-[32m[2017-12-17 00:35:02.169] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
-[32m[2017-12-17 00:35:02.169] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
-[32m[2017-12-17 00:35:02.173] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
-[32m[2017-12-17 00:35:02.176] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
+[32m[2017-12-21 08:26:32.569] [INFO] SERVER CLUSTER - [39mMaster 7116 is running
+[32m[2017-12-21 08:26:33.263] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
+[32m[2017-12-21 08:26:33.263] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
+[32m[2017-12-21 08:26:33.276] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
+[32m[2017-12-21 08:26:33.276] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
+[32m[2017-12-21 08:26:33.276] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
+[32m[2017-12-21 08:26:33.287] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
+[32m[2017-12-21 08:26:33.291] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
+[32m[2017-12-21 08:26:33.303] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
