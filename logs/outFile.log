@@ -1,9 +1,42 @@
-[32m[2017-12-21 08:26:32.569] [INFO] SERVER CLUSTER - [39mMaster 7116 is running
-[32m[2017-12-21 08:26:33.263] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
-[32m[2017-12-21 08:26:33.263] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
-[32m[2017-12-21 08:26:33.276] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
-[32m[2017-12-21 08:26:33.276] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
-[32m[2017-12-21 08:26:33.276] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
-[32m[2017-12-21 08:26:33.287] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
-[32m[2017-12-21 08:26:33.291] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
-[32m[2017-12-21 08:26:33.303] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
+[32m[2017-12-21T22:57:29.988] [INFO] SERVER CLUSTER - [39mMaster 3076 is running
+[32m[2017-12-21T22:57:30.620] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
+[32m[2017-12-21T22:57:30.621] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
+[32m[2017-12-21T22:57:30.621] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
+[32m[2017-12-21T22:57:30.621] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
+[32m[2017-12-21T22:57:30.623] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
+[32m[2017-12-21T22:57:30.624] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
+[32m[2017-12-21T22:57:30.631] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
+[32m[2017-12-21T22:57:30.652] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
+[36m[2017-12-21T23:34:43.854] [DEBUG] SERVER CLUSTER - [39muser-agent: okhttp/3.8.0
+[36m[2017-12-21T23:34:43.855] [DEBUG] SERVER CLUSTER - [39mworker: 6
+[36m[2017-12-21T23:34:43.855] [DEBUG] SERVER CLUSTER - [39mlen: 2
+[36m[2017-12-21T23:34:43.855] [DEBUG] SERVER CLUSTER - [39mmethod: create_listener
+[36m[2017-12-21T23:34:43.855] [DEBUG] SERVER CLUSTER - [39mos: android
+[36m[2017-12-21T23:34:43.855] [DEBUG] SERVER CLUSTER - [39mpath: /contacts
+[36m[2017-12-21T23:34:43.856] [DEBUG] SERVER CLUSTER - [39msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
+[36m[2017-12-21T23:34:43.871] [DEBUG] SERVER CLUSTER - [39mF795D8FA3BA8F1C665C6BD349BBA98198AC3C7B4
+[36m[2017-12-21T23:34:43.872] [DEBUG] SERVER CLUSTER - [39mBF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
+[32m[2017-12-21T23:34:43.874] [INFO] SERVER CLUSTER - [39mworker: 6
+[32m[2017-12-21T23:34:43.874] [INFO] SERVER CLUSTER - [39mresponse: {"status":"OK","data":{"len":244,"info":"listener_ready_for_refresh_client"},"error":null}
+[36m[2017-12-21T23:57:31.322] [DEBUG] SERVER CLUSTER - [39muser-agent: okhttp/3.8.0
+[36m[2017-12-21T23:57:31.322] [DEBUG] SERVER CLUSTER - [39mworker: 1
+[36m[2017-12-21T23:57:31.322] [DEBUG] SERVER CLUSTER - [39mlen: 2
+[36m[2017-12-21T23:57:31.323] [DEBUG] SERVER CLUSTER - [39mmethod: create_listener
+[36m[2017-12-21T23:57:31.323] [DEBUG] SERVER CLUSTER - [39mos: android
+[36m[2017-12-21T23:57:31.323] [DEBUG] SERVER CLUSTER - [39mpath: /contacts
+[36m[2017-12-21T23:57:31.324] [DEBUG] SERVER CLUSTER - [39msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
+[36m[2017-12-21T23:57:31.324] [DEBUG] SERVER CLUSTER - [39mtoken: f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_
+[36m[2017-12-21T23:57:31.339] [DEBUG] SERVER CLUSTER - [39mF795D8FA3BA8F1C665C6BD349BBA98198AC3C7B4
+[36m[2017-12-21T23:57:31.339] [DEBUG] SERVER CLUSTER - [39mBF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
+[32m[2017-12-21T23:57:31.341] [INFO] SERVER CLUSTER - [39mworker: 1
+[32m[2017-12-21T23:57:31.342] [INFO] SERVER CLUSTER - [39mresponse: {"status":"OK","data":{"len":244,"info":"listener_ready_for_refresh_client"},"error":null}
+[36m[2017-12-21T23:58:33.866] [DEBUG] SERVER CLUSTER - [39muser-agent: okhttp/3.8.0
+[36m[2017-12-21T23:58:33.866] [DEBUG] SERVER CLUSTER - [39mworker: 2
+[36m[2017-12-21T23:58:33.866] [DEBUG] SERVER CLUSTER - [39mclean: false
+[36m[2017-12-21T23:58:33.866] [DEBUG] SERVER CLUSTER - [39mdifferences: {"$set":{"lolo.id":"lala","lolo.name":"lolo","lolo.os":"android","lolo.token":"f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_"}}
+[36m[2017-12-21T23:58:33.867] [DEBUG] SERVER CLUSTER - [39mlen: 214
+[36m[2017-12-21T23:58:33.867] [DEBUG] SERVER CLUSTER - [39mmethod: update_data
+[36m[2017-12-21T23:58:33.868] [DEBUG] SERVER CLUSTER - [39mpath: /contacts
+[36m[2017-12-21T23:58:33.868] [DEBUG] SERVER CLUSTER - [39mtoken: f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_
+[32m[2017-12-21T23:58:34.299] [INFO] SERVER CLUSTER - [39mworker: 2
+[32m[2017-12-21T23:58:34.299] [INFO] SERVER CLUSTER - [39mresponse: {"status":"KO","data":{},"error":"data_updated_with_differences"}
