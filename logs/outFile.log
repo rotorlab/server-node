@@ -1,29 +1,9 @@
-[32m[2017-12-22T00:12:15.539] [INFO] SERVER CLUSTER - [39mMaster 4241 is running
-[32m[2017-12-22T00:12:16.298] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
-[32m[2017-12-22T00:12:16.298] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
-[32m[2017-12-22T00:12:16.300] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
-[32m[2017-12-22T00:12:16.320] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
-[32m[2017-12-22T00:12:16.331] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
-[32m[2017-12-22T00:12:16.372] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
-[32m[2017-12-22T00:12:16.413] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
-[32m[2017-12-22T00:12:16.423] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
-[36m[2017-12-22T00:12:38.390] [DEBUG] SERVER CLUSTER - [39muser-agent: okhttp/3.8.0
-[36m[2017-12-22T00:12:38.390] [DEBUG] SERVER CLUSTER - [39mworker: 1
-[36m[2017-12-22T00:12:38.390] [DEBUG] SERVER CLUSTER - [39mlen: 2
-[36m[2017-12-22T00:12:38.390] [DEBUG] SERVER CLUSTER - [39mmethod: create_listener
-[36m[2017-12-22T00:12:38.391] [DEBUG] SERVER CLUSTER - [39mos: android
-[36m[2017-12-22T00:12:38.391] [DEBUG] SERVER CLUSTER - [39mpath: /contacts
-[36m[2017-12-22T00:12:38.391] [DEBUG] SERVER CLUSTER - [39msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
-[36m[2017-12-22T00:12:38.406] [DEBUG] SERVER CLUSTER - [39mAE1381A91AA601DA0BE8A3A64AA1292473A78AC7
-[36m[2017-12-22T00:12:38.406] [DEBUG] SERVER CLUSTER - [39mBF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
-[32m[2017-12-22T00:12:38.411] [INFO] SERVER CLUSTER - [39mworker: 1
-[32m[2017-12-22T00:12:38.411] [INFO] SERVER CLUSTER - [39mresponse: {"status":"OK","data":{"len":457,"info":"listener_ready_for_refresh_client"},"error":null}
-[36m[2017-12-22T00:13:01.861] [DEBUG] SERVER CLUSTER - [39muser-agent: okhttp/3.8.0
-[36m[2017-12-22T00:13:01.861] [DEBUG] SERVER CLUSTER - [39mworker: 3
-[36m[2017-12-22T00:13:01.861] [DEBUG] SERVER CLUSTER - [39mclean: false
-[36m[2017-12-22T00:13:01.862] [DEBUG] SERVER CLUSTER - [39mdifferences: {"$set":{"yiiii.id":"yeeeeee","yiiii.name":"yiiii","yiiii.os":"android","yiiii.token":"cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk"}}
-[36m[2017-12-22T00:13:01.862] [DEBUG] SERVER CLUSTER - [39mlen: 219
-[36m[2017-12-22T00:13:01.862] [DEBUG] SERVER CLUSTER - [39mmethod: update_data
-[36m[2017-12-22T00:13:01.863] [DEBUG] SERVER CLUSTER - [39mpath: /contacts
-[32m[2017-12-22T00:13:02.256] [INFO] SERVER CLUSTER - [39mworker: 3
-[32m[2017-12-22T00:13:02.256] [INFO] SERVER CLUSTER - [39mresponse: {"status":"KO","data":{},"error":"data_updated_with_differences"}
+[32m[2017-12-23T12:19:35.181] [INFO] SERVER CLUSTER - [39mMaster 19618 is running
+[32m[2017-12-23T12:19:35.816] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
+[32m[2017-12-23T12:19:35.830] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
+[32m[2017-12-23T12:19:35.836] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
+[32m[2017-12-23T12:19:35.836] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
+[32m[2017-12-23T12:19:35.836] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
+[32m[2017-12-23T12:19:35.840] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
+[32m[2017-12-23T12:19:35.848] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
+[32m[2017-12-23T12:19:35.853] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker

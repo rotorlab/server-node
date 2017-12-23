@@ -116,7 +116,26 @@ if (cluster.isMaster) {
             connection.response.contentType('application/json');
             connection.response.send(result);
         },
+        /**
+         * replaces path format: /contacts/batman -> contacts.batman
+         * creates a token reference for the given path:
+            "contacts.batman": {
+                "path": "/contacts/batman",
+                "tokens": {
+                    "f3AR3hpGa6c:APA91bH5BQAe2JJ5EHBk_t2Qs16RINOY5f": {
+                        "os": "android",
+                        "time": 1506663439626
+                    }
+                }
+            }
+         * @param connection
+         * @param pId
+         */
         addListener:    function (connection, pId) {
+
+            /**
+             * work with path database
+             */
             var paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
 
@@ -124,6 +143,7 @@ if (cluster.isMaster) {
                 paths.ref = {}
             }
 
+            // valid path
             if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
                 var key = connection.path.replaceAll("/", "\.");
                 key = key.substr(1, key.length - 1);
@@ -137,31 +157,61 @@ if (cluster.isMaster) {
                     paths.ref[key].tokens = {};
                 }
 
+                /**
+                 * before adding the current connection, last token
+                 * used is detected
+                 */
+                var lastChangeTime = 0;
+                var currentChangeTime = connection.time;
+
+                var lastToken = null;
+
+                var keys = Object.keys(paths.ref[key].tokens);
+                if (keys.length > 0) {
+
+                    for (var i = keys.length - 1; i >= 0; i--) {
+                        var time = paths.ref[key].tokens[keys[i]].time;
+                        if (lastChangeTime < time) {
+                            lastChangeTime = time;
+                            lastToken = keys[i];
+                        }
+                    }
+
+                }
+
+                /**
+                 * current device did the last change, so only
+                 * length verification is returned to device
+                 */
+                if (connection.token === lastToken) {
+                    var equals = this.verifyLenght(connection, pId);
+
+                }
+
+
+
+                /**
+                 *
+                 */
+
                 if (paths.ref[key].tokens[connection.token] === undefined) {
                     paths.ref[key].tokens[connection.token] = {};
                     paths.ref[key].tokens[connection.token].os = connection.os;
                 }
 
-                var keys = Object.keys(paths.ref[key].tokens);
-                var lastChangeTime = 0;
-                var lastToken = null;
 
-                for (var i = keys.length - 1; i >= 0; i--) {
-                    var time = paths.ref[key].tokens[keys[i]].time;
-                    if (lastChangeTime < time) {
-                        lastChangeTime = time;
-                        lastToken = keys[i];
-                    }
-                }
-
+                /**
+                 * finish work with path database
+                 */
                 paths.syncToDatabase();
+
+
 
                 this.updateTime(connection);
 
-                var equals = this.verifyLenght(connection, pId);
-
                 var object = this.getReference(connection, pId);
                 object.FD.syncFromDatabase();
+
                 var len = 0;
 
                 if (typeof object !== "string") {
@@ -217,6 +267,7 @@ if (cluster.isMaster) {
         },
         verifyLenght:   function (connection, pId) {
             var object = this.getReference(connection, pId);
+            logger.debug(JSON.stringifyAligned(object.FD.ref));
             logger.debug(sha1(JSON.stringify(object.FD.ref)).toUpperCase());
             logger.debug(connection.sha1);
 
