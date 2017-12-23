@@ -1,5 +1,5 @@
-//var FlamebaseDatabase =     require("flamebase-database-node");
-var FlamebaseDatabase =     require("../../flamebase-database-node/index.js");
+var FlamebaseDatabase =     require("flamebase-database-node");
+// var FlamebaseDatabase =     require("../../flamebase-database-node/index.js");
 var log4js =                require('log4js');
 
 var TAG =                   "PATH CLUSTER";

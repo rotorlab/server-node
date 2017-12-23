@@ -1,2 +1,12 @@
 {
+    "contacts": {
+        "path": "/contacts",
+        "tokens": {
+            "cV941dQRGO8:APA91bGs30EHuRCMNl2tNmcmwpK9BgxM_574F3HPOba_Oaz7N7tAjZwPLcJ-a3n8CPHY1ktIjCQJVnnRcc_bvzeTdPvFaokHOHgedcnJNNGXyShuKoJnGHx_N6mOPyI46VmgWkR-rgLh": {
+                "os": "android",
+                "queue": {},
+                "time": 1514070158950
+            }
+        }
+    }
 }

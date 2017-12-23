@@ -1,15 +1,16 @@
-var express =               require('express');
-var bodyParser =            require('body-parser');
-var timeout =               require('connect-timeout');
-var log4js =                require('log4js');
-var cluster =               require('cluster');
-var http =                  require('http');
-var numCPUs =               require('os').cpus().length;
-var FlamebaseDatabase =     require("flamebase-database-node");
-var Path =                  require("./model/path.js");
-var apply =                 require('rus-diff').apply;
-var clone =                 require('rus-diff').clone;
-var sha1 =                  require('sha1');
+const express =               require('express');
+const bodyParser =            require('body-parser');
+const timeout =               require('connect-timeout');
+const log4js =                require('log4js');
+const cluster =               require('cluster');
+const http =                  require('http');
+const numCPUs =               require('os').cpus().length;
+const FlamebaseDatabase =     require("flamebase-database-node");
+// const FlamebaseDatabase =     require("../flamebase-database-node/index.js");
+const Path =                  require("./model/path.js");
+const apply =                 require('rus-diff').apply;
+const clone =                 require('rus-diff').clone;
+const sha1 =                  require('sha1');
 
 JSON.stringifyAligned = require('json-align');
 
@@ -56,7 +57,16 @@ if (cluster.isMaster) {
     logger.info("Master " + process.pid + " is running");
 
     for (var i = 0; i < numCPUs; i++) {
-        var worker = cluster.fork();
+        const worker = cluster.fork();
+        worker.on('exit', (code, signal) => {
+            if (signal) {
+                console.log(`worker was killed by signal: ${signal}`);
+            } else if (code !== 0) {
+                console.log(`worker exited with error code: ${code}`);
+            } else {
+                console.log('worker success!');
+            }
+        });
         workers[worker.pid] = worker;
     }
 
@@ -157,21 +167,7 @@ if (cluster.isMaster) {
                     paths.ref[key].tokens = {};
                 }
 
-                /**
-                 *
-                 */
-                var object = this.getReference(connection, pId);
-                object.FD.syncFromDatabase();
-
                 var data = {};
-                if (typeof object !== "string") {
-                    data.objectLen = JSON.stringify(object.FD.ref).length;
-                } else {
-                    data.objectLen = 0;
-                }
-
-                logger.info(JSON.stringifyAligned(object.FD.ref));
-
                 if (paths.ref[key].tokens[connection.token] === undefined) {
                     paths.ref[key].tokens[connection.token] = {};
                     paths.ref[key].tokens[connection.token].os = connection.os;
@@ -184,23 +180,7 @@ if (cluster.isMaster) {
                      * respond queue ready
                      */
                     data.queueLen = 0;
-
-                    var device = {
-                        token: connection.token,
-                        os: connection.os
-                    };
-
-                    if (data.objectLen > 2) {
-                        object.sendUpdateFor("{}", device, function() {
-                            data.info = "queue_ready";
-                            paths.syncToDatabase();
-                            action.response(connection, data, null, pId);
-                        });
-                    } else {
-                        data.info = "queue_ready";
-                        paths.syncToDatabase();
-                        action.response(connection, data, null, pId);
-                    }
+                    data.info = "queue_ready";
                 } else {
                     /**
                      * respond queue ready
@@ -214,11 +194,40 @@ if (cluster.isMaster) {
                     }
                     paths.ref[key].tokens[connection.token].time = new Date().getTime();
 
-                    paths.syncToDatabase();
-
                     data.info = "queue_ready";
                     action.response(connection, data, null, pId);
                 }
+
+                paths.syncToDatabase();
+
+                /**
+                 *
+                 */
+                var object = this.getReference(connection, pId);
+                object.FD.syncFromDatabase();
+
+                if (typeof object !== "string") {
+                    data.objectLen = JSON.stringify(object.FD.ref).length;
+                } else {
+                    data.objectLen = 0;
+                }
+
+                logger.info(JSON.stringifyAligned(object.FD.ref));
+
+                var device = {
+                    token: connection.token,
+                    os: connection.os
+                };
+
+                if (data.objectLen > 2) {
+                    object.sendUpdateFor("{}", device, function() {
+                        logger.info("sending full object");
+                        action.response(connection, data, null, pId);
+                    });
+                } else {
+                    action.response(connection, data, null, pId);
+                }
+
             } else {
                 this.response(connection, null, "path_contains_dots", pId);
             }
@@ -341,6 +350,8 @@ if (cluster.isMaster) {
                             return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug);
                         } else {
                             // TODO reference on path database
+                            paths.ref[key] = {};
+
                             error = "holder_not_found";
                         }
                     } else {
