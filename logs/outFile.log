@@ -1,9 +1,42 @@
-[32m[2017-12-23T12:19:35.181] [INFO] SERVER CLUSTER - [39mMaster 19618 is running
-[32m[2017-12-23T12:19:35.816] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
-[32m[2017-12-23T12:19:35.830] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
-[32m[2017-12-23T12:19:35.836] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
-[32m[2017-12-23T12:19:35.836] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
-[32m[2017-12-23T12:19:35.836] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
-[32m[2017-12-23T12:19:35.840] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
-[32m[2017-12-23T12:19:35.848] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
-[32m[2017-12-23T12:19:35.853] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
+[32m[2017-12-23T21:00:25.924] [INFO] SERVER CLUSTER - [39mMaster 23547 is running
+[32m[2017-12-23T21:00:26.801] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
+[32m[2017-12-23T21:00:26.808] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
+[32m[2017-12-23T21:00:26.812] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
+[32m[2017-12-23T21:00:26.812] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
+[32m[2017-12-23T21:00:26.814] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
+[32m[2017-12-23T21:00:26.819] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
+[32m[2017-12-23T21:00:26.820] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
+[32m[2017-12-23T21:00:26.831] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
+[36m[2017-12-23T21:00:38.693] [DEBUG] SERVER CLUSTER - [39muser-agent: okhttp/3.8.0
+[36m[2017-12-23T21:00:38.693] [DEBUG] SERVER CLUSTER - [39mworker: 3
+[36m[2017-12-23T21:00:38.693] [DEBUG] SERVER CLUSTER - [39mlen: 2
+[36m[2017-12-23T21:00:38.694] [DEBUG] SERVER CLUSTER - [39mmethod: create_listener
+[36m[2017-12-23T21:00:38.694] [DEBUG] SERVER CLUSTER - [39mos: android
+[36m[2017-12-23T21:00:38.694] [DEBUG] SERVER CLUSTER - [39mpath: /contacts
+[36m[2017-12-23T21:00:38.694] [DEBUG] SERVER CLUSTER - [39msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F
+[36m[2017-12-23T21:00:38.694] [DEBUG] SERVER CLUSTER - [39mtoken: cV941dQRGO8:APA91bGs30EHuRCMNl2tNmcmwpK9BgxM_574F3HPOba_Oaz7N7tAjZwPLcJ-a3n8CPHY1ktIjCQJVnnRcc_bvzeTdPvFaokHOHgedcnJNNGXyShuKoJnGHx_N6mOPyI46VmgWkR-rgLh
+[31m[2017-12-23T21:00:38.699] [ERROR] SERVER CLUSTER - [39mholder_not_found
+[31m[2017-12-23T21:00:38.701] [ERROR] SERVER CLUSTER - [39mthere was an error parsing request from addGreatListener: TypeError: Cannot read property 'syncFromDatabase' of undefined
+    at Object.addListener (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/server.js:164:26)
+    at Object.parseRequest (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/server.js:449:34)
+    at /Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/server.js:515:20
+    at Layer.handle [as handle_request] (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/route.js:137:13)
+    at next (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/route.js:131:14)
+    at Route.dispatch (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/layer.js:95:5)
+    at /Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/index.js:275:10)
+    at /Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/connect-timeout/index.js:70:5
+    at Layer.handle [as handle_request] (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/index.js:317:13)
+    at /Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/index.js:284:7
+    at Function.process_params (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/express/lib/router/index.js:275:10)
+    at /Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/body-parser/lib/read.js:130:5
+    at invokeCallback (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/raw-body/index.js:224:16)
+    at done (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/raw-body/index.js:213:7)
+    at IncomingMessage.onEnd (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/raw-body/index.js:273:7)
+    at emitNone (events.js:86:13)
+[31m[2017-12-23T21:00:38.702] [ERROR] SERVER CLUSTER - [39mthere was an error parsing request: TypeError: Cannot read property 'split' of undefined

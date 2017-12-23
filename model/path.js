@@ -1,4 +1,5 @@
-var FlamebaseDatabase =     require("flamebase-database-node");
+//var FlamebaseDatabase =     require("flamebase-database-node");
+var FlamebaseDatabase =     require("../../flamebase-database-node/index.js");
 var log4js =                require('log4js');
 
 var TAG =                   "PATH CLUSTER";
@@ -67,7 +68,7 @@ function Path(APIKey, databasePath, database, path, pid, dbg) {
     };
 
     this.FD.setSyncConfig(config);
-    this.FD.debug(dbg === "true" ? true : false);
+    this.FD.debug(dbg === "true");
 
     this.sendUpdateFor = function (before, device, callback) {
         this.FD.sendDifferencesForClient(before, device, callback);

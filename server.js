@@ -158,79 +158,67 @@ if (cluster.isMaster) {
                 }
 
                 /**
-                 * before adding the current connection, last token
-                 * used is detected
-                 */
-                var lastChangeTime = 0;
-                var currentChangeTime = connection.time;
-
-                var lastToken = null;
-
-                var keys = Object.keys(paths.ref[key].tokens);
-                if (keys.length > 0) {
-
-                    for (var i = keys.length - 1; i >= 0; i--) {
-                        var time = paths.ref[key].tokens[keys[i]].time;
-                        if (lastChangeTime < time) {
-                            lastChangeTime = time;
-                            lastToken = keys[i];
-                        }
-                    }
-
-                }
-
-                /**
-                 * current device did the last change, so only
-                 * length verification is returned to device
-                 */
-                if (connection.token === lastToken) {
-                    var equals = this.verifyLenght(connection, pId);
-
-                }
-
-
-
-                /**
                  *
                  */
+                var object = this.getReference(connection, pId);
+                object.FD.syncFromDatabase();
+
+                var data = {};
+                if (typeof object !== "string") {
+                    data.objectLen = JSON.stringify(object.FD.ref).length;
+                } else {
+                    data.objectLen = 0;
+                }
+
+                logger.info(JSON.stringifyAligned(object.FD.ref));
 
                 if (paths.ref[key].tokens[connection.token] === undefined) {
                     paths.ref[key].tokens[connection.token] = {};
                     paths.ref[key].tokens[connection.token].os = connection.os;
-                }
+                    paths.ref[key].tokens[connection.token].queue = {};
+                    paths.ref[key].tokens[connection.token].time = new Date().getTime();
 
+                    /**
+                     * queue is ready, all changes in the current path will be queue here
+                     * and will be removed when device receive it.
+                     * respond queue ready
+                     */
+                    data.queueLen = 0;
 
-                /**
-                 * finish work with path database
-                 */
-                paths.syncToDatabase();
+                    var device = {
+                        token: connection.token,
+                        os: connection.os
+                    };
 
-
-
-                this.updateTime(connection);
-
-                var object = this.getReference(connection, pId);
-                object.FD.syncFromDatabase();
-
-                var len = 0;
-
-                if (typeof object !== "string") {
-                    len = JSON.stringify(object.FD.ref).length;
+                    if (data.objectLen > 2) {
+                        object.sendUpdateFor("{}", device, function() {
+                            data.info = "queue_ready";
+                            paths.syncToDatabase();
+                            action.response(connection, data, null, pId);
+                        });
+                    } else {
+                        data.info = "queue_ready";
+                        paths.syncToDatabase();
+                        action.response(connection, data, null, pId);
+                    }
                 } else {
-                    this.response(connection, null, object, pId);
-                    return;
+                    /**
+                     * respond queue ready
+                     *
+                     */
+                    if (paths.ref[key].tokens[connection.token].queue === undefined) {
+                        paths.ref[key].tokens[connection.token].queue = {};
+                        data.queueLen = 0;
+                    } else {
+                        data.queueLen = Object.keys(paths.ref[key].tokens[connection.token].queue).length;
+                    }
+                    paths.ref[key].tokens[connection.token].time = new Date().getTime();
+
+                    paths.syncToDatabase();
+
+                    data.info = "queue_ready";
+                    action.response(connection, data, null, pId);
                 }
-
-                var data = {};
-                data.len = len;
-
-                if (lastToken === connection.token) {
-                    data.info = "listener_up_to_date";
-                } else {
-                    data.info = "listener_ready_for_refresh_client";
-                }
-
-                this.response(connection, data, null, pId);
             } else {
                 this.response(connection, null, "path_contains_dots", pId);
             }
@@ -352,6 +340,7 @@ if (cluster.isMaster) {
                         if (paths.ref[key] !== undefined) {
                             return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug);
                         } else {
+                            // TODO reference on path database
                             error = "holder_not_found";
                         }
                     } else {
