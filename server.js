@@ -1,12 +1,12 @@
 const express =               require('express');
 const bodyParser =            require('body-parser');
 const timeout =               require('connect-timeout');
-const log4js =                require('log4js');
+const logjs =                 require('logjsx');
 const cluster =               require('cluster');
 const http =                  require('http');
 const numCPUs =               require('os').cpus().length;
-const FlamebaseDatabase =     require("flamebase-database-node");
-// const FlamebaseDatabase =     require("../flamebase-database-node/index.js");
+// const FlamebaseDatabase =     require("flamebase-database-node");
+const FlamebaseDatabase =     require("../flamebase-database-node/index.js");
 const Path =                  require("./model/path.js");
 const apply =                 require('rus-diff').apply;
 const clone =                 require('rus-diff').clone;
@@ -45,8 +45,11 @@ process.argv.forEach(function (val, index, array) {
 
 
 var TAG =                   "SERVER CLUSTER";
-var logger =                log4js.getLogger(TAG);
-logger.level = 'all';
+var logger = new logjs();
+
+logger.init({
+    level : "DEBUG"
+});
 
 var dbPaths = "paths";
 
@@ -195,7 +198,13 @@ if (cluster.isMaster) {
                     paths.ref[key].tokens[connection.token].time = new Date().getTime();
 
                     data.info = "queue_ready";
+
+                    /*
+
                     action.response(connection, data, null, pId);
+                    {"queueLen":0,"info":"queue_ready"}
+
+                     */
                 }
 
                 paths.syncToDatabase();
@@ -307,7 +316,6 @@ if (cluster.isMaster) {
                     paths.ref.tokens = {};
                 }
                 paths.ref.tokens[connection.token].time = new Date().getTime();
-                paths.ref.id = paths.ref.tokens[connection.token].time + "_" + connection.token;
                 paths.syncToDatabase();
             }
         },
@@ -316,14 +324,11 @@ if (cluster.isMaster) {
             if (typeof object === "string") {
                 this.response(connection, null, object, pId);
             } else {
-                object.FD.syncFromDatabase();
-
-                var differences = connection.differences;
-
-                if (differences !== undefined) {
-                    apply(object.FD.ref, JSON.parse(differences));
+                object.addDifferencesToQueue(connection);
+                if (connection.differences !== undefined) {
+                    object.FD.syncFromDatabase();
+                    apply(object.FD.ref, JSON.parse(connection.differences));
                     this.updateTime(connection);
-
                     object.FD.syncToDatabase(false, function() {
                         if (JSON.stringify(object.FD.ref).length !== connection.len) {
                             action.response(connection, null, "data_updated_with_differences", pId);
@@ -347,11 +352,8 @@ if (cluster.isMaster) {
                         var key = connection.path.replaceAll("/", "\.");
                         key = key.substr(1, key.length - 1);
                         if (paths.ref[key] !== undefined) {
-                            return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug);
+                            return new Path(APIKey, paths, connection, dbMaster, pId, debug);
                         } else {
-                            // TODO reference on path database
-                            paths.ref[key] = {};
-
                             error = "holder_not_found";
                         }
                     } else {

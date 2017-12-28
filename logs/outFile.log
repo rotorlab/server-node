@@ -1,9 +1,45 @@
-[32m[2017-12-24T00:15:40.652] [INFO] SERVER CLUSTER - [39mMaster 32157 is running
-[32m[2017-12-24T00:15:41.318] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 1 worker
-[32m[2017-12-24T00:15:41.361] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 6 worker
-[32m[2017-12-24T00:15:41.379] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 8 worker
-[32m[2017-12-24T00:15:41.383] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 4 worker
-[32m[2017-12-24T00:15:41.394] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 3 worker
-[32m[2017-12-24T00:15:41.402] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 2 worker
-[32m[2017-12-24T00:15:41.406] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 5 worker
-[32m[2017-12-24T00:15:41.422] [INFO] SERVER CLUSTER - [39mserver cluster started on port 1507 on 7 worker
+[36mMaster 44977 is running[39m
+[36mserver cluster started on port 1507 on 1 worker[39m
+[36mserver cluster started on port 1507 on 6 worker[39m
+[36mserver cluster started on port 1507 on 4 worker[39m
+[36mserver cluster started on port 1507 on 3 worker[39m
+[36mserver cluster started on port 1507 on 7 worker[39m
+[36mserver cluster started on port 1507 on 5 worker[39m
+[36mserver cluster started on port 1507 on 8 worker[39m
+[36mserver cluster started on port 1507 on 2 worker[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 1[39m
+[34mlen: 451[39m
+[34mmethod: create_listener[39m
+[34mos: android[39m
+[34mpath: /contacts[39m
+[34msha1: DA8BF082E6060DFEAF4D09953982EE90AB9DE5BF[39m
+[34mtoken: eFGNwoAJMyQ:APA91bEM_gw-Ik9TgsHCbFNSmIQ7BLadOL8WfT039P4SOWLv78C5cy9s3YrUkWyA0g1IO9ILnDmdfYr8UjhXOr2CY_xhcjGlCqJBR2k6OeXjZgYsGSEI6L8KmbNV7LTQR63BIdRkDXjT[39m
+[36m{
+    "jejejejej" : {
+        "id"    : "jajijujejos",
+        "name"  : "jejejejej",
+        "os"    : "android",
+        "token" : "eFGNwoAJMyQ:APA91bEM_gw-Ik9TgsHCbFNSmIQ7BLadOL8WfT039P4SOWLv78C5cy9s3YrUkWyA0g1IO9ILnDmdfYr8UjhXOr2CY_xhcjGlCqJBR2k6OeXjZgYsGSEI6L8KmbNV7LTQR63BIdRkDXjT"
+    }
+}[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 6[39m
+[34mclean: false[39m
+[34mdifferences: {"$unset":{"hhfjd":"{id=jajajajaj, name=hhfjd, os=android, token=cV941dQRGO8:APA91bGs30EHuRCMNl2tNmcmwpK9BgxM_574F3HPOba_Oaz7N7tAjZwPLcJ-a3n8CPHY1ktIjCQJVnnRcc_bvzeTdPvFaokHOHgedcnJNNGXyShuKoJnGHx_N6mOPyI46VmgWkR-rgLh}"}}[39m
+[34mlen: 231[39m
+[34mmethod: update_data[39m
+[34mpath: /contacts[39m
+[34mtoken: eFGNwoAJMyQ:APA91bEM_gw-Ik9TgsHCbFNSmIQ7BLadOL8WfT039P4SOWLv78C5cy9s3YrUkWyA0g1IO9ILnDmdfYr8UjhXOr2CY_xhcjGlCqJBR2k6OeXjZgYsGSEI6L8KmbNV7LTQR63BIdRkDXjT[39m
+------ 33
+------ 66
+------ 77
+------ 88
+------ 99 + /contacts
+------ 55
+------ 44
+[36msending full object[39m
+[36mworker: 1[39m
+[36mresponse: {"status":"OK","data":{"queueLen":18,"info":"queue_ready","objectLen":231},"error":null}[39m
+[36mworker: 6[39m
+[36mresponse: {"status":"OK","data":"data_updated","error":null}[39m

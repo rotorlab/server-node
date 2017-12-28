@@ -1,20 +1,26 @@
-var FlamebaseDatabase =     require("flamebase-database-node");
-// var FlamebaseDatabase =     require("../../flamebase-database-node/index.js");
-var log4js =                require('log4js');
+// var FlamebaseDatabase =     require("flamebase-database-node");
+var FlamebaseDatabase =     require("../../flamebase-database-node/index.js");
+const logjs =                 require('logjsx');
+
+JSON.stringifyAligned = require('json-align');
+
+var logger = new logjs();
+
+logger.init({
+    level : "DEBUG"
+});
 
 var TAG =                   "PATH CLUSTER";
-var logger =                log4js.getLogger(TAG);
 
-function Path(APIKey, databasePath, database, path, pid, dbg) {
+function Path(APIKey, pathReference, connection, database, pid, dbg) {
 
     // object reference
     var object = this;
 
-    this.path = path;
+    this.path = connection.path; //
     this.database = database;
-    this.databasePath = databasePath;
+    this.pathReference = pathReference;
     this.FD = new FlamebaseDatabase(this.database, this.path);
-
     this.FD.syncFromDatabase();
 
     var config = {};
@@ -31,10 +37,12 @@ function Path(APIKey, databasePath, database, path, pid, dbg) {
      * to slice big JSON changes for android or ios push notifications
      */
     config.devices = function() {
+        let path = connection.path.replaceAll("/", "\.");
+        path = path.substr(1, path.length - 1);
         var devices = [];
-        var keys = Object.keys(object.databasePath.tokens);
+        var keys = Object.keys(object.pathReference.ref[path].tokens);
         for (var i = 0; i < keys.length; i++) {
-            var devic = object.databasePath.tokens[keys[i]];
+            var devic = object.pathReference.ref[path].tokens[keys[i]];
 
             var device = {};
             device.token = keys[i];
@@ -49,7 +57,7 @@ function Path(APIKey, databasePath, database, path, pid, dbg) {
      * tag that informs android/ios client which action is being called
      */
     config.tag = function() {
-        return path + "_sync"; // groupA_sync
+        return object.path + "_sync"; // groupA_sync
     };
 
     /**
@@ -72,6 +80,21 @@ function Path(APIKey, databasePath, database, path, pid, dbg) {
 
     this.sendUpdateFor = function (before, device, callback) {
         this.FD.sendDifferencesForClient(before, device, callback);
+    };
+
+    this.addDifferencesToQueue = function (connection) {
+        object.pathReference.syncFromDatabase();
+
+        let path = connection.path.replaceAll("/", "\.");
+        path = path.substr(1, path.length - 1);
+
+        let keys = Object.keys(object.pathReference.ref[path].tokens);
+        let date = new Date().getTime() + "";
+        for (let key in keys) {
+            object.pathReference.ref[path].tokens[keys[key]].queue[date] = JSON.parse(connection.differences);
+        }
+
+        object.pathReference.syncToDatabase()
     }
 
 }
