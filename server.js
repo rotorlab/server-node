@@ -75,7 +75,7 @@ if (cluster.isMaster) {
 
     cluster.on('exit', function (worker) {
         console.log('Worker %d died :(', worker.id);
-        var w = cluster.fork();
+        let w = cluster.fork();
         workers[w.pid] = w;
     });
 
@@ -122,8 +122,11 @@ if (cluster.isMaster) {
 
     var action = {
         response:       function (connection, data, error, pId) {
-            var result = {status: (data === null || error !== null ? "KO" : "OK"),
-                data: (data === null ? {} : data), error: error};
+            let result = {
+                status: (data === null || error !== null ? "KO" : "OK"),
+                data: (data === null ? {} : data),
+                error: error
+            };
             logger.info("worker: " + pId);
             logger.info("response: " + JSON.stringify(result));
             connection.response.contentType('application/json');
@@ -170,7 +173,7 @@ if (cluster.isMaster) {
                     paths.ref[key].tokens = {};
                 }
 
-                var data = {};
+                let data = {};
                 if (paths.ref[key].tokens[connection.token] === undefined) {
                     paths.ref[key].tokens[connection.token] = {};
                     paths.ref[key].tokens[connection.token].os = connection.os;
@@ -226,7 +229,9 @@ if (cluster.isMaster) {
                         action.response(connection, data, null, pId);
                     });
                 } else {
-                    action.response(connection, data, null, pId);
+                    object.sync(connection, function() {
+                        action.response(connection, data, null, pId);
+                    });
                 }
 
             } else {
@@ -291,12 +296,16 @@ if (cluster.isMaster) {
                 });
             }
         },
+        /**
+         * Updates last time field for the given token
+         * @param connection
+         */
         updateTime:     function (connection) {
             if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-                var key = connection.path.replaceAll("/", "\.");
+                let key = connection.path.replaceAll("/", "\.");
                 key = key.substr(1, key.length - 1);
 
-                var paths = new FlamebaseDatabase(dbPaths, "/" + key);
+                let paths = new FlamebaseDatabase(dbPaths, "/" + key);
                 paths.syncFromDatabase();
 
                 if (paths.ref === undefined) {
@@ -318,9 +327,21 @@ if (cluster.isMaster) {
             } else {
                 object.addDifferencesToQueue(connection);
                 if (connection.differences !== undefined) {
+                    logger.error("test")
                     object.FD.syncFromDatabase();
                     apply(object.FD.ref, JSON.parse(connection.differences));
                     this.updateTime(connection);
+
+                    logger.error("test 2")
+
+                    object.sync(connection, function() {
+                        logger.error("test 3")
+
+                        let data = {};
+                        data.info = "data_updated";
+                        action.response(connection, data, null, pId);
+                    });
+                    /*
                     object.FD.syncToDatabase(false, function() {
                         if (JSON.stringify(object.FD.ref).length !== connection.len) {
                             action.response(connection, null, "data_updated_with_differences", pId);
@@ -328,6 +349,7 @@ if (cluster.isMaster) {
                             action.response(connection, "data_updated", null, pId);
                         }
                     });
+                    */
 
                 } else {
                     this.response(connection, "no_diff_updated", null, pId);
@@ -335,13 +357,13 @@ if (cluster.isMaster) {
             }
         },
         getReference:   function (connection, pId) {
-            var paths = new FlamebaseDatabase(dbPaths, "/");
+            let paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
-            var error = null;
+            let error = null;
             if (connection.path !== undefined) {
                 if (connection.path.indexOf("\.") === -1) {
                     if (connection.path.indexOf("/") === 0) {
-                        var key = connection.path.replaceAll("/", "\.");
+                        let key = connection.path.replaceAll("/", "\.");
                         key = key.substr(1, key.length - 1);
                         if (paths.ref[key] !== undefined) {
                             return new Path(APIKey, paths, connection, dbMaster, pId, debug);
@@ -362,18 +384,18 @@ if (cluster.isMaster) {
         },
         printError:     function (msg, stackMessage) {
             logger.error(msg);
-            var messages = stackMessage.split("\n");
-            for (var i = 0; i < messages.length; i++) {
+            let messages = stackMessage.split("\n");
+            for (let i = 0; i < messages.length; i++) {
                 logger.error(messages[i]);
             }
             return error;
         },
         parseRequest:   function (req, res, worker) {
-            var response = res;
+            let response = res;
 
             try {
-                var message = req.body;
-                var connection = {};     // connection element
+                let message = req.body;
+                let connection = {};     // connection element
 
                 logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
                 logger.debug(VARS.WORKER + ": " + worker);
@@ -381,15 +403,15 @@ if (cluster.isMaster) {
 
                 if (message === undefined || message === null) {
                     logger.error(ERROR.MISSING_PARAMS);
-                    var result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_PARAMS};
+                    let result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_PARAMS};
                     response.contentType(VARS.APPLICATION_JSON);
                     response.send(JSON.stringify(result));
                     return null
                 }
 
-                var keys = Object.keys(message); // keys
-                for (var i = 0; i < keys.length; i++) {
-                    var key = keys[i];
+                let keys = Object.keys(message); // keys
+                for (let i = 0; i < keys.length; i++) {
+                    let key = keys[i];
                     switch (key) {
                         case KEY_REQUEST.METHOD:
                             connection[key] = message[key];
@@ -496,7 +518,7 @@ if (cluster.isMaster) {
             } catch (e) {
                 logger.error("there was an error parsing request: " + e.toString());
 
-                var result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_WRONG_PARAMS};
+                let result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_WRONG_PARAMS};
 
                 res.contentType('application/json');
                 res.send(JSON.stringify(result));

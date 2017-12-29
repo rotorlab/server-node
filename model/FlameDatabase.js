@@ -99,35 +99,7 @@ function FlamebaseDatabase(database, path) {
             }
         }
         object.db.push(path, object.ref);
-        object.syncNotifications(callback);
-    };
-
-    this.syncDevices = function(pathReference, connection) {
-        let path = connection.path.replaceAll("/", "\.");
-        path = path.substr(1, path.length - 1);
-
-        if (pathReference.ref[path].tokens !== undefined) {
-            let tokens = Object.keys(pathReference.ref[path].tokens);
-
-            for (let i in tokens) {
-                let tok = tokens[i];
-                let token = pathReference.ref[path].tokens[tok];
-                let os = token.os;
-                let queue = token.queue;
-
-                let changes = Object.keys(queue);
-
-                for (let t in changes) {
-                    let id = changes[t];
-
-                    // TODO send push message and wait for confirmation to remove
-                }
-            }
-        }
-
-        if (this.debugVal) {
-            logger.debug("syncing devices on " + pathReference.ref[path].tokens);
-        }
+        // object.syncNotifications(callback);
     };
 
     /**
@@ -170,6 +142,7 @@ function FlamebaseDatabase(database, path) {
     /**
      *
      */
+
     this.sendDetailPushMessage = function(callback) {
         if (this.fcm === null) {
             logger.error("# no fcm detected, set an API key")
@@ -450,6 +423,9 @@ function FlamebaseDatabase(database, path) {
                     logger.debug("Sending to: " + JSON.stringifyAligned(message.registration_ids));
                 }
 
+                logger.error("test 13");
+
+
                 object.fcm.send(message)
                     .then(function (response) {
                         if (object.debugVal) {
@@ -469,6 +445,41 @@ function FlamebaseDatabase(database, path) {
 
             });
         });
+    };
+
+    this.getParts = function(os, content) {
+        logger.error("test 14");
+        let notification = this.pushConfig.notification();
+        logger.error("test 15");
+        let notificationLength = JSON.stringify(notification).length;
+
+        let partsToSend = [];
+
+        let c = content;
+
+        if (this.debugVal) {
+            logger.debug("slicing: " + c);
+        }
+
+        c = this.string2Hex(c);
+
+        let limit = os.indexOf(this.OS.IOS) !== -1 ? this.lengthLimit.IOS - notificationLength : this.lengthLimit.ANDROID - notificationLength;
+        if (c.length > limit) {
+            let index = -1;
+            let pendingChars = c.length;
+            while (pendingChars > 0) {
+                index++;
+                let part = c.slice(index * limit, (pendingChars < limit ? index * limit + pendingChars : (index + 1) * limit));
+                pendingChars = pendingChars - part.length;
+                partsToSend.push(part);
+            }
+        } else {
+            partsToSend.push(c);
+        }
+
+        let result = {};
+        result.parts = partsToSend;
+        return result;
     };
 
     this.getPartsFor = function(os, before, after) {
