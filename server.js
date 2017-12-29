@@ -6,8 +6,8 @@ const cluster =               require('cluster');
 const http =                  require('http');
 const numCPUs =               require('os').cpus().length;
 // const FlamebaseDatabase =     require("flamebase-database-node");
-const FlamebaseDatabase =     require("../flamebase-database-node/index.js");
-const Path =                  require("./model/path.js");
+const FlamebaseDatabase =     require("./model/FlameDatabase.js");
+const Path =                  require("./model/Path.js");
 const apply =                 require('rus-diff').apply;
 const clone =                 require('rus-diff').clone;
 const sha1 =                  require('sha1');
@@ -198,13 +198,6 @@ if (cluster.isMaster) {
                     paths.ref[key].tokens[connection.token].time = new Date().getTime();
 
                     data.info = "queue_ready";
-
-                    /*
-
-                    action.response(connection, data, null, pId);
-                    {"queueLen":0,"info":"queue_ready"}
-
-                     */
                 }
 
                 paths.syncToDatabase();
@@ -212,7 +205,7 @@ if (cluster.isMaster) {
                 /**
                  *
                  */
-                var object = this.getReference(connection, pId);
+                let object = this.getReference(connection, pId);
                 object.FD.syncFromDatabase();
 
                 if (typeof object !== "string") {
@@ -223,12 +216,11 @@ if (cluster.isMaster) {
 
                 logger.info(JSON.stringifyAligned(object.FD.ref));
 
-                var device = {
-                    token: connection.token,
-                    os: connection.os
-                };
-
                 if (data.objectLen > 2) {
+                    let device = {
+                        token: connection.token,
+                        os: connection.os
+                    };
                     object.sendUpdateFor("{}", device, function() {
                         logger.info("sending full object");
                         action.response(connection, data, null, pId);

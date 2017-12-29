@@ -1,5 +1,5 @@
 // var FlamebaseDatabase =     require("flamebase-database-node");
-var FlamebaseDatabase =     require("../../flamebase-database-node/index.js");
+var FlamebaseDatabase =     require("./FlameDatabase.js");
 const logjs =                 require('logjsx');
 
 JSON.stringifyAligned = require('json-align');
