@@ -102,15 +102,32 @@ function FlamebaseDatabase(database, path) {
         object.syncNotifications(callback);
     };
 
-    this.syncDevices = function(connection) {
-        if (restart !== undefined && restart) {
-            this.lastStringReference = JSON.stringify({});
-            if (this.debugVal) {
-                logger.debug("cleaning last reference on " + path);
+    this.syncDevices = function(pathReference, connection) {
+        let path = connection.path.replaceAll("/", "\.");
+        path = path.substr(1, path.length - 1);
+
+        if (pathReference.ref[path].tokens !== undefined) {
+            let tokens = Object.keys(pathReference.ref[path].tokens);
+
+            for (let i in tokens) {
+                let tok = tokens[i];
+                let token = pathReference.ref[path].tokens[tok];
+                let os = token.os;
+                let queue = token.queue;
+
+                let changes = Object.keys(queue);
+
+                for (let t in changes) {
+                    let id = changes[t];
+
+                    // TODO send push message and wait for confirmation to remove
+                }
             }
         }
-        object.db.push(path, object.ref);
-        object.syncNotifications(callback);
+
+        if (this.debugVal) {
+            logger.debug("syncing devices on " + pathReference.ref[path].tokens);
+        }
     };
 
     /**
