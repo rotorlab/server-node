@@ -408,7 +408,7 @@ function FlamebaseDatabase(database, path) {
         this.lastStringReference = JSON.stringify(this.ref);
     };
 
-    this.sendPushMessage = function(send, callback) {
+    this.sendPushMessage = function(send, success, fail) {
         this.queue.pushJob(function() {
             return new Promise(function (resolve, reject) {
                 var message = {
@@ -423,23 +423,22 @@ function FlamebaseDatabase(database, path) {
                     logger.debug("Sending to: " + JSON.stringifyAligned(message.registration_ids));
                 }
 
-                logger.error("test 13");
-
-
                 object.fcm.send(message)
                     .then(function (response) {
                         if (object.debugVal) {
                             logger.debug("Successfully sent with response: " + JSON.stringifyAligned(JSON.parse(response)));
                         }
-                        if (callback !== undefined) {
-                            callback();
+                        if (success !== undefined) {
+                            success();
                         }
                         resolve();
                     })
                     .catch(function (err) {
-                        logger.info("api key: " + object.pushConfig.APIKey());
-                        logger.error("message: " + JSON.stringifyAligned(message));
-                        logger.error("error: " + JSON.stringifyAligned(err));
+                        // logger.info("api key: " + object.pushConfig.APIKey());
+                        // logger.error("message: " + JSON.stringifyAligned(message));
+                        if (fail !== undefined) {
+                            fail(err);
+                        }
                         resolve();
                     })
 
@@ -448,9 +447,7 @@ function FlamebaseDatabase(database, path) {
     };
 
     this.getParts = function(os, content) {
-        logger.error("test 14");
         let notification = this.pushConfig.notification();
-        logger.error("test 15");
         let notificationLength = JSON.stringify(notification).length;
 
         let partsToSend = [];

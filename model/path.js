@@ -14,6 +14,7 @@ let TAG =                   "PATH CLUSTER";
 let ACTION_SIMPLE_UPDATE    = "simple_update";
 let ACTION_SLICE_UPDATE     = "slice_update";
 let ACTION_NO_UPDATE        = "no_update";
+let NOT_REGISTERED        = "NotRegistered";
 
 function Path(APIKey, pathReference, connection, database, pid, dbg) {
 
@@ -116,9 +117,7 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
 
         if (this.pathReference.ref[path].tokens !== undefined) {
             let referenceId = config.referenceId();
-            logger.error("test 11");
             let notification = config.notification();
-            logger.error("test 12");
 
             let tokens = Object.keys(this.pathReference.ref[path].tokens);
 
@@ -150,7 +149,31 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                         send.data = data;
                         send.tokens = [tok];
                         send.notification = notification;
-                        this.FD.sendPushMessage(send);
+                        this.FD.sendPushMessage(send,
+                            /**
+                             * success
+                             */
+                            function () {
+                                logger.info("success event");
+                                object.removeQueue(path, tok, id);
+                            },
+                            /**
+                             * fail
+                             * @param error
+                             */
+                            function (error) {
+                                logger.error(error);
+                                switch (error) {
+
+                                    case NOT_REGISTERED:
+                                        object.removeToken(tok);
+                                        break;
+
+                                    default:
+                                        // nothing to do here
+                                        break;
+                                }
+                            });
                     } else if (dataToSend.parts.length > 1) {
                         /**
                          * few parts, ACTION_SLICE_UPDATE
@@ -167,7 +190,30 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                             send.data = data;
                             send.tokens = [tok];
                             send.notification = notification;
-                            this.FD.sendPushMessage(send);
+                            this.FD.sendPushMessage(send,
+                                /**
+                                 * success
+                                 */
+                                function () {
+                                    object.removeQueue(path, tok, id);
+                                },
+                                /**
+                                 * fail
+                                 * @param error
+                                 */
+                                function (error) {
+                                    logger.error(error);
+                                    switch (error) {
+
+                                        case NOT_REGISTERED:
+                                            object.removeToken(tok);
+                                            break;
+
+                                        default:
+                                            // nothing to do here
+                                            break;
+                                    }
+                                });
                         }
                     } else {
                         /**
@@ -181,18 +227,67 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                         send.data = data;
                         send.tokens = [tok];
                         send.notification = notification;
-                        this.FD.sendPushMessage(send);
+                        this.FD.sendPushMessage(send,
+                            /**
+                             * success
+                             */
+                            function () {
+                                object.removeQueue(path, tok, id);
+                            },
+                            /**
+                             * fail
+                             * @param error
+                             */
+                            function (error) {
+                                logger.error(error);
+                                switch (error) {
+
+                                    case NOT_REGISTERED:
+                                        object.removeToken(tok);
+                                        break;
+
+                                    default:
+                                        // nothing to do here
+                                        break;
+                                }
+                            });
                     }
 
 
                     // TODO send push message and wait for confirmation to remove
                 }
             }
+
+            this.pathReference.syncToDatabase();
             callback();
         } else {
             logger.error("no tokens found for path: " + path);
         }
 
+    };
+
+    this.removeToken = function (token) {
+        this.pathReference.syncFromDatabase();
+
+        let paths = Object.keys(this.pathReference.ref);
+        for (let i in paths) {
+            let tokens = Object.keys(this.pathReference.ref[paths[i]].tokens);
+            for (let p in tokens) {
+                if (tokens[p] === token) {
+                    delete this.pathReference.ref[paths[i]].tokens[tokens[p]];
+                }
+            }
+        }
+
+        this.pathReference.syncToDatabase()
+    };
+
+    this.removeQueue = function (path, token, id) {
+        this.pathReference.syncFromDatabase();
+
+        delete this.pathReference.ref[path].tokens[token].queue[id];
+
+        this.pathReference.syncToDatabase()
     };
 
 

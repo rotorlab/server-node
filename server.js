@@ -327,12 +327,11 @@ if (cluster.isMaster) {
             } else {
                 object.addDifferencesToQueue(connection);
                 if (connection.differences !== undefined) {
-                    logger.error("test")
                     object.FD.syncFromDatabase();
                     apply(object.FD.ref, JSON.parse(connection.differences));
+                    object.FD.syncToDatabase();
+                    logger.error(JSON.stringifyAligned(connection.differences));
                     this.updateTime(connection);
-
-                    logger.error("test 2")
 
                     object.sync(connection, function() {
                         logger.error("test 3")
