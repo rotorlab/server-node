@@ -43,6 +43,8 @@ process.argv.forEach(function (val, index, array) {
     }
 });
 
+debug = true;
+
 
 var TAG =                   "SERVER CLUSTER";
 var logger = new logjs();
@@ -226,6 +228,7 @@ if (cluster.isMaster) {
                     };
                     object.sendUpdateFor("{}", device, function() {
                         logger.info("sending full object");
+                        data.info = "queue_ready";
                         action.response(connection, data, null, pId);
                     });
                 } else {
@@ -320,8 +323,13 @@ if (cluster.isMaster) {
                 paths.syncToDatabase();
             }
         },
-        updateData:     function (connection, pId) {
-            var object = this.getReference(connection, pId);
+        /**
+         * Updates the queue on on path database
+         * @param connection
+         * @param pId
+         */
+        updateQueue:     function (connection, pId) {
+            let object = this.getReference(connection, pId);
             if (typeof object === "string") {
                 this.response(connection, null, object, pId);
             } else {
@@ -330,26 +338,14 @@ if (cluster.isMaster) {
                     object.FD.syncFromDatabase();
                     apply(object.FD.ref, JSON.parse(connection.differences));
                     object.FD.syncToDatabase();
-                    logger.error(JSON.stringifyAligned(connection.differences));
+
                     this.updateTime(connection);
 
                     object.sync(connection, function() {
-                        logger.error("test 3")
-
                         let data = {};
-                        data.info = "data_updated";
+                        data.info = "queue_updated";
                         action.response(connection, data, null, pId);
                     });
-                    /*
-                    object.FD.syncToDatabase(false, function() {
-                        if (JSON.stringify(object.FD.ref).length !== connection.len) {
-                            action.response(connection, null, "data_updated_with_differences", pId);
-                        } else {
-                            action.response(connection, "data_updated", null, pId);
-                        }
-                    });
-                    */
-
                 } else {
                     this.response(connection, "no_diff_updated", null, pId);
                 }
@@ -492,9 +488,9 @@ if (cluster.isMaster) {
 
                     case "update_data":
                         try {
-                            this.updateData(connection, worker);
+                            this.updateQueue(connection, worker);
                         } catch (e) {
-                            logger.error("there was an error parsing request from updateData: " + e.toString());
+                            logger.error("there was an error parsing request from updateQueue: " + e.toString());
                             this.response(connection, null, "cluster_" + worker + ERROR_RESPONSE.UPDATE_DATA, worker);
                         }
                         break;

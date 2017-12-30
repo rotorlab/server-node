@@ -1,55 +1,422 @@
-[36mMaster 70345 is running[39m
-[36mserver cluster started on port 1507 on 1 worker[39m
-[36mserver cluster started on port 1507 on 5 worker[39m
-[36mserver cluster started on port 1507 on 7 worker[39m
-[36mserver cluster started on port 1507 on 4 worker[39m
-[36mserver cluster started on port 1507 on 8 worker[39m
-[36mserver cluster started on port 1507 on 6 worker[39m
+[36mMaster 88011 is running[39m
 [36mserver cluster started on port 1507 on 2 worker[39m
 [36mserver cluster started on port 1507 on 3 worker[39m
+[36mserver cluster started on port 1507 on 4 worker[39m
+[36mserver cluster started on port 1507 on 1 worker[39m
+[36mserver cluster started on port 1507 on 7 worker[39m
+[36mserver cluster started on port 1507 on 5 worker[39m
+[36mserver cluster started on port 1507 on 8 worker[39m
+[36mserver cluster started on port 1507 on 6 worker[39m
 [34muser-agent: okhttp/3.8.0[39m
-[34mworker: 1[39m
-[34mlen: 2[39m
+[34mworker: 2[39m
+[34mlen: 1093[39m
 [34mmethod: create_listener[39m
 [34mos: android[39m
 [34mpath: /contacts[39m
-[34msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F[39m
-[34mtoken: ct-9xp-59Aw:APA91bHsgovifkmc5H8Bwv8tNUOF8E8iYMTWdGEUgxj3Y24oxi-umuO9KxZL7_IMNwMiunm-XR2kCI4J6dnzBP7DDmsXC41ItJqZ9BhXdQuk7_Z7tGZj2i90w2Ifaq_LVmCzjvOptPH6[39m
+[34msha1: 3C0B5F169B72CED3439ED379CD0FBDD27BC4A6AF[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1713[39m
+[34mref: /[39m
+[34mlen: 1713[39m
+[34mref: /contacts[39m
+[34mlen: 1093[39m
 [36m{
     "huhuhu" : {
         "id"    : "blabla",
         "name"  : "huhuhu",
         "os"    : "android",
         "token" : "cV941dQRGO8:APA91bGs30EHuRCMNl2tNmcmwpK9BgxM_574F3HPOba_Oaz7N7tAjZwPLcJ-a3n8CPHY1ktIjCQJVnnRcc_bvzeTdPvFaokHOHgedcnJNNGXyShuKoJnGHx_N6mOPyI46VmgWkR-rgLh"
+    },
+    "hahah" : {
+        "id"    : "juanjo",
+        "name"  : "hahah",
+        "os"    : "android",
+        "token" : "ct-9xp-59Aw:APA91bHsgovifkmc5H8Bwv8tNUOF8E8iYMTWdGEUgxj3Y24oxi-umuO9KxZL7_IMNwMiunm-XR2kCI4J6dnzBP7DDmsXC41ItJqZ9BhXdQuk7_Z7tGZj2i90w2Ifaq_LVmCzjvOptPH6"
+    },
+    "osborne" : {
+        "id"    : "martin",
+        "name"  : "osborne",
+        "os"    : "android",
+        "token" : "cV941dQRGO8:APA91bGs30EHuRCMNl2tNmcmwpK9BgxM_574F3HPOba_Oaz7N7tAjZwPLcJ-a3n8CPHY1ktIjCQJVnnRcc_bvzeTdPvFaokHOHgedcnJNNGXyShuKoJnGHx_N6mOPyI46VmgWkR-rgLh"
+    },
+    "montoya" : {
+        "id"    : "marcos",
+        "name"  : "montoya",
+        "os"    : "android",
+        "token" : "d0TxYoITyDY:APA91bGE36pDCS14eGprI9ZqXtSTd6MXw53FF4NVdn5sXKvNK7jKaIq-ubSgBjOxvucNZI0nFQAzQ9srlIAaCei1FBBrF8NX2aLSRP426Gv_Mc47NDZa1Pi27RW_xsl5pq0wNJFwSFy0"
+    },
+    "polo" : {
+        "id"    : "marco",
+        "name"  : "polo",
+        "os"    : "android",
+        "token" : "fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S"
     }
 }[39m
 [34muser-agent: okhttp/3.8.0[39m
-[34mworker: 5[39m
+[34mworker: 3[39m
 [34mclean: false[39m
-[34mdifferences: {"$set":{"hahah.id":"juanjo","hahah.name":"hahah","hahah.os":"android","hahah.token":"ct-9xp-59Aw:APA91bHsgovifkmc5H8Bwv8tNUOF8E8iYMTWdGEUgxj3Y24oxi-umuO9KxZL7_IMNwMiunm-XR2kCI4J6dnzBP7DDmsXC41ItJqZ9BhXdQuk7_Z7tGZj2i90w2Ifaq_LVmCzjvOptPH6"}}[39m
-[34mlen: 218[39m
+[34mdifferences: {}[39m
+[34mlen: 1093[39m
 [34mmethod: update_data[39m
 [34mpath: /contacts[39m
-[34mtoken: ct-9xp-59Aw:APA91bHsgovifkmc5H8Bwv8tNUOF8E8iYMTWdGEUgxj3Y24oxi-umuO9KxZL7_IMNwMiunm-XR2kCI4J6dnzBP7DDmsXC41ItJqZ9BhXdQuk7_Z7tGZj2i90w2Ifaq_LVmCzjvOptPH6[39m
-[32m"{\"$set\":{\"hahah.id\":\"juanjo\",\"hahah.name\":\"hahah\",\"hahah.os\":\"android\",\"hahah.token\":\"ct-9xp-59Aw:APA91bHsgovifkmc5H8Bwv8tNUOF8E8iYMTWdGEUgxj3Y24oxi-umuO9KxZL7_IMNwMiunm-XR2kCI4J6dnzBP7DDmsXC41ItJqZ9BhXdQuk7_Z7tGZj2i90w2Ifaq_LVmCzjvOptPH6\"}}"[39m
-[32mtest 3[39m
-[36mworker: 5[39m
-[36mresponse: {"status":"OK","data":{"info":"data_updated"},"error":null}[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1713[39m
+[34mref: /contacts[39m
+[34mlen: 1093[39m
+[34mref: /[39m
+[34mlen: 1713[39m
+[34mref: /contacts[39m
+[34mlen: 253[39m
+[34mref: /[39m
+[34mlen: 1731[39m
+[36mworker: 3[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 4[39m
+[34mlen: 2[39m
+[34mmethod: create_listener[39m
+[34mos: android[39m
+[34mpath: /chats/1514578840774[39m
+[34msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1731[39m
+[34mref: /[39m
+[34mlen: 1731[39m
+[34mref: /chats/1514578840774[39m
+[34mlen: 691[39m
+[36m{
+    "messages" : {
+        "1514641522973" : {
+            "author" : "polo",
+            "text"   : "dfgherfgh"
+        },
+        "1514641523476" : {
+            "author" : "polo",
+            "text"   : ""
+        },
+        "1514641557235" : {
+            "author" : "polo",
+            "text"   : "hola"
+        },
+        "1514641565050" : {
+            "author" : "polo",
+            "text"   : "ydvbsdfbv"
+        },
+        "1514641566813" : {
+            "author" : "polo",
+            "text"   : "d"
+        },
+        "1514641567492" : {
+            "author" : "polo",
+            "text"   : "v"
+        },
+        "1514641568652" : {
+            "author" : "polo",
+            "text"   : "dfv"
+        },
+        "1514641569357" : {
+            "author" : "polo",
+            "text"   : "v"
+        },
+        "1514641569855" : {
+            "author" : "polo",
+            "text"   : "xvc"
+        },
+        "1514641569918" : {
+            "author" : "polo",
+            "text"   : ""
+        },
+        "1514641570547" : {
+            "author" : "polo",
+            "text"   : ""
+        },
+        "1514641572894" : {
+            "author" : "polo",
+            "text"   : "vcsdfvsdfv"
+        },
+        "1514641579387" : {
+            "author" : "polo",
+            "text"   : "🦄🦄🐶"
+        },
+        "1514641580298" : {
+            "author" : "polo",
+            "text"   : ""
+        }
+    },
+    "name" : "yuju"
+}[39m
 [36msending full object[39m
+[36mworker: 2[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":1093},"error":null}[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 1[39m
+[34mclean: false[39m
+[34mdifferences: {}[39m
+[34mlen: 2[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514578840774[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1731[39m
+[34mref: /chats/1514578840774[39m
+[34mlen: 691[39m
+[34mref: /[39m
+[34mlen: 1731[39m
+[34mref: /chats.1514578840774[39m
+[34mlen: 283[39m
+[34mref: /[39m
+[34mlen: 1750[39m
 [36mworker: 1[39m
-[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":220},"error":null}[39m
-[36msuccess event[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
 [34muser-agent: okhttp/3.8.0[39m
 [34mworker: 7[39m
 [34mlen: 2[39m
 [34mmethod: create_listener[39m
 [34mos: android[39m
-[34mpath: /chats/1514568084426[39m
+[34mpath: /chats/1514579124824[39m
 [34msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F[39m
-[34mtoken: ct-9xp-59Aw:APA91bHsgovifkmc5H8Bwv8tNUOF8E8iYMTWdGEUgxj3Y24oxi-umuO9KxZL7_IMNwMiunm-XR2kCI4J6dnzBP7DDmsXC41ItJqZ9BhXdQuk7_Z7tGZj2i90w2Ifaq_LVmCzjvOptPH6[39m
-####################### error: DataError: Can't find dataPath: /chats/1514568084426. Stopped at chats
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1750[39m
+[34mref: /[39m
+[34mlen: 1750[39m
+[34mref: /chats/1514579124824[39m
+[34mlen: 35[39m
+[36m{
+    "messages" : {},
+    "name"     : "holiiiiiii"
+}[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 5[39m
+[34mclean: false[39m
+[34mdifferences: {}[39m
+[34mlen: 2[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514579124824[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1750[39m
+[34mref: /chats/1514579124824[39m
+[34mlen: 35[39m
+[34mref: /[39m
+[34mlen: 1750[39m
+[34mref: /chats.1514579124824[39m
+[34mlen: 283[39m
+[34mref: /[39m
+[34mlen: 1769[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1731[39m
+[36mworker: 5[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[36msending full object[39m
+[36mworker: 4[39m
+[36mresponse: {"status":"OK","data":{"queueLen":1,"info":"queue_ready","objectLen":691},"error":null}[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 8[39m
+[34mlen: 47[39m
+[34mmethod: create_listener[39m
+[34mos: android[39m
+[34mpath: /chats/1514579202847[39m
+[34msha1: 48AD6340BBEAA4351CEABEB3DD94FCC865865103[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1769[39m
+[34mref: /[39m
+[34mlen: 1769[39m
+[34mref: /chats/1514579202847[39m
+[34mlen: 226[39m
+[36m{
+    "messages" : {
+        "1514641883238" : {
+            "author" : "polo",
+            "text"   : "  bbbhj"
+        },
+        "1514641904212" : {
+            "author" : "polo",
+            "text"   : ""
+        },
+        "1514641907943" : {
+            "author" : "polo",
+            "text"   : ""
+        },
+        "1514641958559" : {
+            "author" : "polo",
+            "text"   : "fxvcbsdfbg"
+        }
+    },
+    "name" : "tgggggggg"
+}[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 6[39m
+[34mclean: false[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages":{},"members":[]}}[39m
+[34mlen: 47[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514579202847[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1769[39m
+[34mref: /chats/1514579202847[39m
+[34mlen: 226[39m
+[34mref: /[39m
+[34mlen: 1769[39m
+[34mref: /chats.1514579202847[39m
+[34mlen: 323[39m
+[34mref: /[39m
+[34mlen: 1846[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1750[39m
+[36mworker: 6[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 2[39m
+[34mclean: false[39m
+[34mdifferences: {}[39m
+[34mlen: 1093[39m
+[34mmethod: update_data[39m
+[34mpath: /contacts[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1846[39m
+[34mref: /contacts[39m
+[34mlen: 1093[39m
+[34mref: /[39m
+[34mlen: 1846[39m
+[34mref: /contacts[39m
+[34mlen: 272[39m
+[34mref: /[39m
+[34mlen: 1865[39m
+[36mworker: 2[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[36msending full object[39m
+[36mworker: 7[39m
+[36mresponse: {"status":"OK","data":{"queueLen":1,"info":"queue_ready","objectLen":35},"error":null}[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1731[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1769[39m
+[36msending full object[39m
+[36mworker: 8[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":226},"error":null}[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1865[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1846[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1750[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1846[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 3[39m
+[34mclean: false[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514642172158.author":"polo","messages.1514642172158.text":"hola","members":[]}}[39m
+[34mlen: 287[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514579202847[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1828[39m
+[34mref: /chats/1514579202847[39m
+[34mlen: 34[39m
+[34mref: /[39m
+[34mlen: 1828[39m
+[34mref: /chats.1514579202847[39m
+[34mlen: 463[39m
+[34mref: /[39m
+[34mlen: 1968[39m
+[36mworker: 3[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1968[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1890[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 4[39m
+[34mclean: false[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514642173079.author":"polo","messages.1514642173079.text":"","members":[]}}[39m
+[34mlen: 331[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514579202847[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1751[39m
+[34mref: /chats/1514579202847[39m
+[34mlen: 81[39m
+[34mref: /[39m
+[34mlen: 1751[39m
+[34mref: /chats.1514579202847[39m
+[34mlen: 381[39m
+[34mref: /[39m
+[34mlen: 1886[39m
+[36mworker: 4[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1886[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 1[39m
+[34mmethod: remove_listener[39m
+[34mpath: /chats/1514579202847[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1751[39m
+[36mworker: 1[39m
+[36mresponse: {"status":"OK","data":{"info":"listener_removed"},"error":null}[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 7[39m
+[34mlen: 2[39m
+[34mmethod: create_listener[39m
+[34mos: android[39m
+[34mpath: /chats/1514642213628[39m
+[34msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1548[39m
+[34mref: /[39m
+[34mlen: 1817[39m
+####################### error: DataError: Can't find dataPath: /chats/1514642213628. Stopped at 1514642213628
 ####################### generating tree 
 [36m[object global][39m
+[34mref: /chats/1514642213628[39m
+[34mlen: 2[39m
 [36m{}[39m
+[34mref: /[39m
+[34mlen: 1817[39m
 [36mworker: 7[39m
 [36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":2},"error":null}[39m
+[34muser-agent: okhttp/3.8.0[39m
+[34mworker: 5[39m
+[34mclean: false[39m
+[34mdifferences: {"$set":{"members":["polo"],"messages":{},"name":"jauja"}}[39m
+[34mlen: 49[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514642213628[39m
+[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
+[34mref: /[39m
+[34mlen: 1817[39m
+[34mref: /chats/1514642213628[39m
+[34mlen: 2[39m
+[34mref: /[39m
+[34mlen: 1817[39m
+[34mref: /chats.1514642213628[39m
+[34mlen: 320[39m
+[34mref: /[39m
+[34mlen: 1891[39m
+[36mworker: 5[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[36msuccess event[39m
+[34mref: /[39m
+[34mlen: 1891[39m

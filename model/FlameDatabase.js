@@ -21,7 +21,7 @@ function FlamebaseDatabase(database, path) {
     var object = this;
 
     // debug
-    this.debugVal = false;
+    this.debugVal = true;
 
     // os
     this.OS = {};
@@ -59,28 +59,17 @@ function FlamebaseDatabase(database, path) {
         try {
             object.ref = object.db.getData(path);
             this.lastStringReference = JSON.stringify(object.ref);
-            if (this.debugVal) {
-                logger.debug("ref: " + path);
-                logger.debug("len: " + this.lastStringReference.length);
-            }
         } catch(e) {
-            console.log("####################### error: " + e);
-            console.log("####################### generating tree ");
-            logger.info()
             this.prepareUnknownPath();
             this.lastStringReference = JSON.stringify(object.ref);
-            if (this.debugVal) {
-                logger.debug("ref: " + path);
-                logger.debug("len: " + this.lastStringReference.length);
-            }
         }
     };
 
     this.prepareUnknownPath = function() {
-        var paths = path.split("/");
-        var currentObject = object.ref;
-        for (p in paths) {
-            var pCheck = paths[p];
+        let paths = path.split("/");
+        let currentObject = object.ref;
+        for (let p in paths) {
+            let pCheck = paths[p];
             currentObject[pCheck] = {};
             currentObject = currentObject[pCheck];
         }

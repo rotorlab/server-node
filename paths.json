@@ -2,20 +2,76 @@
     "contacts": {
         "path": "/contacts",
         "tokens": {
-            "ct-9xp-59Aw:APA91bHsgovifkmc5H8Bwv8tNUOF8E8iYMTWdGEUgxj3Y24oxi-umuO9KxZL7_IMNwMiunm-XR2kCI4J6dnzBP7DDmsXC41ItJqZ9BhXdQuk7_Z7tGZj2i90w2Ifaq_LVmCzjvOptPH6": {
+            "fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S": {
                 "os": "android",
                 "queue": {},
-                "time": 1514568045537
+                "time": 1514642158123
             }
         }
     },
     "chats.1514568084426": {
         "path": "/chats/1514568084426",
+        "tokens": {}
+    },
+    "chats.1514575768524": {
+        "path": "/chats/1514575768524",
         "tokens": {
-            "ct-9xp-59Aw:APA91bHsgovifkmc5H8Bwv8tNUOF8E8iYMTWdGEUgxj3Y24oxi-umuO9KxZL7_IMNwMiunm-XR2kCI4J6dnzBP7DDmsXC41ItJqZ9BhXdQuk7_Z7tGZj2i90w2Ifaq_LVmCzjvOptPH6": {
+            "d0TxYoITyDY:APA91bGE36pDCS14eGprI9ZqXtSTd6MXw53FF4NVdn5sXKvNK7jKaIq-ubSgBjOxvucNZI0nFQAzQ9srlIAaCei1FBBrF8NX2aLSRP426Gv_Mc47NDZa1Pi27RW_xsl5pq0wNJFwSFy0": {
+                "os": "android",
+                "queue": {
+                    "1514576538681": {}
+                },
+                "time": 1514576538640
+            }
+        }
+    },
+    "chats.1514576647845": {
+        "path": "/chats/1514576647845",
+        "tokens": {
+            "fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S": {
                 "os": "android",
                 "queue": {},
-                "time": 1514568084943
+                "time": 1514576648548
+            }
+        }
+    },
+    "chats.1514578840774": {
+        "path": "/chats/1514578840774",
+        "tokens": {
+            "fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S": {
+                "os": "android",
+                "queue": {
+                    "1514641731060": {},
+                    "1514642158505": {}
+                },
+                "time": 1514642158421
+            }
+        }
+    },
+    "chats.1514579124824": {
+        "path": "/chats/1514579124824",
+        "tokens": {
+            "fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S": {
+                "os": "android",
+                "queue": {
+                    "1514641731133": {},
+                    "1514642158647": {}
+                },
+                "time": 1514642158579
+            }
+        }
+    },
+    "chats.1514579202847": {
+        "path": "/chats/1514579202847",
+        "tokens": {}
+    },
+    "chats.1514642213628": {
+        "path": "/chats/1514642213628",
+        "tokens": {
+            "fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S": {
+                "os": "android",
+                "queue": {},
+                "time": 1514642214327
             }
         }
     }
