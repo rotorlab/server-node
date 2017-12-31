@@ -1,10 +1,16 @@
 {
     "contacts": {
-        "efraespada": {
-            "email": "efraespadagmail.com",
-            "name": "efraespada",
+        "martinez": {
+            "id": "juan",
+            "name": "martinez",
             "os": "android",
-            "token": "fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x"
+            "token": "ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM"
+        },
+        "yiiii": {
+            "id": "yeeeeee",
+            "name": "yiiii",
+            "os": "android",
+            "token": "cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk"
         },
         "lolo": {
             "id": "lala",
@@ -12,11 +18,125 @@
             "os": "android",
             "token": "f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_"
         },
-        "yiiii": {
-            "id": "yeeeeee",
-            "name": "yiiii",
+        "efraespada": {
+            "name": "efraespada",
             "os": "android",
-            "token": "cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk"
+            "token": "fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x"
+        },
+        "null": {
+            "os": "android",
+            "token": "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"
+        },
+        "manuel": {
+            "id": "juan",
+            "name": "manuel",
+            "os": "android",
+            "token": "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"
+        },
+        "espada": {
+            "id": "efrain",
+            "name": "espada",
+            "os": "android",
+            "token": "c2PGNC4dPDY:APA91bGXWFzglwvXFOjUiHi0xFVke7nFh6QM3t5MgxOkdq_Sny3MjNX3ZC-vWkukKmFDYuONb73owouoWh4EFZSlj2t6gSRzZ3xmsSAVSDiw9kWkrHPH1JfO3sMlX1GbSsUxD20uz52B"
+        }
+    },
+    "chats": {
+        "1514657827428": {
+            "members": [
+                "martinez"
+            ],
+            "messages": {},
+            "name": "grupo a"
+        },
+        "1514657904134": {
+            "members": [
+                "martinez"
+            ],
+            "messages": {},
+            "name": "grupo b"
+        },
+        "1514658155776": {},
+        "1514726155977": {
+            "members": [
+                "manuel"
+            ],
+            "messages": {},
+            "name": "jajajaJO"
+        },
+        "1514726522538": {
+            "messages": {
+                "1514726551222": {
+                    "author": "espada",
+                    "text": "holi"
+                },
+                "1514726567540": {
+                    "author": "espada",
+                    "text": "que tal?"
+                },
+                "1514726621332": {
+                    "author": "espada",
+                    "text": "jejejejej"
+                },
+                "1514726654596": {
+                    "author": "espada",
+                    "text": "yujuuuuuuuuuuu"
+                },
+                "1514726667630": {
+                    "author": "espada",
+                    "text": "guay!!!!"
+                },
+                "1514726675230": {
+                    "author": "espada",
+                    "text": "jxjckfjc"
+                },
+                "1514726677812": {
+                    "author": "espada",
+                    "text": "jxjzjxjc"
+                },
+                "1514726679864": {
+                    "author": "espada",
+                    "text": "nxjcnc"
+                },
+                "1514726684044": {
+                    "author": "espada",
+                    "text": "nxjxidmfkckd"
+                },
+                "1514726686398": {
+                    "author": "espada",
+                    "text": "nxjcjdjxkd"
+                },
+                "1514726691012": {
+                    "author": "espada",
+                    "text": "nxkcjfndjf"
+                }
+            },
+            "name": "halooo",
+            "members": []
+        },
+        "1514726711395": {
+            "messages": {
+                "1514726722597": {
+                    "author": "espada",
+                    "text": "Marco"
+                },
+                "1514726726004": {
+                    "author": "espada",
+                    "text": "POLO"
+                },
+                "1514726731326": {
+                    "author": "espada",
+                    "text": "Marco"
+                },
+                "1514726736786": {
+                    "author": "espada",
+                    "text": "POLO"
+                },
+                "1514726864644": {
+                    "author": "espada",
+                    "text": "holi"
+                }
+            },
+            "name": "Marco polo"
         }
     }
 }

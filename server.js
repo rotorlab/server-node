@@ -1,15 +1,16 @@
-var express =               require('express');
-var bodyParser =            require('body-parser');
-var timeout =               require('connect-timeout');
-var log4js =                require('log4js');
-var cluster =               require('cluster');
-var http =                  require('http');
-var numCPUs =               require('os').cpus().length;
-var FlamebaseDatabase =     require("flamebase-database-node");
-var Path =                  require("./model/path.js");
-var apply =                 require('rus-diff').apply;
-var clone =                 require('rus-diff').clone;
-var sha1 =                  require('sha1');
+const express =               require('express');
+const bodyParser =            require('body-parser');
+const timeout =               require('connect-timeout');
+const logjs =                 require('logjsx');
+const cluster =               require('cluster');
+const http =                  require('http');
+const numCPUs =               require('os').cpus().length;
+// const FlamebaseDatabase =     require("flamebase-database-node");
+const FlamebaseDatabase =     require("./model/FlameDatabase.js");
+const Path =                  require("./model/Path.js");
+const apply =                 require('rus-diff').apply;
+const clone =                 require('rus-diff').clone;
+const sha1 =                  require('sha1');
 
 JSON.stringifyAligned = require('json-align');
 
@@ -42,10 +43,15 @@ process.argv.forEach(function (val, index, array) {
     }
 });
 
+debug = true;
+
 
 var TAG =                   "SERVER CLUSTER";
-var logger =                log4js.getLogger(TAG);
-logger.level = 'all';
+var logger = new logjs();
+
+logger.init({
+    level : "DEBUG"
+});
 
 var dbPaths = "paths";
 
@@ -56,13 +62,22 @@ if (cluster.isMaster) {
     logger.info("Master " + process.pid + " is running");
 
     for (var i = 0; i < numCPUs; i++) {
-        var worker = cluster.fork();
+        const worker = cluster.fork();
+        worker.on('exit', (code, signal) => {
+            if (signal) {
+                console.log(`worker was killed by signal: ${signal}`);
+            } else if (code !== 0) {
+                console.log(`worker exited with error code: ${code}`);
+            } else {
+                console.log('worker success!');
+            }
+        });
         workers[worker.pid] = worker;
     }
 
     cluster.on('exit', function (worker) {
         console.log('Worker %d died :(', worker.id);
-        var w = cluster.fork();
+        let w = cluster.fork();
         workers[w.pid] = w;
     });
 
@@ -109,8 +124,11 @@ if (cluster.isMaster) {
 
     var action = {
         response:       function (connection, data, error, pId) {
-            var result = {status: (data === null || error !== null ? "KO" : "OK"),
-                data: (data === null ? {} : data), error: error};
+            let result = {
+                status: (data === null || error !== null ? "KO" : "OK"),
+                data: (data === null ? {} : data),
+                error: error
+            };
             logger.info("worker: " + pId);
             logger.info("response: " + JSON.stringify(result));
             connection.response.contentType('application/json');
@@ -157,80 +175,68 @@ if (cluster.isMaster) {
                     paths.ref[key].tokens = {};
                 }
 
-                /**
-                 * before adding the current connection, last token
-                 * used is detected
-                 */
-                var lastChangeTime = 0;
-                var currentChangeTime = connection.time;
+                let data = {};
+                if (paths.ref[key].tokens[connection.token] === undefined) {
+                    paths.ref[key].tokens[connection.token] = {};
+                    paths.ref[key].tokens[connection.token].os = connection.os;
+                    paths.ref[key].tokens[connection.token].queue = {};
+                    paths.ref[key].tokens[connection.token].time = new Date().getTime();
 
-                var lastToken = null;
-
-                var keys = Object.keys(paths.ref[key].tokens);
-                if (keys.length > 0) {
-
-                    for (var i = keys.length - 1; i >= 0; i--) {
-                        var time = paths.ref[key].tokens[keys[i]].time;
-                        if (lastChangeTime < time) {
-                            lastChangeTime = time;
-                            lastToken = keys[i];
-                        }
+                    /**
+                     * queue is ready, all changes in the current path will be queue here
+                     * and will be removed when device receive it.
+                     * respond queue ready
+                     */
+                    data.queueLen = 0;
+                    data.info = "queue_ready";
+                } else {
+                    /**
+                     * respond queue ready
+                     *
+                     */
+                    if (paths.ref[key].tokens[connection.token].queue === undefined) {
+                        paths.ref[key].tokens[connection.token].queue = {};
+                        data.queueLen = 0;
+                    } else {
+                        data.queueLen = Object.keys(paths.ref[key].tokens[connection.token].queue).length;
                     }
+                    paths.ref[key].tokens[connection.token].time = new Date().getTime();
 
+                    data.info = "queue_ready";
                 }
 
-                /**
-                 * current device did the last change, so only
-                 * length verification is returned to device
-                 */
-                if (connection.token === lastToken) {
-                    var equals = this.verifyLenght(connection, pId);
-
-                }
-
-
+                paths.syncToDatabase();
 
                 /**
                  *
                  */
-
-                if (paths.ref[key].tokens[connection.token] === undefined) {
-                    paths.ref[key].tokens[connection.token] = {};
-                    paths.ref[key].tokens[connection.token].os = connection.os;
-                }
-
-
-                /**
-                 * finish work with path database
-                 */
-                paths.syncToDatabase();
-
-
-
-                this.updateTime(connection);
-
-                var object = this.getReference(connection, pId);
+                let object = this.getReference(connection, pId);
                 object.FD.syncFromDatabase();
 
-                var len = 0;
-
                 if (typeof object !== "string") {
-                    len = JSON.stringify(object.FD.ref).length;
+                    data.objectLen = JSON.stringify(object.FD.ref).length;
                 } else {
-                    this.response(connection, null, object, pId);
-                    return;
+                    data.objectLen = 0;
                 }
 
-                var data = {};
-                data.len = len;
+                logger.info(JSON.stringifyAligned(object.FD.ref));
 
-                if (lastToken === connection.token) {
-                    data.info = "listener_up_to_date";
+                if (data.objectLen > 2) {
+                    let device = {
+                        token: connection.token,
+                        os: connection.os
+                    };
+                    object.sendUpdateFor("{}", device, function() {
+                        logger.info("sending full object");
+                        data.info = "queue_ready";
+                        action.response(connection, data, null, pId);
+                    });
                 } else {
-                    data.info = "listener_ready_for_refresh_client";
+                    object.sync(connection, function() {
+                        action.response(connection, data, null, pId);
+                    });
                 }
 
-                this.response(connection, data, null, pId);
             } else {
                 this.response(connection, null, "path_contains_dots", pId);
             }
@@ -293,12 +299,16 @@ if (cluster.isMaster) {
                 });
             }
         },
+        /**
+         * Updates last time field for the given token
+         * @param connection
+         */
         updateTime:     function (connection) {
             if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-                var key = connection.path.replaceAll("/", "\.");
+                let key = connection.path.replaceAll("/", "\.");
                 key = key.substr(1, key.length - 1);
 
-                var paths = new FlamebaseDatabase(dbPaths, "/" + key);
+                let paths = new FlamebaseDatabase(dbPaths, "/" + key);
                 paths.syncFromDatabase();
 
                 if (paths.ref === undefined) {
@@ -310,47 +320,64 @@ if (cluster.isMaster) {
                     paths.ref.tokens = {};
                 }
                 paths.ref.tokens[connection.token].time = new Date().getTime();
-                paths.ref.id = paths.ref.tokens[connection.token].time + "_" + connection.token;
+
                 paths.syncToDatabase();
             }
         },
-        updateData:     function (connection, pId) {
-            var object = this.getReference(connection, pId);
+        /**
+         * Updates the queue on on path database
+         * @param connection
+         * @param pId
+         */
+        updateQueue:     function (connection, pId) {
+            let object = this.getReference(connection, pId);
             if (typeof object === "string") {
                 this.response(connection, null, object, pId);
             } else {
-                object.FD.syncFromDatabase();
+                object.addDifferencesToQueue(connection);
+                if (connection.differences !== undefined) {
+                    object.FD.syncFromDatabase();
+                    apply(object.FD.ref, JSON.parse(connection.differences));
+                    object.FD.syncToDatabase();
 
-                var differences = connection.differences;
-
-                if (differences !== undefined) {
-                    apply(object.FD.ref, JSON.parse(differences));
                     this.updateTime(connection);
 
-                    object.FD.syncToDatabase(false, function() {
-                        if (JSON.stringify(object.FD.ref).length !== connection.len) {
-                            action.response(connection, null, "data_updated_with_differences", pId);
-                        } else {
-                            action.response(connection, "data_updated", null, pId);
-                        }
-                    });
+                    if (connection[KEY_REQUEST.CLEAN] === true) {
+                        let device = {
+                            token: connection.token,
+                            os: connection.os
+                        };
 
+                        logger.debug("sending full object");
+                        object.sendUpdateFor("{}", device, function() {
+                            let data = {};
+                            data.info = "queue_updated";
+                            action.response(connection, data, null, pId);
+                        });
+                    } else {
+                        object.sync(connection, function() {
+                            let data = {};
+                            data.info = "queue_updated";
+                            action.response(connection, data, null, pId);
+                        });
+                    }
                 } else {
                     this.response(connection, "no_diff_updated", null, pId);
                 }
             }
         },
         getReference:   function (connection, pId) {
-            var paths = new FlamebaseDatabase(dbPaths, "/");
+            let paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
-            var error = null;
+            let error = null;
+
             if (connection.path !== undefined) {
                 if (connection.path.indexOf("\.") === -1) {
                     if (connection.path.indexOf("/") === 0) {
-                        var key = connection.path.replaceAll("/", "\.");
+                        let key = connection.path.replaceAll("/", "\.");
                         key = key.substr(1, key.length - 1);
                         if (paths.ref[key] !== undefined) {
-                            return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug);
+                            return new Path(APIKey, paths, connection, dbMaster, pId, debug);
                         } else {
                             error = "holder_not_found";
                         }
@@ -368,34 +395,34 @@ if (cluster.isMaster) {
         },
         printError:     function (msg, stackMessage) {
             logger.error(msg);
-            var messages = stackMessage.split("\n");
-            for (var i = 0; i < messages.length; i++) {
+            let messages = stackMessage.split("\n");
+            for (let i = 0; i < messages.length; i++) {
                 logger.error(messages[i]);
             }
             return error;
         },
         parseRequest:   function (req, res, worker) {
-            var response = res;
+            let response = res;
 
             try {
-                var message = req.body;
-                var connection = {};     // connection element
+                let message = req.body;
+                let connection = {};     // connection element
 
-                logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
+                // logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
                 logger.debug(VARS.WORKER + ": " + worker);
 
 
                 if (message === undefined || message === null) {
                     logger.error(ERROR.MISSING_PARAMS);
-                    var result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_PARAMS};
+                    let result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_PARAMS};
                     response.contentType(VARS.APPLICATION_JSON);
                     response.send(JSON.stringify(result));
                     return null
                 }
 
-                var keys = Object.keys(message); // keys
-                for (var i = 0; i < keys.length; i++) {
-                    var key = keys[i];
+                let keys = Object.keys(message); // keys
+                for (let i = 0; i < keys.length; i++) {
+                    let key = keys[i];
                     switch (key) {
                         case KEY_REQUEST.METHOD:
                             connection[key] = message[key];
@@ -409,12 +436,12 @@ if (cluster.isMaster) {
 
                         case KEY_REQUEST.SHA1:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.SHA1 + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.SHA1 + ": " + connection[key]);
                             break;
 
                         case KEY_REQUEST.TOKEN:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.TOKEN + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.TOKEN + ": " + connection[key]);
                             break;
 
                         case KEY_REQUEST.DIFFERENCES:
@@ -429,17 +456,17 @@ if (cluster.isMaster) {
 
                         case KEY_REQUEST.LEN:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.LEN + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.LEN + ": " + connection[key]);
                             break;
 
                         case KEY_REQUEST.OS:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.OS + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.OS + ": " + connection[key]);
                             break;
 
                         case KEY_REQUEST.CLEAN:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
                             break;
 
                         default:
@@ -477,9 +504,9 @@ if (cluster.isMaster) {
 
                     case "update_data":
                         try {
-                            this.updateData(connection, worker);
+                            this.updateQueue(connection, worker);
                         } catch (e) {
-                            logger.error("there was an error parsing request from updateData: " + e.toString());
+                            logger.error("there was an error parsing request from updateQueue: " + e.toString());
                             this.response(connection, null, "cluster_" + worker + ERROR_RESPONSE.UPDATE_DATA, worker);
                         }
                         break;
@@ -502,7 +529,7 @@ if (cluster.isMaster) {
             } catch (e) {
                 logger.error("there was an error parsing request: " + e.toString());
 
-                var result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_WRONG_PARAMS};
+                let result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_WRONG_PARAMS};
 
                 res.contentType('application/json');
                 res.send(JSON.stringify(result));
@@ -517,7 +544,7 @@ if (cluster.isMaster) {
     }));
 
     app.use(bodyParser.json({limit: '50mb'}));
-    app.use(timeout('60s'));
+    app.use(timeout('120s'));
 
     app.route('/')
         .get(function (req, res) {

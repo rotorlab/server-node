@@ -1,9 +1,12 @@
-var forever = require('forever-monitor');
-var log4js  = require('log4js');
+const forever =            require('forever-monitor');
+const logjs =              require('logjsx');
 
 const TAG   = "Flamebase Database";
-var logger  = log4js.getLogger(TAG);
-logger.level = 'all';
+var logger = new logjs();
+
+logger.init({
+    level : "DEBUG"
+});
 
 
 function FlamebaseDatabaseCluster(database, port, APIKey, debug) {
