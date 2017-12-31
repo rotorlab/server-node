@@ -1,422 +1,971 @@
-[36mMaster 88011 is running[39m
+[36mMaster 98094 is running[39m
 [36mserver cluster started on port 1507 on 2 worker[39m
 [36mserver cluster started on port 1507 on 3 worker[39m
-[36mserver cluster started on port 1507 on 4 worker[39m
 [36mserver cluster started on port 1507 on 1 worker[39m
-[36mserver cluster started on port 1507 on 7 worker[39m
+[36mserver cluster started on port 1507 on 4 worker[39m
+[36mserver cluster started on port 1507 on 6 worker[39m
 [36mserver cluster started on port 1507 on 5 worker[39m
 [36mserver cluster started on port 1507 on 8 worker[39m
-[36mserver cluster started on port 1507 on 6 worker[39m
-[34muser-agent: okhttp/3.8.0[39m
+[36mserver cluster started on port 1507 on 7 worker[39m
 [34mworker: 2[39m
-[34mlen: 1093[39m
 [34mmethod: create_listener[39m
-[34mos: android[39m
 [34mpath: /contacts[39m
-[34msha1: 3C0B5F169B72CED3439ED379CD0FBDD27BC4A6AF[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1713[39m
-[34mref: /[39m
-[34mlen: 1713[39m
-[34mref: /contacts[39m
-[34mlen: 1093[39m
 [36m{
-    "huhuhu" : {
-        "id"    : "blabla",
-        "name"  : "huhuhu",
+    "martinez" : {
+        "id"    : "juan",
+        "name"  : "martinez",
         "os"    : "android",
-        "token" : "cV941dQRGO8:APA91bGs30EHuRCMNl2tNmcmwpK9BgxM_574F3HPOba_Oaz7N7tAjZwPLcJ-a3n8CPHY1ktIjCQJVnnRcc_bvzeTdPvFaokHOHgedcnJNNGXyShuKoJnGHx_N6mOPyI46VmgWkR-rgLh"
+        "token" : "ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM"
     },
-    "hahah" : {
-        "id"    : "juanjo",
-        "name"  : "hahah",
+    "yiiii" : {
+        "id"    : "yeeeeee",
+        "name"  : "yiiii",
         "os"    : "android",
-        "token" : "ct-9xp-59Aw:APA91bHsgovifkmc5H8Bwv8tNUOF8E8iYMTWdGEUgxj3Y24oxi-umuO9KxZL7_IMNwMiunm-XR2kCI4J6dnzBP7DDmsXC41ItJqZ9BhXdQuk7_Z7tGZj2i90w2Ifaq_LVmCzjvOptPH6"
+        "token" : "cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk"
     },
-    "osborne" : {
-        "id"    : "martin",
-        "name"  : "osborne",
+    "lolo" : {
+        "id"    : "lala",
+        "name"  : "lolo",
         "os"    : "android",
-        "token" : "cV941dQRGO8:APA91bGs30EHuRCMNl2tNmcmwpK9BgxM_574F3HPOba_Oaz7N7tAjZwPLcJ-a3n8CPHY1ktIjCQJVnnRcc_bvzeTdPvFaokHOHgedcnJNNGXyShuKoJnGHx_N6mOPyI46VmgWkR-rgLh"
+        "token" : "f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_"
     },
-    "montoya" : {
-        "id"    : "marcos",
-        "name"  : "montoya",
+    "efraespada" : {
+        "name"  : "efraespada",
         "os"    : "android",
-        "token" : "d0TxYoITyDY:APA91bGE36pDCS14eGprI9ZqXtSTd6MXw53FF4NVdn5sXKvNK7jKaIq-ubSgBjOxvucNZI0nFQAzQ9srlIAaCei1FBBrF8NX2aLSRP426Gv_Mc47NDZa1Pi27RW_xsl5pq0wNJFwSFy0"
+        "token" : "fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x"
     },
-    "polo" : {
-        "id"    : "marco",
-        "name"  : "polo",
+    "null" : {
         "os"    : "android",
-        "token" : "fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S"
+        "token" : "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"
+    },
+    "manuel" : {
+        "id"    : "juan",
+        "name"  : "manuel",
+        "os"    : "android",
+        "token" : "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"
     }
 }[39m
-[34muser-agent: okhttp/3.8.0[39m
 [34mworker: 3[39m
-[34mclean: false[39m
-[34mdifferences: {}[39m
-[34mlen: 1093[39m
+[34mdifferences: {"$set":{"yiiii.id":"yeeeeee","yiiii.name":"yiiii","yiiii.os":"android","yiiii.token":"cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk","lolo.id":"lala","lolo.name":"lolo","lolo.os":"android","lolo.token":"f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_","null.os":"android","null.token":"cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN","manuel.id":"juan","manuel.name":"manuel","manuel.os":"android","manuel.token":"cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN","martinez.id":"juan","martinez.name":"martinez","martinez.os":"android","martinez.token":"ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM","efraespada.name":"efraespada","efraespada.os":"android","efraespada.token":"fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x"}}[39m
 [34mmethod: update_data[39m
 [34mpath: /contacts[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1713[39m
-[34mref: /contacts[39m
-[34mlen: 1093[39m
-[34mref: /[39m
-[34mlen: 1713[39m
-[34mref: /contacts[39m
-[34mlen: 253[39m
-[34mref: /[39m
-[34mlen: 1731[39m
-[36mworker: 3[39m
-[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 4[39m
-[34mlen: 2[39m
-[34mmethod: create_listener[39m
-[34mos: android[39m
-[34mpath: /chats/1514578840774[39m
-[34msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1731[39m
-[34mref: /[39m
-[34mlen: 1731[39m
-[34mref: /chats/1514578840774[39m
-[34mlen: 691[39m
-[36m{
-    "messages" : {
-        "1514641522973" : {
-            "author" : "polo",
-            "text"   : "dfgherfgh"
-        },
-        "1514641523476" : {
-            "author" : "polo",
-            "text"   : ""
-        },
-        "1514641557235" : {
-            "author" : "polo",
-            "text"   : "hola"
-        },
-        "1514641565050" : {
-            "author" : "polo",
-            "text"   : "ydvbsdfbv"
-        },
-        "1514641566813" : {
-            "author" : "polo",
-            "text"   : "d"
-        },
-        "1514641567492" : {
-            "author" : "polo",
-            "text"   : "v"
-        },
-        "1514641568652" : {
-            "author" : "polo",
-            "text"   : "dfv"
-        },
-        "1514641569357" : {
-            "author" : "polo",
-            "text"   : "v"
-        },
-        "1514641569855" : {
-            "author" : "polo",
-            "text"   : "xvc"
-        },
-        "1514641569918" : {
-            "author" : "polo",
-            "text"   : ""
-        },
-        "1514641570547" : {
-            "author" : "polo",
-            "text"   : ""
-        },
-        "1514641572894" : {
-            "author" : "polo",
-            "text"   : "vcsdfvsdfv"
-        },
-        "1514641579387" : {
-            "author" : "polo",
-            "text"   : "🦄🦄🐶"
-        },
-        "1514641580298" : {
-            "author" : "polo",
-            "text"   : ""
+[34msending full object[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6982680066333302000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726036787687%0dea1e8f00364492"
         }
-    },
-    "name" : "yuju"
+    ]
 }[39m
 [36msending full object[39m
 [36mworker: 2[39m
-[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":1093},"error":null}[39m
-[34muser-agent: okhttp/3.8.0[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":1270},"error":null}[39m
 [34mworker: 1[39m
-[34mclean: false[39m
-[34mdifferences: {}[39m
-[34mlen: 2[39m
+[34mdifferences: {"$set":{"yiiii.id":"yeeeeee","yiiii.name":"yiiii","yiiii.os":"android","yiiii.token":"cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk","lolo.id":"lala","lolo.name":"lolo","lolo.os":"android","lolo.token":"f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_","null.os":"android","null.token":"cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN","manuel.id":"juan","manuel.name":"manuel","manuel.os":"android","manuel.token":"cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN","martinez.id":"juan","martinez.name":"martinez","martinez.os":"android","martinez.token":"ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM","efraespada.name":"efraespada","efraespada.os":"android","efraespada.token":"fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x"}}[39m
 [34mmethod: update_data[39m
-[34mpath: /chats/1514578840774[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1731[39m
-[34mref: /chats/1514578840774[39m
-[34mlen: 691[39m
-[34mref: /[39m
-[34mlen: 1731[39m
-[34mref: /chats.1514578840774[39m
-[34mlen: 283[39m
-[34mref: /[39m
-[34mlen: 1750[39m
+[34mpath: /contacts[39m
 [36mworker: 1[39m
 [36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 7[39m
-[34mlen: 2[39m
-[34mmethod: create_listener[39m
-[34mos: android[39m
-[34mpath: /chats/1514579124824[39m
-[34msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1750[39m
-[34mref: /[39m
-[34mlen: 1750[39m
-[34mref: /chats/1514579124824[39m
-[34mlen: 35[39m
-[36m{
-    "messages" : {},
-    "name"     : "holiiiiiii"
-}[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 5[39m
-[34mclean: false[39m
-[34mdifferences: {}[39m
-[34mlen: 2[39m
-[34mmethod: update_data[39m
-[34mpath: /chats/1514579124824[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1750[39m
-[34mref: /chats/1514579124824[39m
-[34mlen: 35[39m
-[34mref: /[39m
-[34mlen: 1750[39m
-[34mref: /chats.1514579124824[39m
-[34mlen: 283[39m
-[34mref: /[39m
-[34mlen: 1769[39m
-[36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1731[39m
-[36mworker: 5[39m
-[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
-[36msending full object[39m
-[36mworker: 4[39m
-[36mresponse: {"status":"OK","data":{"queueLen":1,"info":"queue_ready","objectLen":691},"error":null}[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 8[39m
-[34mlen: 47[39m
-[34mmethod: create_listener[39m
-[34mos: android[39m
-[34mpath: /chats/1514579202847[39m
-[34msha1: 48AD6340BBEAA4351CEABEB3DD94FCC865865103[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1769[39m
-[34mref: /[39m
-[34mlen: 1769[39m
-[34mref: /chats/1514579202847[39m
-[34mlen: 226[39m
-[36m{
-    "messages" : {
-        "1514641883238" : {
-            "author" : "polo",
-            "text"   : "  bbbhj"
-        },
-        "1514641904212" : {
-            "author" : "polo",
-            "text"   : ""
-        },
-        "1514641907943" : {
-            "author" : "polo",
-            "text"   : ""
-        },
-        "1514641958559" : {
-            "author" : "polo",
-            "text"   : "fxvcbsdfbg"
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6848638085166298000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726037062665%0dea1e8f00364492"
         }
-    },
-    "name" : "tgggggggg"
+    ]
 }[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 6[39m
-[34mclean: false[39m
-[34mdifferences: {"$unset":{"members":[]},"$set":{"messages":{},"members":[]}}[39m
-[34mlen: 47[39m
-[34mmethod: update_data[39m
-[34mpath: /chats/1514579202847[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1769[39m
-[34mref: /chats/1514579202847[39m
-[34mlen: 226[39m
-[34mref: /[39m
-[34mlen: 1769[39m
-[34mref: /chats.1514579202847[39m
-[34mlen: 323[39m
-[34mref: /[39m
-[34mlen: 1846[39m
+[36mworker: 3[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5205960135602026000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726037191827%0dea1e8f00364492"
+        }
+    ]
+}[39m
 [36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1750[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6294245158661027000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726037372210%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6264815599708811000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726037598840%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 7053757709469763000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726037790497%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 4[39m
+[34mmethod: create_listener[39m
+[34mpath: /chats/1514726155977[39m
+[36m{}[39m
+[36mworker: 4[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":2},"error":null}[39m
+[34mworker: 6[39m
+[34mdifferences: {"$set":{"members":["manuel"],"messages":{},"name":"jajajaJO"}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726155977[39m
+[34msending full object[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8468354216125427000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726156648219%0dea1e8f00364492"
+        }
+    ]
+}[39m
 [36mworker: 6[39m
 [36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 2[39m
-[34mclean: false[39m
+[34mworker: 5[39m
+[34mmethod: create_listener[39m
+[34mpath: /contacts[39m
+[36m{
+    "martinez" : {
+        "id"    : "juan",
+        "name"  : "martinez",
+        "os"    : "android",
+        "token" : "ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM"
+    },
+    "yiiii" : {
+        "id"    : "yeeeeee",
+        "name"  : "yiiii",
+        "os"    : "android",
+        "token" : "cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk"
+    },
+    "lolo" : {
+        "id"    : "lala",
+        "name"  : "lolo",
+        "os"    : "android",
+        "token" : "f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_"
+    },
+    "efraespada" : {
+        "name"  : "efraespada",
+        "os"    : "android",
+        "token" : "fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x"
+    },
+    "null" : {
+        "os"    : "android",
+        "token" : "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"
+    },
+    "manuel" : {
+        "id"    : "juan",
+        "name"  : "manuel",
+        "os"    : "android",
+        "token" : "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"
+    }
+}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8820919829739910000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726462445303%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msending full object[39m
+[36mworker: 5[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":1270},"error":null}[39m
+[34mworker: 8[39m
 [34mdifferences: {}[39m
-[34mlen: 1093[39m
 [34mmethod: update_data[39m
 [34mpath: /contacts[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1846[39m
-[34mref: /contacts[39m
-[34mlen: 1093[39m
-[34mref: /[39m
-[34mlen: 1846[39m
-[34mref: /contacts[39m
-[34mlen: 272[39m
-[34mref: /[39m
-[34mlen: 1865[39m
-[36mworker: 2[39m
-[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
-[36msending full object[39m
-[36mworker: 7[39m
-[36mresponse: {"status":"OK","data":{"queueLen":1,"info":"queue_ready","objectLen":35},"error":null}[39m
-[36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1731[39m
-[36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1769[39m
-[36msending full object[39m
+[34msending full object[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8913232464430122000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726462851371%0dea1e8f00364492"
+        }
+    ]
+}[39m
 [36mworker: 8[39m
-[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":226},"error":null}[39m
-[36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1865[39m
-[36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1846[39m
-[36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1750[39m
-[36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1846[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 3[39m
-[34mclean: false[39m
-[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514642172158.author":"polo","messages.1514642172158.text":"hola","members":[]}}[39m
-[34mlen: 287[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mworker: 7[39m
+[34mdifferences: {"$set":{"espada.id":"efrain","espada.name":"espada","espada.os":"android","espada.token":"c2PGNC4dPDY:APA91bGXWFzglwvXFOjUiHi0xFVke7nFh6QM3t5MgxOkdq_Sny3MjNX3ZC-vWkukKmFDYuONb73owouoWh4EFZSlj2t6gSRzZ3xmsSAVSDiw9kWkrHPH1JfO3sMlX1GbSsUxD20uz52B"}}[39m
 [34mmethod: update_data[39m
-[34mpath: /chats/1514579202847[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1828[39m
-[34mref: /chats/1514579202847[39m
-[34mlen: 34[39m
-[34mref: /[39m
-[34mlen: 1828[39m
-[34mref: /chats.1514579202847[39m
-[34mlen: 463[39m
-[34mref: /[39m
-[34mlen: 1968[39m
+[34mpath: /contacts[39m
+[36mworker: 7[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 7154023006588745000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726480631811%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6453930556882250000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726480806091%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 4640235525200755000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726480959996%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8858188108713457000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726481128482%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6575981457309277000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726481336502%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8432205924509340000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726481496684%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 2[39m
+[34mmethod: create_listener[39m
+[34mpath: /chats/1514726522538[39m
+[36m{}[39m
+[36mworker: 2[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":2},"error":null}[39m
+[34mworker: 3[39m
+[34mdifferences: {"$set":{"members":["espada"],"messages":{},"name":"halooo"}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
+[34msending full object[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8916263128898383000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726518091282%0dea1e8f00364492"
+        }
+    ]
+}[39m
 [36mworker: 3[39m
 [36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
-[36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1968[39m
-[36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1890[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 4[39m
-[34mclean: false[39m
-[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514642173079.author":"polo","messages.1514642173079.text":"","members":[]}}[39m
-[34mlen: 331[39m
+[34mworker: 1[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"members":[],"messages.1514726551222.author":"espada","messages.1514726551222.text":"holi"}}[39m
 [34mmethod: update_data[39m
-[34mpath: /chats/1514579202847[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1751[39m
-[34mref: /chats/1514579202847[39m
-[34mlen: 81[39m
-[34mref: /[39m
-[34mlen: 1751[39m
-[34mref: /chats.1514579202847[39m
-[34mlen: 381[39m
-[34mref: /[39m
-[34mlen: 1886[39m
+[34mpath: /chats/1514726522538[39m
+[36mworker: 1[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5205917997492399000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726546774988%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 7905281856039903000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726546962306%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 4[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726567540.author":"espada","messages.1514726567540.text":"que tal?","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
 [36mworker: 4[39m
 [36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5808821370302432000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726563147422%0dea1e8f00364492"
+        }
+    ]
+}[39m
 [36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1886[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 1[39m
-[34mmethod: remove_listener[39m
-[34mpath: /chats/1514579202847[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1751[39m
-[36mworker: 1[39m
-[36mresponse: {"status":"OK","data":{"info":"listener_removed"},"error":null}[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 7[39m
-[34mlen: 2[39m
-[34mmethod: create_listener[39m
-[34mos: android[39m
-[34mpath: /chats/1514642213628[39m
-[34msha1: BF21A9E8FBC5A3846FB05B4FA0859E0917B2202F[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1548[39m
-[34mref: /[39m
-[34mlen: 1817[39m
-####################### error: DataError: Can't find dataPath: /chats/1514642213628. Stopped at 1514642213628
-####################### generating tree 
-[36m[object global][39m
-[34mref: /chats/1514642213628[39m
-[34mlen: 2[39m
-[36m{}[39m
-[34mref: /[39m
-[34mlen: 1817[39m
-[36mworker: 7[39m
-[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":2},"error":null}[39m
-[34muser-agent: okhttp/3.8.0[39m
-[34mworker: 5[39m
-[34mclean: false[39m
-[34mdifferences: {"$set":{"members":["polo"],"messages":{},"name":"jauja"}}[39m
-[34mlen: 49[39m
+[34mworker: 6[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726621332.author":"espada","messages.1514726621332.text":"jejejejej","members":[]}}[39m
 [34mmethod: update_data[39m
-[34mpath: /chats/1514642213628[39m
-[34mtoken: fspymKOcLJc:APA91bFWEevDKXClR-iuIgdO1_jqx-_OgkwdRcHeMY4ubpktC94qOz_-F6tH0zThBU9DyIJDqlCsExRUYQwcRcSTZI2mu6Tf4qQgzPvcvTy2wTkD-ZyNK7DqvsfIQZcmrdeG8H7JAf5S[39m
-[34mref: /[39m
-[34mlen: 1817[39m
-[34mref: /chats/1514642213628[39m
-[34mlen: 2[39m
-[34mref: /[39m
-[34mlen: 1817[39m
-[34mref: /chats.1514642213628[39m
-[34mlen: 320[39m
-[34mref: /[39m
-[34mlen: 1891[39m
+[34mpath: /chats/1514726522538[39m
+[36mworker: 6[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6545501841335242000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726616917915%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 5[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726654596.author":"espada","messages.1514726654596.text":"yujuuuuuuuuuuu","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
 [36mworker: 5[39m
 [36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 4895356940258524000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726650208434%0dea1e8f00364492"
+        }
+    ]
+}[39m
 [36msuccess event[39m
-[34mref: /[39m
-[34mlen: 1891[39m
+[34mworker: 8[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726667630.author":"espada","messages.1514726667630.text":"guay!!!!","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
+[36mworker: 8[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6916920720351732000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726663231915%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 7[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726675230.author":"espada","messages.1514726675230.text":"jxjckfjc","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
+[36mworker: 7[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8300954521580355000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726670751046%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 2[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726677812.author":"espada","messages.1514726677812.text":"jxjzjxjc","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
+[36mworker: 2[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8413044145298737000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726673415144%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 3[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726679864.author":"espada","messages.1514726679864.text":"nxjcnc","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
+[36mworker: 3[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5914844370548765000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726675496709%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 1[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726684044.author":"espada","messages.1514726684044.text":"nxjxidmfkckd","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
+[36mworker: 1[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8852509015546188000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726679574696%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 4[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726686398.author":"espada","messages.1514726686398.text":"nxjcjdjxkd","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
+[36mworker: 4[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6205125512528892000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726681907014%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 6[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726691012.author":"espada","messages.1514726691012.text":"nxkcjfndjf","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
+[36mworker: 6[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5723364967376769000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726686727210%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 5[39m
+[34mmethod: create_listener[39m
+[34mpath: /chats/1514726711395[39m
+[36m{}[39m
+[36mworker: 5[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":2},"error":null}[39m
+[34mworker: 8[39m
+[34mdifferences: {"$set":{"members":["espada"],"messages":{},"name":"Marco polo"}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726711395[39m
+[34msending full object[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8595032957159404000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726706921652%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36mworker: 8[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mworker: 7[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"members":[],"messages.1514726722597.author":"espada","messages.1514726722597.text":"Marco"}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726711395[39m
+[36mworker: 7[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5641344689589515000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726718185981%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 7103668166748561000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726718422218%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 2[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726726004.author":"espada","messages.1514726726004.text":"POLO","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726711395[39m
+[36mworker: 2[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5311340001829231000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726721581744%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 3[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726731326.author":"espada","messages.1514726731326.text":"Marco","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726711395[39m
+[36mworker: 3[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 4700300883483504000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726726804462%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 1[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726731326.author":"espada","messages.1514726731326.text":"Marco","messages.1514726736786.author":"espada","messages.1514726736786.text":"POLO","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726711395[39m
+[36mworker: 1[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8124467973040898000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726732420667%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 4[39m
+[34mmethod: create_listener[39m
+[34mpath: /contacts[39m
+[36m{
+    "martinez" : {
+        "id"    : "juan",
+        "name"  : "martinez",
+        "os"    : "android",
+        "token" : "ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM"
+    },
+    "yiiii" : {
+        "id"    : "yeeeeee",
+        "name"  : "yiiii",
+        "os"    : "android",
+        "token" : "cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk"
+    },
+    "lolo" : {
+        "id"    : "lala",
+        "name"  : "lolo",
+        "os"    : "android",
+        "token" : "f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_"
+    },
+    "efraespada" : {
+        "name"  : "efraespada",
+        "os"    : "android",
+        "token" : "fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x"
+    },
+    "null" : {
+        "os"    : "android",
+        "token" : "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"
+    },
+    "manuel" : {
+        "id"    : "juan",
+        "name"  : "manuel",
+        "os"    : "android",
+        "token" : "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"
+    },
+    "espada" : {
+        "id"    : "efrain",
+        "name"  : "espada",
+        "os"    : "android",
+        "token" : "c2PGNC4dPDY:APA91bGXWFzglwvXFOjUiHi0xFVke7nFh6QM3t5MgxOkdq_Sny3MjNX3ZC-vWkukKmFDYuONb73owouoWh4EFZSlj2t6gSRzZ3xmsSAVSDiw9kWkrHPH1JfO3sMlX1GbSsUxD20uz52B"
+    }
+}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5310289188579239000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726813881061%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msending full object[39m
+[36mworker: 4[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":1489},"error":null}[39m
+[34mworker: 6[39m
+[34mdifferences: {"$set":{"espada.id":"efrain","espada.name":"espada","espada.os":"android","espada.token":"c2PGNC4dPDY:APA91bGXWFzglwvXFOjUiHi0xFVke7nFh6QM3t5MgxOkdq_Sny3MjNX3ZC-vWkukKmFDYuONb73owouoWh4EFZSlj2t6gSRzZ3xmsSAVSDiw9kWkrHPH1JfO3sMlX1GbSsUxD20uz52B","efraespada.name":"efraespada","efraespada.os":"android","efraespada.token":"fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x","lolo.id":"lala","lolo.name":"lolo","lolo.os":"android","lolo.token":"f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_","martinez.id":"juan","martinez.name":"martinez","martinez.os":"android","martinez.token":"ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM","null.os":"android","null.token":"cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN","yiiii.id":"yeeeeee","yiiii.name":"yiiii","yiiii.os":"android","yiiii.token":"cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk","manuel.id":"juan","manuel.name":"manuel","manuel.os":"android","manuel.token":"cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"}}[39m
+[34mmethod: update_data[39m
+[34mpath: /contacts[39m
+[34msending full object[39m
+[34mworker: 5[39m
+[34mmethod: create_listener[39m
+[34mpath: /chats/1514726522538[39m
+[36m{
+    "messages" : {
+        "1514726551222" : {
+            "author" : "espada",
+            "text"   : "holi"
+        },
+        "1514726567540" : {
+            "author" : "espada",
+            "text"   : "que tal?"
+        },
+        "1514726621332" : {
+            "author" : "espada",
+            "text"   : "jejejejej"
+        },
+        "1514726654596" : {
+            "author" : "espada",
+            "text"   : "yujuuuuuuuuuuu"
+        },
+        "1514726667630" : {
+            "author" : "espada",
+            "text"   : "guay!!!!"
+        },
+        "1514726675230" : {
+            "author" : "espada",
+            "text"   : "jxjckfjc"
+        },
+        "1514726677812" : {
+            "author" : "espada",
+            "text"   : "jxjzjxjc"
+        },
+        "1514726679864" : {
+            "author" : "espada",
+            "text"   : "nxjcnc"
+        },
+        "1514726684044" : {
+            "author" : "espada",
+            "text"   : "nxjxidmfkckd"
+        },
+        "1514726686398" : {
+            "author" : "espada",
+            "text"   : "nxjcjdjxkd"
+        },
+        "1514726691012" : {
+            "author" : "espada",
+            "text"   : "nxkcjfndjf"
+        }
+    },
+    "name" : "halooo"
+}[39m
+[34mworker: 8[39m
+[34mdifferences: {"$set":{"members":[],"messages.1514726551222.author":"espada","messages.1514726551222.text":"holi","messages.1514726567540.author":"espada","messages.1514726567540.text":"que tal?","messages.1514726621332.author":"espada","messages.1514726621332.text":"jejejejej","messages.1514726654596.author":"espada","messages.1514726654596.text":"yujuuuuuuuuuuu","messages.1514726667630.author":"espada","messages.1514726667630.text":"guay!!!!","messages.1514726675230.author":"espada","messages.1514726675230.text":"jxjckfjc","messages.1514726677812.author":"espada","messages.1514726677812.text":"jxjzjxjc","messages.1514726679864.author":"espada","messages.1514726679864.text":"nxjcnc","messages.1514726684044.author":"espada","messages.1514726684044.text":"nxjxidmfkckd","messages.1514726686398.author":"espada","messages.1514726686398.text":"nxjcjdjxkd","messages.1514726691012.author":"espada","messages.1514726691012.text":"nxkcjfndjf","name":"halooo"}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726522538[39m
+[34msending full object[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6482053422597198000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726814340534%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36mworker: 6[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mworker: 7[39m
+[34mmethod: create_listener[39m
+[34mpath: /chats/1514726711395[39m
+[36m{
+    "messages" : {
+        "1514726722597" : {
+            "author" : "espada",
+            "text"   : "Marco"
+        },
+        "1514726726004" : {
+            "author" : "espada",
+            "text"   : "POLO"
+        },
+        "1514726731326" : {
+            "author" : "espada",
+            "text"   : "Marco"
+        },
+        "1514726736786" : {
+            "author" : "espada",
+            "text"   : "POLO"
+        }
+    },
+    "name" : "Marco polo"
+}[39m
+[34mworker: 2[39m
+[34mdifferences: {"$set":{"members":[],"messages.1514726722597.author":"espada","messages.1514726722597.text":"Marco","messages.1514726726004.author":"espada","messages.1514726726004.text":"POLO","name":"Marco polo"}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726711395[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5247753134886782000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726814414235%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msending full object[39m
+[36mworker: 5[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":633},"error":null}[39m
+[34msending full object[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8330440410001840000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726814478971%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36mworker: 8[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mworker: 3[39m
+[34mdifferences: {"$set":{"espada.id":"efrain","espada.name":"espada","espada.os":"android","espada.token":"c2PGNC4dPDY:APA91bGXWFzglwvXFOjUiHi0xFVke7nFh6QM3t5MgxOkdq_Sny3MjNX3ZC-vWkukKmFDYuONb73owouoWh4EFZSlj2t6gSRzZ3xmsSAVSDiw9kWkrHPH1JfO3sMlX1GbSsUxD20uz52B","efraespada.name":"efraespada","efraespada.os":"android","efraespada.token":"fxE82XSAtvM:APA91bH6EH7d5DMgbpMzm8HmewlzWK8f_Lk11pXKyc-dk4SBWmZGEgIcjfSd1DEPuXvMr3-3eX4AgN_OW0NFSTYDBqMM8qrXAIAgtuzS0WfVilKK_hA6o8fWxUpq8g20BCBJ8O5UXi1x","lolo.id":"lala","lolo.name":"lolo","lolo.os":"android","lolo.token":"f_6Ny3xUQrU:APA91bGYW6gKz0e8Vhqrb_5ZKLqx6tnSWsYwQ24kw4mnJ5YCMcTPg8hcGQu0jGm_60olI2qdi8ZOKZ_tZNwkgEUxRLUw5Gcap6oHIZF3QvWTxRgyk6HIipdpQzJqJVyHqS8mBFLFBgV_","martinez.id":"juan","martinez.name":"martinez","martinez.os":"android","martinez.token":"ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM","null.os":"android","null.token":"cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN","yiiii.id":"yeeeeee","yiiii.name":"yiiii","yiiii.os":"android","yiiii.token":"cGxijJ4bH-Y:APA91bFDmzf3Pa60rErMTE4jmeWpG0zIQwt60rcIR22t_5GA-Yd8cL8zXNBHdBsYg4JU7ek_C3A_d22n7z07CmGVon2aoKt-VSb1KOki78azLxOCWWI7uMb4ooeSvJrI-BkgaaYpf3Kk","manuel.id":"juan","manuel.name":"manuel","manuel.os":"android","manuel.token":"cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN"}}[39m
+[34mmethod: update_data[39m
+[34mpath: /contacts[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6538538743840579000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726814532398%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msending full object[39m
+[36mworker: 7[39m
+[36mresponse: {"status":"OK","data":{"queueLen":0,"info":"queue_ready","objectLen":236},"error":null}[39m
+[36mworker: 3[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6730324405887036000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726814601909%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36mworker: 2[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 6769333477397462000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726814727505%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 5216523884429793000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726814926630%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8815966555975696000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726815114720%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8922151703044139000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726815324997%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 7951277306254980000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726815539027%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8266720455255284000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726815724596%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mworker: 1[39m
+[34mdifferences: {"$unset":{"members":[]},"$set":{"messages.1514726864644.author":"espada","messages.1514726864644.text":"holi","members":[]}}[39m
+[34mmethod: update_data[39m
+[34mpath: /chats/1514726711395[39m
+[36mworker: 1[39m
+[36mresponse: {"status":"OK","data":{"info":"queue_updated"},"error":null}[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8065329007613715000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726860203027%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m
+[34mSuccessfully sent with response: {
+    "multicast_id"  : 8600262171832833000,
+    "success"       : 1,
+    "failure"       : 0,
+    "canonical_ids" : 0,
+    "results"       : [
+        {
+            "message_id" : "0:1514726860377826%0dea1e8f00364492"
+        }
+    ]
+}[39m
+[36msuccess event[39m

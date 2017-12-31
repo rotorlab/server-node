@@ -3,6 +3,12 @@ var JsonDB =                require('node-json-db');
 var FCM =                   require('fcm-push');
 var diff =                  require('rus-diff').diff;
 const logjs =                 require('logjsx');
+var logger = new logjs();
+
+logger.init({
+    level : "DEBUG"
+});
+
 var SN =                    require('sync-node');
 var sha1 =                  require('sha1');
 
@@ -45,12 +51,6 @@ function FlamebaseDatabase(database, path) {
     this.lastStringReference = JSON.stringify({});
     this.pushConfig = null;
     this.fcm = null;
-
-    var logger = new logjs();
-
-    logger.init({
-        level : "DEBUG"
-    });
 
     /**
      * sync from database
@@ -407,24 +407,16 @@ function FlamebaseDatabase(database, path) {
                     notification: send.notification === null ? {} : send.notification
                 };
 
-
-                if (object.debugVal) {
-                    logger.debug("Sending to: " + JSON.stringifyAligned(message.registration_ids));
-                }
-
                 object.fcm.send(message)
                     .then(function (response) {
-                        if (object.debugVal) {
-                            logger.debug("Successfully sent with response: " + JSON.stringifyAligned(JSON.parse(response)));
-                        }
+                        logger.debug("Successfully sent with response: " + JSON.stringifyAligned(JSON.parse(response)));
+
                         if (success !== undefined) {
                             success();
                         }
                         resolve();
                     })
                     .catch(function (err) {
-                        // logger.info("api key: " + object.pushConfig.APIKey());
-                        // logger.error("message: " + JSON.stringifyAligned(message));
                         if (fail !== undefined) {
                             fail(err);
                         }
@@ -442,10 +434,6 @@ function FlamebaseDatabase(database, path) {
         let partsToSend = [];
 
         let c = content;
-
-        if (this.debugVal) {
-            logger.debug("slicing: " + c);
-        }
 
         c = this.string2Hex(c);
 

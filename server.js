@@ -320,6 +320,7 @@ if (cluster.isMaster) {
                     paths.ref.tokens = {};
                 }
                 paths.ref.tokens[connection.token].time = new Date().getTime();
+
                 paths.syncToDatabase();
             }
         },
@@ -341,11 +342,25 @@ if (cluster.isMaster) {
 
                     this.updateTime(connection);
 
-                    object.sync(connection, function() {
-                        let data = {};
-                        data.info = "queue_updated";
-                        action.response(connection, data, null, pId);
-                    });
+                    if (connection[KEY_REQUEST.CLEAN] === true) {
+                        let device = {
+                            token: connection.token,
+                            os: connection.os
+                        };
+
+                        logger.debug("sending full object");
+                        object.sendUpdateFor("{}", device, function() {
+                            let data = {};
+                            data.info = "queue_updated";
+                            action.response(connection, data, null, pId);
+                        });
+                    } else {
+                        object.sync(connection, function() {
+                            let data = {};
+                            data.info = "queue_updated";
+                            action.response(connection, data, null, pId);
+                        });
+                    }
                 } else {
                     this.response(connection, "no_diff_updated", null, pId);
                 }
@@ -355,6 +370,7 @@ if (cluster.isMaster) {
             let paths = new FlamebaseDatabase(dbPaths, "/");
             paths.syncFromDatabase();
             let error = null;
+
             if (connection.path !== undefined) {
                 if (connection.path.indexOf("\.") === -1) {
                     if (connection.path.indexOf("/") === 0) {
@@ -392,7 +408,7 @@ if (cluster.isMaster) {
                 let message = req.body;
                 let connection = {};     // connection element
 
-                logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
+                // logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
                 logger.debug(VARS.WORKER + ": " + worker);
 
 
@@ -420,12 +436,12 @@ if (cluster.isMaster) {
 
                         case KEY_REQUEST.SHA1:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.SHA1 + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.SHA1 + ": " + connection[key]);
                             break;
 
                         case KEY_REQUEST.TOKEN:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.TOKEN + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.TOKEN + ": " + connection[key]);
                             break;
 
                         case KEY_REQUEST.DIFFERENCES:
@@ -440,17 +456,17 @@ if (cluster.isMaster) {
 
                         case KEY_REQUEST.LEN:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.LEN + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.LEN + ": " + connection[key]);
                             break;
 
                         case KEY_REQUEST.OS:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.OS + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.OS + ": " + connection[key]);
                             break;
 
                         case KEY_REQUEST.CLEAN:
                             connection[key] = message[key];
-                            logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
+                            // logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
                             break;
 
                         default:
@@ -528,7 +544,7 @@ if (cluster.isMaster) {
     }));
 
     app.use(bodyParser.json({limit: '50mb'}));
-    app.use(timeout('60s'));
+    app.use(timeout('120s'));
 
     app.route('/')
         .get(function (req, res) {
