@@ -7,15 +7,15 @@
                 "queue": {},
                 "time": 1514659478702
             },
-            "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN": {
-                "os": "android",
-                "queue": {},
-                "time": 1514726036826
-            },
             "c2PGNC4dPDY:APA91bGXWFzglwvXFOjUiHi0xFVke7nFh6QM3t5MgxOkdq_Sny3MjNX3ZC-vWkukKmFDYuONb73owouoWh4EFZSlj2t6gSRzZ3xmsSAVSDiw9kWkrHPH1JfO3sMlX1GbSsUxD20uz52B": {
                 "os": "android",
                 "queue": {},
                 "time": 1514726814190
+            },
+            "dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN": {
+                "os": "android",
+                "queue": {},
+                "time": 1514952469208
             }
         }
     },
@@ -55,23 +55,7 @@
     },
     "chats.1514726155977": {
         "path": "/chats/1514726155977",
-        "tokens": {
-            "cV941dQRGO8:APA91bHicHtph6Y6RncfvvaITR7j_w3xyqkBKb-4RdZc8YtWy5g89H1wj6vdR2WQj9vrX2s3K_Iymj9IgweN2MDGkR40zBgNngKiRGJN-yA4Rh71TI-dmj5ukrLWBa0mGUhCFxaZ_LtN": {
-                "os": "android",
-                "queue": {
-                    "1514726156406": {
-                        "$set": {
-                            "members": [
-                                "manuel"
-                            ],
-                            "messages": {},
-                            "name": "jajajaJO"
-                        }
-                    }
-                },
-                "time": 1514726156411
-            }
-        }
+        "tokens": {}
     },
     "chats.1514726522538": {
         "path": "/chats/1514726522538",
@@ -119,6 +103,19 @@
                 "os": "android",
                 "queue": {},
                 "time": 1514726814474
+            }
+        }
+    },
+    "chats.1514928191524": {
+        "path": "/chats/1514928191524",
+        "tokens": {
+            "dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN": {
+                "os": "android",
+                "queue": {
+                    "1514952340340": {},
+                    "1514952469269": {}
+                },
+                "time": 1514952469273
             }
         }
     }

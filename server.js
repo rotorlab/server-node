@@ -537,7 +537,10 @@ if (cluster.isMaster) {
         }
     };
 
-    var app = express();
+    // var app = express();
+    var app = require('express')();
+    var server = require('http').Server(app);
+    var io = require('socket.io')(server);
 
     app.use(bodyParser.urlencoded({
         extended: true
@@ -554,7 +557,20 @@ if (cluster.isMaster) {
             action.parseRequest(req, res, cluster.worker.id)
         });
 
+    io.on('connection', function (socket) {
+        socket.emit('test', { hello: 'world' });
+        socket.on('test', function (data) {
+            logger.error(data);
+        });
+    });
+
+    server.listen(port, function () {
+        logger.info("server cluster started on port " + port + " on " + cluster.worker.id + " worker");
+    });
+
+    /*
     app.listen(port, function () {
         logger.info("server cluster started on port " + port + " on " + cluster.worker.id + " worker");
     });
+    */
 }
