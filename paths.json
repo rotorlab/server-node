@@ -2,107 +2,19 @@
     "contacts": {
         "path": "/contacts",
         "tokens": {
-            "ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM": {
-                "os": "android",
-                "queue": {},
-                "time": 1514659478702
-            },
-            "c2PGNC4dPDY:APA91bGXWFzglwvXFOjUiHi0xFVke7nFh6QM3t5MgxOkdq_Sny3MjNX3ZC-vWkukKmFDYuONb73owouoWh4EFZSlj2t6gSRzZ3xmsSAVSDiw9kWkrHPH1JfO3sMlX1GbSsUxD20uz52B": {
-                "os": "android",
-                "queue": {},
-                "time": 1514726814190
-            },
             "dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN": {
                 "os": "android",
-                "queue": {},
-                "time": 1514952469208
-            }
-        }
-    },
-    "chats.1514657827428": {
-        "path": "/chats/1514657827428",
-        "tokens": {
-            "ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM": {
-                "os": "android",
                 "queue": {
-                    "1514659478699": {}
-                },
-                "time": 1514658753967
-            }
-        }
-    },
-    "chats.1514657904134": {
-        "path": "/chats/1514657904134",
-        "tokens": {
-            "ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM": {
-                "os": "android",
-                "queue": {},
-                "time": 1514659478700
-            }
-        }
-    },
-    "chats.1514658155776": {
-        "path": "/chats/1514658155776",
-        "tokens": {
-            "ciPiEQDjUow:APA91bFg1MyIsatpWxOgsSlwj_9MjoUlSM5Hpz1ObDvUEwNOSiRV0AKPaoqU6SrhszK89LXeHS7lN7UEtISV08KLqjdNkp3jR7o-kGl3jSWPHMxaTKh6T_xp9n_8BiVVt4Ttv5zoDuuM": {
-                "os": "android",
-                "queue": {
-                    "1514658839052": {}
-                },
-                "time": 1514659478722
-            }
-        }
-    },
-    "chats.1514726155977": {
-        "path": "/chats/1514726155977",
-        "tokens": {}
-    },
-    "chats.1514726522538": {
-        "path": "/chats/1514726522538",
-        "tokens": {
-            "c2PGNC4dPDY:APA91bGXWFzglwvXFOjUiHi0xFVke7nFh6QM3t5MgxOkdq_Sny3MjNX3ZC-vWkukKmFDYuONb73owouoWh4EFZSlj2t6gSRzZ3xmsSAVSDiw9kWkrHPH1JfO3sMlX1GbSsUxD20uz52B": {
-                "os": "android",
-                "queue": {
-                    "1514726814354": {
+                    "1515019750185": {
                         "$set": {
-                            "members": [],
-                            "messages.1514726551222.author": "espada",
-                            "messages.1514726551222.text": "holi",
-                            "messages.1514726567540.author": "espada",
-                            "messages.1514726567540.text": "que tal?",
-                            "messages.1514726621332.author": "espada",
-                            "messages.1514726621332.text": "jejejejej",
-                            "messages.1514726654596.author": "espada",
-                            "messages.1514726654596.text": "yujuuuuuuuuuuu",
-                            "messages.1514726667630.author": "espada",
-                            "messages.1514726667630.text": "guay!!!!",
-                            "messages.1514726675230.author": "espada",
-                            "messages.1514726675230.text": "jxjckfjc",
-                            "messages.1514726677812.author": "espada",
-                            "messages.1514726677812.text": "jxjzjxjc",
-                            "messages.1514726679864.author": "espada",
-                            "messages.1514726679864.text": "nxjcnc",
-                            "messages.1514726684044.author": "espada",
-                            "messages.1514726684044.text": "nxjxidmfkckd",
-                            "messages.1514726686398.author": "espada",
-                            "messages.1514726686398.text": "nxjcjdjxkd",
-                            "messages.1514726691012.author": "espada",
-                            "messages.1514726691012.text": "nxkcjfndjf",
-                            "name": "halooo"
+                            "jejejejeje.id": "holaaaaaaa",
+                            "jejejejeje.name": "jejejejeje",
+                            "jejejejeje.os": "android",
+                            "jejejejeje.token": "dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN"
                         }
                     }
                 },
-                "time": 1514726814357
-            }
-        }
-    },
-    "chats.1514726711395": {
-        "path": "/chats/1514726711395",
-        "tokens": {
-            "c2PGNC4dPDY:APA91bGXWFzglwvXFOjUiHi0xFVke7nFh6QM3t5MgxOkdq_Sny3MjNX3ZC-vWkukKmFDYuONb73owouoWh4EFZSlj2t6gSRzZ3xmsSAVSDiw9kWkrHPH1JfO3sMlX1GbSsUxD20uz52B": {
-                "os": "android",
-                "queue": {},
-                "time": 1514726814474
+                "time": 1515019750188
             }
         }
     },
@@ -112,10 +24,10 @@
             "dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN": {
                 "os": "android",
                 "queue": {
-                    "1514952340340": {},
-                    "1514952469269": {}
+                    "1515019679955": {},
+                    "1515019750264": {}
                 },
-                "time": 1514952469273
+                "time": 1515019750267
             }
         }
     }

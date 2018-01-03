@@ -119,7 +119,8 @@ if (cluster.isMaster) {
         CONTENT: "content",
         LEN: "len",
         OS: "os",
-        CLEAN: "clean"
+        CLEAN: "clean",
+        UUID: "uuid"
     };
 
     var action = {
@@ -129,10 +130,9 @@ if (cluster.isMaster) {
                 data: (data === null ? {} : data),
                 error: error
             };
-            logger.info("worker: " + pId);
-            logger.info("response: " + JSON.stringify(result));
-            connection.response.contentType('application/json');
-            connection.response.send(result);
+            //logger.info("worker: " + pId);
+            //logger.info("response: " + JSON.stringifyAligned(result));
+            connection.callback(result);
         },
         /**
          * replaces path format: /contacts/batman -> contacts.batman
@@ -402,10 +402,9 @@ if (cluster.isMaster) {
             return error;
         },
         parseRequest:   function (req, res, worker) {
-            let response = res;
 
             try {
-                let message = req.body;
+                let message = req;
                 let connection = {};     // connection element
 
                 // logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
@@ -469,6 +468,11 @@ if (cluster.isMaster) {
                             // logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
                             break;
 
+                        case KEY_REQUEST.UUID:
+                            connection[key] = message[key];
+                            // logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
+                            break;
+
                         default:
 
                             //
@@ -479,7 +483,7 @@ if (cluster.isMaster) {
                 // super important values
                 connection.id = new Date().getTime();
                 connection.request = req;
-                connection.response = response;
+                connection.callback = res;
 
                 switch (connection.method) {
 
@@ -530,9 +534,7 @@ if (cluster.isMaster) {
                 logger.error("there was an error parsing request: " + e.toString());
 
                 let result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_WRONG_PARAMS};
-
-                res.contentType('application/json');
-                res.send(JSON.stringify(result));
+                res(result);
             }
         }
     };
@@ -551,17 +553,40 @@ if (cluster.isMaster) {
 
     app.route('/')
         .get(function (req, res) {
-            action.parseRequest(req, res, cluster.worker.id)
+            //action.parseRequest(req, res, cluster.worker.id)
         })
         .post(function (req, res) {
-            action.parseRequest(req, res, cluster.worker.id)
+            //action.parseRequest(req, res, cluster.worker.id)
         });
 
     io.on('connection', function (socket) {
-        socket.emit('test', { hello: 'world' });
-        socket.on('test', function (data) {
-            logger.error(data);
+        let key = "database";
+        // socket.emit(key, { hello: 'world' });
+        socket.on(key, function (data, callback) {
+            let req = JSON.parse(data);
+            logger.error(JSON.stringifyAligned(req));
+            action.parseRequest(req, function(result) {
+                //logger.info("callback: " + JSON.stringifyAligned(callback));
+                //socket.emit(key, result);
+                if (callback !== undefined) {
+                    logger.info("worker: " + cluster.worker.id);
+                    logger.info("response: " + JSON.stringifyAligned(result));
+                    callback(result);
+                }
+            }, cluster.worker.id);
         });
+        /*
+        socket.on(key, function (data) {
+            logger.error(JSON.stringifyAligned(JSON.parse(data)));
+            let req = JSON.parse(data);
+            logger.info("test");
+            action.parseRequest(req, function(result) {
+                logger.info("worker: " + cluster.worker.id);
+                logger.info("response: " + JSON.stringifyAligned(result));
+                //socket.emit(key, result);
+                callback(result);
+            }, cluster.worker.id);
+        });*/
     });
 
     server.listen(port, function () {
