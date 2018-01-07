@@ -9,10 +9,10 @@ logger.init({
 });
 
 
-function FlamebaseDatabaseCluster(database, port, APIKey, debug) {
+function FlamebaseDatabaseCluster(database, port, debug) {
 
     this.initCluster = function (callback) {
-        var child = forever.start('./server.js', {
+        let config = {
             silent: false,
             uid: "flamebase-database",
             pidFile: "./flamebase-database.pid",
@@ -24,7 +24,7 @@ function FlamebaseDatabaseCluster(database, port, APIKey, debug) {
 
             sourceDir: __dirname,
 
-            args:    ['DATABASE_NAME=' + database, 'DATABASE_PORT=' + port, 'API_KEY=' + APIKey, 'DEBUG=' + debug.toString()],
+            args:    ['DATABASE_NAME=' + database, 'DATABASE_PORT=' + port, 'DEBUG=' + debug.toString()],
 
             watch: false,
             watchIgnoreDotFiles: null,
@@ -35,9 +35,12 @@ function FlamebaseDatabaseCluster(database, port, APIKey, debug) {
             logFile: __dirname + "/logs/logFile.log",
             outFile: __dirname + "/logs/outFile.log",
             errFile: __dirname + "/logs/errFile.log"
-        });
+        };
+
+        var child = forever.start('./server.js', config);
 
         child.on('start', function(code) {
+            logger.info(config.args);
             callback.start();
         });
     }

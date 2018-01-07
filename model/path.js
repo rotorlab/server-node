@@ -16,7 +16,7 @@ let ACTION_SLICE_UPDATE     = "slice_update";
 let ACTION_NO_UPDATE        = "no_update";
 let NOT_REGISTERED        = "NotRegistered";
 
-function Path(APIKey, pathReference, connection, database, pid, dbg) {
+function Path(pathReference, connection, database, dbg) {
 
     // object reference
     var object = this;
@@ -28,13 +28,6 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
     this.FD.syncFromDatabase();
 
     var config = {};
-
-    /**
-     * server API key for firebase cloud messaging
-     */
-    config.APIKey = function() {
-        return APIKey;
-    };
 
     /**
      * all device objects must have token and os info in order
@@ -82,8 +75,8 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
     this.FD.setSyncConfig(config);
     this.FD.debug(dbg === "true");
 
-    this.sendUpdateFor = function (before, device, callback) {
-        this.FD.sendDifferencesForClient(before, device, callback);
+    this.sendUpdateFor = function (before, device, callback, connection) {
+        this.FD.sendDifferencesForClient(before, device, callback, connection);
     };
 
     this.addDifferencesToQueue = function (connection) {
@@ -101,28 +94,36 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
         this.pathReference.syncToDatabase()
     };
 
-    this.sync = function(connection, callback) {
-        if (this.fcm === null) {
-            logger.error("# no fcm detected, set an API key");
-            return;
-        }
-
+    this.sync = function(connection, action) {
         let path = connection.path.replaceAll("/", "\.");
         path = path.substr(1, path.length - 1);
 
         if (this.debugVal) {
             logger.debug("synchronizing with devices for path: " + path);
         }
+
         this.pathReference.syncFromDatabase();
+        let sessions = new FlamebaseDatabase("sessions", "/");
+        sessions.syncFromDatabase();
 
         if (this.pathReference.ref[path].tokens !== undefined) {
-            let referenceId = config.referenceId();
-            let notification = config.notification();
+            let referenceId = connection.path;
+            let tag = connection.path + "_sync";
 
             let tokens = Object.keys(this.pathReference.ref[path].tokens);
 
             for (let i in tokens) {
                 let tok = tokens[i];
+
+                if (sessions.ref[tok] === undefined || sessions.ref[tok] !== connection.worker) {
+                    if (sessions.ref[tok] !== undefined) {
+                        action.refreshOnWorker(sessions.ref[tok]);
+                    }
+                    continue;
+                }
+
+                logger.error(JSON.stringifyAligned(sessions.ref[tok]));
+
                 let token = this.pathReference.ref[path].tokens[tok];
                 let os = token.os;
                 let queue = token.queue;
@@ -140,7 +141,7 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                     if (dataToSend.parts.length === 1) {
                         let data = {};
                         data.id = referenceId;
-                        data.tag = config.tag();
+                        data.tag = tag;
                         data.reference = dataToSend.parts[0];
                         data.action = ACTION_SIMPLE_UPDATE;
                         data.size = dataToSend.parts.length;
@@ -148,7 +149,6 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                         let send = {};
                         send.data = data;
                         send.tokens = [tok];
-                        send.notification = notification;
                         this.FD.sendPushMessage(send,
                             /**
                              * success
@@ -173,7 +173,7 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                                         // nothing to do here
                                         break;
                                 }
-                            });
+                            }, connection);
                     } else if (dataToSend.parts.length > 1) {
                         /**
                          * few parts, ACTION_SLICE_UPDATE
@@ -181,7 +181,7 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                         for (let i = 0; i < dataToSend.parts.length; i++) {
                             let data = {};
                             data.id = referenceId;
-                            data.tag = config.tag();
+                            data.tag = tag;
                             data.reference = dataToSend.parts[i];
                             data.action = ACTION_SLICE_UPDATE;
                             data.index = i;
@@ -189,7 +189,6 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                             let send = {};
                             send.data = data;
                             send.tokens = [tok];
-                            send.notification = notification;
                             this.FD.sendPushMessage(send,
                                 /**
                                  * success
@@ -213,7 +212,7 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                                             // nothing to do here
                                             break;
                                     }
-                                });
+                                }, connection);
                         }
                     } else {
                         /**
@@ -221,12 +220,11 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                          */
                         let data = {};
                         data.id = referenceId;
-                        data.tag = config.tag();
+                        data.tag = tag;
                         data.action = ACTION_NO_UPDATE;
                         let send = {};
                         send.data = data;
                         send.tokens = [tok];
-                        send.notification = notification;
                         this.FD.sendPushMessage(send,
                             /**
                              * success
@@ -250,7 +248,7 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
                                         // nothing to do here
                                         break;
                                 }
-                            });
+                            }, connection);
                     }
 
 
@@ -259,7 +257,7 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
             }
 
             this.pathReference.syncToDatabase();
-            callback();
+            action.success();
         } else {
             logger.error("no tokens found for path: " + path);
         }
@@ -284,6 +282,8 @@ function Path(APIKey, pathReference, connection, database, pid, dbg) {
 
     this.removeQueue = function (path, token, id) {
         this.pathReference.syncFromDatabase();
+
+        logger.info("removing queue: " + JSON.stringifyAligned(pathReference.ref[path].tokens[token].queue));
 
         delete this.pathReference.ref[path].tokens[token].queue[id];
 

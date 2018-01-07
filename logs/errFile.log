@@ -1,0 +1,652 @@
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: Redis connection to localhost:1507 failed - read ECONNRESET
+    at _errnoException (util.js:999:13)
+    at TCP.onread (net.js:629:25)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)
+
+events.js:136
+      throw er; // Unhandled 'error' event
+      ^
+AbortError: Ready check failed: Fatal error encountert. Command aborted. It might have been processed.
+    at RedisClient.flush_and_error (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:362:23)
+    at JavascriptRedisParser.returnFatalError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:203:18)
+    at handleError (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:204:10)
+    at parseType (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:305:14)
+    at JavascriptRedisParser.execute (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis-parser/lib/parser.js:563:20)
+    at Socket.<anonymous> (/Users/efraespada/Documents/Github/flamebase/flamebase-database-server-cluster/node_modules/redis/index.js:274:27)
+    at Socket.emit (events.js:159:13)
+    at addChunk (_stream_readable.js:265:12)
+    at readableAddChunk (_stream_readable.js:252:11)
+    at Socket.Readable.push (_stream_readable.js:209:10)

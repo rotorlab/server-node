@@ -1,6 +1,5 @@
 
 var JsonDB =                require('node-json-db');
-var FCM =                   require('fcm-push');
 var diff =                  require('rus-diff').diff;
 const logjs =                 require('logjsx');
 var logger = new logjs();
@@ -50,7 +49,6 @@ function FlamebaseDatabase(database, path) {
     // last db string reference
     this.lastStringReference = JSON.stringify({});
     this.pushConfig = null;
-    this.fcm = null;
 
     /**
      * sync from database
@@ -97,12 +95,6 @@ function FlamebaseDatabase(database, path) {
      */
     this.setSyncConfig = function(config) {
         this.pushConfig = config;
-
-        // push notifications
-        if (this.fcm === null) {
-            this.fcm = (this.pushConfig.APIKey() === null || this.pushConfig.APIKey() === 0 ? null : new FCM(this.pushConfig.APIKey()));
-        }
-
         this.lastStringReference = JSON.stringify({});
     };
 
@@ -114,164 +106,12 @@ function FlamebaseDatabase(database, path) {
         this.debugVal = value;
     };
 
-    /**
-     * fired if fcm is defined and DB changes or reloads
-     */
-    this.syncNotifications = function(callback) {
-        if (this.pushConfig !== null) {
-            try {
-                this.sendDetailPushMessage(callback);
-            } catch (e) {
-                logger.info("------");
-                logger.error("error: " + e);
-            }
-        }
-    };
 
     /**
      *
      */
+    this.sendDifferencesForClient = function(before, device, callback, connection) {
 
-    this.sendDetailPushMessage = function(callback) {
-        if (this.fcm === null) {
-            logger.error("# no fcm detected, set an API key")
-            return;
-        }
-
-        var ios_tokens = [];
-        var android_tokens = [];
-
-        var id = this.pushConfig.referenceId();
-        var notification = this.pushConfig.notification();
-        var devices = this.pushConfig.devices();
-
-        for (var t = 0; t < devices.length; t++) {
-            var device = devices[t];
-            if (device.os.indexOf(this.OS.IOS) !== -1) {
-                ios_tokens.push(device.token);
-            } else {
-                android_tokens.push(device.token);
-            }
-        }
-
-        this.lastStringReference = JSON.stringify(this.ref);
-
-        if (android_tokens.length > 0) {
-            var data_android = this.getPartsFor(this.OS.ANDROID, JSON.parse(this.lastStringReference), this.ref);
-            if (object.debugVal) {
-                logger.debug("android_tokens_size: " + android_tokens.length);
-                logger.debug("data_android_size: " + data_android.parts.length);
-            }
-            if (data_android.parts.length === 1) {
-                var data = {};
-                data.id = id;
-                data.tag = this.pushConfig.tag();
-                data.reference = data_android.parts[0];
-                data.action = ACTION_SIMPLE_UPDATE;
-                data.size = data_android.parts.length;
-                data.index = 0;
-                var send = {};
-                send.data = data;
-                send.tokens = android_tokens;
-                send.notification = notification;
-                if (ios_tokens.length === 0) {
-                    this.sendPushMessage(send, callback);
-                } else {
-                    this.sendPushMessage(send);
-                }
-            } else if (data_android.parts.length > 1) {
-                for (var i = 0; i < data_android.parts.length; i++) {
-                    var dat = {};
-                    dat.id = id;
-                    dat.tag = this.pushConfig.tag();
-                    dat.reference = data_android.parts[i];
-                    dat.action = ACTION_SLICE_UPDATE;
-                    dat.index = i;
-                    dat.size = data_android.parts.length;
-                    var sen = {};
-                    sen.data = dat;
-                    sen.tokens = android_tokens;
-                    sen.notification = notification;
-                    if (ios_tokens.length === 0 && i === data_android.parts.length - 1) {
-                        this.sendPushMessage(sen, callback);
-                    } else {
-                        this.sendPushMessage(sen);
-                    }
-                }
-            } else {
-                var data = {};
-                data.id = id;
-                data.tag = this.pushConfig.tag();
-                data.action = ACTION_NO_UPDATE;
-                var send = {};
-                send.data = data;
-                send.tokens = android_tokens;
-                send.notification = notification;
-                if (ios_tokens.length === 0) {
-                    this.sendPushMessage(send, callback);
-                } else {
-                    this.sendPushMessage(send);
-                }
-            }
-        }
-
-        if (ios_tokens.length > 0) {
-            var data_ios = this.getPartsFor(this.OS.IOS, JSON.parse(this.lastStringReference), this.ref);
-            if (object.debugVal) {
-                logger.debug("ios_tokens_size: " + ios_tokens.length);
-                logger.debug("data_ios_size: " + data_ios.parts.length);
-            }
-            if (data_ios.parts.length === 1) {
-                var da = {};
-                da.id = id;
-                da.tag = this.pushConfig.tag();
-                da.reference = data_ios.parts[0];
-                da.action = ACTION_SIMPLE_UPDATE;
-                da.size = data_ios.parts.length;
-                da.index = 0;
-                var se = {};
-                se.data = da;
-                se.tokens = ios_tokens;
-                se.notification = notification;
-                this.sendPushMessage(se, callback);
-            } else if (data_ios.parts.length > 1) {
-                for (var i = 0; i < data_ios.parts.length; i++) {
-                    var d = {};
-                    d.id = id;
-                    d.tag = this.pushConfig.tag();
-                    d.reference = data_ios.parts[i];
-                    d.action = ACTION_SLICE_UPDATE;
-                    d.index = i;
-                    d.size = data_ios.parts.length;
-                    var s = {};
-                    s.data = d;
-                    s.tokens = ios_tokens;
-                    s.notification = notification;
-                    if (i === data_ios.parts.length - 1) {
-                        this.sendPushMessage(s, callback);
-                    } else {
-                        this.sendPushMessage(s);
-                    }
-                }
-            } else {
-                var data = {};
-                data.id = id;
-                data.tag = this.pushConfig.tag();
-                data.action = ACTION_NO_UPDATE;
-                var s = {};
-                s.data = data;
-                s.tokens = ios_tokens;
-                s.notification = notification;
-                this.sendPushMessage(s, callback);
-            }
-        }
-    };
-
-    this.sendDifferencesForClient = function(before, device, callback) {
-        if (this.fcm === null) {
-            logger.error("# no fcm detected, set an API key")
-            return;
-        }
         var ios_tokens = [];
         var android_tokens = [];
 
@@ -303,9 +143,9 @@ function FlamebaseDatabase(database, path) {
                 send.tokens = android_tokens;
                 send.notification = notification;
                 if (ios_tokens.length === 0) {
-                    this.sendPushMessage(send, callback);
+                    this.sendPushMessage(send, callback, null, connection);
                 } else {
-                    this.sendPushMessage(send);
+                    this.sendPushMessage(send, callback, null, connection);
                 }
             } else if (data_android.parts.length > 1) {
                 for (var i = 0; i < data_android.parts.length; i++) {
@@ -321,9 +161,9 @@ function FlamebaseDatabase(database, path) {
                     sen.tokens = android_tokens;
                     sen.notification = notification;
                     if (ios_tokens.length === 0 && i === data_android.parts.length - 1) {
-                        this.sendPushMessage(sen, callback);
+                        this.sendPushMessage(sen, callback, null, connection);
                     } else {
-                        this.sendPushMessage(sen);
+                        this.sendPushMessage(sen, callback, null, connection);
                     }
                 }
             } else {
@@ -336,9 +176,9 @@ function FlamebaseDatabase(database, path) {
                 send.tokens = android_tokens;
                 send.notification = notification;
                 if (ios_tokens.length === 0) {
-                    this.sendPushMessage(send, callback);
+                    this.sendPushMessage(send, callback, null, connection);
                 } else {
-                    this.sendPushMessage(send);
+                    this.sendPushMessage(send, callback, null, connection);
                 }
             }
         }
@@ -361,7 +201,7 @@ function FlamebaseDatabase(database, path) {
                 se.data = da;
                 se.tokens = ios_tokens;
                 se.notification = notification;
-                this.sendPushMessage(se, callback);
+                this.sendPushMessage(se, callback, null, connection);
             } else if (data_ios.parts.length > 1) {
                 for (var i = 0; i < data_ios.parts.length; i++) {
                     var d = {};
@@ -376,9 +216,9 @@ function FlamebaseDatabase(database, path) {
                     s.tokens = ios_tokens;
                     s.notification = notification;
                     if (i === data_ios.parts.length - 1) {
-                        this.sendPushMessage(s, callback);
+                        this.sendPushMessage(s, callback, null, connection);
                     } else {
-                        this.sendPushMessage(s);
+                        this.sendPushMessage(s, callback, null, connection);
                     }
                 }
             } else {
@@ -390,39 +230,36 @@ function FlamebaseDatabase(database, path) {
                 send.data = data;
                 send.tokens = ios_tokens;
                 send.notification = notification;
-                this.sendPushMessage(send, callback);
+                this.sendPushMessage(send, callback, null, connection);
             }
         }
 
         this.lastStringReference = JSON.stringify(this.ref);
     };
 
-    this.sendPushMessage = function(send, success, fail) {
+    this.sendPushMessage = function(send, success, fail, connection) {
         this.queue.pushJob(function() {
             return new Promise(function (resolve, reject) {
                 var message = {
-                    registration_ids: send.tokens, // required fill with device token or topics
                     data: send.data,
-                    collapse_key: 'test',
-                    notification: send.notification === null ? {} : send.notification
+                    error: null
                 };
 
-                object.fcm.send(message)
-                    .then(function (response) {
-                        logger.debug("Successfully sent with response: " + JSON.stringifyAligned(JSON.parse(response)));
-
+                for (let t in send.tokens) {
+                    let token = send.tokens[t];
+                    try {
+                        connection.callback(token, message);
                         if (success !== undefined) {
                             success();
                         }
-                        resolve();
-                    })
-                    .catch(function (err) {
-                        if (fail !== undefined) {
+                    } catch (e) {
+                        if (fail !== null && fail !== undefined) {
                             fail(err);
                         }
-                        resolve();
-                    })
+                    }
+                }
 
+                resolve();
             });
         });
     };

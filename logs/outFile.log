@@ -1,116 +1,54 @@
-[36mMaster 28650 is running[39m
-[36mserver cluster started on port 1507 on 3 worker[39m
-[36mserver cluster started on port 1507 on 8 worker[39m
-[36mserver cluster started on port 1507 on 2 worker[39m
-[36mserver cluster started on port 1507 on 7 worker[39m
-[36mserver cluster started on port 1507 on 1 worker[39m
-[36mserver cluster started on port 1507 on 6 worker[39m
-[36mserver cluster started on port 1507 on 4 worker[39m
-[36mserver cluster started on port 1507 on 5 worker[39m
-[32m{
-    "len"    : 232,
-    "method" : "create_listener",
-    "os"     : "android",
-    "path"   : "/contacts",
-    "sha1"   : "A3EB803E647A52E2813803A4A4C6C18D902EDEE8",
-    "token"  : "dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN"
-}[39m
-[34mworker: 3[39m
-[34mmethod: create_listener[39m
-[34mpath: /contacts[39m
-[36m{
-    "jejejejeje" : {
-        "id"    : "holaaaaaaa",
-        "name"  : "jejejejeje",
-        "os"    : "android",
-        "token" : "dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN"
-    }
-}[39m
-[32m{
-    "clean"       : true,
-    "differences" : "{\"$set\":{\"jejejejeje.id\":\"holaaaaaaa\",\"jejejejeje.name\":\"jejejejeje\",\"jejejejeje.os\":\"android\",\"jejejejeje.token\":\"dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN\"}}",
-    "len"         : 232,
-    "method"      : "update_data",
-    "os"          : "android",
-    "path"        : "/contacts",
-    "token"       : "dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN"
-}[39m
-[34mworker: 2[39m
-[34mdifferences: {"$set":{"jejejejeje.id":"holaaaaaaa","jejejejeje.name":"jejejejeje","jejejejeje.os":"android","jejejejeje.token":"dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN"}}[39m
-[34mmethod: update_data[39m
-[34mpath: /contacts[39m
-[34msending full object[39m
-[34mSuccessfully sent with response: {
-    "multicast_id"  : 4897492636805464000,
-    "success"       : 1,
-    "failure"       : 0,
-    "canonical_ids" : 0,
-    "results"       : [
-        {
-            "message_id" : "0:1515019750148036%0dea1e8f00364492"
-        }
-    ]
-}[39m
-[36msending full object[39m
-[36mworker: 3[39m
-[36mresponse: {
-    "status" : "OK",
-    "data"   : {
-        "queueLen"  : 0,
-        "info"      : "queue_ready",
-        "objectLen" : 232
-    },
-    "error" : null
-}[39m
-[32m{
-    "clean"       : true,
-    "differences" : "{}",
-    "len"         : 2,
-    "method"      : "update_data",
-    "os"          : "android",
-    "path"        : "/chats/1514928191524",
-    "token"       : "dwLVztv9t7I:APA91bFHtyp8ZogXuvd3rLmZfdCfe7CvdkK3D6ElfoaHs1kBv6KPkxJxmbEyEmLRxlqs_zqZM2WEWUtrULl8ccCRf8kCHBkvrkcEyUysg9Z-pee1Dv9HUt397De9LDg9rTOAmKOoafAN"
-}[39m
-[34mworker: 6[39m
-[34mdifferences: {}[39m
-[34mmethod: update_data[39m
-[34mpath: /chats/1514928191524[39m
-[34msending full object[39m
-[34mSuccessfully sent with response: {
-    "multicast_id"  : 7368038999426296000,
-    "success"       : 1,
-    "failure"       : 0,
-    "canonical_ids" : 0,
-    "results"       : [
-        {
-            "message_id" : "0:1515019750395184%0dea1e8f00364492"
-        }
-    ]
-}[39m
-[36mworker: 2[39m
-[36mresponse: {
-    "status" : "OK",
-    "data"   : {
-        "info" : "queue_updated"
-    },
-    "error" : null
-}[39m
-[34mSuccessfully sent with response: {
-    "multicast_id"  : 7918050970866958000,
-    "success"       : 1,
-    "failure"       : 0,
-    "canonical_ids" : 0,
-    "results"       : [
-        {
-            "message_id" : "0:1515019750460411%0dea1e8f00364492"
-        }
-    ]
-}[39m
-[36mworker: 6[39m
-[36mresponse: {
-    "status" : "OK",
-    "data"   : {
-        "info" : "queue_updated"
-    },
-    "error" : null
-}[39m
+[36mMaster 46776 is running[39m
+[36mserver started on 1507 port[39m
+worker exited with error code: 1
+Worker 3 died :(
+worker exited with error code: 1
+Worker 4 died :(
+worker exited with error code: 1
+Worker 5 died :(
+worker exited with error code: 1
+Worker 6 died :(
+worker exited with error code: 1
+Worker 7 died :(
+worker exited with error code: 1
+Worker 8 died :(
+Worker 9 died :(
+Worker 13 died :(
+worker exited with error code: 1
+Worker 1 died :(
+worker exited with error code: 1
+Worker 2 died :(
+Worker 10 died :(
+Worker 11 died :(
+Worker 15 died :(
+Worker 16 died :(
+Worker 20 died :(
+Worker 21 died :(
+Worker 31 died :(
+Worker 32 died :(
+Worker 18 died :(
+Worker 24 died :(
+Worker 17 died :(
+Worker 19 died :(
+Worker 23 died :(
+Worker 25 died :(
+Worker 26 died :(
+Worker 28 died :(
+Worker 29 died :(
+Worker 34 died :(
+Worker 38 died :(
+Worker 33 died :(
+Worker 36 died :(
+Worker 39 died :(
+Worker 35 died :(
+Worker 37 died :(
+Worker 44 died :(
+Worker 45 died :(
+Worker 47 died :(
+Worker 48 died :(
+Worker 46 died :(
+Worker 49 died :(
+Worker 50 died :(
+Worker 51 died :(
+Worker 53 died :(
+Worker 52 died :(
