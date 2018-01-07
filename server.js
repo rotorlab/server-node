@@ -211,7 +211,6 @@ var action = {
                         action.response(connection, data, null);
                     },
                     refreshOnWorker:    function(worker) {
-                        logger.debug("asking for refresh path on worker: " + worker);
                         action.refreshPathOnWorker({
                             path: connection.path,
                             worker: worker
@@ -263,18 +262,27 @@ var action = {
             let key = connection.path.replaceAll("/", "\.");
             key = key.substr(1, key.length - 1);
 
-            let paths = new FlamebaseDatabase(dbPaths, "/" + key);
             paths.syncFromDatabase();
 
             if (paths.ref === undefined) {
                 paths.ref = {};
-                paths.ref.path = connection.path;
             }
 
-            if (paths.ref.tokens === undefined) {
-                paths.ref.tokens = {};
+            if (paths.ref[key] === undefined) {
+                paths.ref[key] = {};
             }
-            paths.ref.tokens[connection.token].time = new Date().getTime();
+
+            if (paths.ref[key].tokens === undefined) {
+                paths.ref[key].tokens = {};
+            }
+
+            if (paths.ref[key].tokens === undefined && connection.token !== undefined) {
+                paths.ref[key].tokens[connection.token] = {};
+            }
+
+            if (paths.ref[key].tokens[connection.token] !== undefined) {
+                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+            }
 
             paths.syncToDatabase();
         }
@@ -499,8 +507,6 @@ var action = {
 
 if (!sticky.listen(server, port)) {
 
-    const workers = {};
-
     logger.info("Master " + process.pid + " is running");
 
     for (var i = 0; i < numCPUs; i++) {
@@ -527,24 +533,27 @@ if (!sticky.listen(server, port)) {
             }
             console.log('Master ' + process.pid + ' received message from worker ' + this.pid + '.', msg);
         });*/
-
-        workers[worker.pid] = worker;
     }
 
     cluster.on('message', (worker, message, handle) => {
-        logger.error("JE 1: " + JSON.stringifyAligned(message));
         if (message.worker !== undefined && message.path !== undefined) {
             let w = message.worker;
             let p = message.path;
-            cluster.workers[w].send({path: p});
-            logger.error("JE 2: " + JSON.stringifyAligned(message));
+            let ki = Object.keys(cluster.workers);
+            for (let l in ki) {
+                let wor = cluster.workers[ki[l]];
+                if (wor.id === w) {
+                    logger.error("wId: " + wor.id);
+                    cluster.workers[w].send({path: p});
+                    break;
+                }
+            }
         }
     });
 
     cluster.on('exit', function (worker) {
-        console.log('Worker %d died :(', worker.id);
-        let w = cluster.fork();
-        workers[w.pid] = w;
+        logger.error('Worker %d died :(', worker.id);
+        cluster.fork();
     });
 
     server.once('listening', function() {
@@ -576,6 +585,8 @@ if (!sticky.listen(server, port)) {
 
     //var connectedUsers = {};
 
+    let cId = cluster.worker.id;
+
     io.on('connection', function (socket) {
         let key = "database";
         // socket.emit(key, { worker_id: cluster.worker.id });
@@ -584,15 +595,14 @@ if (!sticky.listen(server, port)) {
             let req = JSON.parse(data);
             socket.join(ROOM + req.token);
 
-            logger.error(cluster.worker.id + " " + JSON.stringifyAligned(io.sockets.adapter.rooms));
             sessions.syncFromDatabase();
-            sessions.ref[req.token] = cluster.worker.id;
+            sessions.ref[req.token] = cId;
             sessions.syncToDatabase();
 
             action.parseRequest(req, function(token, result) {
-                logger.info("callback worker: " + cluster.worker.id);
+                logger.info(cId + " callback worker");
                 // logger.info("response: " + JSON.stringifyAligned(result));
-                logger.info("id: " + JSON.stringifyAligned(token));
+                logger.info(cId + " id: " + JSON.stringifyAligned(token));
                 io.sockets.in(ROOM + token).emit(key, result);
 
             });
@@ -603,25 +613,34 @@ if (!sticky.listen(server, port)) {
         if (msg.path !== undefined) {
             let connection = {};
             connection.path = msg.path;
+            connection.worker = cId;
+            let key = "database";
+            connection.callback = function(token, result) {
+                logger.info(cId + " callback worker: " + cId);
+                // logger.info("response: " + JSON.stringifyAligned(result));
+                logger.info(cId + " id: " + JSON.stringifyAligned(token));
+                io.sockets.in(ROOM + token).emit(key, result);
+
+            };
 
             let object = action.getReference(connection);
             if (typeof object === "string") {
-                object.sync("error: " + object);
+               logger.error(cId + " error: " + object);
                     // action.response(connection, null, object);
             } else {
-                console.log('synchronizing');
+                console.log(cId + ' synchronizing');
                 object.sync(connection, {
                     success:            function() {
-                        // nothing to do here
+                        logger.debug(cId + ' synchronized');
                     },
                     refreshOnWorker:    function(worker) {
-                        // nothing to do here
+                        // logger.error('error');
                     }
                 });
             }
-            console.log('Worker ' + cluster.worker.pid + ' received message from master.', msg);
+            // logger.debug('Worker ' + cId + ' received message from master.', msg);
         } else {
-            logger.error("received this from master: " + JSON.stringifyAligned(msg));
+            // logger.error("received this from master: " + JSON.stringifyAligned(msg));
         }
     });
 

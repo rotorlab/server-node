@@ -110,6 +110,8 @@ function Path(pathReference, connection, database, dbg) {
             let referenceId = connection.path;
             let tag = connection.path + "_sync";
 
+            logger.error(JSON.stringifyAligned(sessions.ref));
+
             let tokens = Object.keys(this.pathReference.ref[path].tokens);
 
             for (let i in tokens) {
@@ -121,8 +123,6 @@ function Path(pathReference, connection, database, dbg) {
                     }
                     continue;
                 }
-
-                logger.error(JSON.stringifyAligned(sessions.ref[tok]));
 
                 let token = this.pathReference.ref[path].tokens[tok];
                 let os = token.os;

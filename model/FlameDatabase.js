@@ -55,7 +55,7 @@ function FlamebaseDatabase(database, path) {
      */
     this.syncFromDatabase = function() {
         try {
-            object.ref = object.db.getData(path);
+            object.ref = new JsonDB(database, true, true).getData(path);
             this.lastStringReference = JSON.stringify(object.ref);
         } catch(e) {
             this.prepareUnknownPath();
@@ -72,7 +72,7 @@ function FlamebaseDatabase(database, path) {
             currentObject = currentObject[pCheck];
         }
         object.ref = currentObject;
-        object.db.push(path, object.ref);
+        new JsonDB(database, true, true).push(path, object.ref);
     };
 
     /**
@@ -85,7 +85,7 @@ function FlamebaseDatabase(database, path) {
                 logger.debug("cleaning last reference on " + path);
             }
         }
-        object.db.push(path, object.ref);
+        new JsonDB(database, true, true).push(path, object.ref);
         // object.syncNotifications(callback);
     };
 
@@ -248,13 +248,15 @@ function FlamebaseDatabase(database, path) {
                 for (let t in send.tokens) {
                     let token = send.tokens[t];
                     try {
+                        logger.error("will send messages")
                         connection.callback(token, message);
+                        logger.error("sent messages")
                         if (success !== undefined) {
                             success();
                         }
                     } catch (e) {
                         if (fail !== null && fail !== undefined) {
-                            fail(err);
+                            fail(e);
                         }
                     }
                 }
