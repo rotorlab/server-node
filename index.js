@@ -37,7 +37,7 @@ function FlamebaseDatabaseCluster(database, port, debug) {
             errFile: __dirname + "/logs/errFile.log"
         };
 
-        var child = forever.start('./server.js', config);
+        var child = forever.start('./test2.js', config);
 
         child.on('start', function(code) {
             logger.info(config.args);

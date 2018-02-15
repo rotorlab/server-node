@@ -12,7 +12,24 @@ For now it still developing, so please be patient with errors.
 
 ### Setup
 
-Install package:
+Prepare Redis server
+
+OSX:
+```bash
+// install
+brew install redis
+
+// start
+redis-server
+```
+Ubuntu:
+```bash 
+sudo apt-get install redis-server
+
+sudo service redis-server status
+```
+
+Install Flamebase:
 ```bash
 npm install flamebase-database-server-cluster --save
 ```

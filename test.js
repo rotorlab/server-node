@@ -1,27 +1,32 @@
 var express =               require('express');
 var logjs =                 require('logjsx');
 var cluster =               require('cluster');
-var ioProm =                require('express-socket.io');
-var http =                  require('http');
 var net =                   require('net');
+var sio =                   require('socket.io');
+var sio_redis =             require('socket.io-redis');
 var farmhash =              require('farmhash');
 var numCPUs =               require('os').cpus().length;
 var FlamebaseDatabase =     require("./model/FlameDatabase.js");
 var Path =                  require("./model/Path.js");
 var port =                  1507;
+var apply =                 require('rus-diff').apply;
+var sha1 =                  require('sha1');
 var logger =                new logjs();
 var sessions =              new FlamebaseDatabase("sessions", "/");
 var paths =                 new FlamebaseDatabase("paths", "/");
-var apply =                 require('rus-diff').apply;
-var sha1 =                  require('sha1');
+
+
+
 JSON.stringifyAligned =     require('json-align');
 logger.init({
     level : "DEBUG"
 });
+
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
+
 var dbMaster = "myDatabase";
 var debug = "true";
 var ROOM =                  "/databases/";
@@ -472,24 +477,23 @@ var action = {
 
 if (cluster.isMaster) {
 
-    var workers = [];
+    let workers = [];
 
-    var spawn = function(i) {
+    let spawn = function(i) {
+        logger.debug("spawning worker " + i);
         workers[i] = cluster.fork();
-
-        // Optional: Restart worker on exit
         workers[i].on('exit', function(code, signal) {
-            console.log('respawning worker', i);
+            logger.debug('respawning worker ' + i);
             spawn(i);
         });
     };
 
-    for (var i = 0; i < numCPUs; i++) {
+    for (let i = 0; i < numCPUs; i++) {
         spawn(i);
     }
 
-    var worker_index = function(ip, len) {
-        return farmhash.fingerprint32(ip[i]) % len; // Farmhash is the fastest and works with IPv6, too
+    let worker_index = function(ip, len) {
+        return farmhash.fingerprint32(ip[numCPUs]) % len; // Farmhash is the fastest and works with IPv6, too
     };
 
     cluster.on('error', err => {
@@ -498,14 +502,12 @@ if (cluster.isMaster) {
 
     cluster.on('message', (worker, message, handle) => {
         if (message.worker !== undefined && message.path !== undefined) {
-            let w = message.worker;
-            let p = message.path;
             let ki = Object.keys(cluster.workers);
             for (let l in ki) {
                 let wor = cluster.workers[ki[l]];
-                if (wor.id === w) {
-                    logger.error("wId: " + wor.id);
-                    cluster.workers[w].send({path: p});
+                if (wor.id === message.worker) {
+                    logger.debug("MASTER: message from worker " + wor.id);
+                    cluster.workers[message.worker].send({path: message.path});
                     break;
                 }
             }
@@ -513,86 +515,73 @@ if (cluster.isMaster) {
     });
 
     let server = net.createServer({ pauseOnConnect: true }, function(connection) {
-        try {
-            var worker = workers[worker_index(connection.remoteAddress, numCPUs)];
-            logger.error(connection.remoteAddress);
-            worker.send('sticky-session:connection', connection);
-        } catch (e) {
-
-        }
+        logger.debug("connection from " + connection.remoteAddress);
+        let worker = workers[worker_index(connection.remoteAddress, numCPUs)];
+        worker.send('sticky-session:connection', connection);
     }).listen(port);
-
-    logger.debug("master ready")
 
 } else {
 
     let clusterId = cluster.worker.id;
     let app = express();
-    let ioServer  = ioProm.init(app);
+    let server = app.listen(0, 'localhost');
+    let io = sio(server);
 
-    ioServer.listen(0, function () {
-        logger.debug("server cluster started on port " + port + " on " + cluster.worker.id + " worker");
-    });
+    io.adapter(sio_redis({ host: 'localhost', port: 6379 }));
+    io.on('connection', function (socket) {
+        let key = "database";
+        socket.on(key, function (data) {
+            logger.info(clusterId + " eee");
 
-    ioProm.then(function(io) {
-        io.on('connection', function (socket) {
-            let key = "database";
-            socket.on(key, function (data) {
-                logger.info(clusterId + " eee");
+            let req = JSON.parse(data);
+            socket.join(ROOM + req.token);
 
-                let req = JSON.parse(data);
-                socket.join(ROOM + req.token);
+            sessions.syncFromDatabase();
+            sessions.ref[req.token] = clusterId;
+            sessions.syncToDatabase();
 
-                sessions.syncFromDatabase();
-                sessions.ref[req.token] = clusterId;
-                sessions.syncToDatabase();
+            action.parseRequest(req, function(token, result) {
+                logger.info("worker " + clusterId + ": socket.io emit() -> " + token);
+                logger.info("worker " + clusterId + ": sending -> " + JSON.stringifyAligned(result));
+                io.sockets.in(ROOM + token).emit(key, result);
 
-                action.parseRequest(req, function(token, result) {
-                    logger.info(clusterId + " callback worker");
-                    // logger.info("response: " + JSON.stringifyAligned(result));
-                    logger.info(clusterId + " id: " + JSON.stringifyAligned(token));
-                    io.sockets.in(ROOM + token).emit(key, result);
-
-                });
             });
         });
     });
 
+
     process.on('message', function(message, connection) {
+        logger.debug("worker " + clusterId + ": message from MASTER");
         if (message === 'sticky-session:connection') {
-            ioServer.emit('connection', connection);
+            server.emit('connection', connection);
             connection.resume();
             logger.debug("new connection!")
         } else if (message.path !== undefined) {
-            ioProm.then(function(io) {
-                let connection = {};
-                connection.path = message.path;
-                connection.worker = clusterId;
-                let key = "database";
-                connection.callback = function (token, result) {
-                    logger.info(clusterId + " callback worker: " + cId);
-                    // logger.info("response: " + JSON.stringifyAligned(result));
-                    logger.info(clusterId + " id: " + JSON.stringifyAligned(token));
-                    io.sockets.in(ROOM + token).emit(key, result);
-                };
+            let connection = {};
+            connection.path = message.path;
+            connection.worker = clusterId;
+            let key = "database";
+            connection.callback = function (token, result) {
+                logger.info(clusterId + " callback worker");
+                logger.info(clusterId + " id: " + JSON.stringifyAligned(token));
+                io.sockets.in(ROOM + token).emit(key, result);
+            };
 
-                let object = action.getReference(connection);
-                if (typeof object === "string") {
-                    logger.error(clusterId + " error: " + object);
-                    // action.response(connection, null, object);
-                } else {
-                    logger.debug(clusterId + ' synchronizing');
-                    object.sync(connection, {
-                        success: function () {
-                            logger.debug(clusterId + ' synchronized');
-                        },
-                        refreshOnWorker: function (worker) {
-                            // logger.error('error');
-                        }
-                    });
-                }
-                // logger.debug('Worker ' + cId + ' received message from master.', msg);
-            });
+            let object = action.getReference(connection);
+            if (typeof object === "string") {
+                logger.error(clusterId + " error: " + object);
+                // action.response(connection, null, object);
+            } else {
+                logger.debug(clusterId + ' synchronizing');
+                object.sync(connection, {
+                    success: function () {
+                        logger.debug(clusterId + ' synchronized');
+                    },
+                    refreshOnWorker: function (worker) {
+                        // logger.error('error');
+                    }
+                });
+            }
         }
     });
 
