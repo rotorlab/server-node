@@ -103,26 +103,15 @@ function Path(pathReference, connection, database, dbg) {
         }
 
         this.pathReference.syncFromDatabase();
-        let sessions = new FlamebaseDatabase("sessions", "/");
-        sessions.syncFromDatabase();
 
         if (this.pathReference.ref[path].tokens !== undefined) {
             let referenceId = connection.path;
             let tag = connection.path + "_sync";
 
-            logger.error(JSON.stringifyAligned(sessions.ref));
-
             let tokens = Object.keys(this.pathReference.ref[path].tokens);
 
             for (let i in tokens) {
                 let tok = tokens[i];
-
-                if (sessions.ref[tok] === undefined || sessions.ref[tok] !== connection.worker) {
-                    if (sessions.ref[tok] !== undefined) {
-                        action.refreshOnWorker(sessions.ref[tok]);
-                    }
-                    continue;
-                }
 
                 let token = this.pathReference.ref[path].tokens[tok];
                 let os = token.os;
@@ -283,7 +272,7 @@ function Path(pathReference, connection, database, dbg) {
     this.removeQueue = function (path, token, id) {
         this.pathReference.syncFromDatabase();
 
-        logger.info("removing queue: " + JSON.stringifyAligned(pathReference.ref[path].tokens[token].queue));
+        logger.info("removing queue of " + token);
 
         delete this.pathReference.ref[path].tokens[token].queue[id];
 

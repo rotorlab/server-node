@@ -12,7 +12,6 @@ var port =                  1507;
 var apply =                 require('rus-diff').apply;
 var sha1 =                  require('sha1');
 var logger =                new logjs();
-var sessions =              new FlamebaseDatabase("sessions", "/");
 var paths =                 new FlamebaseDatabase("paths", "/");
 
 
@@ -181,12 +180,6 @@ var action = {
                 object.sync(connection, {
                     success:            function() {
                         action.response(connection, data, null);
-                    },
-                    refreshOnWorker:    function(worker) {
-                        action.refreshPathOnWorker({
-                            path: connection.path,
-                            worker: worker
-                        })
                     }
                 });
             }
@@ -258,11 +251,10 @@ var action = {
             paths.syncToDatabase();
         }
     },
+
     /**
-     * Updates the queue on on path database
+     * Updates the queue in path database
      * @param connection
-     * @param pId
-     * @param sessions
      */
     updateQueue:     function (connection) {
         let object = this.getReference(connection);
@@ -295,12 +287,6 @@ var action = {
                             let data = {};
                             data.info = "queue_updated";
                             action.response(connection, data, null);
-                        },
-                        refreshOnWorker:    function(worker) {
-                            action.refreshPathOnWorker({
-                                path: connection.path,
-                                worker: worker
-                            })
                         }
                     });
                 }
@@ -308,17 +294,6 @@ var action = {
                 this.response(connection, "no_diff_updated", null);
             }
         }
-    },
-    /**
-     {
-         path: path,
-         worker: worker
-     }
-     * @param info
-     */
-    refreshPathOnWorker: function (info) {
-        logger.debug("asking for refresh path: " + JSON.stringifyAligned(info));
-        process.send(info)
     },
     getReference:   function (connection) {
         paths.syncFromDatabase();
@@ -492,97 +467,30 @@ if (cluster.isMaster) {
         spawn(i);
     }
 
-    let worker_index = function(ip, len) {
-        return farmhash.fingerprint32(ip[numCPUs]) % len; // Farmhash is the fastest and works with IPv6, too
-    };
-
     cluster.on('error', err => {
         // handle the err here or just ignore them
     });
 
-    cluster.on('message', (worker, message, handle) => {
-        if (message.worker !== undefined && message.path !== undefined) {
-            let ki = Object.keys(cluster.workers);
-            for (let l in ki) {
-                let wor = cluster.workers[ki[l]];
-                if (wor.id === message.worker) {
-                    logger.debug("MASTER: message from worker " + wor.id);
-                    cluster.workers[message.worker].send({path: message.path});
-                    break;
-                }
-            }
-        }
-    });
-
-    let server = net.createServer({ pauseOnConnect: true }, function(connection) {
-        logger.debug("connection from " + connection.remoteAddress);
-        let worker = workers[worker_index(connection.remoteAddress, numCPUs)];
-        worker.send('sticky-session:connection', connection);
-    }).listen(port);
 
 } else {
 
     let clusterId = cluster.worker.id;
     let app = express();
-    let server = app.listen(0, 'localhost');
+    let server = app.listen(port, function () {
+        logger.info("server started on port " + port + " => worker " + cluster.worker.id);
+    });
     let io = sio(server);
 
     io.adapter(sio_redis({ host: 'localhost', port: 6379 }));
     io.on('connection', function (socket) {
         let key = "database";
         socket.on(key, function (data) {
-            logger.info(clusterId + " eee");
-
-            let req = JSON.parse(data);
-            socket.join(ROOM + req.token);
-
-            sessions.syncFromDatabase();
-            sessions.ref[req.token] = clusterId;
-            sessions.syncToDatabase();
-
-            action.parseRequest(req, function(token, result) {
+            action.parseRequest(JSON.parse(data), function(token, result) {
                 logger.info("worker " + clusterId + ": socket.io emit() -> " + token);
                 logger.info("worker " + clusterId + ": sending -> " + JSON.stringifyAligned(result));
-                io.sockets.in(ROOM + token).emit(key, result);
-
+                io.to(ROOM + token).emit(key, result);
             });
         });
-    });
-
-
-    process.on('message', function(message, connection) {
-        logger.debug("worker " + clusterId + ": message from MASTER");
-        if (message === 'sticky-session:connection') {
-            server.emit('connection', connection);
-            connection.resume();
-            logger.debug("new connection!")
-        } else if (message.path !== undefined) {
-            let connection = {};
-            connection.path = message.path;
-            connection.worker = clusterId;
-            let key = "database";
-            connection.callback = function (token, result) {
-                logger.info(clusterId + " callback worker");
-                logger.info(clusterId + " id: " + JSON.stringifyAligned(token));
-                io.sockets.in(ROOM + token).emit(key, result);
-            };
-
-            let object = action.getReference(connection);
-            if (typeof object === "string") {
-                logger.error(clusterId + " error: " + object);
-                // action.response(connection, null, object);
-            } else {
-                logger.debug(clusterId + ' synchronizing');
-                object.sync(connection, {
-                    success: function () {
-                        logger.debug(clusterId + ' synchronized');
-                    },
-                    refreshOnWorker: function (worker) {
-                        // logger.error('error');
-                    }
-                });
-            }
-        }
     });
 
 }
