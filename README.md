@@ -18,17 +18,22 @@ OSX:
 ```bash
 // install
 brew install redis
-
-// start
+ 
+// run
 redis-server
-
+ 
 // logs
 redis-cli monitor
+ 
+// test channels (sub/pub)
+redis-cli PUBLISH d7bec76d-d4e1-4788-816f-f7260cd4a92c holi // redis-cli PUBLISH <Flamebase.id> message
 ```
 Ubuntu:
 ```bash 
+// install
 sudo apt-get install redis-server
-
+ 
+// run
 sudo service redis-server status
 ```
 
@@ -83,7 +88,3 @@ Client options to connect with server cluster.
 compile 'com.flamebase:database:1.3.0'
 ```
 
-- [Node](https://github.com/flamebase/flamebase-database-node)
-```bash
-npm install flamebase-database-node --save
-```
