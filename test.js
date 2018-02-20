@@ -482,14 +482,28 @@ if (cluster.isMaster) {
     let io = sio(server);
 
     io.adapter(sio_redis({ host: 'localhost', port: 6379 }));
-    io.on('connection', function (socket) {
+    io.on('connection', function (client) {
         let key = "database";
-        socket.on(key, function (data) {
-            action.parseRequest(JSON.parse(data), function(token, result) {
-                logger.info("worker " + clusterId + ": socket.io emit() -> " + token);
-                logger.info("worker " + clusterId + ": sending -> " + JSON.stringifyAligned(result));
-                io.to(ROOM + token).emit(key, result);
+        client.on(key, function (data) {
+            try {
+                logger.error("joining with " + client.id)
+                // logger.error("joining with " + JSON.parse(data).token)
+            } catch (e) {
+                logger.error(e)
+            }
+
+            io.of('/').adapter.remoteJoin(client.id, "/" + key + "/" + JSON.parse(data).token, (err) => {
+                if (err) {
+                    logger.error("unknown id joining")
+                } else {
+                    action.parseRequest(JSON.parse(data), function(token, result) {
+                        logger.info("worker " + clusterId + ": socket.io emit() -> " + token);
+                        logger.info("worker " + clusterId + ": sending -> " + JSON.stringifyAligned(result));
+                        io.in("/" + key + "/" + token).emit(key, result);
+                    });
+                }
             });
+
         });
     });
 

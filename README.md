@@ -21,6 +21,9 @@ brew install redis
 
 // start
 redis-server
+
+// logs
+redis-cli monitor
 ```
 Ubuntu:
 ```bash 
