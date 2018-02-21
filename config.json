@@ -1,3 +1,6 @@
 {
-    "serverKey": "AIzaSyDhzzf2kkKuknAdiB_ak-KJ0a3XgaBDO4A"
+    "server_port": 1507,
+    "redis_port": 6379,
+    "db_name": "database",
+    "debug": true
 }
