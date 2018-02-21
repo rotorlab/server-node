@@ -3,62 +3,32 @@ var bodyParser =            require('body-parser');
 var timeout =               require('connect-timeout');
 var logjs =                 require('logjsx');
 var cluster =               require('cluster');
-var sticky =                require('sticky-session');
-var http =                  require('http');
+var Redis =                 require('ioredis');
 var numCPUs =               require('os').cpus().length;
 var FlamebaseDatabase =     require("./model/FlameDatabase.js");
 var Path =                  require("./model/Path.js");
 var apply =                 require('rus-diff').apply;
-var clone =                 require('rus-diff').clone;
 var sha1 =                  require('sha1');
-var redis =                 require('socket.io-redis');
+var logger =                new logjs();
+
+var port =                  1507;
+var redis_port =            6379;
+var redis = new Redis(redis_port);
+
+
 JSON.stringifyAligned =     require('json-align');
+logger.init({
+    level : "DEBUG"
+});
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-var expectedDBNEnvVar = "DATABASE_NAME";
-var expectedPORTEnvVar = "DATABASE_PORT";
-var expectedDebugKeyEnvVar = "DEBUG";
-var dbMaster = null;
-var port = null;
-var debug = null;
-
-process.argv.forEach(function (val, index, array) {
-    if (val.indexOf(expectedDBNEnvVar) > -1) {
-        dbMaster = val.replaceAll(expectedDBNEnvVar + "=", "");
-    }
-    if (val.indexOf(expectedPORTEnvVar) > -1) {
-        port = val.replaceAll(expectedPORTEnvVar + "=", "");
-    }
-    if (val.indexOf(expectedDebugKeyEnvVar) > -1) {
-        debug = val.replaceAll(expectedDebugKeyEnvVar + "=", "") === "true" ? true : false;
-    }
-});
-
-debug = true;
-
-
-var TAG =                   "SERVER CLUSTER";
-var ROOM =                   "/databases/";
-var logger = new logjs();
-
-logger.init({
-    level : "DEBUG"
-});
-
-var dbPaths = "paths";
-var dbSessions = "sessions";
-var sessions = new FlamebaseDatabase(dbSessions, "/");
-var paths = new FlamebaseDatabase(dbPaths, "/");
-
-var server = require('http').createServer(function(req, res) {
-    res.end('worker: ' + cluster.worker.id);
-});
-var io = require('socket.io')(server);
-
+var dbMaster = "myDatabase";
+var debug = "true";
+var ROOM =                  "/databases/";
 var VARS = {
     USER_AGENT: "user-agent",
     APPLICATION_JSON: "application/json",
@@ -129,6 +99,7 @@ var action = {
         /**
          * work with path database
          */
+        var paths = new FlamebaseDatabase("paths", "/");
         paths.syncFromDatabase();
 
         if (paths.ref === undefined) {
@@ -137,6 +108,7 @@ var action = {
 
         // valid path
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
+            logger.error(connection.path);
             var key = connection.path.replaceAll("/", "\.");
             key = key.substr(1, key.length - 1);
 
@@ -209,12 +181,6 @@ var action = {
                 object.sync(connection, {
                     success:            function() {
                         action.response(connection, data, null);
-                    },
-                    refreshOnWorker:    function(worker) {
-                        action.refreshPathOnWorker({
-                            path: connection.path,
-                            worker: worker
-                        })
                     }
                 });
             }
@@ -225,7 +191,7 @@ var action = {
 
     },
     removeListener: function (connection) {
-        var paths = new FlamebaseDatabase(dbPaths, "/");
+        var paths = new FlamebaseDatabase("paths", "/");
         paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
@@ -262,6 +228,7 @@ var action = {
             let key = connection.path.replaceAll("/", "\.");
             key = key.substr(1, key.length - 1);
 
+            var paths = new FlamebaseDatabase("paths", "/");
             paths.syncFromDatabase();
 
             if (paths.ref === undefined) {
@@ -287,14 +254,14 @@ var action = {
             paths.syncToDatabase();
         }
     },
+
     /**
-     * Updates the queue on on path database
+     * Updates the queue in path database
      * @param connection
-     * @param pId
-     * @param sessions
      */
     updateQueue:     function (connection) {
         let object = this.getReference(connection);
+        logger.error("test 1");
         if (typeof object === "string") {
             this.response(connection, null, object);
         } else {
@@ -324,12 +291,6 @@ var action = {
                             let data = {};
                             data.info = "queue_updated";
                             action.response(connection, data, null);
-                        },
-                        refreshOnWorker:    function(worker) {
-                            action.refreshPathOnWorker({
-                                path: connection.path,
-                                worker: worker
-                            })
                         }
                     });
                 }
@@ -338,19 +299,8 @@ var action = {
             }
         }
     },
-    /**
-        {
-            path: path,
-            worker: worker
-        }
-     * @param info
-     */
-    refreshPathOnWorker: function (info) {
-        logger.debug("asking for refresh path: " + JSON.stringifyAligned(info));
-        process.send(info)
-    },
     getReference:   function (connection) {
-        let paths = new FlamebaseDatabase(dbPaths, "/");
+        var paths = new FlamebaseDatabase("paths", "/");
         paths.syncFromDatabase();
         let error = null;
 
@@ -387,7 +337,7 @@ var action = {
     parseRequest:   function (req, res) {
 
         try {
-            let message = req;
+            let message = req.body;
             let connection = {};     // connection element
 
             // logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
@@ -505,69 +455,26 @@ var action = {
     }
 };
 
-if (!sticky.listen(server, port)) {
+if (cluster.isMaster) {
 
-    logger.info("Master " + process.pid + " is running");
+    let workers = [];
 
-    for (var i = 0; i < numCPUs; i++) {
-        let worker = cluster.fork();
-        worker.on('exit', (code, signal) => {
-            if (signal) {
-                console.log(`worker was killed by signal: ${signal}`);
-            } else if (code !== 0) {
-                console.log(`worker exited with error code: ${code}`);
-            } else {
-                console.log('worker success!');
-            }
+    let spawn = function(i) {
+        workers[i] = cluster.fork();
+        workers[i].on('exit', function(code, signal) {
+            logger.debug('respawning worker ' + i);
+            spawn(i);
         });
-        /*
-        worker.on('message', function(msg) {
-            let w = msg.worker;
-            let p = msg.path;
-            let k = Object.keys(workers);
-            for (let t in k) {
-                if (w === k[t]) {
-                    let wo = workers[k[t]];
-                    wo.send({path: p});
-                }
-            }
-            console.log('Master ' + process.pid + ' received message from worker ' + this.pid + '.', msg);
-        });*/
+    };
+
+    for (let i = 0; i < numCPUs; i++) {
+        spawn(i);
     }
 
-    cluster.on('message', (worker, message, handle) => {
-        if (message.worker !== undefined && message.path !== undefined) {
-            let w = message.worker;
-            let p = message.path;
-            let ki = Object.keys(cluster.workers);
-            for (let l in ki) {
-                let wor = cluster.workers[ki[l]];
-                if (wor.id === w) {
-                    logger.error("wId: " + wor.id);
-                    cluster.workers[w].send({path: p});
-                    break;
-                }
-            }
-        }
-    });
-
-    cluster.on('exit', function (worker) {
-        logger.error('Worker %d died :(', worker.id);
-        cluster.fork();
-    });
-
-    server.once('listening', function() {
-        logger.info('server started on ' + port + ' port');
-    });
 } else {
 
-    // var app = express();
-    // var app = require('express')();
-    // var server = require('http').Server(app);
+    var app = express();
 
-    // io.adapter(redis({ host: 'localhost', port: port }));
-
-    /*
     app.use(bodyParser.urlencoded({
         extended: true
     }));
@@ -577,80 +484,19 @@ if (!sticky.listen(server, port)) {
 
     app.route('/')
         .get(function (req, res) {
-            //action.parseRequest(req, res, cluster.worker.id)
+            res.send("hi :)");
         })
         .post(function (req, res) {
-            //action.parseRequest(req, res, cluster.worker.id)
-        });*/
-
-    //var connectedUsers = {};
-
-    let cId = cluster.worker.id;
-
-    io.on('connection', function (socket) {
-        let key = "database";
-        // socket.emit(key, { worker_id: cluster.worker.id });
-        //io.emit(key, { worker_id: cluster.worker.id });
-        socket.on(key, function (data) {
-            let req = JSON.parse(data);
-            socket.join(ROOM + req.token);
-
-            sessions.syncFromDatabase();
-            sessions.ref[req.token] = cId;
-            sessions.syncToDatabase();
-
             action.parseRequest(req, function(token, result) {
-                logger.info(cId + " callback worker");
-                // logger.info("response: " + JSON.stringifyAligned(result));
-                logger.info(cId + " id: " + JSON.stringifyAligned(token));
-                io.sockets.in(ROOM + token).emit(key, result);
-
+                logger.info("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
+                logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
+                redis.publish(token, JSON.stringify(result));
             });
+            res.send("thanks :)")
         });
-    });
-
-    process.on('message', function(msg) {
-        if (msg.path !== undefined) {
-            let connection = {};
-            connection.path = msg.path;
-            connection.worker = cId;
-            let key = "database";
-            connection.callback = function(token, result) {
-                logger.info(cId + " callback worker: " + cId);
-                // logger.info("response: " + JSON.stringifyAligned(result));
-                logger.info(cId + " id: " + JSON.stringifyAligned(token));
-                io.sockets.in(ROOM + token).emit(key, result);
-
-            };
-
-            let object = action.getReference(connection);
-            if (typeof object === "string") {
-               logger.error(cId + " error: " + object);
-                    // action.response(connection, null, object);
-            } else {
-                console.log(cId + ' synchronizing');
-                object.sync(connection, {
-                    success:            function() {
-                        logger.debug(cId + ' synchronized');
-                    },
-                    refreshOnWorker:    function(worker) {
-                        // logger.error('error');
-                    }
-                });
-            }
-            // logger.debug('Worker ' + cId + ' received message from master.', msg);
-        } else {
-            // logger.error("received this from master: " + JSON.stringifyAligned(msg));
-        }
-    });
-
-    /*
-    server.listen(port, function () {
-        logger.info("server cluster started on port " + port + " on " + cluster.worker.id + " worker");
-    });
 
     app.listen(port, function () {
-        logger.info("server cluster started on port " + port + " on " + cluster.worker.id + " worker");
+        logger.info("server cluster started on port " + port + " | worker => " + cluster.worker.id);
     });
-    */
+
 }
