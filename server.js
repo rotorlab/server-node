@@ -1,17 +1,20 @@
 var express =               require('express');
 var bodyParser =            require('body-parser');
 var timeout =               require('connect-timeout');
-var log4js =                require('log4js');
+var logjs =                 require('logjsx');
 var cluster =               require('cluster');
-var http =                  require('http');
+var Redis =                 require('ioredis');
 var numCPUs =               require('os').cpus().length;
-var FlamebaseDatabase =     require("flamebase-database-node");
-var Path =                  require("./model/path.js");
+var FlamebaseDatabase =     require("./model/FlameDatabase.js");
+var Path =                  require("./model/Path.js");
 var apply =                 require('rus-diff').apply;
-var clone =                 require('rus-diff').clone;
 var sha1 =                  require('sha1');
+var logger =                new logjs();
 
-JSON.stringifyAligned = require('json-align');
+JSON.stringifyAligned =     require('json-align');
+logger.init({
+    level : "DEBUG"
+});
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
@@ -20,11 +23,11 @@ String.prototype.replaceAll = function(search, replacement) {
 
 var expectedDBNEnvVar = "DATABASE_NAME";
 var expectedPORTEnvVar = "DATABASE_PORT";
-var expectedAPIKeyEnvVar = "API_KEY";
+var expectedRPORTEnvVar = "REDIS_PORT";
 var expectedDebugKeyEnvVar = "DEBUG";
 var dbMaster = null;
-var port = null;
-var APIKey = null;
+var server_port = null;
+var redis_port = null;
 var debug = null;
 
 process.argv.forEach(function (val, index, array) {
@@ -32,383 +35,461 @@ process.argv.forEach(function (val, index, array) {
         dbMaster = val.replaceAll(expectedDBNEnvVar + "=", "");
     }
     if (val.indexOf(expectedPORTEnvVar) > -1) {
-        port = val.replaceAll(expectedPORTEnvVar + "=", "");
+        server_port = val.replaceAll(expectedPORTEnvVar + "=", "");
     }
     if (val.indexOf(expectedDebugKeyEnvVar) > -1) {
-        debug = val.replaceAll(expectedDebugKeyEnvVar + "=", "") === "true" ? true : false;
+        debug = val.replaceAll(expectedDebugKeyEnvVar + "=", "") === "true";
     }
-    if (val.indexOf(expectedAPIKeyEnvVar) > -1) {
-        APIKey = val.replaceAll(expectedAPIKeyEnvVar + "=", "");
+    if (val.indexOf(expectedRPORTEnvVar) > -1) {
+        redis_port = val.replaceAll(expectedRPORTEnvVar + "=", "");
     }
 });
 
+var redis = new Redis(redis_port);
 
-var TAG =                   "SERVER CLUSTER";
-var logger =                log4js.getLogger(TAG);
+var VARS = {
+    USER_AGENT: "user-agent",
+    APPLICATION_JSON: "application/json",
+    WORKER: "worker",
+    RESPONSE_KO: "KO"
+};
 
-var dbPaths = "paths";
+var ERROR = {
+    MISSING_PARAMS: "there vas an error on the connection instance creation: no_params"
+};
 
-if (cluster.isMaster) {
+var ERROR_REQUEST = {
+    MISSING_PARAMS: "missing_params",
+    MISSING_WRONG_PARAMS: "missing_or_wrong_params"
+};
 
-    var workers = {};
+var ERROR_RESPONSE = {
+    GET_UPDATES: "_error_getting_updates",
+    GET_UPDATES_MSG: "_error_getting_updates",
+    UPDATE_DATA: "_error_updating_data",
+    UPDATE_DATA_MSG: "_error_updating_data",
+    ADD_LISTENER: "_error_creating_listener",
+    ADD_LISTENER_MSG: "_error_creating_listener",
+    REMOVE_LISTENER: "_error_removing_listener",
+    REMOVE_LISTENER_MSG: "_error_removing_listener"
+};
 
-    logger.info("Master " + process.pid + " is running");
+var KEY_REQUEST = {
+    METHOD: "method",
+    PATH:   "path",
+    SHA1:   "sha1",
+    TOKEN:  "token",
+    DIFFERENCES: "differences",
+    CONTENT: "content",
+    LEN: "len",
+    OS: "os",
+    CLEAN: "clean",
+    UUID: "uuid"
+};
 
-    for (var i = 0; i < numCPUs; i++) {
-        var worker = cluster.fork();
-        workers[worker.pid] = worker;
-    }
-
-    cluster.on('exit', function (worker) {
-        console.log('Worker %d died :(', worker.id);
-        var w = cluster.fork();
-        workers[w.pid] = w;
-    });
-
-} else {
-
-    var action = {
-        response:           function (connection, data, error, pId) {
-            var result = {status: (data === null || error !== null ? "KO" : "OK"),
-                data: (data === null ? {} : data), error: error};
-            logger.info("worker: " + pId);
-            logger.info("response: " + JSON.stringify(result));
-            connection.response.contentType('application/json');
-            connection.response.send(result);
-        },
-        addListener:   function (connection, pId) {
-            var paths = new FlamebaseDatabase(dbPaths, "/");
-            paths.syncFromDatabase();
-
-            if (paths.ref === undefined) {
-                paths.ref = {}
-            }
-
-            if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-                var key = connection.path.replaceAll("/", "\.");
-                key = key.substr(1, key.length - 1);
-
-                if (paths.ref[key] === undefined) {
-                    paths.ref[key] = {};
-                    paths.ref[key].path = connection.path;
-                }
-
-                if (paths.ref[key].tokens === undefined) {
-                    paths.ref[key].tokens = {};
-                }
-
-                if (paths.ref[key].tokens[connection.token] === undefined) {
-                    paths.ref[key].tokens[connection.token] = {};
-                    paths.ref[key].tokens[connection.token].os = connection.os;
-                }
-
-                var keys = Object.keys(paths.ref[key].tokens);
-                var lastChangeTime = 0;
-                var lastToken = null;
-
-                for (var i = keys.length - 1; i >= 0; i--) {
-                    var time = paths.ref[key].tokens[keys[i]].time;
-                    if (lastChangeTime < time) {
-                        lastChangeTime = time;
-                        lastToken = keys[i];
+var action = {
+    response:       function (connection, data, error) {
+        let result = {
+            status: (data === null || error !== null ? "KO" : "OK"),
+            data: (data === null ? {} : data),
+            error: error
+        };
+        connection.callback(connection.token, result);
+    },
+    /**
+     * replaces path format: /contacts/batman -> contacts.batman
+     * creates a token reference for the given path:
+     "contacts.batman": {
+                "path": "/contacts/batman",
+                "tokens": {
+                    "6FBAEC3CD175FD1F4F86E59A5F2DEFF1D1ACD350": {
+                        "queue": {},
+                        "os": "android",
+                        "time": 1506663439626
                     }
                 }
+            }
+     * @param connection
+     * @param pId
+     */
+    addListener:    function (connection) {
+
+        /**
+         * work with path database
+         */
+        var paths = new FlamebaseDatabase("paths", "/");
+        paths.syncFromDatabase();
+
+        if (paths.ref === undefined) {
+            paths.ref = {}
+        }
+
+        // valid path
+        if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
+            logger.error(connection.path);
+            var key = connection.path.replaceAll("/", "\.");
+            key = key.substr(1, key.length - 1);
+
+            if (paths.ref[key] === undefined) {
+                paths.ref[key] = {};
+                paths.ref[key].path = connection.path;
+            }
+
+            if (paths.ref[key].tokens === undefined) {
+                paths.ref[key].tokens = {};
+            }
+
+            let data = {};
+            if (paths.ref[key].tokens[connection.token] === undefined) {
+                paths.ref[key].tokens[connection.token] = {};
+                paths.ref[key].tokens[connection.token].os = connection.os;
+                paths.ref[key].tokens[connection.token].queue = {};
+                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+
+                /**
+                 * queue is ready, all changes in the current path will be queue here
+                 * and will be removed when device receive it.
+                 * respond queue ready
+                 */
+                data.queueLen = 0;
+                data.info = "queue_ready";
+            } else {
+                /**
+                 * respond queue ready
+                 *
+                 */
+                if (paths.ref[key].tokens[connection.token].queue === undefined) {
+                    paths.ref[key].tokens[connection.token].queue = {};
+                    data.queueLen = 0;
+                } else {
+                    data.queueLen = Object.keys(paths.ref[key].tokens[connection.token].queue).length;
+                }
+                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+
+                data.info = "queue_ready";
+            }
+
+            paths.syncToDatabase();
+
+            /**
+             *
+             */
+            let object = this.getReference(connection);
+            object.FD.syncFromDatabase();
+
+            if (typeof object !== "string") {
+                data.objectLen = JSON.stringify(object.FD.ref).length;
+            } else {
+                data.objectLen = 0;
+            }
+
+            logger.info(JSON.stringifyAligned(object.FD.ref));
+
+            if (data.objectLen > 2) {
+                let device = {
+                    token: connection.token,
+                    os: connection.os
+                };
+                object.sendUpdateFor("{}", device, function() {
+                    logger.info("sending full object");
+                    data.info = "queue_ready";
+                    action.response(connection, data, null);
+                }, connection);
+            } else {
+                object.sync(connection, {
+                    success:            function() {
+                        action.response(connection, data, null);
+                    }
+                });
+            }
+
+        } else {
+            this.response(connection, null, "path_contains_dots");
+        }
+
+    },
+    removeListener: function (connection) {
+        var paths = new FlamebaseDatabase("paths", "/");
+        paths.syncFromDatabase();
+
+        if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
+            var key = connection.path.replaceAll("/", "\.");
+            key = key.substr(1, key.length - 1);
+
+            if (paths.ref[key] !== undefined && paths.ref[key].tokens !== undefined && paths.ref[key].tokens[connection.token] !== undefined) {
+                delete paths.ref[key].tokens[connection.token];
 
                 paths.syncToDatabase();
 
-                this.updateTime(connection);
-
-                var equals = this.verifyLenght(connection, pId);
-
-                var object = this.getReference(connection, pId);
-                object.FD.syncFromDatabase();
-                var len = 0;
-
-                if (typeof object !== "string") {
-                    len = JSON.stringify(object.FD.ref).length;
-                } else {
-                    this.response(connection, null, object, pId);
-                    return;
-                }
-
                 var data = {};
-                data.len = len;
-
-                if (lastToken === connection.token) {
-                    data.info = "listener_up_to_date";
-                } else {
-                    data.info = "listener_ready_for_refresh_client";
-                }
+                data.info = "listener_removed";
 
                 this.response(connection, data, null, pId);
             } else {
-                this.response(connection, null, "path_contains_dots", pId);
-            }
-
-        },
-        removeListener:   function (connection, pId) {
-            var paths = new FlamebaseDatabase(dbPaths, "/");
-            paths.syncFromDatabase();
-
-            if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-                var key = connection.path.replaceAll("/", "\.");
-                key = key.substr(1, key.length - 1);
-
-                if (paths.ref[key] !== undefined && paths.ref[key].tokens !== undefined && paths.ref[key].tokens[connection.token] !== undefined) {
-                    delete paths.ref[key].tokens[connection.token];
-
-                    paths.syncToDatabase();
-
-                    var data = {};
-                    data.info = "listener_removed";
-
-                    this.response(connection, data, null, pId);
+                if (paths.ref[key] === undefined) {
+                    this.response(connection, null, "path_not_found");
                 } else {
-                    if (paths.ref[key] === undefined) {
-                        this.response(connection, null, "path_not_found", pId);
-                    } else {
-                        this.response(connection, null, "token_not_found", pId);
-                    }
+                    this.response(connection, null, "token_not_found");
                 }
-            } else {
-                this.response(connection, null, "path_contains_dots", pId);
             }
+        } else {
+            this.response(connection, null, "path_contains_dots");
+        }
 
-        },
-        verifyLenght:       function (connection, pId) {
-            var object = this.getReference(connection, pId);
-            logger.debug(sha1(JSON.stringify(object.FD.ref)).toUpperCase());
-            logger.debug(connection.sha1);
+    },
+    /**
+     * Updates last time field for the given token
+     * @param connection
+     */
+    updateTime:     function (connection) {
+        if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
+            let key = connection.path.replaceAll("/", "\.");
+            key = key.substr(1, key.length - 1);
 
-            var hash = sha1(JSON.stringify(object.FD.ref)).toUpperCase();
-            return hash === connection.sha1;
-        },
-        getUpdatesFrom:     function (connection, pId) {
-            var paths = new FlamebaseDatabase(dbPaths, "/");
+            var paths = new FlamebaseDatabase("paths", "/");
             paths.syncFromDatabase();
-            var object = this.getReference(connection, pId);
-            if (typeof object === "string") {
-                this.response(connection, null, object, pId);
-            } else {
-                var device = {
-                    token: connection.token,
-                    os: connection.os
-                }
-                object.sendUpdateFor(connection.content, device, function() {
-                    var data = {};
-                    data.info = "updates_sent";
-                    data.len = JSON.stringify(object.FD.ref).length;
-                    action.response(connection, data, null, pId);
-                });
+
+            if (paths.ref === undefined) {
+                paths.ref = {};
             }
-        },
-        updateTime:         function (connection) {
-            if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-                var key = connection.path.replaceAll("/", "\.");
-                key = key.substr(1, key.length - 1);
 
-                var paths = new FlamebaseDatabase(dbPaths, "/" + key);
-                paths.syncFromDatabase();
-
-                if (paths.ref === undefined) {
-                    paths.ref = {};
-                    paths.ref.path = connection.path;
-                }
-
-                if (paths.ref.tokens === undefined) {
-                    paths.ref.tokens = {};
-                }
-                paths.ref.tokens[connection.token].time = new Date().getTime();
-                paths.syncToDatabase();
+            if (paths.ref[key] === undefined) {
+                paths.ref[key] = {};
             }
-        },
-        updateData:         function (connection, pId) {
-            var object = this.getReference(connection, pId);
-            if (typeof object === "string") {
-                this.response(connection, null, object, pId);
-            } else {
+
+            if (paths.ref[key].tokens === undefined) {
+                paths.ref[key].tokens = {};
+            }
+
+            if (paths.ref[key].tokens === undefined && connection.token !== undefined) {
+                paths.ref[key].tokens[connection.token] = {};
+            }
+
+            if (paths.ref[key].tokens[connection.token] !== undefined) {
+                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+            }
+
+            paths.syncToDatabase();
+        }
+    },
+
+    /**
+     * Updates the queue in path database
+     * @param connection
+     */
+    updateQueue:     function (connection) {
+        let object = this.getReference(connection);
+        logger.error("test 1");
+        if (typeof object === "string") {
+            this.response(connection, null, object);
+        } else {
+            object.addDifferencesToQueue(connection);
+            if (connection.differences !== undefined) {
                 object.FD.syncFromDatabase();
+                apply(object.FD.ref, JSON.parse(connection.differences));
+                object.FD.syncToDatabase();
 
-                var differences = connection.differences;
+                this.updateTime(connection);
 
-                if (differences !== undefined) {
-                    apply(object.FD.ref, JSON.parse(differences));
-                    this.updateTime(connection);
+                if (connection[KEY_REQUEST.CLEAN] === true) {
+                    let device = {
+                        token: connection.token,
+                        os: connection.os
+                    };
 
-                    object.FD.syncToDatabase(false, function() {
-                        if (JSON.stringify(object.FD.ref).length !== connection.len) {
-                            action.response(connection, null, "data_updated_with_differences", pId);
-                        } else {
-                            action.response(connection, "data_updated", null, pId);
+                    logger.debug("sending full object");
+                    object.sendUpdateFor("{}", device, function() {
+                        let data = {};
+                        data.info = "queue_updated";
+                        action.response(connection, data, null);
+                    }, connection);
+                } else {
+                    object.sync(connection, {
+                        success:            function() {
+                            let data = {};
+                            data.info = "queue_updated";
+                            action.response(connection, data, null);
                         }
                     });
-
-                } else {
-                    this.response(connection, "no_diff_updated", null, pId);
-                }
-            }
-        },
-        getReference:       function (connection, pId) {
-            var paths = new FlamebaseDatabase(dbPaths, "/");
-            paths.syncFromDatabase();
-            var error = null;
-            if (connection.path !== undefined) {
-                if (connection.path.indexOf("\.") === -1) {
-                    if (connection.path.indexOf("/") === 0) {
-                        var key = connection.path.replaceAll("/", "\.");
-                        key = key.substr(1, key.length - 1);
-                        if (paths.ref[key] !== undefined) {
-                            return new Path(APIKey, paths.ref[key], dbMaster, connection.path, pId, debug.toString());
-                        } else {
-                            error = "holder_not_found";
-                        }
-                    } else {
-                        error = "path_not_starts_with_slash";
-                    }
-                } else {
-                    error = "path_contains_dots";
                 }
             } else {
-                error = "json_path_not_found";
+                this.response(connection, "no_diff_updated", null);
             }
-            logger.error(error);
-            return error;
-        },
-        parseRequest:       function (req, res, worker) {
-            var response = res;
+        }
+    },
+    getReference:   function (connection) {
+        var paths = new FlamebaseDatabase("paths", "/");
+        paths.syncFromDatabase();
+        let error = null;
 
-            try {
-                var message = req.body;
-                var connection = {};     // connection element
-
-                logger.debug("user-agent: " + req.headers['user-agent']);
-                logger.debug("worker: " + worker);
-
-
-                if (message === undefined || message === null) {
-                    logger.error("there vas an error on the connection instance creation: no_params");
-                    var result = {status: "KO", data: null, error: "missing_params"};
-                    response.contentType('application/json');
-                    response.send(JSON.stringify(result));
-                    return null
-                }
-
-                var keys = Object.keys(message); // keys
-                for (var i = 0; i < keys.length; i++) {
-                    var key = keys[i];
-                    switch (key) {
-                        case "method":
-                            connection[key] = message[key];
-                            logger.debug("method: " + connection[key]);
-                            break;
-
-                        case "path":
-                            connection[key] = message[key];
-                            logger.debug("path: " + connection[key]);
-                            break;
-
-                        case "sha1":
-                            connection[key] = message[key];
-                            logger.debug("sha1: " + connection[key]);
-                            break;
-
-                        case "token":
-                            connection[key] = message[key];
-                            logger.debug("token: " + connection[key]);
-                            break;
-
-                        case "differences":
-                            connection[key] = message[key];
-                            logger.debug("differences: " + connection[key]);
-                            break;
-
-                        case "content":
-                            connection[key] = message[key];
-                            logger.debug("content: " + connection[key]);
-                            break;
-
-                        case "len":
-                            connection[key] = message[key];
-                            logger.debug("len: " + connection[key]);
-                            break;
-
-                        case "os":
-                            connection[key] = message[key];
-                            logger.debug("os: " + connection[key]);
-                            break;
-
-                        case "clean":
-                            connection[key] = message[key];
-                            logger.debug("clean: " + connection[key]);
-                            break;
-
-                        default:
-
-                            //
-                            break;
+        if (connection.path !== undefined) {
+            if (connection.path.indexOf("\.") === -1) {
+                if (connection.path.indexOf("/") === 0) {
+                    let key = connection.path.replaceAll("/", "\.");
+                    key = key.substr(1, key.length - 1);
+                    if (paths.ref[key] !== undefined) {
+                        return new Path(paths, connection, dbMaster, debug);
+                    } else {
+                        error = "holder_not_found";
                     }
+                } else {
+                    error = "path_not_starts_with_slash";
                 }
+            } else {
+                error = "path_contains_dots";
+            }
+        } else {
+            error = "json_path_not_found";
+        }
+        logger.error(error);
+        return error;
+    },
+    printError:     function (msg, stackMessage) {
+        logger.error(msg);
+        let messages = stackMessage.split("\n");
+        for (let i = 0; i < messages.length; i++) {
+            logger.error(messages[i]);
+        }
+        return messages;
+    },
+    parseRequest:   function (req, res) {
 
-                // super important values
-                connection.id = new Date().getTime();
-                connection.request = req;
-                connection.response = response;
+        try {
+            let message = req.body;
+            let connection = {};     // connection element
 
-                switch (connection.method) {
+            // logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
+            logger.debug(VARS.WORKER + ": " + cluster.worker.id);
 
-                    case "create_listener":
-                        try {
-                            this.addListener(connection, worker);
-                        } catch (e) {
-                            logger.error("there was an error parsing request from addGreatListener: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_creating", worker);
-                        }
+            let keys = Object.keys(message); // keys
+            for (let i = 0; i < keys.length; i++) {
+                let key = keys[i];
+                switch (key) {
+                    case KEY_REQUEST.METHOD:
+                        connection[key] = message[key];
+                        logger.debug(KEY_REQUEST.METHOD + ": " + connection[key]);
                         break;
 
-
-                    case "remove_listener":
-                        try {
-                            this.removeListener(connection, worker);
-                        } catch (e) {
-                            logger.error("there was an error parsing request from addGreatListener: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_removing_listener", worker);
-                        }
+                    case KEY_REQUEST.PATH:
+                        connection[key] = message[key];
+                        logger.debug(KEY_REQUEST.PATH + ": " + connection[key]);
                         break;
 
-                    case "update_data":
-                        try {
-                            this.updateData(connection, worker);
-                        } catch (e) {
-                            logger.error("there was an error parsing request from updateData: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_updating_data", worker);
-                        }
+                    case KEY_REQUEST.SHA1:
+                        connection[key] = message[key];
+                        // logger.debug(KEY_REQUEST.SHA1 + ": " + connection[key]);
                         break;
 
-                    case "get_updates":
-                        try {
-                            this.getUpdatesFrom(connection, worker);
-                        } catch (e) {
-                            logger.error("there was an error parsing request from getUpdatesFrom: " + e.toString());
-                            this.response(connection, null, "cluster_" + worker + "_error_getting_updates", worker);
-                        }
+                    case KEY_REQUEST.TOKEN:
+                        connection[key] = message[key];
+                        // logger.debug(KEY_REQUEST.TOKEN + ": " + connection[key]);
+                        break;
+
+                    case KEY_REQUEST.DIFFERENCES:
+                        connection[key] = message[key];
+                        logger.debug(KEY_REQUEST.DIFFERENCES + ": " + connection[key]);
+                        break;
+
+                    case KEY_REQUEST.CONTENT:
+                        connection[key] = message[key];
+                        logger.debug(KEY_REQUEST.CONTENT + ": " + connection[key]);
+                        break;
+
+                    case KEY_REQUEST.LEN:
+                        connection[key] = message[key];
+                        // logger.debug(KEY_REQUEST.LEN + ": " + connection[key]);
+                        break;
+
+                    case KEY_REQUEST.OS:
+                        connection[key] = message[key];
+                        // logger.debug(KEY_REQUEST.OS + ": " + connection[key]);
+                        break;
+
+                    case KEY_REQUEST.CLEAN:
+                        connection[key] = message[key];
+                        logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
+                        break;
+
+                    case KEY_REQUEST.UUID:
+                        connection[key] = message[key];
+                        // logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
                         break;
 
                     default:
+
                         //
                         break;
-
                 }
-
-            } catch (e) {
-                logger.error("there was an error parsing request: " + e.toString());
-
-                var result = {status: "KO", data: null, error: "missing_or_wrong_params"};
-
-                res.contentType('application/json');
-                res.send(JSON.stringify(result));
             }
+
+            // super important values
+            connection.id = new Date().getTime();
+            connection.worker = cluster.worker.id;
+            connection.request = req;
+            connection.callback = res;
+
+            switch (connection.method) {
+
+                case "create_listener":
+                    try {
+                        this.addListener(connection);
+                    } catch (e) {
+                        this.printError("there was an error parsing request from addGreatListener: " + e.stack);
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.ADD_LISTENER);
+                    }
+                    break;
+
+
+                case "remove_listener":
+                    try {
+                        this.removeListener(connection);
+                    } catch (e) {
+                        logger.error("there was an error parsing request from addGreatListener: " + e.toString());
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.REMOVE_LISTENER);
+                    }
+                    break;
+
+                case "update_data":
+                    try {
+                        this.updateQueue(connection);
+                    } catch (e) {
+                        logger.error("there was an error parsing request from updateQueue: " + e.toString());
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
+                    }
+                    break;
+
+                default:
+                    //
+                    break;
+
+            }
+
+        } catch (e) {
+            logger.error("there was an error parsing request: " + e.toString());
+
+            let result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_WRONG_PARAMS};
+            res(req.token, result);
         }
+    }
+};
+
+if (cluster.isMaster) {
+
+    let workers = [];
+
+    let spawn = function(i) {
+        workers[i] = cluster.fork();
+        workers[i].on('exit', function(code, signal) {
+            logger.debug('respawning worker ' + i);
+            spawn(i);
+        });
     };
+
+    for (let i = 0; i < numCPUs; i++) {
+        spawn(i);
+    }
+
+} else {
 
     var app = express();
 
@@ -417,17 +498,23 @@ if (cluster.isMaster) {
     }));
 
     app.use(bodyParser.json({limit: '50mb'}));
-    app.use(timeout('60s'))
+    app.use(timeout('120s'));
 
     app.route('/')
         .get(function (req, res) {
-            action.parseRequest(req, res, cluster.worker.id)
+            res.send("hi :)");
         })
         .post(function (req, res) {
-            action.parseRequest(req, res, cluster.worker.id)
+            action.parseRequest(req, function(token, result) {
+                logger.info("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
+                logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
+                redis.publish(token, JSON.stringify(result));
+            });
+            res.send("thanks :)")
         });
 
-    app.listen(port, function () {
-        logger.info("server cluster started on port " + port + " on " + cluster.worker.id + " worker");
+    app.listen(server_port, function () {
+        logger.info("server cluster started on port " + server_port + " | worker => " + cluster.worker.id);
     });
+
 }

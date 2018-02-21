@@ -1,2 +1,6 @@
 .idea/
 node_modules/
+package-lock.json
+database.json
+paths.json
+dump.rdb

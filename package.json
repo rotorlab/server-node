@@ -1,9 +1,10 @@
 {
   "name": "flamebase-database-server-cluster",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Server cluster to hold a realtime JSON database",
   "main": "index.js",
   "scripts": {
+    "launcher": "node launcher.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,13 +14,19 @@
   "dependencies": {
     "body-parser": "latest",
     "connect-timeout": "^1.9.0",
-    "express": "latest",
-    "flamebase-database-node": "^1.3.0",
+    "ent": "^2.2.0",
+    "express": "4.15.2",
+    "express-socket.io": "^1.0.3",
+    "fcm-push": "latest",
     "forever-monitor": "^1.7.1",
+    "ioredis": "^3.2.2",
     "json-align": "^0.1.0",
-    "log4js": "latest",
+    "logjsx": "0.0.2",
+    "node-json-db": "^0.7.3",
+    "redis": "^2.8.0",
     "rus-diff": "^1.1.0",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "sync-node": ">= 1.3.1"
   },
   "keywords": [
     "flamebase",
