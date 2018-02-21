@@ -46,19 +46,17 @@ Create a server cluster to hold all realtime changes.
 
 ```javascript
 var FlamebaseDatabaseCluster = require('flamebase-database-server-cluster');
-
-var serverKey = 'AIzafvwsdfmvsdfv-fdvwsdfgweFGfdAsfwefgw-z1JI';
-
-/**
-* - database name
-* - clusters port
-* - server key for push messages (fcm)
-* - debug logs
-*/
-var FDC = new FlamebaseDatabaseCluster("myDatabase", 1507, serverKey, true);
+var FDC = new FlamebaseDatabaseCluster();
 FDC.initCluster({
     start: function () {
-        console.log("start!!")
+        console.log("flamebase cluster ready")
+    },
+    config: {
+        server_port: 1507,
+        redis_port: 6379,
+        db_name: "database",
+        log_dir: "logs/",
+        debug: true
     }
 });
 ```
@@ -70,14 +68,14 @@ Console Output:
 ```bash
 start!!
 [2017-07-02 21:05:48.337] [INFO] SERVER CLUSTER - Master 40001 is running
-[2017-07-02 21:05:48.836] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 2 worker
-[2017-07-02 21:05:48.836] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 5 worker
-[2017-07-02 21:05:48.837] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 3 worker
-[2017-07-02 21:05:48.836] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 1 worker
-[2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 4 worker
-[2017-07-02 21:05:48.838] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 7 worker
-[2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 8 worker
-[2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 on 6 worker
+[2017-07-02 21:05:48.836] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 2
+[2017-07-02 21:05:48.836] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 5
+[2017-07-02 21:05:48.837] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 3
+[2017-07-02 21:05:48.836] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 1
+[2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 4
+[2017-07-02 21:05:48.838] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 7
+[2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 8
+[2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 6
 ```
 
 ### Libraries and packages

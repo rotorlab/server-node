@@ -11,11 +11,6 @@ var apply =                 require('rus-diff').apply;
 var sha1 =                  require('sha1');
 var logger =                new logjs();
 
-var port =                  1507;
-var redis_port =            6379;
-var redis = new Redis(redis_port);
-
-
 JSON.stringifyAligned =     require('json-align');
 logger.init({
     level : "DEBUG"
@@ -26,9 +21,32 @@ String.prototype.replaceAll = function(search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-var dbMaster = "myDatabase";
-var debug = "true";
-var ROOM =                  "/databases/";
+var expectedDBNEnvVar = "DATABASE_NAME";
+var expectedPORTEnvVar = "DATABASE_PORT";
+var expectedRPORTEnvVar = "REDIS_PORT";
+var expectedDebugKeyEnvVar = "DEBUG";
+var dbMaster = null;
+var server_port = null;
+var redis_port = null;
+var debug = null;
+
+process.argv.forEach(function (val, index, array) {
+    if (val.indexOf(expectedDBNEnvVar) > -1) {
+        dbMaster = val.replaceAll(expectedDBNEnvVar + "=", "");
+    }
+    if (val.indexOf(expectedPORTEnvVar) > -1) {
+        server_port = val.replaceAll(expectedPORTEnvVar + "=", "");
+    }
+    if (val.indexOf(expectedDebugKeyEnvVar) > -1) {
+        debug = val.replaceAll(expectedDebugKeyEnvVar + "=", "") === "true";
+    }
+    if (val.indexOf(expectedRPORTEnvVar) > -1) {
+        redis_port = val.replaceAll(expectedRPORTEnvVar + "=", "");
+    }
+});
+
+var redis = new Redis(redis_port);
+
 var VARS = {
     USER_AGENT: "user-agent",
     APPLICATION_JSON: "application/json",
@@ -495,8 +513,8 @@ if (cluster.isMaster) {
             res.send("thanks :)")
         });
 
-    app.listen(port, function () {
-        logger.info("server cluster started on port " + port + " | worker => " + cluster.worker.id);
+    app.listen(server_port, function () {
+        logger.info("server cluster started on port " + server_port + " | worker => " + cluster.worker.id);
     });
 
 }
