@@ -83,6 +83,7 @@ Client options to connect with server cluster.
 
 - [Android](https://github.com/flamebase/flamebase-database-android)
 ```groovy
-compile 'com.flamebase:database:1.3.0'
+// gradle
+implement 'com.flamebase:database:1.4.0'
 ```
 
