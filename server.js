@@ -279,7 +279,6 @@ var action = {
      */
     updateQueue:     function (connection) {
         let object = this.getReference(connection);
-        logger.error("test 1");
         if (typeof object === "string") {
             this.response(connection, null, object);
         } else {
@@ -510,7 +509,7 @@ if (cluster.isMaster) {
                 logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
                 redis.publish(token, JSON.stringify(result));
             });
-            res.send("thanks :)")
+            res.send("{}")
         });
 
     app.listen(server_port, function () {
