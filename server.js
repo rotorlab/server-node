@@ -110,7 +110,6 @@ var action = {
                 }
             }
      * @param connection
-     * @param pId
      */
     addListener:    function (connection) {
 
@@ -183,15 +182,15 @@ var action = {
                 data.objectLen = 0;
             }
 
-            logger.info(JSON.stringifyAligned(object.FD.ref));
+            // logger.debug(JSON.stringifyAligned(object.FD.ref));
 
             if (data.objectLen > 2) {
                 let device = {
                     token: connection.token,
                     os: connection.os
                 };
-                object.sendUpdateFor("{}", device, function() {
-                    logger.info("sending full object");
+                object.sendUpdateFor(connection.content, device, function() {
+                    logger.debug("sending object for original length: " + connection.content.length);
                     data.info = "queue_ready";
                     action.response(connection, data, null);
                 }, connection);
@@ -224,7 +223,7 @@ var action = {
                 var data = {};
                 data.info = "listener_removed";
 
-                this.response(connection, data, null, pId);
+                this.response(connection, data, null, connection.worker);
             } else {
                 if (paths.ref[key] === undefined) {
                     this.response(connection, null, "path_not_found");

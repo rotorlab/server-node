@@ -58,8 +58,10 @@ function FlamebaseDatabase(database, path) {
             object.ref = new JsonDB(database, true, true).getData(path);
             this.lastStringReference = JSON.stringify(object.ref);
         } catch(e) {
-            this.prepareUnknownPath();
-            this.lastStringReference = JSON.stringify(object.ref);
+            setTimeout(function() {
+                object.prepareUnknownPath();
+                object.lastStringReference = JSON.stringify(object.ref);
+            }, 200);
         }
     };
 

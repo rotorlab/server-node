@@ -21,6 +21,9 @@ brew install redis
  
 // run
 redis-server
+
+// for testing with physical devices
+redis-server --protected-mode no
  
 // logs
 redis-cli monitor
