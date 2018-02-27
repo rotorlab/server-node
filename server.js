@@ -182,24 +182,20 @@ var action = {
                 data.objectLen = 0;
             }
 
-            // logger.debug(JSON.stringifyAligned(object.FD.ref));
-
+            // TODO send pending queues
             if (data.objectLen > 2) {
                 let device = {
                     token: connection.token,
                     os: connection.os
                 };
-                object.sendUpdateFor(connection.content, device, function() {
-                    logger.debug("sending object for original length: " + connection.content.length);
+                object.sendUpdateByContent("{}", device, function() {
                     data.info = "queue_ready";
                     action.response(connection, data, null);
                 }, connection);
             } else {
-                object.sync(connection, {
-                    success:            function() {
-                        action.response(connection, data, null);
-                    }
-                });
+                data.info = "new_object";
+                data.id = connection.path;
+                action.response(connection, data, null);
             }
 
         } else {
@@ -296,13 +292,13 @@ var action = {
                     };
 
                     logger.debug("sending full object");
-                    object.sendUpdateFor("{}", device, function() {
+                    object.sendUpdateByContent("{}", device, function() {
                         let data = {};
                         data.info = "queue_updated";
                         action.response(connection, data, null);
                     }, connection);
                 } else {
-                    object.sync(connection, {
+                    object.sendQueues(connection, {
                         success:            function() {
                             let data = {};
                             data.info = "queue_updated";
@@ -326,6 +322,7 @@ var action = {
                     let key = connection.path.replaceAll("/", "\.");
                     key = key.substr(1, key.length - 1);
                     if (paths.ref[key] !== undefined) {
+                        logger.debug("path found");
                         return new Path(paths, connection, dbMaster, debug);
                     } else {
                         error = "holder_not_found";

@@ -247,12 +247,13 @@ function FlamebaseDatabase(database, path) {
                     error: null
                 };
 
+
                 for (let t in send.tokens) {
                     let token = send.tokens[t];
                     try {
-                        logger.error("will send messages")
+                        logger.debug("will send messages");
                         connection.callback(token, message);
-                        logger.error("sent messages")
+                        logger.debug("sent messages");
                         if (success !== undefined) {
                             success();
                         }

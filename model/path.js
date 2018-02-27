@@ -75,7 +75,7 @@ function Path(pathReference, connection, database, dbg) {
     this.FD.setSyncConfig(config);
     this.FD.debug(dbg === "true");
 
-    this.sendUpdateFor = function (before, device, callback, connection) {
+    this.sendUpdateByContent = function (before, device, callback, connection) {
         this.FD.sendDifferencesForClient(before, device, callback, connection);
     };
 
@@ -94,13 +94,11 @@ function Path(pathReference, connection, database, dbg) {
         this.pathReference.syncToDatabase()
     };
 
-    this.sync = function(connection, action) {
+    this.sendQueues = function(connection, action) {
         let path = connection.path.replaceAll("/", "\.");
         path = path.substr(1, path.length - 1);
 
-        if (this.debugVal) {
-            logger.debug("synchronizing with devices for path: " + path);
-        }
+        // logger.debug("synchronizing with devices for path: " + path);
 
         this.pathReference.syncFromDatabase();
 
