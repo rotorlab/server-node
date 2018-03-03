@@ -1,9 +1,9 @@
-var FlamebaseDatabaseCluster = require('./index.js');
+var FlamebaseServer = require('./index.js');
 
-var FDC = new FlamebaseDatabaseCluster();
+var FDC = new FlamebaseServer();
 FDC.initCluster({
     start: function () {
-        console.log("flamebase cluster ready")
+        console.log("flamebase server ready")
     },
     config: require("./config.json")
 });

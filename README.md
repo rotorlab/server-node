@@ -1,4 +1,4 @@
-[ ![flamebase/flamebase-database-server-cluster](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.4.0&x2=0)](https://www.npmjs.com/package/flamebase-database-server-cluster)
+[ ![flamebase/flamebase-server](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.5.0&x2=0)](https://www.npmjs.com/package/flamebase-server)
 
 # :fire: flamebase-database-server-cluster
 Server cluster to hold a realtime JSON database.
@@ -29,7 +29,7 @@ redis-server --protected-mode no
 redis-cli monitor
  
 // test channels (sub/pub)
-redis-cli PUBLISH d7bec76d-d4e1-4788-816f-f7260cd4a92c holi // redis-cli PUBLISH <Flamebase.id> message
+redis-cli PUBLISH d7bec76dac4e holi // redis-cli PUBLISH <Flamebase.id> message
 ```
 Ubuntu:
 ```bash 
@@ -42,14 +42,14 @@ sudo service redis-server status
 
 Install Flamebase:
 ```bash
-npm install flamebase-database-server-cluster --save
+npm install flamebase-server --save
 ```
 
 Create a server cluster to hold all realtime changes.
 
 ```javascript
-var FlamebaseDatabaseCluster = require('flamebase-database-server-cluster');
-var FDC = new FlamebaseDatabaseCluster();
+var FlamebaseServer = require('flamebase-database-server-cluster');
+var FDC = new FlamebaseServer();
 FDC.initCluster({
     start: function () {
         console.log("flamebase cluster ready")
@@ -87,6 +87,6 @@ Client options to connect with server cluster.
 - [Android](https://github.com/flamebase/flamebase-database-android)
 ```groovy
 // gradle
-implement 'com.flamebase:database:1.4.0'
+implementation 'com.flamebase:database:1.5.0'
 ```
 
