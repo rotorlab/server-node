@@ -4,9 +4,7 @@
 Server cluster to hold a realtime JSON database.
 
 ### What is this?
-Flamebase is an open source project that tries to emulate Firebase Database features as much as possible. I like Firebase but it's expensive for what it currently offers.
-If you are doing an altruist project with Firebase, pray not to became successful, because the monthly amount will increase considerably.
-
+Flamebase is an open source project that tries to emulate Firebase Database features as much as possible. 
 In this repo you can find the proper package for run a server cluster with node framework.
 For now it still developing, so please be patient with errors.
 
@@ -52,7 +50,7 @@ var FlamebaseServer = require('flamebase-server');
 var server = new FlamebaseServer();
 server.initCluster({
     start: function () {
-        console.log("flamebase cluster ready")
+        console.log("flamebase server ready")
     },
     config: {
         server_port: 1507,
