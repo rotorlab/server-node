@@ -55,7 +55,8 @@ function FlamebaseDatabase(database, path) {
      */
     this.syncFromDatabase = function() {
         try {
-            object.ref = new JsonDB(database, true, true).getData(path);
+            object.db.reload();
+            object.ref = object.db.getData(path);
             this.lastStringReference = JSON.stringify(object.ref);
         } catch(e) {
             setTimeout(function() {
@@ -74,7 +75,8 @@ function FlamebaseDatabase(database, path) {
             currentObject = currentObject[pCheck];
         }
         object.ref = currentObject;
-        new JsonDB(database, true, true).push(path, object.ref);
+        object.db.reload();
+        object.db.push(path, object.ref);
     };
 
     /**
@@ -87,7 +89,8 @@ function FlamebaseDatabase(database, path) {
                 logger.debug("cleaning last reference on " + path);
             }
         }
-        new JsonDB(database, true, true).push(path, object.ref);
+        object.db.reload();
+        object.db.push(path, object.ref);
         // object.syncNotifications(callback);
     };
 
@@ -252,11 +255,19 @@ function FlamebaseDatabase(database, path) {
                     let token = send.tokens[t];
                     try {
                         logger.debug("will send messages");
-                        connection.callback(token, message);
+                        connection.callback(token, message,
+                            function () {
+                                if (success !== undefined) {
+                                    success();
+                                }
+                            },
+                            function () {
+                                if (fail !== undefined) {
+                                    fail();
+                                }
+                            });
                         logger.debug("sent messages");
-                        if (success !== undefined) {
-                            success();
-                        }
+
                     } catch (e) {
                         if (fail !== null && fail !== undefined) {
                             fail(e);

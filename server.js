@@ -29,6 +29,8 @@ var dbMaster = null;
 var server_port = null;
 var redis_port = null;
 var debug = null;
+var paths = new FlamebaseDatabase("paths", "/");
+
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
@@ -116,7 +118,6 @@ var action = {
         /**
          * work with path database
          */
-        var paths = new FlamebaseDatabase("paths", "/");
         paths.syncFromDatabase();
 
         if (paths.ref === undefined) {
@@ -188,10 +189,21 @@ var action = {
                     token: connection.token,
                     os: connection.os
                 };
-                object.sendUpdateByContent("{}", device, function() {
-                    data.info = "queue_ready";
-                    action.response(connection, data, null);
-                }, connection);
+                let keys = Object.keys(paths.ref[key].tokens[connection.token].queue);
+                if (keys.length > 0) {
+                    object.sendQueues(connection, {
+                        success:            function() {
+                            let data = {};
+                            data.info = "queue_sent";
+                            action.response(connection, data, null);
+                        }
+                    });
+                } else  {
+                    object.sendUpdateByContent("{}", device, function() {
+                        data.info = "queue_ready";
+                        action.response(connection, data, null);
+                    }, connection);
+                }
             } else {
                 data.info = "new_object";
                 data.id = connection.path;
@@ -204,7 +216,6 @@ var action = {
 
     },
     removeListener: function (connection) {
-        var paths = new FlamebaseDatabase("paths", "/");
         paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
@@ -241,7 +252,6 @@ var action = {
             let key = connection.path.replaceAll("/", "\.");
             key = key.substr(1, key.length - 1);
 
-            var paths = new FlamebaseDatabase("paths", "/");
             paths.syncFromDatabase();
 
             if (paths.ref === undefined) {
@@ -312,7 +322,6 @@ var action = {
         }
     },
     getReference:   function (connection) {
-        var paths = new FlamebaseDatabase("paths", "/");
         paths.syncFromDatabase();
         let error = null;
 
@@ -500,10 +509,22 @@ if (cluster.isMaster) {
             res.send("hi :)");
         })
         .post(function (req, res) {
-            action.parseRequest(req, function(token, result) {
+            action.parseRequest(req, function(token, result, success, fail) {
                 logger.info("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
-                redis.publish(token, JSON.stringify(result));
+                redis.publish(token, JSON.stringify(result)).then(function(r) {
+                    if (r === 1) {
+                        logger.info("SUCCESS publish result");
+                        if (success !== undefined) {
+                            success();
+                        }
+                    } else {
+                        logger.error("FAILED publish result");
+                        if (fail !== undefined) {
+                            fail();
+                        }
+                    }
+                });
             });
             res.send("{}")
         });
