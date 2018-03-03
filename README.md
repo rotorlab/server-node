@@ -1,4 +1,4 @@
-[ ![flamebase/flamebase-server](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.5.0&x2=0)](https://www.npmjs.com/package/flamebase-server)
+[ ![flamebase/flamebase-server](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.5.1&x2=0)](https://www.npmjs.com/package/flamebase-server)
 
 # :fire: flamebase-server
 Server cluster to hold a realtime JSON database.
@@ -85,6 +85,6 @@ Client options to connect with server cluster.
 - [Android](https://github.com/flamebase/flamebase-database-android)
 ```groovy
 // gradle
-implementation 'com.flamebase:database:1.5.0'
+implementation 'com.flamebase:database:1.5.1'
 ```
 
