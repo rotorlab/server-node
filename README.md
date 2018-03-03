@@ -1,12 +1,10 @@
-[ ![flamebase/flamebase-database-server-cluster](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.4.0&x2=0)](https://www.npmjs.com/package/flamebase-database-server-cluster)
+[ ![flamebase/flamebase-server](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.5.0&x2=0)](https://www.npmjs.com/package/flamebase-server)
 
-# :fire: flamebase-database-server-cluster
+# :fire: flamebase-server
 Server cluster to hold a realtime JSON database.
 
 ### What is this?
-Flamebase is an open source project that tries to emulate Firebase Database features as much as possible. I like Firebase but it's expensive for what it currently offers.
-If you are doing an altruist project with Firebase, pray not to became successful, because the monthly amount will increase considerably.
-
+Flamebase is an open source project that tries to emulate Firebase Database features as much as possible. 
 In this repo you can find the proper package for run a server cluster with node framework.
 For now it still developing, so please be patient with errors.
 
@@ -21,12 +19,15 @@ brew install redis
  
 // run
 redis-server
+
+// for testing with physical devices
+redis-server --protected-mode no
  
 // logs
 redis-cli monitor
  
 // test channels (sub/pub)
-redis-cli PUBLISH d7bec76d-d4e1-4788-816f-f7260cd4a92c holi // redis-cli PUBLISH <Flamebase.id> message
+redis-cli PUBLISH d7bec76dac4e holi // redis-cli PUBLISH <Flamebase.id> message
 ```
 Ubuntu:
 ```bash 
@@ -39,17 +40,17 @@ sudo service redis-server status
 
 Install Flamebase:
 ```bash
-npm install flamebase-database-server-cluster --save
+npm install flamebase-server --save
 ```
 
 Create a server cluster to hold all realtime changes.
 
 ```javascript
-var FlamebaseDatabaseCluster = require('flamebase-database-server-cluster');
-var FDC = new FlamebaseDatabaseCluster();
-FDC.initCluster({
+var FlamebaseServer = require('flamebase-server');
+var server = new FlamebaseServer();
+server.initCluster({
     start: function () {
-        console.log("flamebase cluster ready")
+        console.log("flamebase server ready")
     },
     config: {
         server_port: 1507,
@@ -84,6 +85,6 @@ Client options to connect with server cluster.
 - [Android](https://github.com/flamebase/flamebase-database-android)
 ```groovy
 // gradle
-implement 'com.flamebase:database:1.4.0'
+implementation 'com.flamebase:database:1.5.0'
 ```
 

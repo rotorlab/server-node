@@ -29,6 +29,8 @@ var dbMaster = null;
 var server_port = null;
 var redis_port = null;
 var debug = null;
+var paths = new FlamebaseDatabase("paths", "/");
+
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
@@ -110,14 +112,12 @@ var action = {
                 }
             }
      * @param connection
-     * @param pId
      */
     addListener:    function (connection) {
 
         /**
          * work with path database
          */
-        var paths = new FlamebaseDatabase("paths", "/");
         paths.syncFromDatabase();
 
         if (paths.ref === undefined) {
@@ -183,24 +183,31 @@ var action = {
                 data.objectLen = 0;
             }
 
-            logger.info(JSON.stringifyAligned(object.FD.ref));
-
+            // TODO send pending queues
             if (data.objectLen > 2) {
                 let device = {
                     token: connection.token,
                     os: connection.os
                 };
-                object.sendUpdateFor("{}", device, function() {
-                    logger.info("sending full object");
-                    data.info = "queue_ready";
-                    action.response(connection, data, null);
-                }, connection);
-            } else {
-                object.sync(connection, {
-                    success:            function() {
+                let keys = Object.keys(paths.ref[key].tokens[connection.token].queue);
+                if (keys.length > 0) {
+                    object.sendQueues(connection, {
+                        success:            function() {
+                            let data = {};
+                            data.info = "queue_sent";
+                            action.response(connection, data, null);
+                        }
+                    });
+                } else  {
+                    object.sendUpdateByContent("{}", device, function() {
+                        data.info = "queue_ready";
                         action.response(connection, data, null);
-                    }
-                });
+                    }, connection);
+                }
+            } else {
+                data.info = "new_object";
+                data.id = connection.path;
+                action.response(connection, data, null);
             }
 
         } else {
@@ -209,7 +216,6 @@ var action = {
 
     },
     removeListener: function (connection) {
-        var paths = new FlamebaseDatabase("paths", "/");
         paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
@@ -224,7 +230,7 @@ var action = {
                 var data = {};
                 data.info = "listener_removed";
 
-                this.response(connection, data, null, pId);
+                this.response(connection, data, null, connection.worker);
             } else {
                 if (paths.ref[key] === undefined) {
                     this.response(connection, null, "path_not_found");
@@ -246,7 +252,6 @@ var action = {
             let key = connection.path.replaceAll("/", "\.");
             key = key.substr(1, key.length - 1);
 
-            var paths = new FlamebaseDatabase("paths", "/");
             paths.syncFromDatabase();
 
             if (paths.ref === undefined) {
@@ -279,7 +284,6 @@ var action = {
      */
     updateQueue:     function (connection) {
         let object = this.getReference(connection);
-        logger.error("test 1");
         if (typeof object === "string") {
             this.response(connection, null, object);
         } else {
@@ -298,13 +302,13 @@ var action = {
                     };
 
                     logger.debug("sending full object");
-                    object.sendUpdateFor("{}", device, function() {
+                    object.sendUpdateByContent("{}", device, function() {
                         let data = {};
                         data.info = "queue_updated";
                         action.response(connection, data, null);
                     }, connection);
                 } else {
-                    object.sync(connection, {
+                    object.sendQueues(connection, {
                         success:            function() {
                             let data = {};
                             data.info = "queue_updated";
@@ -318,7 +322,6 @@ var action = {
         }
     },
     getReference:   function (connection) {
-        var paths = new FlamebaseDatabase("paths", "/");
         paths.syncFromDatabase();
         let error = null;
 
@@ -328,6 +331,7 @@ var action = {
                     let key = connection.path.replaceAll("/", "\.");
                     key = key.substr(1, key.length - 1);
                     if (paths.ref[key] !== undefined) {
+                        logger.debug("path found");
                         return new Path(paths, connection, dbMaster, debug);
                     } else {
                         error = "holder_not_found";
@@ -505,12 +509,24 @@ if (cluster.isMaster) {
             res.send("hi :)");
         })
         .post(function (req, res) {
-            action.parseRequest(req, function(token, result) {
+            action.parseRequest(req, function(token, result, success, fail) {
                 logger.info("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
-                redis.publish(token, JSON.stringify(result));
+                redis.publish(token, JSON.stringify(result)).then(function(r) {
+                    if (r === 1) {
+                        logger.info("SUCCESS publish result");
+                        if (success !== undefined) {
+                            success();
+                        }
+                    } else {
+                        logger.error("FAILED publish result");
+                        if (fail !== undefined) {
+                            fail();
+                        }
+                    }
+                });
             });
-            res.send("thanks :)")
+            res.send("{}")
         });
 
     app.listen(server_port, function () {

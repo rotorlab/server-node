@@ -14,7 +14,6 @@ let TAG =                   "PATH CLUSTER";
 let ACTION_SIMPLE_UPDATE    = "simple_update";
 let ACTION_SLICE_UPDATE     = "slice_update";
 let ACTION_NO_UPDATE        = "no_update";
-let NOT_REGISTERED        = "NotRegistered";
 
 function Path(pathReference, connection, database, dbg) {
 
@@ -75,7 +74,7 @@ function Path(pathReference, connection, database, dbg) {
     this.FD.setSyncConfig(config);
     this.FD.debug(dbg === "true");
 
-    this.sendUpdateFor = function (before, device, callback, connection) {
+    this.sendUpdateByContent = function (before, device, callback, connection) {
         this.FD.sendDifferencesForClient(before, device, callback, connection);
     };
 
@@ -94,13 +93,11 @@ function Path(pathReference, connection, database, dbg) {
         this.pathReference.syncToDatabase()
     };
 
-    this.sync = function(connection, action) {
+    this.sendQueues = function(connection, action) {
         let path = connection.path.replaceAll("/", "\.");
         path = path.substr(1, path.length - 1);
 
-        if (this.debugVal) {
-            logger.debug("synchronizing with devices for path: " + path);
-        }
+        // logger.debug("synchronizing with devices for path: " + path);
 
         this.pathReference.syncFromDatabase();
 
@@ -151,17 +148,7 @@ function Path(pathReference, connection, database, dbg) {
                              * @param error
                              */
                             function (error) {
-                                logger.error(error);
-                                switch (error) {
-
-                                    case NOT_REGISTERED:
-                                        object.removeToken(tok);
-                                        break;
-
-                                    default:
-                                        // nothing to do here
-                                        break;
-                                }
+                                // logger.error(error);
                             }, connection);
                     } else if (dataToSend.parts.length > 1) {
                         /**
@@ -190,17 +177,7 @@ function Path(pathReference, connection, database, dbg) {
                                  * @param error
                                  */
                                 function (error) {
-                                    logger.error(error);
-                                    switch (error) {
-
-                                        case NOT_REGISTERED:
-                                            object.removeToken(tok);
-                                            break;
-
-                                        default:
-                                            // nothing to do here
-                                            break;
-                                    }
+                                    // logger.error(error);
                                 }, connection);
                         }
                     } else {
@@ -226,17 +203,7 @@ function Path(pathReference, connection, database, dbg) {
                              * @param error
                              */
                             function (error) {
-                                logger.error(error);
-                                switch (error) {
-
-                                    case NOT_REGISTERED:
-                                        object.removeToken(tok);
-                                        break;
-
-                                    default:
-                                        // nothing to do here
-                                        break;
-                                }
+                                // logger.error(error);
                             }, connection);
                     }
 
