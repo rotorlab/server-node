@@ -48,9 +48,9 @@ npm install flamebase-server --save
 Create a server cluster to hold all realtime changes.
 
 ```javascript
-var FlamebaseServer = require('flamebase-database-server-cluster');
-var FDC = new FlamebaseServer();
-FDC.initCluster({
+var FlamebaseServer = require('flamebase-server');
+var server = new FlamebaseServer();
+server.initCluster({
     start: function () {
         console.log("flamebase cluster ready")
     },

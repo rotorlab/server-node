@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flamebase/flamebase-database-server-cluster.git"
+    "url": "git+https://github.com/flamebase/flamebase-server.git"
   },
   "dependencies": {
     "body-parser": "latest",
@@ -35,7 +35,7 @@
   "author": "efraespada@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/flamebase/flamebase-database-server-cluster/issues"
+    "url": "https://github.com/flamebase/flamebase-server/issues"
   },
-  "homepage": "https://github.com/flamebase/flamebase-database-server-cluster#readme"
+  "homepage": "https://github.com/flamebase/flamebase-server#readme"
 }
