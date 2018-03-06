@@ -148,9 +148,13 @@ function FlamebaseDatabase(database, path) {
                 send.tokens = android_tokens;
                 send.notification = notification;
                 if (ios_tokens.length === 0) {
-                    this.sendPushMessage(send, callback, null, connection);
+                    this.sendPushMessage(send, callback, function (error) {
+                        // nothing to do here
+                    }, connection);
                 } else {
-                    this.sendPushMessage(send, callback, null, connection);
+                    this.sendPushMessage(send, callback, function (error) {
+                        // nothing to do here
+                    }, connection);
                 }
             } else if (data_android.parts.length > 1) {
                 for (var i = 0; i < data_android.parts.length; i++) {
@@ -166,9 +170,13 @@ function FlamebaseDatabase(database, path) {
                     sen.tokens = android_tokens;
                     sen.notification = notification;
                     if (ios_tokens.length === 0 && i === data_android.parts.length - 1) {
-                        this.sendPushMessage(sen, callback, null, connection);
+                        this.sendPushMessage(sen, callback, function (error) {
+                            // nothing to do here
+                        }, connection);
                     } else {
-                        this.sendPushMessage(sen, callback, null, connection);
+                        this.sendPushMessage(sen, callback, function (error) {
+                            // nothing to do here
+                        }, connection);
                     }
                 }
             } else {
@@ -181,9 +189,13 @@ function FlamebaseDatabase(database, path) {
                 send.tokens = android_tokens;
                 send.notification = notification;
                 if (ios_tokens.length === 0) {
-                    this.sendPushMessage(send, callback, null, connection);
+                    this.sendPushMessage(send, callback, function (error) {
+                        // nothing to do here
+                    }, connection);
                 } else {
-                    this.sendPushMessage(send, callback, null, connection);
+                    this.sendPushMessage(send, callback, function (error) {
+                        // nothing to do here
+                    }, connection);
                 }
             }
         }
@@ -206,7 +218,9 @@ function FlamebaseDatabase(database, path) {
                 se.data = da;
                 se.tokens = ios_tokens;
                 se.notification = notification;
-                this.sendPushMessage(se, callback, null, connection);
+                this.sendPushMessage(se, callback, function (error) {
+                    // nothing to do here
+                }, connection);
             } else if (data_ios.parts.length > 1) {
                 for (var i = 0; i < data_ios.parts.length; i++) {
                     var d = {};
@@ -221,9 +235,13 @@ function FlamebaseDatabase(database, path) {
                     s.tokens = ios_tokens;
                     s.notification = notification;
                     if (i === data_ios.parts.length - 1) {
-                        this.sendPushMessage(s, callback, null, connection);
+                        this.sendPushMessage(s, callback, function (error) {
+                            // nothing to do here
+                        }, connection);
                     } else {
-                        this.sendPushMessage(s, callback, null, connection);
+                        this.sendPushMessage(s, callback, function (error) {
+                            // nothing to do here
+                        }, connection);
                     }
                 }
             } else {
@@ -235,7 +253,9 @@ function FlamebaseDatabase(database, path) {
                 send.data = data;
                 send.tokens = ios_tokens;
                 send.notification = notification;
-                this.sendPushMessage(send, callback, null, connection);
+                this.sendPushMessage(send, callback, function (error) {
+                    // nothing to do here
+                }, connection);
             }
         }
 
@@ -249,7 +269,6 @@ function FlamebaseDatabase(database, path) {
                     data: send.data,
                     error: null
                 };
-
 
                 for (let t in send.tokens) {
                     let token = send.tokens[t];
