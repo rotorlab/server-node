@@ -200,6 +200,7 @@ var action = {
                     });
                 } else  {
                     object.sendUpdateByContent("{}", device, function() {
+                        let data = {};
                         data.info = "queue_ready";
                         action.response(connection, data, null);
                     }, connection);
@@ -513,7 +514,8 @@ if (cluster.isMaster) {
                 logger.info("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
                 redis.publish(token, JSON.stringify(result)).then(function(r) {
-                    if (r === 1) {
+                    logger.info("result: " + r);
+                    if (r > 0) {
                         logger.info("SUCCESS publish result");
                         if (success !== undefined) {
                             success();

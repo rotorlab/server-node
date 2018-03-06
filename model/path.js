@@ -238,12 +238,12 @@ function Path(pathReference, connection, database, dbg) {
 
     this.removeQueue = function (path, token, id) {
         this.pathReference.syncFromDatabase();
-
         logger.info("removing queue of " + token);
 
-        delete this.pathReference.ref[path].tokens[token].queue[id];
-
-        this.pathReference.syncToDatabase()
+        if (this.pathReference.ref[path].tokens !== undefined && this.pathReference.ref[path].tokens[token] !== undefined && this.pathReference.ref[path].tokens[token].queue !== undefined && this.pathReference.ref[path].tokens[token].queue[id] !== undefined) {
+            delete this.pathReference.ref[path].tokens[token].queue[id];
+            this.pathReference.syncToDatabase()
+        }
     };
 
 

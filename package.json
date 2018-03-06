@@ -1,7 +1,7 @@
 {
   "name": "flamebase-server",
-  "version": "1.5.1",
-  "description": "Server cluster to hold a realtime JSON database",
+  "version": "1.6.0",
+  "description": "Hold a realtime JSON database",
   "main": "index.js",
   "scripts": {
     "launcher": "node launcher.js",
