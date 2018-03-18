@@ -1,7 +1,7 @@
 {
-  "name": "flamebase-server",
-  "version": "1.6.0",
-  "description": "Hold a realtime JSON database",
+  "name": "rotor-server",
+  "version": "0.0.1",
+  "description": "Rotor service to work with JSON queues and Redis",
   "main": "index.js",
   "scripts": {
     "launcher": "node launcher.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flamebase/flamebase-server.git"
+    "url": "git+https://github.com/rotorlab/server-node.git"
   },
   "dependencies": {
     "body-parser": "latest",
@@ -25,7 +25,8 @@
     "sync-node": ">= 1.3.1"
   },
   "keywords": [
-    "flamebase",
+    "rotor",
+    "redis",
     "server",
     "cluster",
     "json",
@@ -35,7 +36,7 @@
   "author": "efraespada@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/flamebase/flamebase-server/issues"
+    "url": "https://github.com/rotorlab/server-node/issues"
   },
-  "homepage": "https://github.com/flamebase/flamebase-server#readme"
+  "homepage": "https://github.com/rotorlab/server-node#readme"
 }

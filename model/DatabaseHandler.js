@@ -20,7 +20,7 @@ var ACTION_SIMPLE_UPDATE    = "simple_update";
 var ACTION_SLICE_UPDATE     = "slice_update";
 var ACTION_NO_UPDATE        = "no_update";
 
-function FlamebaseDatabase(database, path) {
+function DatabaseHandler(database, path) {
 
     // object reference
     var object = this;
@@ -385,4 +385,4 @@ function FlamebaseDatabase(database, path) {
     };
 }
 
-module.exports = FlamebaseDatabase;
+module.exports = DatabaseHandler;

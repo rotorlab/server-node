@@ -1,9 +1,9 @@
-var FlamebaseServer = require('./index.js');
+var RotorServer = require('./index.js');
 
-var server = new FlamebaseServer();
+var server = new RotorServer();
 server.initCluster({
     start: function () {
-        console.log("flamebase server ready")
+        console.log("rotor server ready")
     },
     config: require("./config.json")
 });

@@ -1,5 +1,5 @@
-// var FlamebaseDatabase =     require("flamebase-database-node");
-var FlamebaseDatabase =     require("./FlameDatabase.js");
+// var DatabaseHandler =     require("flamebase-database-node");
+var DatabaseHandler =     require("./DatabaseHandler.js");
 const logjs =                 require('logjsx');
 
 JSON.stringifyAligned = require('json-align');
@@ -23,7 +23,7 @@ function Path(pathReference, connection, database, dbg) {
     this.path = connection.path; //
     this.database = database;
     this.pathReference = pathReference;
-    this.FD = new FlamebaseDatabase(this.database, this.path);
+    this.FD = new DatabaseHandler(this.database, this.path);
     this.FD.syncFromDatabase();
 
     var config = {};
