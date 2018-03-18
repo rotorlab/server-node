@@ -6,7 +6,7 @@ logger.init({
     level : "DEBUG"
 });
 
-function FlamebaseServer() {
+function RotorServer() {
 
     this.initCluster = function (callback) {
         let db_name = "database";
@@ -68,4 +68,4 @@ function FlamebaseServer() {
 
 }
 
-module.exports = FlamebaseServer;
+module.exports = RotorServer;

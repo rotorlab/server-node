@@ -5,7 +5,7 @@ var logjs =                 require('logjsx');
 var cluster =               require('cluster');
 var Redis =                 require('ioredis');
 var numCPUs =               require('os').cpus().length;
-var FlamebaseDatabase =     require("./model/FlameDatabase.js");
+var DatabaseHandler =       require("./model/DatabaseHandler.js");
 var Path =                  require("./model/Path.js");
 var apply =                 require('rus-diff').apply;
 var sha1 =                  require('sha1');
@@ -29,7 +29,7 @@ var dbMaster = null;
 var server_port = null;
 var redis_port = null;
 var debug = null;
-var paths = new FlamebaseDatabase("paths", "/");
+var paths = new DatabaseHandler("paths", "/");
 
 
 process.argv.forEach(function (val, index, array) {

@@ -1,12 +1,8 @@
-[ ![flamebase/flamebase-server](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.6.0&x2=0)](https://www.npmjs.com/package/flamebase-server)
+[ ![rotorlab/server-node](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.0.1&x2=0)](https://www.npmjs.com/package/rotor-server)
+<p align="center"><img width="10%" vspace="20" src="https://github.com/rotorlab/database-kotlin/raw/develop/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"></p>
 
-# :fire: flamebase-server
+# Rotor Server for Node
 Server cluster to hold a realtime JSON database.
-
-### What is this?
-Flamebase is an open source project that tries to emulate Firebase Database features as much as possible. 
-In this repo you can find the proper package for run a server cluster with node framework.
-For now it still developing, so please be patient with errors.
 
 ### Setup
 
@@ -40,17 +36,17 @@ sudo service redis-server status
 
 Install Flamebase:
 ```bash
-npm install flamebase-server --save
+npm install rotor-server --save
 ```
 
 Create a server cluster to hold all realtime changes.
 
 ```javascript
-var FlamebaseServer = require('flamebase-server');
-var server = new FlamebaseServer();
+var RotorServer = require('rotor-server');
+var server = new RotorServer();
 server.initCluster({
     start: function () {
-        console.log("flamebase server ready")
+        console.log("rotor server ready")
     },
     config: {
         server_port: 1507,
@@ -67,24 +63,23 @@ node launcher.js
 ```
 Console Output:
 ```bash
-start!!
-[2017-07-02 21:05:48.337] [INFO] SERVER CLUSTER - Master 40001 is running
-[2017-07-02 21:05:48.836] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 2
-[2017-07-02 21:05:48.836] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 5
-[2017-07-02 21:05:48.837] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 3
-[2017-07-02 21:05:48.836] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 1
-[2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 4
-[2017-07-02 21:05:48.838] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 7
-[2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 8
-[2017-07-02 21:05:48.839] [INFO] SERVER CLUSTER - server cluster started on port 1507 | worker => 6
+rotor server ready
+server cluster started on port 1507 | worker => 7
+server cluster started on port 1507 | worker => 6
+server cluster started on port 1507 | worker => 5
+server cluster started on port 1507 | worker => 3
+server cluster started on port 1507 | worker => 2
+server cluster started on port 1507 | worker => 4
+server cluster started on port 1507 | worker => 8
+server cluster started on port 1507 | worker => 1
 ```
 
 ### Libraries and packages
-Client options to connect with server cluster.
+Client to work with Rotor server:
 
-- [Android](https://github.com/flamebase/flamebase-database-android)
+- [Android](https://github.com/rotorlab/database-kotlin)
 ```groovy
 // gradle
-implementation 'com.flamebase:database:1.5.1'
+implementation 'com.rotor:database:0.1.0'
 ```
 
