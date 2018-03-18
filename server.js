@@ -532,7 +532,7 @@ if (cluster.isMaster) {
         });
 
     app.listen(server_port, function () {
-        logger.info("server cluster started on port " + server_port + " | worker => " + cluster.worker.id);
+        logger.info("rotor cluster started on port " + server_port + " | worker => " + cluster.worker.id);
     });
 
 }

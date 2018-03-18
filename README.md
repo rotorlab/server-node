@@ -64,14 +64,15 @@ node launcher.js
 Console Output:
 ```bash
 rotor server ready
-server cluster started on port 1507 | worker => 7
-server cluster started on port 1507 | worker => 6
-server cluster started on port 1507 | worker => 5
-server cluster started on port 1507 | worker => 3
-server cluster started on port 1507 | worker => 2
-server cluster started on port 1507 | worker => 4
-server cluster started on port 1507 | worker => 8
-server cluster started on port 1507 | worker => 1
+rotor cluster started on port 1507 | worker => 3
+rotor cluster started on port 1507 | worker => 6
+rotor cluster started on port 1507 | worker => 2
+rotor cluster started on port 1507 | worker => 1
+rotor cluster started on port 1507 | worker => 5
+rotor cluster started on port 1507 | worker => 7
+rotor cluster started on port 1507 | worker => 4
+rotor cluster started on port 1507 | worker => 8
+
 ```
 
 ### Libraries and packages
