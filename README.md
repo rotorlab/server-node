@@ -80,6 +80,14 @@ Client to work with Rotor server:
 - [Android](https://github.com/rotorlab/database-kotlin)
 ```groovy
 // gradle
-implementation 'com.rotor:database:0.1.0'
+def rotor_version =  "0.1.0"
+dependencies {
+    implementation ("com.rotor:core:$rotor_version@aar") {
+        transitive = true
+    }
+    implementation ("com.rotor:database:$rotor_version@aar") {
+        transitive = true
+    }
+}
 ```
 
