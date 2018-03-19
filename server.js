@@ -86,7 +86,9 @@ var KEY_REQUEST = {
     LEN: "len",
     OS: "os",
     CLEAN: "clean",
-    UUID: "uuid"
+    UUID: "uuid",
+    NOTIFICATION_ID: "id",
+    RECEIVERS: "receivers"
 };
 
 var action = {
@@ -97,6 +99,14 @@ var action = {
             error: error
         };
         connection.callback(connection.token, result);
+    },
+    notify:         function (connection, id, notifications, error) {
+        let result = {
+            status: (notifications === null || error !== null ? "KO" : "OK"),
+            notifications: (notifications === null ? {} : notifications),
+            error: error
+        };
+        connection.callback(id, result);
     },
     /**
      * replaces path format: /contacts/batman -> contacts.batman
@@ -192,14 +202,14 @@ var action = {
                 let keys = Object.keys(paths.ref[key].tokens[connection.token].queue);
                 if (keys.length > 0) {
                     object.sendQueues(connection, {
-                        success:            function() {
+                        success: function () {
                             let data = {};
                             data.info = "queue_sent";
                             action.response(connection, data, null);
                         }
                     });
-                } else  {
-                    object.sendUpdateByContent("{}", device, function() {
+                } else {
+                    object.sendUpdateByContent("{}", device, function () {
                         let data = {};
                         data.info = "queue_ready";
                         action.response(connection, data, null);
@@ -210,7 +220,8 @@ var action = {
                 data.id = connection.path;
                 action.response(connection, data, null);
             }
-
+        } else if (connection.path.indexOf("/") !== 0) {
+            this.response(connection, null, "path_not_start_with_slash");
         } else {
             this.response(connection, null, "path_contains_dots");
         }
@@ -239,6 +250,8 @@ var action = {
                     this.response(connection, null, "token_not_found");
                 }
             }
+        } else if (connection.path.indexOf("/") !== 0) {
+            this.response(connection, null, "path_not_start_with_slash");
         } else {
             this.response(connection, null, "path_contains_dots");
         }
@@ -322,6 +335,15 @@ var action = {
             }
         }
     },
+    sendNotifications:     function (connection) {
+        let receivers = connection[KEY_REQUEST.RECEIVERS];
+        let notifications = {};
+        notifications.id = connection[KEY_REQUEST.NOTIFICATION_ID];
+        notifications.method = "add";
+        for (let i = 0; i < receivers.length; i++) {
+            action.notify(connection, receivers[i].id, notifications, null)
+        }
+    },
     getReference:   function (connection) {
         paths.syncFromDatabase();
         let error = null;
@@ -338,7 +360,7 @@ var action = {
                         error = "holder_not_found";
                     }
                 } else {
-                    error = "path_not_starts_with_slash";
+                    error = "path_not_start_with_slash";
                 }
             } else {
                 error = "path_contains_dots";
@@ -420,6 +442,16 @@ var action = {
                         // logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
                         break;
 
+                    case KEY_REQUEST.NOTIFICATION_ID:
+                        connection[key] = message[key];
+                        logger.debug(key + ": " + connection[key]);
+                        break;
+
+                    case KEY_REQUEST.RECEIVERS:
+                        connection[key] = message[key];
+                        logger.debug(key + ": " + connection[key]);
+                        break;
+
                     default:
 
                         //
@@ -457,6 +489,15 @@ var action = {
                 case "update_data":
                     try {
                         this.updateQueue(connection);
+                    } catch (e) {
+                        logger.error("there was an error parsing request from updateQueue: " + e.toString());
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
+                    }
+                    break;
+
+                case "send_notifications":
+                    try {
+                        this.sendNotifications(connection);
                     } catch (e) {
                         logger.error("there was an error parsing request from updateQueue: " + e.toString());
                         this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
