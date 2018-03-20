@@ -1,7 +1,7 @@
 {
   "name": "rotor-server",
   "version": "0.0.1",
-  "description": "Rotor service to work with JSON queues and Redis",
+  "description": "Rotor server to work with JSON queues and Redis",
   "main": "index.js",
   "scripts": {
     "launcher": "node launcher.js",
