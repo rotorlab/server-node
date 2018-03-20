@@ -87,7 +87,7 @@ var KEY_REQUEST = {
     OS: "os",
     CLEAN: "clean",
     UUID: "uuid",
-    NOTIFICATION_ID: "id",
+    NOTIFICATION_ID: "notificationId",
     RECEIVERS: "receivers"
 };
 
@@ -341,6 +341,7 @@ var action = {
         notifications.id = connection[KEY_REQUEST.NOTIFICATION_ID];
         notifications.method = "add";
         for (let i = 0; i < receivers.length; i++) {
+            logger.debug("notification ID: " + connection[KEY_REQUEST.NOTIFICATION_ID]);
             action.notify(connection, receivers[i].id, notifications, null)
         }
     },
