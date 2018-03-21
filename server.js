@@ -6,7 +6,7 @@ var cluster =               require('cluster');
 var Redis =                 require('ioredis');
 var numCPUs =               require('os').cpus().length;
 var DatabaseHandler =       require("./model/DatabaseHandler.js");
-var Path =                  require("./model/Path.js");
+var Reference =             require("./model/reference.js");
 var apply =                 require('rus-diff').apply;
 var sha1 =                  require('sha1');
 var logger =                new logjs();
@@ -185,10 +185,10 @@ var action = {
              *
              */
             let object = this.getReference(connection);
-            object.FD.syncFromDatabase();
+            object.DH.syncFromDatabase();
 
             if (typeof object !== "string") {
-                data.objectLen = JSON.stringify(object.FD.ref).length;
+                data.objectLen = JSON.stringify(object.DH.ref).length;
             } else {
                 data.objectLen = 0;
             }
@@ -303,9 +303,9 @@ var action = {
         } else {
             object.addDifferencesToQueue(connection);
             if (connection.differences !== undefined) {
-                object.FD.syncFromDatabase();
-                apply(object.FD.ref, JSON.parse(connection.differences));
-                object.FD.syncToDatabase();
+                object.DH.syncFromDatabase();
+                apply(object.DH.ref, JSON.parse(connection.differences));
+                object.DH.syncToDatabase();
 
                 this.updateTime(connection);
 
@@ -356,7 +356,7 @@ var action = {
                     key = key.substr(1, key.length - 1);
                     if (paths.ref[key] !== undefined) {
                         logger.debug("path found");
-                        return new Path(paths, connection, dbMaster, debug);
+                        return new Reference(paths, connection, dbMaster, debug.toString());
                     } else {
                         error = "holder_not_found";
                     }

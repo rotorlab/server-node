@@ -15,7 +15,15 @@ let ACTION_SIMPLE_UPDATE    = "simple_update";
 let ACTION_SLICE_UPDATE     = "slice_update";
 let ACTION_NO_UPDATE        = "no_update";
 
-function Path(pathReference, connection, database, dbg) {
+/**
+ * Reference for
+ * @param pathReference
+ * @param connection
+ * @param database
+ * @param dbg
+ * @constructor
+ */
+function Reference(pathReference, connection, database, dbg) {
 
     // object reference
     var object = this;
@@ -23,8 +31,8 @@ function Path(pathReference, connection, database, dbg) {
     this.path = connection.path; //
     this.database = database;
     this.pathReference = pathReference;
-    this.FD = new DatabaseHandler(this.database, this.path);
-    this.FD.syncFromDatabase();
+    this.DH = new DatabaseHandler(this.database, this.path);
+    this.DH.syncFromDatabase();
 
     var config = {};
 
@@ -71,13 +79,24 @@ function Path(pathReference, connection, database, dbg) {
         return null;
     };
 
-    this.FD.setSyncConfig(config);
-    this.FD.debug(dbg === "true");
+    this.DH.setSyncConfig(config);
+    this.DH.debug(dbg);
 
+    /**
+     * Sends differences of received content (older) with stored content
+     * @param before
+     * @param device
+     * @param callback
+     * @param connection
+     */
     this.sendUpdateByContent = function (before, device, callback, connection) {
-        this.FD.sendDifferencesForClient(before, device, callback, connection);
+        this.DH.sendDifferencesForClient(before, device, callback, connection);
     };
 
+    /**
+     * Adds received differences on their path's queue
+     * @param connection
+     */
     this.addDifferencesToQueue = function (connection) {
         this.pathReference.syncFromDatabase();
 
@@ -93,6 +112,12 @@ function Path(pathReference, connection, database, dbg) {
         this.pathReference.syncToDatabase()
     };
 
+    /**
+     * sends all queues
+     * TODO check (for performance) if should be better only send specific path's tokens
+     * @param connection
+     * @param action
+     */
     this.sendQueues = function(connection, action) {
         let path = connection.path.replaceAll("/", "\.");
         path = path.substr(1, path.length - 1);
@@ -119,7 +144,7 @@ function Path(pathReference, connection, database, dbg) {
                 for (let t in changes) {
                     let id = changes[t];
 
-                    let dataToSend = this.FD.getParts(os, JSON.stringify(queue[id]));
+                    let dataToSend = this.DH.getParts(os, JSON.stringify(queue[id]));
 
                     /**
                      * single part, ACTION_SIMPLE_UPDATE
@@ -135,7 +160,7 @@ function Path(pathReference, connection, database, dbg) {
                         let send = {};
                         send.data = data;
                         send.tokens = [tok];
-                        this.FD.sendPushMessage(send,
+                        this.DH.sendPushMessage(send,
                             /**
                              * success
                              */
@@ -165,7 +190,7 @@ function Path(pathReference, connection, database, dbg) {
                             let send = {};
                             send.data = data;
                             send.tokens = [tok];
-                            this.FD.sendPushMessage(send,
+                            this.DH.sendPushMessage(send,
                                 /**
                                  * success
                                  */
@@ -191,7 +216,7 @@ function Path(pathReference, connection, database, dbg) {
                         let send = {};
                         send.data = data;
                         send.tokens = [tok];
-                        this.FD.sendPushMessage(send,
+                        this.DH.sendPushMessage(send,
                             /**
                              * success
                              */
@@ -220,6 +245,10 @@ function Path(pathReference, connection, database, dbg) {
 
     };
 
+    /**
+     * Removes a token from paths database
+     * @param token
+     */
     this.removeToken = function (token) {
         this.pathReference.syncFromDatabase();
 
@@ -236,6 +265,12 @@ function Path(pathReference, connection, database, dbg) {
         this.pathReference.syncToDatabase()
     };
 
+    /**
+     * Removes a queue (id) in a specific token listening the given path
+     * @param path
+     * @param token
+     * @param id
+     */
     this.removeQueue = function (path, token, id) {
         this.pathReference.syncFromDatabase();
         logger.info("removing queue of " + token);
@@ -249,4 +284,4 @@ function Path(pathReference, connection, database, dbg) {
 
 }
 
-module.exports = Path;
+module.exports = Reference;

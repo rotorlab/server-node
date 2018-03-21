@@ -108,7 +108,7 @@ function DatabaseHandler(database, path) {
      * @param callback
      */
     this.debug = function(value) {
-        this.debugVal = value;
+        this.debugVal = value === "true";
     };
 
 
