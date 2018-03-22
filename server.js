@@ -123,7 +123,7 @@ var action = {
             }
      * @param connection
      */
-    addListener:    function (connection) {
+    listen:    function (connection) {
 
         /**
          * work with path database
@@ -227,7 +227,7 @@ var action = {
         }
 
     },
-    removeListener: function (connection) {
+    unlisten: function (connection) {
         paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
@@ -297,6 +297,49 @@ var action = {
      * @param connection
      */
     updateQueue:     function (connection) {
+        let object = this.getReference(connection);
+        if (typeof object === "string") {
+            this.response(connection, null, object);
+        } else {
+            object.addDifferencesToQueue(connection);
+            if (connection.differences !== undefined) {
+                object.DH.syncFromDatabase();
+                apply(object.DH.ref, JSON.parse(connection.differences));
+                object.DH.syncToDatabase();
+
+                this.updateTime(connection);
+
+                if (connection[KEY_REQUEST.CLEAN] === true) {
+                    let device = {
+                        token: connection.token,
+                        os: connection.os
+                    };
+
+                    logger.debug("sending full object");
+                    object.sendUpdateByContent("{}", device, function() {
+                        let data = {};
+                        data.info = "queue_updated";
+                        action.response(connection, data, null);
+                    }, connection);
+                } else {
+                    object.sendQueues(connection, {
+                        success:            function() {
+                            let data = {};
+                            data.info = "queue_updated";
+                            action.response(connection, data, null);
+                        }
+                    });
+                }
+            } else {
+                this.response(connection, "no_diff_updated", null);
+            }
+        }
+    },
+    /**
+     * Removes reference on database
+     * @param connection
+     */
+    remove:     function (connection) {
         let object = this.getReference(connection);
         if (typeof object === "string") {
             this.response(connection, null, object);
@@ -468,26 +511,26 @@ var action = {
 
             switch (connection.method) {
 
-                case "create_listener":
+                case "listen_reference":
                     try {
-                        this.addListener(connection);
+                        this.listen(connection);
                     } catch (e) {
-                        this.printError("there was an error parsing request from addGreatListener: " + e.stack);
+                        this.printError("there was an error parsing request from listen: " + e.stack);
                         this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.ADD_LISTENER);
                     }
                     break;
 
 
-                case "remove_listener":
+                case "unlisten_reference":
                     try {
-                        this.removeListener(connection);
+                        this.unlisten(connection);
                     } catch (e) {
-                        logger.error("there was an error parsing request from addGreatListener: " + e.toString());
+                        logger.error("there was an error parsing request from unlisten: " + e.toString());
                         this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.REMOVE_LISTENER);
                     }
                     break;
 
-                case "update_data":
+                case "update_reference":
                     try {
                         this.updateQueue(connection);
                     } catch (e) {
@@ -496,11 +539,20 @@ var action = {
                     }
                     break;
 
+                case "remove_reference":
+                    try {
+                        this.remove(connection);
+                    } catch (e) {
+                        logger.error("there was an error parsing request from remove: " + e.toString());
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
+                    }
+                    break;
+
                 case "send_notifications":
                     try {
                         this.sendNotifications(connection);
                     } catch (e) {
-                        logger.error("there was an error parsing request from updateQueue: " + e.toString());
+                        logger.error("there was an error parsing request from send_notifications: " + e.toString());
                         this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
                     }
                     break;

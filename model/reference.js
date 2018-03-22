@@ -43,12 +43,12 @@ function Reference(pathReference, connection, database, dbg) {
     config.devices = function() {
         let path = connection.path.replaceAll("/", "\.");
         path = path.substr(1, path.length - 1);
-        var devices = [];
-        var keys = Object.keys(object.pathReference.ref[path].tokens);
-        for (var i = 0; i < keys.length; i++) {
-            var devic = object.pathReference.ref[path].tokens[keys[i]];
+        let devices = [];
+        let keys = Object.keys(object.pathReference.ref[path].tokens);
+        for (let i = 0; i < keys.length; i++) {
+            let devic = object.pathReference.ref[path].tokens[keys[i]];
 
-            var device = {};
+            let device = {};
             device.token = keys[i];
             device.os = devic.os;
 
