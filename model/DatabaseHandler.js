@@ -99,14 +99,13 @@ function DatabaseHandler(database, path) {
      * stores object on server database
      * TODO change to mongoDB
      */
-    this.syncToDatabase = function(restart, callback) {
-        if (restart !== undefined && restart) {
-            if (this.debugVal) {
-                logger.debug("cleaning last reference on " + path);
-            }
-        }
+    this.syncToDatabase = function() {
         object.db.reload();
-        object.db.push(path, object.ref);
+        if (object.ref !== null) {
+            object.db.push(path, object.ref)
+        } else {
+            object.db.delete(path)
+        }
     };
 
     /**
