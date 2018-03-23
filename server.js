@@ -335,8 +335,9 @@ var action = {
             }
         }
     },
+
     /**
-     * Removes reference on database
+     * Removes reference in database
      * @param connection
      */
     remove:     function (connection) {
@@ -344,38 +345,13 @@ var action = {
         if (typeof object === "string") {
             this.response(connection, null, object);
         } else {
-            object.addDifferencesToQueue(connection);
-            if (connection.differences !== undefined) {
-                object.DH.syncFromDatabase();
-                apply(object.DH.ref, JSON.parse(connection.differences));
-                object.DH.syncToDatabase();
+            object.DH.ref = null;
+            object.DH.syncToDatabase();
 
-                this.updateTime(connection);
-
-                if (connection[KEY_REQUEST.CLEAN] === true) {
-                    let device = {
-                        token: connection.token,
-                        os: connection.os
-                    };
-
-                    logger.debug("sending full object");
-                    object.sendUpdateByContent("{}", device, function() {
-                        let data = {};
-                        data.info = "queue_updated";
-                        action.response(connection, data, null);
-                    }, connection);
-                } else {
-                    object.sendQueues(connection, {
-                        success:            function() {
-                            let data = {};
-                            data.info = "queue_updated";
-                            action.response(connection, data, null);
-                        }
-                    });
-                }
-            } else {
-                this.response(connection, "no_diff_updated", null);
-            }
+            let data = {};
+            data.info = "reference_removed";
+            data.id = connection.path;
+            action.response(connection, data, null);
         }
     },
     sendNotifications:     function (connection) {
