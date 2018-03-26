@@ -5,7 +5,10 @@
  */
 
 // server database
-const JsonDB =                require('node-json-db');
+const JsonDB =                  require('node-json-db');
+const MongoClient =             require('mongodb').MongoClient;
+const BSON =                    require('bson');
+const bson = new BSON();
 
 // returns JSON differences
 const diff =                  require('rus-diff').diff;
@@ -38,9 +41,11 @@ function DatabaseHandler(database, path) {
 
     // object reference
     var object = this;
+    this.url = 'mongodb://localhost:27017';
 
     // debug
     this.debugVal = true;
+    this.collection = "data";
 
     // os
     this.OS = {};
@@ -68,21 +73,79 @@ function DatabaseHandler(database, path) {
      * loads the DB object reference of the given path on object.ref
      * TODO change to mongoDB
      */
-    this.syncFromDatabase = function() {
+    this.syncFromDatabase = async function() {
+        let mongoPath = this.getPath(path);
+        logger.debug("mongo path: " + mongoPath);
         try {
-            object.db.reload();
-            object.ref = object.db.getData(path);
+            let client = await MongoClient.connect(object.url);
+            // console.log("Connected correctly to server");
+
+            const db = client.db(database);
+
+            let col = await db.collection(this.collection);
+            let obj = await db.collection(path).find({ path: mongoPath }, function(err, document) {
+                if (err) {
+                    logger.error(err)
+                } else {
+                    delete document["_id"];
+                    object.ref = document;
+                    logger.debug("data returned for database " + database + "| collection" + path + ": " + JSON.stringify(object.ref));
+                }
+            });
+
+            await client.close();
+
+
+            /*
+            let c = await col.count();
+            //logger.debug("count: " + c);
+            //logger.debug("database: " + database);
+            //logger.debug("collection: " + path);
+            if (c === 0) {
+                let data = {};
+                let mongoPath = connection.path.replaceAll("/", "\.");
+                mongoPath = "^\," + mongoPath.substr(1, key.length - 1);
+                if (mongoPath.indexOf(mongoPath.length - 1) === "\,") {
+                    mongoPath += "\,"
+                }
+                await db.collection(this.collection).find({ path: mongoPath }).insertOne(data)
+                object.ref = data;
+            } else {
+                let obj = await db.collection(path).findOne({}, function(err, document) {
+                    delete document["_id"];
+                    object.ref = document;
+                    //logger.debug("data returned for database " + database + "| collection" + path + ": " + JSON.stringifyAligned(object.ref));
+                });
+
+                //object.ref = bson.deserialize(obj);
+
+                //logger.debug("data: " + JSON.stringifyAligned(object.ref));
+            }
+            await client.close();
+            */
+            //object.db.reload();
+            //object.ref = object.db.getData(path);
+
         } catch(e) {
-            setTimeout(function() {
-                object.prepareUnknownPath();
-            }, 200);
+            //await object.prepareUnknownPath();
         }
+    };
+
+    this.getPath = function (value) {
+        let mongoPath = value.replaceAll("/", ",");
+        if (mongoPath.substr(mongoPath.length - 2, mongoPath.length - 1) !== ",") {
+            mongoPath += ","
+        }
+        if (mongoPath.substr(0, 1) !== ",") {
+            mongoPath = "," + mongoPath;
+        }
+        return "^" + mongoPath;
     };
 
     /**
      * when some path doesn't exist on db and needs to create nested objects
      */
-    this.prepareUnknownPath = function() {
+    this.prepareUnknownPath = async function() {
         let paths = path.split("/");
         let currentObject = object.ref;
         for (let p in paths) {
@@ -99,7 +162,36 @@ function DatabaseHandler(database, path) {
      * stores object on server database
      * TODO change to mongoDB
      */
-    this.syncToDatabase = function() {
+    this.syncToDatabase = async function() {
+        /*
+        try {
+            let client = await MongoClient.connect(object.url);
+            // console.log("to database: Connected correctly to server");
+
+            const db = client.db(database);
+
+            let col = await db.collection(path);
+            let c = await col.count();
+            // logger.debug("count: " + c);
+            // logger.debug("path: " + path);
+            if (c === 0) {
+                let data = {};
+                await db.collection(path).insertOne(data)
+            } else {
+                if (object.ref !== null) {
+                    let obj = await db.collection(path).updateOne({}, {$set: object.ref}, function () {
+                        logger.debug("updated: " + JSON.stringifyAligned(object.ref))
+                    });
+                } else {
+                    let obj = await db.collection(path).deleteOne({});
+                }
+            }
+            await client.close();
+        } catch(e) {
+            await object.prepareUnknownPath();
+        }
+        */
+
         object.db.reload();
         if (object.ref !== null) {
             object.db.push(path, object.ref)

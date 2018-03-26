@@ -32,7 +32,9 @@ function Reference(pathReference, connection, database, dbg) {
     this.database = database;
     this.pathReference = pathReference;
     this.DH = new DatabaseHandler(this.database, this.path);
-    this.DH.syncFromDatabase();
+    this.DH.syncFromDatabase().then(function () {
+
+    });
 
     var config = {};
 
@@ -41,8 +43,9 @@ function Reference(pathReference, connection, database, dbg) {
      * to slice big JSON changes for android or ios push notifications
      */
     config.devices = function() {
-        let path = connection.path.replaceAll("/", "\.");
-        path = path.substr(1, path.length - 1);
+        let path = connection.path;
+        // let path = connection.path.replaceAll("/", "\.");
+        // path = path.substr(1, path.length - 1);
         let devices = [];
         let keys = Object.keys(object.pathReference.ref[path].tokens);
         for (let i = 0; i < keys.length; i++) {
@@ -97,19 +100,16 @@ function Reference(pathReference, connection, database, dbg) {
      * Adds received differences on their path's queue
      * @param connection
      */
-    this.addDifferencesToQueue = function (connection) {
-        this.pathReference.syncFromDatabase();
+    this.addDifferencesToQueue = async function (connection) {
+        await this.pathReference.syncFromDatabase();
 
-        let path = connection.path.replaceAll("/", "\.");
-        path = path.substr(1, path.length - 1);
-
-        let keys = Object.keys(this.pathReference.ref[path].tokens);
+        let keys = Object.keys(this.pathReference.ref[connection.path].tokens);
         let date = new Date().getTime() + "";
         for (let key in keys) {
-            this.pathReference.ref[path].tokens[keys[key]].queue[date] = JSON.parse(connection.differences);
+            this.pathReference.ref[connection.path].tokens[keys[key]].queue[date] = JSON.parse(connection.differences);
         }
 
-        this.pathReference.syncToDatabase()
+        await this.pathReference.syncToDatabase()
     };
 
     /**
@@ -118,24 +118,21 @@ function Reference(pathReference, connection, database, dbg) {
      * @param connection
      * @param action
      */
-    this.sendQueues = function(connection, action) {
-        let path = connection.path.replaceAll("/", "\.");
-        path = path.substr(1, path.length - 1);
-
+    this.sendQueues = async function(connection, action) {
         // logger.debug("synchronizing with devices for path: " + path);
 
-        this.pathReference.syncFromDatabase();
+        await this.pathReference.syncFromDatabase();
 
-        if (this.pathReference.ref[path].tokens !== undefined) {
+        if (this.pathReference.ref[connection.path].tokens !== undefined) {
             let referenceId = connection.path;
             let tag = connection.path + "_sync";
 
-            let tokens = Object.keys(this.pathReference.ref[path].tokens);
+            let tokens = Object.keys(this.pathReference.ref[connection.path].tokens);
 
             for (let i in tokens) {
                 let tok = tokens[i];
 
-                let token = this.pathReference.ref[path].tokens[tok];
+                let token = this.pathReference.ref[connection.path].tokens[tok];
                 let os = token.os;
                 let queue = token.queue;
 
@@ -237,7 +234,7 @@ function Reference(pathReference, connection, database, dbg) {
                 }
             }
 
-            this.pathReference.syncToDatabase();
+            await this.pathReference.syncToDatabase();
             action.success();
         } else {
             logger.error("no tokens found for path: " + path);
@@ -249,8 +246,8 @@ function Reference(pathReference, connection, database, dbg) {
      * Removes a token from paths database
      * @param token
      */
-    this.removeToken = function (token) {
-        this.pathReference.syncFromDatabase();
+    this.removeToken = async function (token) {
+        await this.pathReference.syncFromDatabase();
 
         let paths = Object.keys(this.pathReference.ref);
         for (let i in paths) {
@@ -262,7 +259,7 @@ function Reference(pathReference, connection, database, dbg) {
             }
         }
 
-        this.pathReference.syncToDatabase()
+        await this.pathReference.syncToDatabase()
     };
 
     /**
@@ -271,13 +268,13 @@ function Reference(pathReference, connection, database, dbg) {
      * @param token
      * @param id
      */
-    this.removeQueue = function (path, token, id) {
-        this.pathReference.syncFromDatabase();
+    this.removeQueue = async function (path, token, id) {
+        await this.pathReference.syncFromDatabase();
         logger.info("removing queue of " + token);
 
         if (this.pathReference.ref[path].tokens !== undefined && this.pathReference.ref[path].tokens[token] !== undefined && this.pathReference.ref[path].tokens[token].queue !== undefined && this.pathReference.ref[path].tokens[token].queue[id] !== undefined) {
             delete this.pathReference.ref[path].tokens[token].queue[id];
-            this.pathReference.syncToDatabase()
+            await this.pathReference.syncToDatabase()
         }
     };
 
