@@ -12,7 +12,6 @@ OSX:
 ```bash
 // install
 brew install redis
-brew install mongodb
  
 // run
 redis-server
