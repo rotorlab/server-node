@@ -12,7 +12,7 @@ function RotorServer() {
         let db_name = "database";
         let server_port = 1507;
         let redis_port = 6379;
-        let uid = "flamebase-database";
+        let uid = "rotor-server";
         let log_dir = "logs/";
         let debug = false;
 

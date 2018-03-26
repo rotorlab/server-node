@@ -12,7 +12,6 @@ OSX:
 ```bash
 // install
 brew install redis
-brew install mongodb
  
 // run
 redis-server
@@ -35,7 +34,7 @@ sudo apt-get install redis-server
 sudo service redis-server status
 ```
 
-Install Flamebase:
+Install Flamebaserotor server:
 ```bash
 npm install rotor-server --save
 ```
@@ -82,7 +81,7 @@ Client to work with Rotor server:
 - [Android](https://github.com/rotorlab/database-kotlin)
 ```groovy
 // gradle
-def rotor_version =  "0.1.0"
+def rotor_version =  "0.1.3"
 dependencies {
     implementation ("com.rotor:core:$rotor_version@aar") {
         transitive = true
