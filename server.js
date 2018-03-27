@@ -6,7 +6,7 @@ var cluster =               require('cluster');
 var Redis =                 require('ioredis');
 var numCPUs =               require('os').cpus().length;
 var DatabaseHandler =       require("./model/DatabaseHandler.js");
-var Reference =             require("./model/reference.js");
+var Reference =             require("./model/Reference.js");
 var apply =                 require('rus-diff').apply;
 var sha1 =                  require('sha1');
 var logger =                new logjs();
@@ -29,7 +29,7 @@ var dbMaster = null;
 var server_port = null;
 var redis_port = null;
 var debug = null;
-var paths = new DatabaseHandler("paths", "paths");
+var paths = new DatabaseHandler("paths", "/");
 
 
 process.argv.forEach(function (val, index, array) {
@@ -128,7 +128,7 @@ var action = {
         /**
          * work with path database
          */
-        await paths.syncFromDatabase();
+        await paths.syncFromDatabase(redis);
 
         if (paths.ref === undefined) {
             paths.ref = {}
@@ -180,9 +180,8 @@ var action = {
 
                 data.info = "queue_ready";
             }
-            logger.debug("contains: " + JSON.stringifyAligned(paths.ref));
-            await paths.syncToDatabase();
-
+            await paths.syncToDatabase(redis);
+            await action.sleep(2000);
             /**
              *
              */
@@ -190,7 +189,7 @@ var action = {
             if (typeof object === "string") {
                 this.response(connection, null, object);
             } else {
-                await object.DH.syncFromDatabase();
+                await object.DH.syncFromDatabase(redis);
 
                 if (typeof object !== "string") {
                     data.objectLen = JSON.stringify(object.DH.ref).length;
@@ -232,8 +231,11 @@ var action = {
             this.response(connection, null, "path_contains_dots");
         }
     },
+    sleep: async function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    },
     unlisten: async function (connection) {
-        await paths.syncFromDatabase();
+        await paths.syncFromDatabase(redis);
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
             var key = connection.path;
@@ -243,7 +245,7 @@ var action = {
             if (paths.ref[key] !== undefined && paths.ref[key].tokens !== undefined && paths.ref[key].tokens[connection.token] !== undefined) {
                 delete paths.ref[key].tokens[connection.token];
 
-                await paths.syncToDatabase();
+                await paths.syncToDatabase(redis);
 
                 var data = {};
                 data.info = "listener_removed";
@@ -273,7 +275,7 @@ var action = {
             // let key = connection.path.replaceAll("/", "\.");
             // key = key.substr(1, key.length - 1);
 
-            await paths.syncFromDatabase();
+            await paths.syncFromDatabase(redis);
 
             if (paths.ref === undefined) {
                 paths.ref = {};
@@ -295,7 +297,7 @@ var action = {
                 paths.ref[key].tokens[connection.token].time = new Date().getTime();
             }
 
-            await paths.syncToDatabase();
+            await paths.syncToDatabase(redis);
         }
     },
 
@@ -308,12 +310,11 @@ var action = {
         if (typeof object === "string") {
             this.response(connection, null, object);
         } else {
-            logger.debug("object: " + object);
             await object.addDifferencesToQueue(connection);
             if (connection.differences !== undefined) {
-                await object.DH.syncFromDatabase();
+                await object.DH.syncFromDatabase(redis);
                 apply(object.DH.ref, JSON.parse(connection.differences));
-                await object.DH.syncToDatabase();
+                await object.DH.syncToDatabase(redis);
 
                 await this.updateTime(connection);
 
@@ -354,7 +355,7 @@ var action = {
             this.response(connection, null, object);
         } else {
             object.DH.ref = null;
-            await object.DH.syncToDatabase();
+            await object.DH.syncToDatabase(redis);
 
             let data = {};
             data.info = "reference_removed";
@@ -373,7 +374,7 @@ var action = {
         }
     },
     getReference: async function (connection) {
-        await paths.syncFromDatabase();
+        await paths.syncFromDatabase(redis);
         let error = null;
 
         if (connection.path !== undefined) {
@@ -383,8 +384,7 @@ var action = {
                     // let key = connection.path.replaceAll("/", "\.");
                     // key = key.substr(1, key.length - 1);
                     if (paths.ref[key] !== undefined) {
-                        logger.debug("path " + key + "json: " +  JSON.stringifyAligned(paths.ref));
-                        return new Reference(paths, connection, dbMaster, debug.toString());
+                        return new Reference(paths, connection, dbMaster, debug.toString(), redis);
                     } else {
                         error = "holder_not_found_on" + key;
                     }

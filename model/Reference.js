@@ -23,7 +23,7 @@ let ACTION_NO_UPDATE        = "no_update";
  * @param dbg
  * @constructor
  */
-function Reference(pathReference, connection, database, dbg) {
+function Reference(pathReference, connection, database, dbg, redis) {
 
     // object reference
     var object = this;
@@ -32,7 +32,7 @@ function Reference(pathReference, connection, database, dbg) {
     this.database = database;
     this.pathReference = pathReference;
     this.DH = new DatabaseHandler(this.database, this.path);
-    this.DH.syncFromDatabase().then(function () {
+    this.DH.syncFromDatabase(redis).then(function () {
 
     });
 
@@ -101,7 +101,7 @@ function Reference(pathReference, connection, database, dbg) {
      * @param connection
      */
     this.addDifferencesToQueue = async function (connection) {
-        await this.pathReference.syncFromDatabase();
+        await this.pathReference.syncFromDatabase(redis);
 
         let keys = Object.keys(this.pathReference.ref[connection.path].tokens);
         let date = new Date().getTime() + "";
@@ -109,7 +109,7 @@ function Reference(pathReference, connection, database, dbg) {
             this.pathReference.ref[connection.path].tokens[keys[key]].queue[date] = JSON.parse(connection.differences);
         }
 
-        await this.pathReference.syncToDatabase()
+        await this.pathReference.syncToDatabase(redis)
     };
 
     /**
@@ -121,7 +121,7 @@ function Reference(pathReference, connection, database, dbg) {
     this.sendQueues = async function(connection, action) {
         // logger.debug("synchronizing with devices for path: " + path);
 
-        await this.pathReference.syncFromDatabase();
+        await this.pathReference.syncFromDatabase(redis);
 
         if (this.pathReference.ref[connection.path].tokens !== undefined) {
             let referenceId = connection.path;
@@ -163,7 +163,7 @@ function Reference(pathReference, connection, database, dbg) {
                              */
                             function () {
                                 logger.info("success event");
-                                object.removeQueue(path, tok, id);
+                                object.removeQueue(connection.path, tok, id);
                             },
                             /**
                              * fail
@@ -234,7 +234,7 @@ function Reference(pathReference, connection, database, dbg) {
                 }
             }
 
-            await this.pathReference.syncToDatabase();
+            await this.pathReference.syncToDatabase(redis);
             action.success();
         } else {
             logger.error("no tokens found for path: " + path);
@@ -247,7 +247,7 @@ function Reference(pathReference, connection, database, dbg) {
      * @param token
      */
     this.removeToken = async function (token) {
-        await this.pathReference.syncFromDatabase();
+        await this.pathReference.syncFromDatabase(redis);
 
         let paths = Object.keys(this.pathReference.ref);
         for (let i in paths) {
@@ -259,7 +259,7 @@ function Reference(pathReference, connection, database, dbg) {
             }
         }
 
-        await this.pathReference.syncToDatabase()
+        await this.pathReference.syncToDatabase(redis)
     };
 
     /**
@@ -269,12 +269,12 @@ function Reference(pathReference, connection, database, dbg) {
      * @param id
      */
     this.removeQueue = async function (path, token, id) {
-        await this.pathReference.syncFromDatabase();
+        await this.pathReference.syncFromDatabase(redis);
         logger.info("removing queue of " + token);
 
         if (this.pathReference.ref[path].tokens !== undefined && this.pathReference.ref[path].tokens[token] !== undefined && this.pathReference.ref[path].tokens[token].queue !== undefined && this.pathReference.ref[path].tokens[token].queue[id] !== undefined) {
             delete this.pathReference.ref[path].tokens[token].queue[id];
-            await this.pathReference.syncToDatabase()
+            await this.pathReference.syncToDatabase(redis)
         }
     };
 

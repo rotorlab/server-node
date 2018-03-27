@@ -28,6 +28,7 @@ const sha1 =                  require('sha1');
 
 
 const TAG = "Database Handler";
+const CHANNEL = "sentinel";
 
 // JSON pretty print
 JSON.stringifyAligned = require('json-align');
@@ -73,130 +74,48 @@ function DatabaseHandler(database, path) {
      * loads the DB object reference of the given path on object.ref
      * TODO change to mongoDB
      */
-    this.syncFromDatabase = async function() {
-        let mongoPath = this.getPath(path);
-        logger.debug("mongo path: " + mongoPath);
+    this.syncFromDatabase = async function(redis) {
         try {
-            let client = await MongoClient.connect(object.url);
-            // console.log("Connected correctly to server");
-
-            const db = client.db(database);
-
-            let col = await db.collection(this.collection);
-            let obj = await db.collection(path).find({ path: mongoPath }, function(err, document) {
-                if (err) {
-                    logger.error(err)
-                } else {
-                    delete document["_id"];
-                    object.ref = document;
-                    logger.debug("data returned for database " + database + "| collection" + path + ": " + JSON.stringify(object.ref));
-                }
-            });
-
-            await client.close();
-
-
-            /*
-            let c = await col.count();
-            //logger.debug("count: " + c);
-            //logger.debug("database: " + database);
-            //logger.debug("collection: " + path);
-            if (c === 0) {
-                let data = {};
-                let mongoPath = connection.path.replaceAll("/", "\.");
-                mongoPath = "^\," + mongoPath.substr(1, key.length - 1);
-                if (mongoPath.indexOf(mongoPath.length - 1) === "\,") {
-                    mongoPath += "\,"
-                }
-                await db.collection(this.collection).find({ path: mongoPath }).insertOne(data)
-                object.ref = data;
-            } else {
-                let obj = await db.collection(path).findOne({}, function(err, document) {
-                    delete document["_id"];
-                    object.ref = document;
-                    //logger.debug("data returned for database " + database + "| collection" + path + ": " + JSON.stringifyAligned(object.ref));
-                });
-
-                //object.ref = bson.deserialize(obj);
-
-                //logger.debug("data: " + JSON.stringifyAligned(object.ref));
-            }
-            await client.close();
-            */
-            //object.db.reload();
-            //object.ref = object.db.getData(path);
-
+            let data = {};
+            data.path = path;
+            data.method = "get";
+            data.database = database;
+            await redis.publish(CHANNEL, JSON.stringify(data));
+            let value = await this.getValue(redis);
+            object.ref = JSON.parse(value);
         } catch(e) {
-            //await object.prepareUnknownPath();
+            logger.error("error: " + e)
         }
     };
 
-    this.getPath = function (value) {
-        let mongoPath = value.replaceAll("/", ",");
-        if (mongoPath.substr(mongoPath.length - 2, mongoPath.length - 1) !== ",") {
-            mongoPath += ","
+    this.getValue = async function(redis) {
+        let value = null;
+        while (value == null) {
+            value = await redis.get(path);
+            await this.sleep(100)
         }
-        if (mongoPath.substr(0, 1) !== ",") {
-            mongoPath = "," + mongoPath;
-        }
-        return "^" + mongoPath;
+        return value
     };
 
-    /**
-     * when some path doesn't exist on db and needs to create nested objects
-     */
-    this.prepareUnknownPath = async function() {
-        let paths = path.split("/");
-        let currentObject = object.ref;
-        for (let p in paths) {
-            let pCheck = paths[p];
-            currentObject[pCheck] = {};
-            currentObject = currentObject[pCheck];
-        }
-        object.ref = currentObject;
-        object.db.reload();
-        object.db.push(path, object.ref);
+    this.sleep = async function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     };
 
     /**
      * stores object on server database
      * TODO change to mongoDB
      */
-    this.syncToDatabase = async function() {
-        /*
+    this.syncToDatabase = async function(redis) {
         try {
-            let client = await MongoClient.connect(object.url);
-            // console.log("to database: Connected correctly to server");
-
-            const db = client.db(database);
-
-            let col = await db.collection(path);
-            let c = await col.count();
-            // logger.debug("count: " + c);
-            // logger.debug("path: " + path);
-            if (c === 0) {
-                let data = {};
-                await db.collection(path).insertOne(data)
-            } else {
-                if (object.ref !== null) {
-                    let obj = await db.collection(path).updateOne({}, {$set: object.ref}, function () {
-                        logger.debug("updated: " + JSON.stringifyAligned(object.ref))
-                    });
-                } else {
-                    let obj = await db.collection(path).deleteOne({});
-                }
-            }
-            await client.close();
+            let data = {};
+            data.path = path;
+            data.database = database;
+            data.method = "post";
+            data.value = JSON.stringify(object.ref);
+            await redis.set(data.path, data.value);
+            await redis.publish(CHANNEL, JSON.stringify(data));
         } catch(e) {
-            await object.prepareUnknownPath();
-        }
-        */
-
-        object.db.reload();
-        if (object.ref !== null) {
-            object.db.push(path, object.ref)
-        } else {
-            object.db.delete(path)
+            logger.error("error: " + e)
         }
     };
 
