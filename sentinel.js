@@ -2,6 +2,9 @@ const Redis =                   require('ioredis');
 const JsonDB =                  require('node-json-db');
 const Interval =                require('Interval');
 const setIn =                   require('set-in');
+const express =                 require('express');
+var bodyParser =                require('body-parser');
+var timeout =                   require('connect-timeout');
 const SN =                      require('sync-node');
 const logjs =                   require('logjsx');
 const logger = new logjs();
@@ -148,6 +151,7 @@ for (let k in pathKeys) {
     logger.debug("loading " + key);
 }
 
+/*
 pubSub.subscribe(CHANNEL, function (err, count) {
     //
 });
@@ -165,5 +169,33 @@ pubSub.on('message', function (channel, message) {
             }
         }
     }
+});*/
+
+const app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(timeout('120s'));
+app.post('/', function (req, res) {
+    let msg = req;
+    if (msg.method !== undefined && msg.path !== undefined && msg.database !== undefined) {
+        if (msg.method === "get") {
+            let object = action.getObject(msg.database, msg.path);
+            // redis.set(msg.path, JSON.stringify(object));
+            logger.debug("getting: " + JSON.stringify(object));
+            res.send(JSON.stringify(object))
+        } else if (msg.method === "post" && msg.value !== undefined) {
+            //redis.set(msg.path, msg.value);
+            action.saveObject(msg.database, msg.path, JSON.parse(msg.value));
+            res.send('{}')
+        } else {
+            res.send('{}')
+        }
+    } else {
+        res.send('{}')
+    }
 });
+
+app.listen(3000);
 

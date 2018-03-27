@@ -8,6 +8,7 @@
 const JsonDB =                  require('node-json-db');
 const MongoClient =             require('mongodb').MongoClient;
 const BSON =                    require('bson');
+const request =                 require('request');
 const bson = new BSON();
 
 // returns JSON differences
@@ -75,13 +76,22 @@ function DatabaseHandler(database, path) {
      * TODO change to mongoDB
      */
     this.syncFromDatabase = async function(redis) {
+        logger.debug("fromDatabase");
         try {
             let data = {};
             data.path = path;
             data.method = "get";
             data.database = database;
-            await redis.publish(CHANNEL, JSON.stringify(data));
-            let value = await this.getValue(redis);
+            // await redis.publish(CHANNEL, JSON.stringify(data));
+            logger.debug("fromDatabase 2");
+            let value = await new Promise(function(resolve,reject) {
+                request.post('http://localhost:3000/').form(data, function (err, httpResponse, body) {
+                    logger.debug("fromDatabase 4: " + body);
+                    resolve(body)
+                })
+            });
+            logger.debug("fromDatabase 3: " + JSON.stringify(value));
+
             object.ref = JSON.parse(value);
         } catch(e) {
             logger.error("error: " + e)
@@ -112,8 +122,10 @@ function DatabaseHandler(database, path) {
             data.database = database;
             data.method = "post";
             data.value = JSON.stringify(object.ref);
-            await redis.set(data.path, data.value);
-            await redis.publish(CHANNEL, JSON.stringify(data));
+            await request.post('http://localhost:3000/').form(data);
+
+            // await redis.set(data.path, data.value);
+            // await redis.publish(CHANNEL, JSON.stringify(data));
         } catch(e) {
             logger.error("error: " + e)
         }
