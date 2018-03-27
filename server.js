@@ -6,7 +6,7 @@ var cluster =               require('cluster');
 var Redis =                 require('ioredis');
 var numCPUs =               require('os').cpus().length;
 var DatabaseHandler =       require("./model/DatabaseHandler.js");
-var Reference =             require("./model/Reference,js");
+var Reference =             require("./model/Reference.js");
 var apply =                 require('rus-diff').apply;
 var sha1 =                  require('sha1');
 var logger =                new logjs();
@@ -128,7 +128,7 @@ var action = {
         /**
          * work with path database
          */
-        paths.syncFromDatabase();
+        paths.syncFromDatabase(redis);
 
         if (paths.ref === undefined) {
             paths.ref = {}
@@ -179,13 +179,13 @@ var action = {
                 data.info = "queue_ready";
             }
 
-            paths.syncToDatabase();
+            paths.syncToDatabase(redis);
 
             /**
              *
              */
             let object = this.getReference(connection);
-            object.DH.syncFromDatabase();
+            object.DH.syncFromDatabase(redis);
 
             if (typeof object !== "string") {
                 data.objectLen = JSON.stringify(object.DH.ref).length;
@@ -228,7 +228,7 @@ var action = {
 
     },
     unlisten: function (connection) {
-        paths.syncFromDatabase();
+        paths.syncFromDatabase(redis);
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
             var key = connection.path.replaceAll("/", "\.");
@@ -237,7 +237,7 @@ var action = {
             if (paths.ref[key] !== undefined && paths.ref[key].tokens !== undefined && paths.ref[key].tokens[connection.token] !== undefined) {
                 delete paths.ref[key].tokens[connection.token];
 
-                paths.syncToDatabase();
+                paths.syncToDatabase(redis);
 
                 var data = {};
                 data.info = "listener_removed";
@@ -266,7 +266,7 @@ var action = {
             let key = connection.path.replaceAll("/", "\.");
             key = key.substr(1, key.length - 1);
 
-            paths.syncFromDatabase();
+            paths.syncFromDatabase(redis);
 
             if (paths.ref === undefined) {
                 paths.ref = {};
@@ -288,7 +288,7 @@ var action = {
                 paths.ref[key].tokens[connection.token].time = new Date().getTime();
             }
 
-            paths.syncToDatabase();
+            paths.syncToDatabase(redis);
         }
     },
 
@@ -303,9 +303,9 @@ var action = {
         } else {
             object.addDifferencesToQueue(connection);
             if (connection.differences !== undefined) {
-                object.DH.syncFromDatabase();
+                object.DH.syncFromDatabase(redis);
                 apply(object.DH.ref, JSON.parse(connection.differences));
-                object.DH.syncToDatabase();
+                object.DH.syncToDatabase(redis);
 
                 this.updateTime(connection);
 
@@ -346,7 +346,7 @@ var action = {
             this.response(connection, null, object);
         } else {
             object.DH.ref = null;
-            object.DH.syncToDatabase();
+            object.DH.syncToDatabase(redis);
 
             let data = {};
             data.info = "reference_removed";
@@ -365,7 +365,7 @@ var action = {
         }
     },
     getReference:   function (connection) {
-        paths.syncFromDatabase();
+        paths.syncFromDatabase(redis);
         let error = null;
 
         if (connection.path !== undefined) {
@@ -375,7 +375,7 @@ var action = {
                     key = key.substr(1, key.length - 1);
                     if (paths.ref[key] !== undefined) {
                         logger.debug("path found");
-                        return new Reference(paths, connection, dbMaster, debug.toString());
+                        return new Reference(paths, connection, dbMaster, debug.toString(), redis);
                     } else {
                         error = "holder_not_found";
                     }

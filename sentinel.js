@@ -47,7 +47,6 @@ let data = dbData.getData(SLASH);
  * backup every 5 seconds
  */
 let count = 0;
-let time = new Date().getTime();
 Interval.run(function() {
     ++count;
     try {
@@ -60,7 +59,6 @@ Interval.run(function() {
     } catch (e) {
         logger.error("error on data backup")
     }
-    if (time)
     logger.debug("backup times: " + count);
 }, 5000);
 

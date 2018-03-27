@@ -23,7 +23,7 @@ let ACTION_NO_UPDATE        = "no_update";
  * @param dbg
  * @constructor
  */
-function Reference(pathReference, connection, database, dbg) {
+function Reference(pathReference, connection, database, dbg, redis) {
 
     // object reference
     var object = this;
@@ -32,7 +32,7 @@ function Reference(pathReference, connection, database, dbg) {
     this.database = database;
     this.pathReference = pathReference;
     this.DH = new DatabaseHandler(this.database, this.path);
-    this.DH.syncFromDatabase();
+    this.DH.syncFromDatabase(redis);
 
     var config = {};
 
@@ -98,7 +98,7 @@ function Reference(pathReference, connection, database, dbg) {
      * @param connection
      */
     this.addDifferencesToQueue = function (connection) {
-        this.pathReference.syncFromDatabase();
+        this.pathReference.syncFromDatabase(redis);
 
         let path = connection.path.replaceAll("/", "\.");
         path = path.substr(1, path.length - 1);
@@ -109,7 +109,7 @@ function Reference(pathReference, connection, database, dbg) {
             this.pathReference.ref[path].tokens[keys[key]].queue[date] = JSON.parse(connection.differences);
         }
 
-        this.pathReference.syncToDatabase()
+        this.pathReference.syncToDatabase(redis)
     };
 
     /**
@@ -124,7 +124,7 @@ function Reference(pathReference, connection, database, dbg) {
 
         // logger.debug("synchronizing with devices for path: " + path);
 
-        this.pathReference.syncFromDatabase();
+        this.pathReference.syncFromDatabase(redis);
 
         if (this.pathReference.ref[path].tokens !== undefined) {
             let referenceId = connection.path;
@@ -237,7 +237,7 @@ function Reference(pathReference, connection, database, dbg) {
                 }
             }
 
-            this.pathReference.syncToDatabase();
+            this.pathReference.syncToDatabase(redis);
             action.success();
         } else {
             logger.error("no tokens found for path: " + path);
@@ -250,7 +250,7 @@ function Reference(pathReference, connection, database, dbg) {
      * @param token
      */
     this.removeToken = function (token) {
-        this.pathReference.syncFromDatabase();
+        this.pathReference.syncFromDatabase(redis);
 
         let paths = Object.keys(this.pathReference.ref);
         for (let i in paths) {
@@ -262,7 +262,7 @@ function Reference(pathReference, connection, database, dbg) {
             }
         }
 
-        this.pathReference.syncToDatabase()
+        this.pathReference.syncToDatabase(redis)
     };
 
     /**
@@ -272,12 +272,12 @@ function Reference(pathReference, connection, database, dbg) {
      * @param id
      */
     this.removeQueue = function (path, token, id) {
-        this.pathReference.syncFromDatabase();
+        this.pathReference.syncFromDatabase(redis);
         logger.info("removing queue of " + token);
 
         if (this.pathReference.ref[path].tokens !== undefined && this.pathReference.ref[path].tokens[token] !== undefined && this.pathReference.ref[path].tokens[token].queue !== undefined && this.pathReference.ref[path].tokens[token].queue[id] !== undefined) {
             delete this.pathReference.ref[path].tokens[token].queue[id];
-            this.pathReference.syncToDatabase()
+            this.pathReference.syncToDatabase(redis)
         }
     };
 

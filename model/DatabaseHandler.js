@@ -25,6 +25,7 @@ const sha1 =                  require('sha1');
 
 
 const TAG = "Database Handler";
+const channel = "sentinel";
 
 // JSON pretty print
 JSON.stringifyAligned = require('json-align');
@@ -68,10 +69,16 @@ function DatabaseHandler(database, path) {
      * loads the DB object reference of the given path on object.ref
      * TODO change to mongoDB
      */
-    this.syncFromDatabase = function() {
+    this.syncFromDatabase = function(redis) {
         try {
+            let data = {};
+            data.path = path;
+            data.method = "get";
+            await redis.publish(channel, JSON.stringify(result));
+            /*
             object.db.reload();
             object.ref = object.db.getData(path);
+            */
         } catch(e) {
             setTimeout(function() {
                 object.prepareUnknownPath();
@@ -99,7 +106,7 @@ function DatabaseHandler(database, path) {
      * stores object on server database
      * TODO change to mongoDB
      */
-    this.syncToDatabase = function() {
+    this.syncToDatabase = function(redis) {
         object.db.reload();
         if (object.ref !== null) {
             object.db.push(path, object.ref)
