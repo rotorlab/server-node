@@ -1,14 +1,12 @@
 /**
- * Handles all actions related with server database.
- * For now we'll still using node-json-db package but
- * it should be replaced with MongoDB
- */
+ * Handles all actions related with server database
+ * */
 
 // server database
 const JsonDB =                  require('node-json-db');
-const MongoClient =             require('mongodb').MongoClient;
 const BSON =                    require('bson');
-const request =                 require('request');
+const rp =                      require('request-promise');
+
 const bson = new BSON();
 
 // returns JSON differences
@@ -23,13 +21,6 @@ logger.init({
 
 // queue
 const SN =                    require('sync-node');
-
-// sha1 converter, it should be removed
-const sha1 =                  require('sha1');
-
-
-const TAG = "Database Handler";
-const CHANNEL = "sentinel";
 
 // JSON pretty print
 JSON.stringifyAligned = require('json-align');
@@ -47,7 +38,6 @@ function DatabaseHandler(database, path) {
 
     // debug
     this.debugVal = true;
-    this.collection = "data";
 
     // os
     this.OS = {};
@@ -75,57 +65,48 @@ function DatabaseHandler(database, path) {
      * loads the DB object reference of the given path on object.ref
      * TODO change to mongoDB
      */
-    this.syncFromDatabase = async function(redis) {
-        logger.debug("fromDatabase");
+    this.syncFromDatabase = async function() {
         try {
             let data = {};
             data.path = path;
             data.method = "get";
             data.database = database;
-            // await redis.publish(CHANNEL, JSON.stringify(data));
-            logger.debug("fromDatabase 2");
-            let value = await new Promise(function(resolve,reject) {
-                request.post('http://localhost:3000/').form(data, function (err, httpResponse, body) {
-                    logger.debug("fromDatabase 4: " + body);
-                    resolve(body)
-                })
-            });
-            logger.debug("fromDatabase 3: " + JSON.stringify(value));
-
-            object.ref = JSON.parse(value);
+            object.ref = await this.ask('http://localhost:3000/', data);
         } catch(e) {
             logger.error("error: " + e)
         }
     };
 
-    this.getValue = async function(redis) {
-        let value = null;
-        while (value == null) {
-            value = await redis.get(path);
-            await this.sleep(100)
-        }
-        return value
-    };
-
-    this.sleep = async function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+    this.ask = async function(url, data) {
+        return new Promise(function(resolve, reject) {
+            let options = {
+                method: 'POST',
+                uri: url,
+                body: data,
+                json: true
+            };
+            rp(options)
+                .then(function (parsedBody) {
+                    resolve(parsedBody)
+                })
+                .catch(function (err) {
+                    reject(err)
+                });
+        });
     };
 
     /**
      * stores object on server database
      * TODO change to mongoDB
      */
-    this.syncToDatabase = async function(redis) {
+    this.syncToDatabase = async function() {
         try {
             let data = {};
             data.path = path;
             data.database = database;
             data.method = "post";
             data.value = JSON.stringify(object.ref);
-            await request.post('http://localhost:3000/').form(data);
-
-            // await redis.set(data.path, data.value);
-            // await redis.publish(CHANNEL, JSON.stringify(data));
+            await this.ask('http://localhost:3000/', data);
         } catch(e) {
             logger.error("error: " + e)
         }

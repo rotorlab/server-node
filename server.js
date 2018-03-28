@@ -128,7 +128,7 @@ var action = {
         /**
          * work with path database
          */
-        await paths.syncFromDatabase(redis);
+        await paths.syncFromDatabase();
 
         if (paths.ref === undefined) {
             paths.ref = {}
@@ -180,7 +180,7 @@ var action = {
 
                 data.info = "queue_ready";
             }
-            await paths.syncToDatabase(redis);
+            await paths.syncToDatabase();
             await action.sleep(2000);
             /**
              *
@@ -189,7 +189,7 @@ var action = {
             if (typeof object === "string") {
                 this.response(connection, null, object);
             } else {
-                await object.DH.syncFromDatabase(redis);
+                await object.DH.syncFromDatabase();
 
                 if (typeof object !== "string") {
                     data.objectLen = JSON.stringify(object.DH.ref).length;
@@ -235,7 +235,7 @@ var action = {
         return new Promise(resolve => setTimeout(resolve, ms));
     },
     unlisten: async function (connection) {
-        await paths.syncFromDatabase(redis);
+        await paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
             var key = connection.path;
@@ -245,7 +245,7 @@ var action = {
             if (paths.ref[key] !== undefined && paths.ref[key].tokens !== undefined && paths.ref[key].tokens[connection.token] !== undefined) {
                 delete paths.ref[key].tokens[connection.token];
 
-                await paths.syncToDatabase(redis);
+                await paths.syncToDatabase();
 
                 var data = {};
                 data.info = "listener_removed";
@@ -275,7 +275,7 @@ var action = {
             // let key = connection.path.replaceAll("/", "\.");
             // key = key.substr(1, key.length - 1);
 
-            await paths.syncFromDatabase(redis);
+            await paths.syncFromDatabase();
 
             if (paths.ref === undefined) {
                 paths.ref = {};
@@ -297,7 +297,7 @@ var action = {
                 paths.ref[key].tokens[connection.token].time = new Date().getTime();
             }
 
-            await paths.syncToDatabase(redis);
+            await paths.syncToDatabase();
         }
     },
 
@@ -312,9 +312,9 @@ var action = {
         } else {
             await object.addDifferencesToQueue(connection);
             if (connection.differences !== undefined) {
-                await object.DH.syncFromDatabase(redis);
+                await object.DH.syncFromDatabase();
                 apply(object.DH.ref, JSON.parse(connection.differences));
-                await object.DH.syncToDatabase(redis);
+                await object.DH.syncToDatabase();
 
                 await this.updateTime(connection);
 
@@ -355,7 +355,7 @@ var action = {
             this.response(connection, null, object);
         } else {
             object.DH.ref = null;
-            await object.DH.syncToDatabase(redis);
+            await object.DH.syncToDatabase();
 
             let data = {};
             data.info = "reference_removed";
@@ -374,7 +374,7 @@ var action = {
         }
     },
     getReference: async function (connection) {
-        await paths.syncFromDatabase(redis);
+        await paths.syncFromDatabase();
         let error = null;
 
         if (connection.path !== undefined) {
@@ -384,7 +384,7 @@ var action = {
                     // let key = connection.path.replaceAll("/", "\.");
                     // key = key.substr(1, key.length - 1);
                     if (paths.ref[key] !== undefined) {
-                        return new Reference(paths, connection, dbMaster, debug.toString(), redis);
+                        return new Reference(paths, connection, dbMaster, debug.toString());
                     } else {
                         error = "holder_not_found_on" + key;
                     }

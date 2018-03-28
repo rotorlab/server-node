@@ -1,11 +1,9 @@
-const Redis =                   require('ioredis');
 const JsonDB =                  require('node-json-db');
 const Interval =                require('Interval');
 const setIn =                   require('set-in');
 const express =                 require('express');
-var bodyParser =                require('body-parser');
-var timeout =                   require('connect-timeout');
-const SN =                      require('sync-node');
+const bodyParser =              require('body-parser');
+const timeout =                 require('connect-timeout');
 const logjs =                   require('logjsx');
 const logger = new logjs();
 
@@ -18,14 +16,13 @@ const SLASH = "/";
 const expectedDBNEnvVar = "DATABASE_NAME";
 const expectedRPORTEnvVar = "REDIS_PORT";
 const expectedDebugKeyEnvVar = "DEBUG";
-const CHANNEL = "sentinel";
 
 let db_name = null;
 let redis_port = null;
 let debug = null;
 
 String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
+    let target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
@@ -41,11 +38,8 @@ process.argv.forEach(function (val, index, array) {
     }
 });
 
-const pubSub = new Redis(redis_port);
-const redis = new Redis(redis_port);
 const dbPath = new JsonDB("paths", true, true);
 const dbData = new JsonDB(db_name, true, true);
-const queue = SN.createQueue();
 
 /**
  * instanced objects: data - paths
@@ -119,8 +113,7 @@ let action = {
      * @returns {*}
      */
     saveObject: function (type, value, object) {
-        if (object === null) {
-        } else if (value.startsWith(SLASH) && value.length > SLASH.length) {
+        if (value.startsWith(SLASH) && value.length > SLASH.length) {
             let branchsVal = value.split(SLASH);
             let branchs = [];
             for (let b in branchsVal) {
@@ -143,59 +136,31 @@ let action = {
     }
 };
 
-let pathKeys = Object.keys(paths);
-for (let k in pathKeys) {
-    let key = pathKeys[k];
-    let object = action.getObject(db_name, key);
-    redis.set(key, JSON.stringify(object));
-    logger.debug("loading " + key);
-}
-
-/*
-pubSub.subscribe(CHANNEL, function (err, count) {
-    //
-});
-
-pubSub.on('message', function (channel, message) {
-    if (channel === CHANNEL) {
-        let msg = JSON.parse(message);
-        if (msg.method !== undefined && msg.path !== undefined && msg.database !== undefined) {
-            if (msg.method === "get") {
-                let object = action.getObject(msg.database, msg.path);
-                redis.set(msg.path, JSON.stringify(object));
-            } else if (msg.method === "post" && msg.value !== undefined) {
-                //redis.set(msg.path, msg.value);
-                action.saveObject(msg.database, msg.path, JSON.parse(msg.value))
-            }
-        }
-    }
-});*/
-
 const app = express();
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(timeout('120s'));
-app.post('/', function (req, res) {
-    let msg = req;
+
+const router = express.Router();
+
+router.post('/', function(req, res) {
+    let msg = req.body;
     if (msg.method !== undefined && msg.path !== undefined && msg.database !== undefined) {
         if (msg.method === "get") {
             let object = action.getObject(msg.database, msg.path);
-            // redis.set(msg.path, JSON.stringify(object));
-            logger.debug("getting: " + JSON.stringify(object));
-            res.send(JSON.stringify(object))
+            res.json(object)
         } else if (msg.method === "post" && msg.value !== undefined) {
-            //redis.set(msg.path, msg.value);
             action.saveObject(msg.database, msg.path, JSON.parse(msg.value));
-            res.send('{}')
+            res.json({})
         } else {
-            res.send('{}')
+            res.json({})
         }
     } else {
-        res.send('{}')
+        res.json({})
     }
 });
-
+app.use('/', router);
 app.listen(3000);
 

@@ -24,6 +24,7 @@
     "mongodb": "^3.0.5",
     "node-json-db": "^0.7.3",
     "request": "^2.85.0",
+    "request-promise": "^4.2.2",
     "rus-diff": "^1.1.0",
     "set-in": "^2.0.0",
     "sha1": "^1.1.1",
