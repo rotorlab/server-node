@@ -61,7 +61,7 @@ function RotorServer() {
         });
     };
 
-    this.initCluster = function (callback) {
+    this.start = function (callback) {
         this.initSentinel(callback);
 
         let db_name = "database";
@@ -117,7 +117,7 @@ function RotorServer() {
         let child = forever.start('./server.js', config);
         child.on('start', function(code) {
             logger.info(config.args);
-            callback.start();
+            callback.ready();
         });
     }
 

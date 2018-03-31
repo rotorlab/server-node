@@ -4,37 +4,17 @@
 # Rotor Server for Node
 Server cluster to hold a realtime JSON database.
 
-### Setup
+### [Wiki ->](https://github.com/rotorlab/server-node/wiki)
 
-Prepare Redis server
+[1. Redis](https://github.com/rotorlab/server-node/wiki/Redis)
 
-OSX:
-```bash
-// install
-brew install redis
- 
-// run
-redis-server
+[2. Implementation](https://github.com/rotorlab/server-node/wiki/Implementation)
 
-// for testing with physical devices
-redis-server --protected-mode no
- 
-// logs
-redis-cli monitor
- 
-// test channels (sub/pub)
-redis-cli PUBLISH d7bec76dac4e holi // redis-cli PUBLISH <Flamebase.id> message
-```
-Ubuntu:
-```bash 
-// install
-sudo apt-get install redis-server
- 
-// run
-sudo service redis-server status
-```
+[3. Start](https://github.com/rotorlab/server-node/wiki/Start)
 
-Install Flamebase:
+[4. Paths and models](https://github.com/rotorlab/server-node/wiki/Paths-and-models)
+
+Install Rotor server:
 ```bash
 npm install rotor-server --save
 ```
