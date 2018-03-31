@@ -181,7 +181,7 @@ var action = {
                 data.info = "queue_ready";
             }
             await paths.syncToDatabase();
-            await action.sleep(2000);
+            //await action.sleep(2000);
             /**
              *
              */
