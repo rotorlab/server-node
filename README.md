@@ -7,13 +7,11 @@ Rotor is a communication framework for work with remote objects from different d
 
 [1. Redis](https://github.com/rotorlab/server-node/wiki/Redis)
 
-[2. Implementation](https://github.com/rotorlab/server-node/wiki/Implementation)
+[2. Implementation and start](https://github.com/rotorlab/server-node/wiki/Implementation-and-start)
 
-[3. Start](https://github.com/rotorlab/server-node/wiki/Start)
+[3. Paths and models](https://github.com/rotorlab/server-node/wiki/Paths-and-models)
 
-[4. Paths and models](https://github.com/rotorlab/server-node/wiki/Paths-and-models)
-
-[5. Libraries](https://github.com/rotorlab/server-node/wiki/Libraries)
+[4. Libraries](https://github.com/rotorlab/server-node/wiki/Libraries)
 
 
 Here you can find all info about how to build a simple API with few lines.
