@@ -74,6 +74,8 @@ rotor cluster started on port 1507 | worker => 4
 rotor cluster started on port 1507 | worker => 8
 
 ```
+### Workflow
+![schema](https://github.com/rotorlab/server-node/raw/feature/mongodb/schema.png)
 
 ### Libraries and packages
 Client to work with Rotor server:
