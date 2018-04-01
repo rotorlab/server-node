@@ -13,6 +13,7 @@ Rotor is a communication framework for work with remote objects from different d
 
 [4. Libraries](https://github.com/rotorlab/server-node/wiki/Libraries)
 
+[5. Configuration](https://github.com/rotorlab/server-node/wiki/Configuration)
 
 Here you can find all info about how to build a simple API with few lines.
 
