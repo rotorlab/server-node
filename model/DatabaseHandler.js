@@ -1,11 +1,14 @@
 /**
- * Handles all actions related with server database.
- * For now we'll still using node-json-db package but
- * it should be replaced with MongoDB
- */
+ * Handles all actions related with server database
+ * */
 
 // server database
-const JsonDB =                require('node-json-db');
+const JsonDB =                  require('node-json-db');
+const BSON =                    require('bson');
+const rp =                      require('request-promise');
+const sha1 =                    require('sha1');
+
+const bson = new BSON();
 
 // returns JSON differences
 const diff =                  require('rus-diff').diff;
@@ -20,13 +23,6 @@ logger.init({
 // queue
 const SN =                    require('sync-node');
 
-// sha1 converter, it should be removed
-const sha1 =                  require('sha1');
-
-
-const TAG = "Database Handler";
-const channel = "sentinel";
-
 // JSON pretty print
 JSON.stringifyAligned = require('json-align');
 
@@ -39,6 +35,7 @@ function DatabaseHandler(database, path) {
 
     // object reference
     var object = this;
+    this.url = 'mongodb://localhost:27017';
 
     // debug
     this.debugVal = true;
@@ -69,49 +66,51 @@ function DatabaseHandler(database, path) {
      * loads the DB object reference of the given path on object.ref
      * TODO change to mongoDB
      */
-    this.syncFromDatabase = function(redis) {
+    this.syncFromDatabase = async function() {
+
         try {
             let data = {};
             data.path = path;
             data.method = "get";
-            await redis.publish(channel, JSON.stringify(result));
-            /*
-            object.db.reload();
-            object.ref = object.db.getData(path);
-            */
+            data.database = database;
+            object.ref = await this.ask('http://localhost:3000/', data);
         } catch(e) {
-            setTimeout(function() {
-                object.prepareUnknownPath();
-            }, 200);
+            logger.error("error: " + e)
         }
     };
 
-    /**
-     * when some path doesn't exist on db and needs to create nested objects
-     */
-    this.prepareUnknownPath = function() {
-        let paths = path.split("/");
-        let currentObject = object.ref;
-        for (let p in paths) {
-            let pCheck = paths[p];
-            currentObject[pCheck] = {};
-            currentObject = currentObject[pCheck];
-        }
-        object.ref = currentObject;
-        object.db.reload();
-        object.db.push(path, object.ref);
+    this.ask = async function(url, data) {
+        return new Promise(function(resolve, reject) {
+            let options = {
+                method: 'POST',
+                uri: url,
+                body: data,
+                json: true
+            };
+            rp(options)
+                .then(function (parsedBody) {
+                    resolve(parsedBody)
+                })
+                .catch(function (err) {
+                    reject(err)
+                });
+        });
     };
 
     /**
      * stores object on server database
      * TODO change to mongoDB
      */
-    this.syncToDatabase = function(redis) {
-        object.db.reload();
-        if (object.ref !== null) {
-            object.db.push(path, object.ref)
-        } else {
-            object.db.delete(path)
+    this.syncToDatabase = async function() {
+        try {
+            let data = {};
+            data.path = path;
+            data.database = database;
+            data.method = "post";
+            data.value = JSON.stringify(object.ref);
+            await this.ask('http://localhost:3000/', data);
+        } catch(e) {
+            logger.error("error: " + e)
         }
     };
 
@@ -151,7 +150,7 @@ function DatabaseHandler(database, path) {
      * @param callback
      * @param connection
      */
-    this.sendDifferencesForClient = function(before, device, callback, connection) {
+    this.sendDifferencesForClient = async function(before, device, callback, connection) {
 
         let ios_tokens = [];
         let android_tokens = [];
@@ -164,6 +163,10 @@ function DatabaseHandler(database, path) {
         } else {
             android_tokens.push(device.token);
         }
+
+        logger.debug("stored: " + JSON.stringify(this.ref));
+        logger.debug("arrived: " + before);
+
 
         if (android_tokens.length > 0) {
             let data_android = this.getPartsFor(this.OS.ANDROID, JSON.parse(before), this.ref);
@@ -178,17 +181,18 @@ function DatabaseHandler(database, path) {
                 data.reference = data_android.parts[0];
                 data.action = ACTION_SIMPLE_UPDATE;
                 data.size = data_android.parts.length;
+                data.sha1 = this.sha1Reference();
                 data.index = 0;
                 let send = {};
                 send.data = data;
                 send.tokens = android_tokens;
                 send.notification = notification;
                 if (ios_tokens.length === 0) {
-                    this.sendPushMessage(send, callback, function (error) {
+                    await this.sendPushMessage(send, callback, function (error) {
                         // nothing to do here
                     }, connection);
                 } else {
-                    this.sendPushMessage(send, callback, function (error) {
+                    await this.sendPushMessage(send, callback, function (error) {
                         // nothing to do here
                     }, connection);
                 }
@@ -199,6 +203,7 @@ function DatabaseHandler(database, path) {
                     data.tag = this.pushConfig.tag();
                     data.reference = data_android.parts[i];
                     data.action = ACTION_SLICE_UPDATE;
+                    data.sha1 = this.sha1Reference();
                     data.index = i;
                     data.size = data_android.parts.length;
                     let send = {};
@@ -206,11 +211,11 @@ function DatabaseHandler(database, path) {
                     send.tokens = android_tokens;
                     send.notification = notification;
                     if (ios_tokens.length === 0 && i === data_android.parts.length - 1) {
-                        this.sendPushMessage(send, callback, function (error) {
+                        await this.sendPushMessage(send, callback, function (error) {
                             // nothing to do here
                         }, connection);
                     } else {
-                        this.sendPushMessage(send, callback, function (error) {
+                        await this.sendPushMessage(send, callback, function (error) {
                             // nothing to do here
                         }, connection);
                     }
@@ -219,17 +224,18 @@ function DatabaseHandler(database, path) {
                 let data = {};
                 data.id = id;
                 data.tag = this.pushConfig.tag();
+                data.sha1 = this.sha1Reference();
                 data.action = ACTION_NO_UPDATE;
                 let send = {};
                 send.data = data;
                 send.tokens = android_tokens;
                 send.notification = notification;
                 if (ios_tokens.length === 0) {
-                    this.sendPushMessage(send, callback, function (error) {
+                    await this.sendPushMessage(send, callback, function (error) {
                         // nothing to do here
                     }, connection);
                 } else {
-                    this.sendPushMessage(send, callback, function (error) {
+                    await this.sendPushMessage(send, callback, function (error) {
                         // nothing to do here
                     }, connection);
                 }
@@ -249,12 +255,13 @@ function DatabaseHandler(database, path) {
                 data.reference = data_ios.parts[0];
                 data.action = ACTION_SIMPLE_UPDATE;
                 data.size = data_ios.parts.length;
+                data.sha1 = this.sha1Reference();
                 data.index = 0;
                 let send = {};
                 send.data = data;
                 send.tokens = ios_tokens;
                 send.notification = notification;
-                this.sendPushMessage(send, callback, function (error) {
+                await this.sendPushMessage(send, callback, function (error) {
                     // nothing to do here
                 }, connection);
             } else if (data_ios.parts.length > 1) {
@@ -264,6 +271,7 @@ function DatabaseHandler(database, path) {
                     data.tag = this.pushConfig.tag();
                     data.reference = data_ios.parts[i];
                     data.action = ACTION_SLICE_UPDATE;
+                    data.sha1 = this.sha1Reference();
                     data.index = i;
                     data.size = data_ios.parts.length;
                     let send = {};
@@ -271,11 +279,11 @@ function DatabaseHandler(database, path) {
                     send.tokens = ios_tokens;
                     send.notification = notification;
                     if (i === data_ios.parts.length - 1) {
-                        this.sendPushMessage(send, callback, function (error) {
+                        await this.sendPushMessage(send, callback, function (error) {
                             // nothing to do here
                         }, connection);
                     } else {
-                        this.sendPushMessage(send, callback, function (error) {
+                        await this.sendPushMessage(send, callback, function (error) {
                             // nothing to do here
                         }, connection);
                     }
@@ -289,7 +297,7 @@ function DatabaseHandler(database, path) {
                 send.data = data;
                 send.tokens = ios_tokens;
                 send.notification = notification;
-                this.sendPushMessage(send, callback, function (error) {
+                await this.sendPushMessage(send, callback, function (error) {
                     // nothing to do here
                 }, connection);
             }
@@ -313,36 +321,31 @@ function DatabaseHandler(database, path) {
      * @param fail
      * @param connection
      */
-    this.sendPushMessage = function(toSend, success, fail, connection) {
-        this.queue.pushJob(function() {
-            return new Promise(function (resolve, reject) {
-                let message = {
-                    data: toSend.data,
-                    error: null
-                };
-                for (let t in toSend.tokens) {
-                    let token = toSend.tokens[t];
-                    try {
-                        connection.callback(token, message,
-                            function () {
-                                if (success !== undefined) {
-                                    success();
-                                }
-                            },
-                            function () {
-                                if (fail !== undefined) {
-                                    fail();
-                                }
-                            });
-                    } catch (e) {
-                        if (fail !== null && fail !== undefined) {
-                            fail(e);
+    this.sendPushMessage = async function(toSend, success, fail, connection) {
+        let message = {
+            data: toSend.data,
+            error: null
+        };
+        for (let t in toSend.tokens) {
+            let token = toSend.tokens[t];
+            try {
+                await connection.callback(token, message,
+                    function () {
+                        if (success !== undefined) {
+                            success();
                         }
-                    }
+                    },
+                    function () {
+                        if (fail !== undefined) {
+                            fail();
+                        }
+                    });
+            } catch (e) {
+                if (fail !== null && fail !== undefined) {
+                    fail(e);
                 }
-                resolve();
-            });
-        });
+            }
+        }
     };
 
     /**
@@ -442,6 +445,14 @@ function DatabaseHandler(database, path) {
             str += tmp[i].charCodeAt(0).toString(16);
         }
         return str;
+    };
+
+    /**
+     * Returns object SHA-1
+     * @param token
+     */
+    this.sha1Reference = function () {
+        return sha1(JSON.stringify(this.ref))
     };
 }
 

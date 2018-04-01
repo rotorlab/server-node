@@ -1,22 +1,21 @@
-var express =               require('express');
-var bodyParser =            require('body-parser');
-var timeout =               require('connect-timeout');
-var logjs =                 require('logjsx');
-var cluster =               require('cluster');
-var Redis =                 require('ioredis');
-var numCPUs =               require('os').cpus().length;
-var DatabaseHandler =       require("./model/DatabaseHandler.js");
-var Reference =             require("./model/Reference.js");
-var apply =                 require('rus-diff').apply;
-var sha1 =                  require('sha1');
-var logger =                new logjs();
+var express = require('express');
+var bodyParser = require('body-parser');
+var timeout = require('connect-timeout');
+var logjs = require('logjsx');
+var cluster = require('cluster');
+var Redis = require('ioredis');
+var numCPUs = require('os').cpus().length;
+var DatabaseHandler = require("./model/DatabaseHandler.js");
+var Reference = require("./model/Reference.js");
+var apply = require('rus-diff').apply;
+var logger = new logjs();
 
-JSON.stringifyAligned =     require('json-align');
+JSON.stringifyAligned = require('json-align');
 logger.init({
-    level : "DEBUG"
+    level: "DEBUG"
 });
 
-String.prototype.replaceAll = function(search, replacement) {
+String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
@@ -29,8 +28,6 @@ var dbMaster = null;
 var server_port = null;
 var redis_port = null;
 var debug = null;
-var paths = new DatabaseHandler("paths", "/");
-
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
@@ -78,9 +75,9 @@ var ERROR_RESPONSE = {
 
 var KEY_REQUEST = {
     METHOD: "method",
-    PATH:   "path",
-    SHA1:   "sha1",
-    TOKEN:  "token",
+    PATH: "path",
+    SHA1: "sha1",
+    TOKEN: "token",
     DIFFERENCES: "differences",
     CONTENT: "content",
     LEN: "len",
@@ -92,21 +89,35 @@ var KEY_REQUEST = {
 };
 
 var action = {
-    response:       function (connection, data, error) {
+    response: function (connection, data, error) {
         let result = {
             status: (data === null || error !== null ? "KO" : "OK"),
             data: (data === null ? {} : data),
             error: error
         };
-        connection.callback(connection.token, result);
+        connection.callback(connection.token, result).then(function () {
+
+        });
     },
-    notify:         function (connection, id, notifications, error) {
+    responseTo: function (connection, data, error, token) {
+        let result = {
+            status: (data === null || error !== null ? "KO" : "OK"),
+            data: (data === null ? {} : data),
+            error: error
+        };
+        connection.callback(token, result).then(function () {
+
+        });
+    },
+    notify: function (connection, id, notifications, error) {
         let result = {
             status: (notifications === null || error !== null ? "KO" : "OK"),
             notifications: (notifications === null ? {} : notifications),
             error: error
         };
-        connection.callback(id, result);
+        connection.callback(id, result).then(function () {
+
+        });
     },
     /**
      * replaces path format: /contacts/batman -> contacts.batman
@@ -123,38 +134,35 @@ var action = {
             }
      * @param connection
      */
-    listen:    function (connection) {
-
+    listen: async function (connection) {
+        let paths = action.getPath(connection);
         /**
          * work with path database
          */
-        paths.syncFromDatabase(redis);
+        await paths.syncFromDatabase();
 
-        if (paths.ref === undefined) {
+        if (paths.ref === undefined || paths.ref === null) {
             paths.ref = {}
         }
 
         // valid path
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-            logger.error(connection.path);
-            var key = connection.path.replaceAll("/", "\.");
-            key = key.substr(1, key.length - 1);
+            logger.debug("ref: " + paths.ref);
 
-            if (paths.ref[key] === undefined) {
-                paths.ref[key] = {};
-                paths.ref[key].path = connection.path;
+            if (paths.ref.path === undefined) {
+                paths.ref.path = connection.path;
             }
 
-            if (paths.ref[key].tokens === undefined) {
-                paths.ref[key].tokens = {};
+            if (paths.ref.tokens === undefined) {
+                paths.ref.tokens = {};
             }
 
             let data = {};
-            if (paths.ref[key].tokens[connection.token] === undefined) {
-                paths.ref[key].tokens[connection.token] = {};
-                paths.ref[key].tokens[connection.token].os = connection.os;
-                paths.ref[key].tokens[connection.token].queue = {};
-                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+            if (paths.ref.tokens[connection.token] === undefined) {
+                paths.ref.tokens[connection.token] = {};
+                paths.ref.tokens[connection.token].os = connection.os;
+                paths.ref.tokens[connection.token].queue = {};
+                paths.ref.tokens[connection.token].time = new Date().getTime();
 
                 /**
                  * queue is ready, all changes in the current path will be queue here
@@ -168,83 +176,94 @@ var action = {
                  * respond queue ready
                  *
                  */
-                if (paths.ref[key].tokens[connection.token].queue === undefined) {
-                    paths.ref[key].tokens[connection.token].queue = {};
+                if (paths.ref.tokens[connection.token].queue === undefined) {
+                    paths.ref.tokens[connection.token].queue = {};
                     data.queueLen = 0;
                 } else {
-                    data.queueLen = Object.keys(paths.ref[key].tokens[connection.token].queue).length;
+                    data.queueLen = Object.keys(paths.ref.tokens[connection.token].queue).length;
                 }
-                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+                paths.ref.tokens[connection.token].time = new Date().getTime();
 
                 data.info = "queue_ready";
             }
 
-            paths.syncToDatabase(redis);
-
+            await paths.syncToDatabase();
             /**
              *
              */
-            let object = this.getReference(connection);
-            object.DH.syncFromDatabase(redis);
-
-            if (typeof object !== "string") {
-                data.objectLen = JSON.stringify(object.DH.ref).length;
+            let object = await this.getReference(connection);
+            if (typeof object === "string") {
+                this.response(connection, null, object);
             } else {
-                data.objectLen = 0;
-            }
+                await object.DH.syncFromDatabase();
 
-            // TODO send pending queues
-            if (data.objectLen > 2) {
-                let device = {
-                    token: connection.token,
-                    os: connection.os
-                };
-                let keys = Object.keys(paths.ref[key].tokens[connection.token].queue);
-                if (keys.length > 0) {
-                    object.sendQueues(connection, {
-                        success: function () {
-                            let data = {};
-                            data.info = "queue_sent";
-                            action.response(connection, data, null);
-                        }
-                    });
+                if (typeof object !== "string") {
+                    data.objectLen = JSON.stringify(object.DH.ref).length;
                 } else {
-                    object.sendUpdateByContent("{}", device, function () {
-                        let data = {};
+                    data.objectLen = 0;
+                }
+
+                // TODO send pending queues
+                if (data.objectLen > 2) {
+                    let device = {
+                        token: connection.token,
+                        os: connection.os
+                    };
+                    logger.debug("sha: " + connection.sha1);
+                    logger.debug("sha cached: " + object.sha1Reference());
+
+                    if (connection.sha1 === object.sha1Reference()) {
+                        let k = Object.keys(paths.ref.tokens[connection.token].queue);
+                        for (let key in k) {
+                            delete paths.ref.tokens[connection.token].queue[k[key]]
+                        }
+                        await paths.syncToDatabase();
                         data.info = "queue_ready";
                         action.response(connection, data, null);
-                    }, connection);
+                    } else {
+                        let keys = Object.keys(paths.ref.tokens[connection.token].queue);
+                        if (keys.length > 0) {
+                            object.sendQueues(connection, {
+                                success: function () {
+                                    let data = {};
+                                    data.info = "queue_sent";
+                                    action.response(connection, data, null);
+                                }
+                            });
+                        } else {
+                            await object.sendUpdateByContent("{}", device, function () {
+                                let data = {};
+                                data.info = "queue_ready";
+                                action.response(connection, data, null);
+                            }, connection);
+                        }
+                    }
+                } else {
+                    data.info = "new_object";
+                    data.id = connection.path;
+                    action.response(connection, data, null);
                 }
-            } else {
-                data.info = "new_object";
-                data.id = connection.path;
-                action.response(connection, data, null);
             }
         } else if (connection.path.indexOf("/") !== 0) {
             this.response(connection, null, "path_not_start_with_slash");
         } else {
             this.response(connection, null, "path_contains_dots");
         }
-
     },
-    unlisten: function (connection) {
-        paths.syncFromDatabase(redis);
+    unlisten: async function (connection) {
+        let paths = action.getPath(connection);
+        await paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-            var key = connection.path.replaceAll("/", "\.");
-            key = key.substr(1, key.length - 1);
+            if (paths.ref !== undefined && paths.ref.tokens !== undefined && paths.ref.tokens[connection.token] !== undefined) {
+                delete paths.ref.tokens[connection.token];
+                await paths.syncToDatabase();
 
-            if (paths.ref[key] !== undefined && paths.ref[key].tokens !== undefined && paths.ref[key].tokens[connection.token] !== undefined) {
-                delete paths.ref[key].tokens[connection.token];
-
-                paths.syncToDatabase(redis);
-
-                var data = {};
+                let data = {};
                 data.info = "listener_removed";
-
                 this.response(connection, data, null, connection.worker);
             } else {
-                if (paths.ref[key] === undefined) {
+                if (paths.ref === undefined) {
                     this.response(connection, null, "path_not_found");
                 } else {
                     this.response(connection, null, "token_not_found");
@@ -261,34 +280,33 @@ var action = {
      * Updates last time field for the given token
      * @param connection
      */
-    updateTime:     function (connection) {
+    updateTime: async function (connection) {
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-            let key = connection.path.replaceAll("/", "\.");
-            key = key.substr(1, key.length - 1);
+            let paths = action.getPath(connection);
 
-            paths.syncFromDatabase(redis);
+            await paths.syncFromDatabase();
 
             if (paths.ref === undefined) {
                 paths.ref = {};
             }
 
-            if (paths.ref[key] === undefined) {
-                paths.ref[key] = {};
+            if (paths.ref === undefined) {
+                paths.ref = {};
             }
 
-            if (paths.ref[key].tokens === undefined) {
-                paths.ref[key].tokens = {};
+            if (paths.ref.tokens === undefined) {
+                paths.ref.tokens = {};
             }
 
-            if (paths.ref[key].tokens === undefined && connection.token !== undefined) {
-                paths.ref[key].tokens[connection.token] = {};
+            if (paths.ref.tokens === undefined && connection.token !== undefined) {
+                paths.ref.tokens[connection.token] = {};
             }
 
-            if (paths.ref[key].tokens[connection.token] !== undefined) {
-                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+            if (paths.ref.tokens[connection.token] !== undefined) {
+                paths.ref.tokens[connection.token].time = new Date().getTime();
             }
 
-            paths.syncToDatabase(redis);
+            await paths.syncToDatabase();
         }
     },
 
@@ -296,18 +314,19 @@ var action = {
      * Updates the queue in path database
      * @param connection
      */
-    updateQueue:     function (connection) {
-        let object = this.getReference(connection);
+    updateQueue: async function (connection) {
+        let object = await this.getReference(connection);
         if (typeof object === "string") {
             this.response(connection, null, object);
         } else {
-            object.addDifferencesToQueue(connection);
+            await object.addDifferencesToQueue(connection);
             if (connection.differences !== undefined) {
-                object.DH.syncFromDatabase(redis);
-                apply(object.DH.ref, JSON.parse(connection.differences));
-                object.DH.syncToDatabase(redis);
 
-                this.updateTime(connection);
+                await object.DH.syncFromDatabase();
+                apply(object.DH.ref, JSON.parse(connection.differences));
+                await object.DH.syncToDatabase();
+
+                await this.updateTime(connection);
 
                 if (connection[KEY_REQUEST.CLEAN] === true) {
                     let device = {
@@ -316,14 +335,14 @@ var action = {
                     };
 
                     logger.debug("sending full object");
-                    object.sendUpdateByContent("{}", device, function() {
+                    await object.sendUpdateByContent("{}", device, function () {
                         let data = {};
                         data.info = "queue_updated";
                         action.response(connection, data, null);
                     }, connection);
                 } else {
-                    object.sendQueues(connection, {
-                        success:            function() {
+                    await object.sendQueues(connection, {
+                        success: function () {
                             let data = {};
                             data.info = "queue_updated";
                             action.response(connection, data, null);
@@ -340,21 +359,46 @@ var action = {
      * Removes reference in database
      * @param connection
      */
-    remove:     function (connection) {
-        let object = this.getReference(connection);
+    remove: async function (connection) {
+        let object = await this.getReference(connection);
         if (typeof object === "string") {
             this.response(connection, null, object);
         } else {
+            await object.pathReference.syncFromDatabase();
+            let dvs = Object.keys(object.pathReference.ref.tokens);
             object.DH.ref = null;
-            object.DH.syncToDatabase(redis);
-
-            let data = {};
-            data.info = "reference_removed";
-            data.id = connection.path;
-            action.response(connection, data, null);
+            await object.DH.syncToDatabase();
+            for (let d in dvs) {
+                let data = {};
+                data.info = "reference_removed";
+                data.id = connection.path;
+                action.responseTo(connection, data, null, dvs[d]);
+            }
         }
     },
-    sendNotifications:     function (connection) {
+    /**
+     * Updates from old content
+     * @param connection
+     */
+    updateFrom: async function (connection) {
+        let object = await this.getReference(connection);
+        if (typeof object === "string") {
+            this.response(connection, null, object);
+        } else {
+            let device = {
+                token: connection.token,
+                os: connection.os
+            };
+            await object.DH.syncFromDatabase();
+            await object.sendUpdateByContent(connection.content, device, function () {
+                let data = {};
+                data.info = "queue_ready";
+                action.response(connection, data, null);
+            }, connection);
+
+        }
+    },
+    sendNotifications: function (connection) {
         let receivers = connection[KEY_REQUEST.RECEIVERS];
         let notifications = {};
         notifications.id = connection[KEY_REQUEST.NOTIFICATION_ID];
@@ -364,20 +408,18 @@ var action = {
             action.notify(connection, receivers[i].id, notifications, null)
         }
     },
-    getReference:   function (connection) {
-        paths.syncFromDatabase(redis);
+    getReference: async function (connection) {
+        let paths = action.getPath(connection);
+        await paths.syncFromDatabase();
         let error = null;
 
         if (connection.path !== undefined) {
             if (connection.path.indexOf("\.") === -1) {
                 if (connection.path.indexOf("/") === 0) {
-                    let key = connection.path.replaceAll("/", "\.");
-                    key = key.substr(1, key.length - 1);
-                    if (paths.ref[key] !== undefined) {
-                        logger.debug("path found");
-                        return new Reference(paths, connection, dbMaster, debug.toString(), redis);
+                    if (paths.ref !== undefined) {
+                        return new Reference(paths, connection, dbMaster, debug.toString());
                     } else {
-                        error = "holder_not_found";
+                        error = "holder_not_found_on" + key;
                     }
                 } else {
                     error = "path_not_start_with_slash";
@@ -391,7 +433,19 @@ var action = {
         logger.error(error);
         return error;
     },
-    printError:     function (msg, stackMessage) {
+    getPath: function (connection) {
+        if (connection.path !== undefined) {
+            let k = connection.path.replaceAll("/", "\.");
+            if (k.startsWith(".")) {
+                k = k.substring(1, k.length)
+            }
+            k = "/paths/" + k;
+            return new DatabaseHandler("paths", k);
+        } else {
+            return null
+        }
+    },
+    printError: function (msg, stackMessage) {
         logger.error(msg);
         let messages = stackMessage.split("\n");
         for (let i = 0; i < messages.length; i++) {
@@ -399,7 +453,7 @@ var action = {
         }
         return messages;
     },
-    parseRequest:   function (req, res) {
+    parseRequest: async function (req, res) {
 
         try {
             let message = req.body;
@@ -489,7 +543,7 @@ var action = {
 
                 case "listen_reference":
                     try {
-                        this.listen(connection);
+                        await this.listen(connection);
                     } catch (e) {
                         this.printError("there was an error parsing request from listen: " + e.stack);
                         this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.ADD_LISTENER);
@@ -499,7 +553,7 @@ var action = {
 
                 case "unlisten_reference":
                     try {
-                        this.unlisten(connection);
+                        await this.unlisten(connection);
                     } catch (e) {
                         logger.error("there was an error parsing request from unlisten: " + e.toString());
                         this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.REMOVE_LISTENER);
@@ -508,7 +562,7 @@ var action = {
 
                 case "update_reference":
                     try {
-                        this.updateQueue(connection);
+                        await this.updateQueue(connection);
                     } catch (e) {
                         logger.error("there was an error parsing request from updateQueue: " + e.toString());
                         this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
@@ -517,9 +571,18 @@ var action = {
 
                 case "remove_reference":
                     try {
-                        this.remove(connection);
+                        await this.remove(connection);
                     } catch (e) {
                         logger.error("there was an error parsing request from remove: " + e.toString());
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
+                    }
+                    break;
+
+                case "update_reference_from":
+                    try {
+                        await this.updateFrom(connection);
+                    } catch (e) {
+                        logger.error("there was an error parsing request from updateFrom: " + e.toString());
                         this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
                     }
                     break;
@@ -552,9 +615,9 @@ if (cluster.isMaster) {
 
     let workers = [];
 
-    let spawn = function(i) {
+    let spawn = function (i) {
         workers[i] = cluster.fork();
-        workers[i].on('exit', function(code, signal) {
+        workers[i].on('exit', function (code, signal) {
             logger.debug('respawning worker ' + i);
             spawn(i);
         });
@@ -579,24 +642,23 @@ if (cluster.isMaster) {
         .get(function (req, res) {
             res.send("hi :)");
         })
-        .post(function (req, res) {
-            action.parseRequest(req, function(token, result, success, fail) {
+        .post(async function (req, res) {
+            await action.parseRequest(req, async function (token, result, success, fail) {
                 logger.info("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
-                redis.publish(token, JSON.stringify(result)).then(function(r) {
-                    logger.info("result: " + r);
-                    if (r > 0) {
-                        logger.info("SUCCESS publish result");
-                        if (success !== undefined) {
-                            success();
-                        }
-                    } else {
-                        logger.error("FAILED publish result");
-                        if (fail !== undefined) {
-                            fail();
-                        }
+                let r = await redis.publish(token, JSON.stringify(result));
+                logger.info("result: " + r);
+                if (r > 0) {
+                    logger.info("SUCCESS publish result");
+                    if (success !== undefined) {
+                        success();
                     }
-                });
+                } else {
+                    logger.error("FAILED publish result");
+                    if (fail !== undefined) {
+                        fail();
+                    }
+                }
             });
             res.send("{}")
         });

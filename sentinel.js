@@ -1,13 +1,16 @@
-const Redis =                 require('ioredis');
-const numCPUs =               require('os').cpus().length;
-const JsonDB =                require('node-json-db');
-const Interval =              require('Interval');
-const setIn =                 require('set-in');
-const logger =                new logjs();
+const JsonDB =                  require('node-json-db');
+const Interval =                require('Interval');
+const setIn =                   require('set-in');
+const express =                 require('express');
+const bodyParser =              require('body-parser');
+const timeout =                 require('connect-timeout');
+const SN =                      require('sync-node');
+const logjs =                   require('logjsx');
+const logger = new logjs();
 
-JSON.stringifyAligned =     require('json-align');
+JSON.stringifyAligned =         require('json-align');
 logger.init({
-    level : "DEBUG"
+    level: "DEBUG"
 });
 
 const SLASH = "/";
@@ -16,10 +19,13 @@ const expectedRPORTEnvVar = "REDIS_PORT";
 const expectedDebugKeyEnvVar = "DEBUG";
 
 let db_name = null;
-let server_port = null;
 let redis_port = null;
 let debug = null;
 
+String.prototype.replaceAll = function(search, replacement) {
+    let target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
@@ -33,9 +39,8 @@ process.argv.forEach(function (val, index, array) {
     }
 });
 
-const redis =   new Redis(redis_port);
-const dbPath =  new JsonDB("paths", true, true);
-const dbData =  new JsonDB(db_name, true, true);
+const dbPath = new JsonDB("paths", true, true);
+const dbData = new JsonDB(db_name, true, true);
 
 /**
  * instanced objects: data - paths
@@ -47,94 +52,122 @@ let data = dbData.getData(SLASH);
  * backup every 5 seconds
  */
 let count = 0;
-Interval.run(function() {
-    ++count;
-    try {
-        dbPath.push(SLASH, paths);
-    } catch (e) {
-        logger.error("error on paths backup")
-    }
-    try {
-        dbData.push(SLASH, data);
-    } catch (e) {
-        logger.error("error on data backup")
-    }
-    logger.debug("backup times: " + count);
+Interval.run(function () {
+    queue.pushJob(function() {
+        ++count;
+        try {
+            dbPath.push(SLASH, paths);
+        } catch (e) {
+            logger.error("error on paths backup")
+        }
+        try {
+            dbData.push(SLASH, data);
+        } catch (e) {
+            logger.error("error on data backup")
+        }
+        logger.debug("backup times: " + count);
+    })
 }, 5000);
 
-// channels for send and receive data
-for (let i = 0; i < numCPUs; i++) {
+let action = {
+    /**
+     * Returns an object from a instance for the given type and path (value)
+     * @param type
+     * @param value
+     * @returns {*}
+     */
+    getObject: function (type, value) {
+        if (value.startsWith(SLASH) && value.length > SLASH.length) {
+            let branchs = value.split(SLASH);
+            let object = null;
+            if (type === "paths") {
+                object = paths
+            } else {
+                object = data
+            }
 
-}
-
-/**
- * Returns an object from a instance for the given type and path (value)
- * @param type
- * @param value
- * @returns {*}
- */
-function getObject(type, value) {
-    if (value.startsWith(SLASH) && value.length > SLASH.length) {
-        let branchs = value.split(SLASH);
-        let object = null;
-        if (type === "data") {
-            object = data
-        } else if (type === "paths") {
-            object = paths
+            for (let b in branchs) {
+                let branch = branchs[b];
+                if (branch.length === 0) {
+                    continue;
+                }
+                if (object[branch] === undefined || object[branch] === null) {
+                    object[branch] = {};
+                }
+                object = object[branch];
+            }
+            return object
+        } else if (value.startsWith(SLASH) && value.length === SLASH.length) {
+            if (type === "paths") {
+                return paths
+            } else {
+                return data;
+            }
         } else {
-            return
+            return null
         }
-        for (let b in branchs) {
-            let branch = branchs[b];
-            if (branch.length === 0) {
-                continue;
-            }
-            if (object[branch] === undefined || object[branch] === null) {
-                object[branch] = {};
-            }
-            object = object[branch];
-        }
-        return object
-    } else if (value.startsWith(SLASH) && value.length === SLASH.length) {
-        if (type === "data") {
-            return data;
-        } else if (type === "paths") {
-            return paths
-        } else {
-            return null;
-        }
-    } else {
-        return null
-    }
-}
+    },
 
-/**
- * Stores an object in the instance for the given type and path (value)
- * @param type ->   "data" / "path"
- * @param value ->  "/notifications/998476354
- * @param object -> object to store
- * @returns {*}
- */
-function saveObject(type, value, object) {
-    if (value.startsWith(SLASH) && value.length > SLASH.length) {
-        let branchsVal = value.split(SLASH);
-        let branchs = [];
-        for (let b in branchsVal) {
-            if (branchsVal[b].length > 0) {
-                branchs.push(branchsVal[b]);
+    /**
+     * Stores an object in the instance for the given type and path (value)
+     * @param type ->   "data" / "path"
+     * @param value ->  "/notifications/998476354
+     * @param object -> object to store
+     * @returns {*}
+     */
+    saveObject: function (type, value, object) {
+        if (value.startsWith(SLASH) && value.length > SLASH.length) {
+            let branchsVal = value.split(SLASH);
+            let branchs = [];
+            for (let b in branchsVal) {
+                if (branchsVal[b].length > 0) {
+                    branchs.push(branchsVal[b]);
+                }
             }
-        }
-        if (type === "data") {
-            data = setIn(data, branchs, object);
-        } else if (type === "paths") {
-            paths = setIn(paths, branchs, object);
-        }
-    } else if (value.startsWith(SLASH) && value.length === SLASH.length) {
-        if (type === "data") {
-            data = object;
-        } else if (type === "paths") {
-            paths = object
+            if (type === "paths") {
+                paths = setIn(paths, branchs, object);
+            } else {
+                data = setIn(data, branchs, object);
+            }
+        } else if (value.startsWith(SLASH) && value.length === SLASH.length) {
+            if (type === "paths") {
+                paths = object
+            } else {
+                data = object;
+            }
         }
     }
-}
+};
+
+const app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(timeout('120s'));
+
+const queue = SN.createQueue();
+
+const router = express.Router();
+
+router.post('/', function(req, res) {
+    queue.pushJob(function(){
+        let msg = req.body;
+        if (msg.method !== undefined && msg.path !== undefined && msg.database !== undefined) {
+            if (msg.method === "get") {
+                let object = action.getObject(msg.database, msg.path);
+                res.json(object)
+            } else if (msg.method === "post" && msg.value !== undefined) {
+                action.saveObject(msg.database, msg.path, JSON.parse(msg.value));
+                res.json({})
+            } else {
+                res.json({})
+            }
+        } else {
+            res.json({})
+        }
+    });
+});
+app.use('/', router);
+app.listen(3000);
 
