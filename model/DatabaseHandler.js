@@ -67,6 +67,7 @@ function DatabaseHandler(database, path) {
      * TODO change to mongoDB
      */
     this.syncFromDatabase = async function() {
+
         try {
             let data = {};
             data.path = path;

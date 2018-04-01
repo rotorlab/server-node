@@ -24,7 +24,7 @@ const ACTION_NO_UPDATE        = "no_update";
  * @param dbg
  * @constructor
  */
-function Reference(pathReference, connection, database, dbg) {
+function Reference(pathReference, connection, database, dbg, redis) {
 
     // object reference
     var object = this;
@@ -236,6 +236,7 @@ function Reference(pathReference, connection, database, dbg) {
             }
 
             await this.pathReference.syncToDatabase();
+
             action.success();
         } else {
             logger.error("no tokens found for path: " + path);

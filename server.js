@@ -1,21 +1,21 @@
-var express =               require('express');
-var bodyParser =            require('body-parser');
-var timeout =               require('connect-timeout');
-var logjs =                 require('logjsx');
-var cluster =               require('cluster');
-var Redis =                 require('ioredis');
-var numCPUs =               require('os').cpus().length;
-var DatabaseHandler =       require("./model/DatabaseHandler.js");
-var Reference =             require("./model/Reference.js");
-var apply =                 require('rus-diff').apply;
-var logger =                new logjs();
+var express = require('express');
+var bodyParser = require('body-parser');
+var timeout = require('connect-timeout');
+var logjs = require('logjsx');
+var cluster = require('cluster');
+var Redis = require('ioredis');
+var numCPUs = require('os').cpus().length;
+var DatabaseHandler = require("./model/DatabaseHandler.js");
+var Reference = require("./model/Reference.js");
+var apply = require('rus-diff').apply;
+var logger = new logjs();
 
-JSON.stringifyAligned =     require('json-align');
+JSON.stringifyAligned = require('json-align');
 logger.init({
-    level : "DEBUG"
+    level: "DEBUG"
 });
 
-String.prototype.replaceAll = function(search, replacement) {
+String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
@@ -75,9 +75,9 @@ var ERROR_RESPONSE = {
 
 var KEY_REQUEST = {
     METHOD: "method",
-    PATH:   "path",
-    SHA1:   "sha1",
-    TOKEN:  "token",
+    PATH: "path",
+    SHA1: "sha1",
+    TOKEN: "token",
     DIFFERENCES: "differences",
     CONTENT: "content",
     LEN: "len",
@@ -89,33 +89,33 @@ var KEY_REQUEST = {
 };
 
 var action = {
-    response:       function (connection, data, error) {
+    response: function (connection, data, error) {
         let result = {
             status: (data === null || error !== null ? "KO" : "OK"),
             data: (data === null ? {} : data),
             error: error
         };
-        connection.callback(connection.token, result).then(function() {
+        connection.callback(connection.token, result).then(function () {
 
         });
     },
-    responseTo:       function (connection, data, error, token) {
+    responseTo: function (connection, data, error, token) {
         let result = {
             status: (data === null || error !== null ? "KO" : "OK"),
             data: (data === null ? {} : data),
             error: error
         };
-        connection.callback(token, result).then(function() {
+        connection.callback(token, result).then(function () {
 
         });
     },
-    notify:         function (connection, id, notifications, error) {
+    notify: function (connection, id, notifications, error) {
         let result = {
             status: (notifications === null || error !== null ? "KO" : "OK"),
             notifications: (notifications === null ? {} : notifications),
             error: error
         };
-        connection.callback(id, result).then(function() {
+        connection.callback(id, result).then(function () {
 
         });
     },
@@ -186,6 +186,7 @@ var action = {
 
                 data.info = "queue_ready";
             }
+
             await paths.syncToDatabase();
             /**
              *
@@ -251,7 +252,6 @@ var action = {
     },
     unlisten: async function (connection) {
         let paths = action.getPath(connection);
-
         await paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
@@ -321,6 +321,7 @@ var action = {
         } else {
             await object.addDifferencesToQueue(connection);
             if (connection.differences !== undefined) {
+
                 await object.DH.syncFromDatabase();
                 apply(object.DH.ref, JSON.parse(connection.differences));
                 await object.DH.syncToDatabase();
@@ -334,14 +335,14 @@ var action = {
                     };
 
                     logger.debug("sending full object");
-                    await object.sendUpdateByContent("{}", device, function() {
+                    await object.sendUpdateByContent("{}", device, function () {
                         let data = {};
                         data.info = "queue_updated";
                         action.response(connection, data, null);
                     }, connection);
                 } else {
                     await object.sendQueues(connection, {
-                        success:            function() {
+                        success: function () {
                             let data = {};
                             data.info = "queue_updated";
                             action.response(connection, data, null);
@@ -394,9 +395,10 @@ var action = {
                 data.info = "queue_ready";
                 action.response(connection, data, null);
             }, connection);
+
         }
     },
-    sendNotifications:     function (connection) {
+    sendNotifications: function (connection) {
         let receivers = connection[KEY_REQUEST.RECEIVERS];
         let notifications = {};
         notifications.id = connection[KEY_REQUEST.NOTIFICATION_ID];
@@ -443,7 +445,7 @@ var action = {
             return null
         }
     },
-    printError:     function (msg, stackMessage) {
+    printError: function (msg, stackMessage) {
         logger.error(msg);
         let messages = stackMessage.split("\n");
         for (let i = 0; i < messages.length; i++) {
@@ -613,9 +615,9 @@ if (cluster.isMaster) {
 
     let workers = [];
 
-    let spawn = function(i) {
+    let spawn = function (i) {
         workers[i] = cluster.fork();
-        workers[i].on('exit', function(code, signal) {
+        workers[i].on('exit', function (code, signal) {
             logger.debug('respawning worker ' + i);
             spawn(i);
         });
@@ -641,7 +643,7 @@ if (cluster.isMaster) {
             res.send("hi :)");
         })
         .post(async function (req, res) {
-            await action.parseRequest(req, async function(token, result, success, fail) {
+            await action.parseRequest(req, async function (token, result, success, fail) {
                 logger.info("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
                 let r = await redis.publish(token, JSON.stringify(result));
