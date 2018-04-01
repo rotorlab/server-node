@@ -1,6 +1,7 @@
-// var DatabaseHandler =     require("flamebase-database-node");
-var DatabaseHandler =     require("./DatabaseHandler.js");
+const DatabaseHandler =     require("./DatabaseHandler.js");
 const logjs =                 require('logjsx');
+const sha1 =                  require('sha1');
+
 
 JSON.stringifyAligned = require('json-align');
 
@@ -10,10 +11,10 @@ logger.init({
     level : "DEBUG"
 });
 
-let TAG =                   "PATH CLUSTER";
-let ACTION_SIMPLE_UPDATE    = "simple_update";
-let ACTION_SLICE_UPDATE     = "slice_update";
-let ACTION_NO_UPDATE        = "no_update";
+const TAG =                   "PATH CLUSTER";
+const ACTION_SIMPLE_UPDATE    = "simple_update";
+const ACTION_SLICE_UPDATE     = "slice_update";
+const ACTION_NO_UPDATE        = "no_update";
 
 /**
  * Reference for
@@ -43,13 +44,10 @@ function Reference(pathReference, connection, database, dbg) {
      * to slice big JSON changes for android or ios push notifications
      */
     config.devices = function() {
-        let path = connection.path;
-        // let path = connection.path.replaceAll("/", "\.");
-        // path = path.substr(1, path.length - 1);
         let devices = [];
-        let keys = Object.keys(object.pathReference.ref[path].tokens);
+        let keys = Object.keys(object.pathReference.ref.tokens);
         for (let i = 0; i < keys.length; i++) {
-            let devic = object.pathReference.ref[path].tokens[keys[i]];
+            let devic = object.pathReference.ref.tokens[keys[i]];
 
             let device = {};
             device.token = keys[i];
@@ -103,10 +101,10 @@ function Reference(pathReference, connection, database, dbg) {
     this.addDifferencesToQueue = async function (connection) {
         await this.pathReference.syncFromDatabase();
 
-        let keys = Object.keys(this.pathReference.ref[connection.path].tokens);
+        let keys = Object.keys(this.pathReference.ref.tokens);
         let date = new Date().getTime() + "";
         for (let key in keys) {
-            this.pathReference.ref[connection.path].tokens[keys[key]].queue[date] = JSON.parse(connection.differences);
+            this.pathReference.ref.tokens[keys[key]].queue[date] = JSON.parse(connection.differences);
         }
 
         await this.pathReference.syncToDatabase()
@@ -123,16 +121,16 @@ function Reference(pathReference, connection, database, dbg) {
 
         await this.pathReference.syncFromDatabase();
 
-        if (this.pathReference.ref[connection.path].tokens !== undefined) {
+        if (this.pathReference.ref.tokens !== undefined) {
             let referenceId = connection.path;
             let tag = connection.path + "_sync";
 
-            let tokens = Object.keys(this.pathReference.ref[connection.path].tokens);
+            let tokens = Object.keys(this.pathReference.ref.tokens);
 
             for (let i in tokens) {
                 let tok = tokens[i];
 
-                let token = this.pathReference.ref[connection.path].tokens[tok];
+                let token = this.pathReference.ref.tokens[tok];
                 let os = token.os;
                 let queue = token.queue;
 
@@ -249,13 +247,10 @@ function Reference(pathReference, connection, database, dbg) {
     this.removeToken = async function (token) {
         await this.pathReference.syncFromDatabase();
 
-        let paths = Object.keys(this.pathReference.ref);
-        for (let i in paths) {
-            let tokens = Object.keys(this.pathReference.ref[paths[i]].tokens);
-            for (let p in tokens) {
-                if (tokens[p] === token) {
-                    delete this.pathReference.ref[paths[i]].tokens[tokens[p]];
-                }
+        let tokens = Object.keys(this.pathReference.ref.tokens);
+        for (let p in tokens) {
+            if (tokens[p] === token) {
+                delete this.pathReference.ref.tokens[tokens[p]];
             }
         }
 
@@ -270,12 +265,25 @@ function Reference(pathReference, connection, database, dbg) {
      */
     this.removeQueue = async function (path, token, id) {
         await this.pathReference.syncFromDatabase();
-        logger.info("removing queue of " + token);
+        logger.info("removing queue of " + token +  " : " + JSON.stringifyAligned(pathReference.ref));
 
-        if (this.pathReference.ref[path].tokens !== undefined && this.pathReference.ref[path].tokens[token] !== undefined && this.pathReference.ref[path].tokens[token].queue !== undefined && this.pathReference.ref[path].tokens[token].queue[id] !== undefined) {
-            delete this.pathReference.ref[path].tokens[token].queue[id];
-            await this.pathReference.syncToDatabase()
+        if (this.pathReference.ref.tokens !== undefined &&
+            this.pathReference.ref.tokens[token] !== undefined &&
+            this.pathReference.ref.tokens[token].queue !== undefined &&
+            this.pathReference.ref.tokens[token].queue[id] !== undefined) {
+
+            delete this.pathReference.ref.tokens[token].queue[id];
+            await this.pathReference.syncToDatabase();
+            logger.info("removed queue of " + token);
         }
+    };
+
+    /**
+     * Returns object SHA-1
+     * @param token
+     */
+    this.sha1Reference = function () {
+        return sha1(JSON.stringify(this.DH.ref))
     };
 
 

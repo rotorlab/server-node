@@ -8,7 +8,6 @@ var numCPUs =               require('os').cpus().length;
 var DatabaseHandler =       require("./model/DatabaseHandler.js");
 var Reference =             require("./model/Reference.js");
 var apply =                 require('rus-diff').apply;
-var sha1 =                  require('sha1');
 var logger =                new logjs();
 
 JSON.stringifyAligned =     require('json-align');
@@ -29,8 +28,6 @@ var dbMaster = null;
 var server_port = null;
 var redis_port = null;
 var debug = null;
-var paths = new DatabaseHandler("paths", "/");
-
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
@@ -124,39 +121,34 @@ var action = {
      * @param connection
      */
     listen: async function (connection) {
-
+        let paths = action.getPath(connection);
         /**
          * work with path database
          */
         await paths.syncFromDatabase();
 
-        if (paths.ref === undefined) {
+        if (paths.ref === undefined || paths.ref === null) {
             paths.ref = {}
         }
 
         // valid path
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-            logger.error(connection.path);
-            var key = connection.path;
-            logger.debug("path listening: " + key);
-            // var key = connection.path.replaceAll("/", "\.");
-            // key = key.substr(1, key.length - 1);
+            logger.debug("ref: " + paths.ref);
 
-            if (paths.ref[key] === undefined) {
-                paths.ref[key] = {};
-                paths.ref[key].path = connection.path;
+            if (paths.ref.path === undefined) {
+                paths.ref.path = connection.path;
             }
 
-            if (paths.ref[key].tokens === undefined) {
-                paths.ref[key].tokens = {};
+            if (paths.ref.tokens === undefined) {
+                paths.ref.tokens = {};
             }
 
             let data = {};
-            if (paths.ref[key].tokens[connection.token] === undefined) {
-                paths.ref[key].tokens[connection.token] = {};
-                paths.ref[key].tokens[connection.token].os = connection.os;
-                paths.ref[key].tokens[connection.token].queue = {};
-                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+            if (paths.ref.tokens[connection.token] === undefined) {
+                paths.ref.tokens[connection.token] = {};
+                paths.ref.tokens[connection.token].os = connection.os;
+                paths.ref.tokens[connection.token].queue = {};
+                paths.ref.tokens[connection.token].time = new Date().getTime();
 
                 /**
                  * queue is ready, all changes in the current path will be queue here
@@ -170,18 +162,17 @@ var action = {
                  * respond queue ready
                  *
                  */
-                if (paths.ref[key].tokens[connection.token].queue === undefined) {
-                    paths.ref[key].tokens[connection.token].queue = {};
+                if (paths.ref.tokens[connection.token].queue === undefined) {
+                    paths.ref.tokens[connection.token].queue = {};
                     data.queueLen = 0;
                 } else {
-                    data.queueLen = Object.keys(paths.ref[key].tokens[connection.token].queue).length;
+                    data.queueLen = Object.keys(paths.ref.tokens[connection.token].queue).length;
                 }
-                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+                paths.ref.tokens[connection.token].time = new Date().getTime();
 
                 data.info = "queue_ready";
             }
             await paths.syncToDatabase();
-            //await action.sleep(2000);
             /**
              *
              */
@@ -203,21 +194,29 @@ var action = {
                         token: connection.token,
                         os: connection.os
                     };
-                    let keys = Object.keys(paths.ref[key].tokens[connection.token].queue);
-                    if (keys.length > 0) {
-                        object.sendQueues(connection, {
-                            success: function () {
-                                let data = {};
-                                data.info = "queue_sent";
-                                action.response(connection, data, null);
-                            }
-                        });
+                    logger.debug("sha: " + connection.sha1);
+                    logger.debug("sha cached: " + object.sha1Reference());
+
+                    if (connection.sha1 === object.sha1Reference()) {
+                        data.info = "queue_ready";
+                        action.response(connection, data, null);
                     } else {
-                        object.sendUpdateByContent("{}", device, function () {
-                            let data = {};
-                            data.info = "queue_ready";
-                            action.response(connection, data, null);
-                        }, connection);
+                        let keys = Object.keys(paths.ref.tokens[connection.token].queue);
+                        if (keys.length > 0) {
+                            object.sendQueues(connection, {
+                                success: function () {
+                                    let data = {};
+                                    data.info = "queue_sent";
+                                    action.response(connection, data, null);
+                                }
+                            });
+                        } else {
+                            object.sendUpdateByContent("{}", device, function () {
+                                let data = {};
+                                data.info = "queue_ready";
+                                action.response(connection, data, null);
+                            }, connection);
+                        }
                     }
                 } else {
                     data.info = "new_object";
@@ -231,10 +230,9 @@ var action = {
             this.response(connection, null, "path_contains_dots");
         }
     },
-    sleep: async function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    },
     unlisten: async function (connection) {
+        let paths = action.getPath(connection);
+
         await paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
@@ -242,8 +240,8 @@ var action = {
             // var key = connection.path.replaceAll("/", "\.");
             // key = key.substr(1, key.length - 1);
 
-            if (paths.ref[key] !== undefined && paths.ref[key].tokens !== undefined && paths.ref[key].tokens[connection.token] !== undefined) {
-                delete paths.ref[key].tokens[connection.token];
+            if (paths.ref !== undefined && paths.ref.tokens !== undefined && paths.ref.tokens[connection.token] !== undefined) {
+                delete paths.ref.tokens[connection.token];
 
                 await paths.syncToDatabase();
 
@@ -252,7 +250,7 @@ var action = {
 
                 this.response(connection, data, null, connection.worker);
             } else {
-                if (paths.ref[key] === undefined) {
+                if (paths.ref === undefined) {
                     this.response(connection, null, "path_not_found");
                 } else {
                     this.response(connection, null, "token_not_found");
@@ -271,9 +269,7 @@ var action = {
      */
     updateTime: async function (connection) {
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-            let key = connection.path;
-            // let key = connection.path.replaceAll("/", "\.");
-            // key = key.substr(1, key.length - 1);
+            let paths = action.getPath(connection);
 
             await paths.syncFromDatabase();
 
@@ -281,20 +277,20 @@ var action = {
                 paths.ref = {};
             }
 
-            if (paths.ref[key] === undefined) {
-                paths.ref[key] = {};
+            if (paths.ref === undefined) {
+                paths.ref = {};
             }
 
-            if (paths.ref[key].tokens === undefined) {
-                paths.ref[key].tokens = {};
+            if (paths.ref.tokens === undefined) {
+                paths.ref.tokens = {};
             }
 
-            if (paths.ref[key].tokens === undefined && connection.token !== undefined) {
-                paths.ref[key].tokens[connection.token] = {};
+            if (paths.ref.tokens === undefined && connection.token !== undefined) {
+                paths.ref.tokens[connection.token] = {};
             }
 
-            if (paths.ref[key].tokens[connection.token] !== undefined) {
-                paths.ref[key].tokens[connection.token].time = new Date().getTime();
+            if (paths.ref.tokens[connection.token] !== undefined) {
+                paths.ref.tokens[connection.token].time = new Date().getTime();
             }
 
             await paths.syncToDatabase();
@@ -374,16 +370,14 @@ var action = {
         }
     },
     getReference: async function (connection) {
+        let paths = action.getPath(connection);
         await paths.syncFromDatabase();
         let error = null;
 
         if (connection.path !== undefined) {
             if (connection.path.indexOf("\.") === -1) {
                 if (connection.path.indexOf("/") === 0) {
-                    let key = connection.path;
-                    // let key = connection.path.replaceAll("/", "\.");
-                    // key = key.substr(1, key.length - 1);
-                    if (paths.ref[key] !== undefined) {
+                    if (paths.ref !== undefined) {
                         return new Reference(paths, connection, dbMaster, debug.toString());
                     } else {
                         error = "holder_not_found_on" + key;
@@ -399,6 +393,18 @@ var action = {
         }
         logger.error(error);
         return error;
+    },
+    getPath: function (connection) {
+        if (connection.path !== undefined) {
+            let k = connection.path.replaceAll("/", "\.");
+            if (k.startsWith(".")) {
+                k = k.substring(1, k.length)
+            }
+            k = "/paths/" + k;
+            return new DatabaseHandler("paths", k);
+        } else {
+            return null
+        }
     },
     printError:     function (msg, stackMessage) {
         logger.error(msg);
