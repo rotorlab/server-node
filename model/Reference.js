@@ -90,8 +90,8 @@ function Reference(pathReference, connection, database, dbg) {
      * @param callback
      * @param connection
      */
-    this.sendUpdateByContent = function (before, device, callback, connection) {
-        this.DH.sendDifferencesForClient(before, device, callback, connection);
+    this.sendUpdateByContent = async function (before, device, callback, connection) {
+        await this.DH.sendDifferencesForClient(before, device, callback, connection);
     };
 
     /**
@@ -152,16 +152,17 @@ function Reference(pathReference, connection, database, dbg) {
                         data.action = ACTION_SIMPLE_UPDATE;
                         data.size = dataToSend.parts.length;
                         data.index = 0;
+                        data.sha1 = this.sha1Reference();
                         let send = {};
                         send.data = data;
                         send.tokens = [tok];
-                        this.DH.sendPushMessage(send,
+                        await this.DH.sendPushMessage(send,
                             /**
                              * success
                              */
-                            function () {
+                            function() {
                                 logger.info("success event");
-                                object.removeQueue(connection.path, tok, id);
+                                object.removeQueue(connection.path, tok, id)
                             },
                             /**
                              * fail
@@ -180,23 +181,24 @@ function Reference(pathReference, connection, database, dbg) {
                             data.tag = tag;
                             data.reference = dataToSend.parts[i];
                             data.action = ACTION_SLICE_UPDATE;
+                            data.sha1 = this.sha1Reference();
                             data.index = i;
                             data.size = dataToSend.parts.length;
                             let send = {};
                             send.data = data;
                             send.tokens = [tok];
-                            this.DH.sendPushMessage(send,
+                            await this.DH.sendPushMessage(send,
                                 /**
                                  * success
                                  */
-                                function () {
-                                    object.removeQueue(connection.path, tok, id);
+                                function() {
+                                    object.removeQueue(connection.path, tok, id)
                                 },
                                 /**
                                  * fail
                                  * @param error
                                  */
-                                function (error) {
+                                function(error) {
                                     // logger.error(error);
                                 }, connection);
                         }
@@ -209,20 +211,21 @@ function Reference(pathReference, connection, database, dbg) {
                         data.tag = tag;
                         data.action = ACTION_NO_UPDATE;
                         let send = {};
+                        data.sha1 = this.sha1Reference();
                         send.data = data;
                         send.tokens = [tok];
-                        this.DH.sendPushMessage(send,
+                        await this.DH.sendPushMessage(send,
                             /**
                              * success
                              */
-                            function () {
-                                object.removeQueue(connection.path, tok, id);
+                            function() {
+                                object.removeQueue(connection.path, tok, id)
                             },
                             /**
                              * fail
                              * @param error
                              */
-                            function (error) {
+                            function(error) {
                                 // logger.error(error);
                             }, connection);
                     }
@@ -263,9 +266,8 @@ function Reference(pathReference, connection, database, dbg) {
      * @param token
      * @param id
      */
-    this.removeQueue = async function (path, token, id) {
-        await this.pathReference.syncFromDatabase();
-        logger.info("removing queue of " + token +  " : " + JSON.stringifyAligned(pathReference.ref));
+    this.removeQueue = function (path, token, id) {
+        logger.info("removing queue of " + token);
 
         if (this.pathReference.ref.tokens !== undefined &&
             this.pathReference.ref.tokens[token] !== undefined &&
@@ -273,8 +275,9 @@ function Reference(pathReference, connection, database, dbg) {
             this.pathReference.ref.tokens[token].queue[id] !== undefined) {
 
             delete this.pathReference.ref.tokens[token].queue[id];
-            await this.pathReference.syncToDatabase();
             logger.info("removed queue of " + token);
+        } else {
+            logger.info("error removing queue of " + token);
         }
     };
 

@@ -95,7 +95,19 @@ var action = {
             data: (data === null ? {} : data),
             error: error
         };
-        connection.callback(connection.token, result);
+        connection.callback(connection.token, result).then(function() {
+
+        });
+    },
+    responseTo:       function (connection, data, error, token) {
+        let result = {
+            status: (data === null || error !== null ? "KO" : "OK"),
+            data: (data === null ? {} : data),
+            error: error
+        };
+        connection.callback(token, result).then(function() {
+
+        });
     },
     notify:         function (connection, id, notifications, error) {
         let result = {
@@ -103,7 +115,9 @@ var action = {
             notifications: (notifications === null ? {} : notifications),
             error: error
         };
-        connection.callback(id, result);
+        connection.callback(id, result).then(function() {
+
+        });
     },
     /**
      * replaces path format: /contacts/batman -> contacts.batman
@@ -216,7 +230,7 @@ var action = {
                                 }
                             });
                         } else {
-                            object.sendUpdateByContent("{}", device, function () {
+                            await object.sendUpdateByContent("{}", device, function () {
                                 let data = {};
                                 data.info = "queue_ready";
                                 action.response(connection, data, null);
@@ -241,18 +255,12 @@ var action = {
         await paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-            var key = connection.path;
-            // var key = connection.path.replaceAll("/", "\.");
-            // key = key.substr(1, key.length - 1);
-
             if (paths.ref !== undefined && paths.ref.tokens !== undefined && paths.ref.tokens[connection.token] !== undefined) {
                 delete paths.ref.tokens[connection.token];
-
                 await paths.syncToDatabase();
 
-                var data = {};
+                let data = {};
                 data.info = "listener_removed";
-
                 this.response(connection, data, null, connection.worker);
             } else {
                 if (paths.ref === undefined) {
@@ -326,7 +334,7 @@ var action = {
                     };
 
                     logger.debug("sending full object");
-                    object.sendUpdateByContent("{}", device, function() {
+                    await object.sendUpdateByContent("{}", device, function() {
                         let data = {};
                         data.info = "queue_updated";
                         action.response(connection, data, null);
@@ -355,13 +363,37 @@ var action = {
         if (typeof object === "string") {
             this.response(connection, null, object);
         } else {
+            await object.pathReference.syncFromDatabase();
+            let dvs = Object.keys(object.pathReference.ref.tokens);
             object.DH.ref = null;
             await object.DH.syncToDatabase();
-
-            let data = {};
-            data.info = "reference_removed";
-            data.id = connection.path;
-            action.response(connection, data, null);
+            for (let d in dvs) {
+                let data = {};
+                data.info = "reference_removed";
+                data.id = connection.path;
+                action.responseTo(connection, data, null, dvs[d]);
+            }
+        }
+    },
+    /**
+     * Updates from old content
+     * @param connection
+     */
+    updateFrom: async function (connection) {
+        let object = await this.getReference(connection);
+        if (typeof object === "string") {
+            this.response(connection, null, object);
+        } else {
+            let device = {
+                token: connection.token,
+                os: connection.os
+            };
+            await object.DH.syncFromDatabase();
+            await object.sendUpdateByContent(connection.content, device, function () {
+                let data = {};
+                data.info = "queue_ready";
+                action.response(connection, data, null);
+            }, connection);
         }
     },
     sendNotifications:     function (connection) {
@@ -544,6 +576,15 @@ var action = {
                     }
                     break;
 
+                case "update_reference_from":
+                    try {
+                        await this.updateFrom(connection);
+                    } catch (e) {
+                        logger.error("there was an error parsing request from updateFrom: " + e.toString());
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
+                    }
+                    break;
+
                 case "send_notifications":
                     try {
                         this.sendNotifications(connection);
@@ -600,23 +641,22 @@ if (cluster.isMaster) {
             res.send("hi :)");
         })
         .post(async function (req, res) {
-            await action.parseRequest(req, function(token, result, success, fail) {
+            await action.parseRequest(req, async function(token, result, success, fail) {
                 logger.info("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
-                redis.publish(token, JSON.stringify(result)).then(function(r) {
-                    logger.info("result: " + r);
-                    if (r > 0) {
-                        logger.info("SUCCESS publish result");
-                        if (success !== undefined) {
-                            success();
-                        }
-                    } else {
-                        logger.error("FAILED publish result");
-                        if (fail !== undefined) {
-                            fail();
-                        }
+                let r = await redis.publish(token, JSON.stringify(result));
+                logger.info("result: " + r);
+                if (r > 0) {
+                    logger.info("SUCCESS publish result");
+                    if (success !== undefined) {
+                        success();
                     }
-                });
+                } else {
+                    logger.error("FAILED publish result");
+                    if (fail !== undefined) {
+                        fail();
+                    }
+                }
             });
             res.send("{}")
         });
