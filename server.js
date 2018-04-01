@@ -198,6 +198,11 @@ var action = {
                     logger.debug("sha cached: " + object.sha1Reference());
 
                     if (connection.sha1 === object.sha1Reference()) {
+                        let k = Object.keys(paths.ref.tokens[connection.token].queue);
+                        for (let key in k) {
+                            delete paths.ref.tokens[connection.token].queue[k[key]]
+                        }
+                        await paths.syncToDatabase();
                         data.info = "queue_ready";
                         action.response(connection, data, null);
                     } else {

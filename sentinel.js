@@ -4,6 +4,7 @@ const setIn =                   require('set-in');
 const express =                 require('express');
 const bodyParser =              require('body-parser');
 const timeout =                 require('connect-timeout');
+const SN =                      require('sync-node');
 const logjs =                   require('logjsx');
 const logger = new logjs();
 
@@ -52,18 +53,20 @@ let data = dbData.getData(SLASH);
  */
 let count = 0;
 Interval.run(function () {
-    ++count;
-    try {
-        dbPath.push(SLASH, paths);
-    } catch (e) {
-        logger.error("error on paths backup")
-    }
-    try {
-        dbData.push(SLASH, data);
-    } catch (e) {
-        logger.error("error on data backup")
-    }
-    logger.debug("backup times: " + count);
+    queue.pushJob(function() {
+        ++count;
+        try {
+            dbPath.push(SLASH, paths);
+        } catch (e) {
+            logger.error("error on paths backup")
+        }
+        try {
+            dbData.push(SLASH, data);
+        } catch (e) {
+            logger.error("error on data backup")
+        }
+        logger.debug("backup times: " + count);
+    })
 }, 5000);
 
 let action = {
@@ -143,23 +146,27 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(timeout('120s'));
 
+const queue = SN.createQueue();
+
 const router = express.Router();
 
 router.post('/', function(req, res) {
-    let msg = req.body;
-    if (msg.method !== undefined && msg.path !== undefined && msg.database !== undefined) {
-        if (msg.method === "get") {
-            let object = action.getObject(msg.database, msg.path);
-            res.json(object)
-        } else if (msg.method === "post" && msg.value !== undefined) {
-            action.saveObject(msg.database, msg.path, JSON.parse(msg.value));
-            res.json({})
+    queue.pushJob(function(){
+        let msg = req.body;
+        if (msg.method !== undefined && msg.path !== undefined && msg.database !== undefined) {
+            if (msg.method === "get") {
+                let object = action.getObject(msg.database, msg.path);
+                res.json(object)
+            } else if (msg.method === "post" && msg.value !== undefined) {
+                action.saveObject(msg.database, msg.path, JSON.parse(msg.value));
+                res.json({})
+            } else {
+                res.json({})
+            }
         } else {
             res.json({})
         }
-    } else {
-        res.json({})
-    }
+    });
 });
 app.use('/', router);
 app.listen(3000);
