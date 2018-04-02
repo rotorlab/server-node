@@ -1,14 +1,15 @@
-const JsonDB =                  require('node-json-db');
-const Interval =                require('Interval');
-const setIn =                   require('set-in');
-const express =                 require('express');
-const bodyParser =              require('body-parser');
-const timeout =                 require('connect-timeout');
-const SN =                      require('sync-node');
-const logjs =                   require('logjsx');
+const JsonDB = require('node-json-db');
+const Interval = require('Interval');
+const setIn = require('set-in');
+const unset = require('unset');
+const express = require('express');
+const bodyParser = require('body-parser');
+const timeout = require('connect-timeout');
+const SN = require('sync-node');
+const logjs = require('logjsx');
 const logger = new logjs();
 
-JSON.stringifyAligned =         require('json-align');
+JSON.stringifyAligned = require('json-align');
 logger.init({
     level: "DEBUG"
 });
@@ -22,7 +23,7 @@ let db_name = null;
 let redis_port = null;
 let debug = null;
 
-String.prototype.replaceAll = function(search, replacement) {
+String.prototype.replaceAll = function (search, replacement) {
     let target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
@@ -53,7 +54,7 @@ let data = dbData.getData(SLASH);
  */
 let count = 0;
 Interval.run(function () {
-    queue.pushJob(function() {
+    queue.pushJob(function () {
         ++count;
         try {
             dbPath.push(SLASH, paths);
@@ -116,7 +117,13 @@ let action = {
      * @returns {*}
      */
     saveObject: function (type, value, object) {
-        if (value.startsWith(SLASH) && value.length > SLASH.length) {
+        if (object == null || JSON.stringify(object) === "{}") {
+            if (type === "paths") {
+                paths = unset(paths, [value])
+            } else {
+                data = unset(data, [value])
+            }
+        } else if (value.startsWith(SLASH) && value.length > SLASH.length) {
             let branchsVal = value.split(SLASH);
             let branchs = [];
             for (let b in branchsVal) {
@@ -150,8 +157,8 @@ const queue = SN.createQueue();
 
 const router = express.Router();
 
-router.post('/', function(req, res) {
-    queue.pushJob(function(){
+router.post('/', function (req, res) {
+    queue.pushJob(function () {
         let msg = req.body;
         if (msg.method !== undefined && msg.path !== undefined && msg.database !== undefined) {
             if (msg.method === "get") {
