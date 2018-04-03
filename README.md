@@ -15,6 +15,7 @@ Rotor is a communication framework for work with remote objects from different d
 
 [5. Configuration](https://github.com/rotorlab/server-node/wiki/Configuration)
 
+[6. Queries]()
 Here you can find all info about how to build a simple API with few lines.
 
 **Rotor philosophy** states that the only needed requests are those that change data on databases. That means that the rest of requests you are imaging are replaced.
