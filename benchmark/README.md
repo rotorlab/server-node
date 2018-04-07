@@ -70,3 +70,14 @@ setting 10000 times -> finished in: 54.426 secs
 querying 10000 times
 querying 10000 times -> finished in: 36.485 secs
 ```
+
+## Run tests
+Run this test on your PC by cloning this repo and running on `/benchmark` folder:
+```bash
+node turbine.js
+node turbine_puncher.js
+```
+```bash
+node graphql.js
+node graphql_puncher.js
+```
