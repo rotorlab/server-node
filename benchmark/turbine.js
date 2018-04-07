@@ -6,8 +6,8 @@ const unset = require('unset');
 const bodyParser = require('body-parser');
 const timeout = require('connect-timeout');
 const SN = require('sync-node');
-const createIterator = require('iterall').createIterator;
-const isCollection = require('iterall').isCollection;
+const boxen = require('boxen');
+const log = require('single-line-log').stdout;
 const RecursiveIterator = require('recursive-iterator');
 const logjs = require('logjsx');
 const logger = new logjs();
@@ -20,6 +20,9 @@ String.prototype.replaceAll = function (search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
+console.log(boxen('turbine', {padding: 2, borderColor: "cyan",borderStyle: 'round'}));
+console.log("starting ..");
+let initOn = new Date().getTime();
 const SLASH = "/";
 const router = express.Router();
 const queue = SN.createQueue();
@@ -28,6 +31,9 @@ const database = new JsonDB("database", true, true);
 let data = database.getData(SLASH);
 let dataVal = {};
 
+let indexed = 0;
+let processed = 0;
+
 let action = {
     /**
      * Returns an object from a instance for the given path (value)
@@ -35,6 +41,7 @@ let action = {
      * @returns {*}
      */
     getObject: function (value) {
+        processed++;
         if (value.startsWith(SLASH) && value.length > SLASH.length) {
             let branchs = value.split(SLASH);
             let object = data;
@@ -62,9 +69,12 @@ let action = {
                 if (dataVal[node] === undefined) {
                     dataVal[node] = [];
                 }
+                indexed++;
+                log('Indexed ' + indexed);
                 dataVal[node].push("/" + path.join("/"));
             }
         }
+        console.log(".")
     },
 
     updateValDB: function(value, object) {
@@ -84,7 +94,6 @@ let action = {
                 }
                 let toRemove = pa + "/" + path.join("/");
                 if (dataVal[node].indexOf(toRemove) > -1) {
-                    logger.debug("removing: " + node);
                     dataVal[node].slice(dataVal[node].indexOf(toRemove), 1)
                 }
             }
@@ -99,7 +108,6 @@ let action = {
                 }
                 let toAdd = pa + "/" + path.join("/");
                 if (dataVal[node].indexOf(toAdd) === -1) {
-                    logger.debug("adding: " + node);
                     dataVal[node].push(toAdd)
                 }
             }
@@ -112,6 +120,7 @@ let action = {
      * @returns {*}
      */
     getObjectFromQuery: function (value, query) {
+        processed++;
         if (query === undefined || query === null || JSON.stringify(query) === "{}" || value.indexOf("*") === -1) {
             return null
         } else if (value.startsWith(SLASH) && value.length > SLASH.length) {
@@ -167,6 +176,7 @@ let action = {
      * @returns {*}
      */
     saveObject: function (value, object) {
+        processed++;
         action.updateValDB(value, object);
         if (object == null || JSON.stringify(object) === "{}") {
             data = unset(data, [value])
@@ -224,23 +234,21 @@ let action = {
 
 
 action.reindexVal(data, "");
-logger.debug("databases ready: " + Object.keys(dataVal).length + " entries");
-
 
 /**
  * backup every 5 seconds
  */
-let count = 0;
 Interval.run(function () {
     queue.pushJob(function () {
-        count++;
-        // data = action.reindex(data);
+        if (processed > 0) {
+            log((processed / 5) + " op/sec");
+            processed = 0;
+        }
         try {
             database.push(SLASH, data);
         } catch (e) {
             logger.error("error on data backup: " + e)
         }
-        logger.debug("backup times: " + count);
     })
 }, 5000);
 
@@ -278,3 +286,5 @@ router.post('/', function (req, res) {
 
 app.use('/', router);
 app.listen(3000);
+
+console.log("started (" + ((new Date().getTime() - initOn)/1000) + " secs)");
