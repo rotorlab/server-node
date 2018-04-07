@@ -26,8 +26,9 @@ Results of 3 common actions on Turbine and GraphQL with a JSON database.
 ```
 It will return all users named "Mark".
 
-Map with 100.000 entries and 90.000 different values (aprox):
+<p align="center"><img width="10%" vspace="20" src="https://github.com/rotorlab/server-node/raw/develop/images/MacBookPro_.png"></p>
 
+Map with 100.000 entries and 90.000 different values (aprox):
 
 ### GraphQL x1000
 ```bash
