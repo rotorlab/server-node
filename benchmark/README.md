@@ -1,6 +1,30 @@
 # Benchmarks -> Turbine vs GraphQL
 
-Results of 3 different type actions:
+Results of 3 common actions on Turbine and GraphQL with a JSON database.
+
+`get` actions looks for an object on the given path.
+```bash
+/users/userA
+```
+
+`set` actions updates an object on the given path passing another object.
+```bash
+/users/userA
+
+{
+    name: "Mark",
+    age 30
+}
+```
+`query` actions looks for an object on the given path for the conditions passed:
+```bash
+/users/*
+
+{
+    name: "Mark"
+}
+```
+It will return all users named "Mark".
 
 Map with 100.000 entries and 90.000 different values (aprox):
 
