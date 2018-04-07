@@ -43,7 +43,6 @@ queue.pushJob(function(){
     logger.debug("getting " + numReq + " times");
 });
 
-// insertions
 for (let i = 0; i < numReq; i++) {
     let userToCheck = "/users/" + randomString();
     let data = {
@@ -78,14 +77,9 @@ queue.pushJob(function(){
     logger.debug("setting " + numReq + " times");
 });
 
-// insertions
 for (let i = 0; i < numReq; i++) {
     let userToCheck = "/users/" + randomString();
-    let data = {
-        method: "get",
-        path: userToCheck
-    };
-    queue.pushJob(function(){
+    queue.pushJob(function() {
         return new Promise(function (resolve, reject) {
             let user = {};
             user.name = randomString();
@@ -96,7 +90,7 @@ for (let i = 0; i < numReq; i++) {
                 value: user
             };
 
-            ask(url, write).then(function(user) {
+            ask(url, write).then(function(res) {
                 resolve()
             })
         })
@@ -112,7 +106,7 @@ queue.pushJob(function(){
 
 queue.pushJob(function(){
     started = new Date().getTime();
-    logger.debug("quering " + numReq + " times");
+    logger.debug("querying " + numReq + " times");
 });
 
 for (let i = 0; i < numReq; i++) {
@@ -128,17 +122,13 @@ for (let i = 0; i < numReq; i++) {
 
     queue.pushJob(function(){
         return new Promise(function (resolve, reject) {
-            // logger.debug("searching users by name: " + data.query.name);
-            ask(url, data).then(function(user) {
-                if (typeof user === "string") {
-                    logger.error("error: " + user);
+            ask(url, data).then(function(res) {
+                if (typeof res === "string") {
+                    logger.error("error: " + res);
                     resolve()
-                } else if (JSON.stringify(user) === JSON.stringify(EMPTY_OBJECT)) {
-                    // logger.error("not found " + userToCheck);
+                } else if (JSON.stringify(res) === JSON.stringify(EMPTY_OBJECT)) {
                     resolve()
                 } else {
-                    // logger.debug("located user: " + userToCheck);
-                    // logger.debug(JSON.stringify(user));
                     resolve()
                 }
             })
@@ -150,5 +140,5 @@ for (let i = 0; i < numReq; i++) {
 
 queue.pushJob(function(){
     let duration = new Date().getTime() - started;
-    logger.debug("quering " + numReq + " times -> finished in: " + (duration/1000) + " secs");
+    logger.debug("querying " + numReq + " times -> finished in: " + (duration/1000) + " secs");
 });
