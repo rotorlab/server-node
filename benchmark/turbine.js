@@ -6,11 +6,19 @@ const unset = require('unset');
 const bodyParser = require('body-parser');
 const timeout = require('connect-timeout');
 const SN = require('sync-node');
+const createIterator = require('iterall').createIterator;
+const isCollection = require('iterall').isCollection;
+const RecursiveIterator = require('recursive-iterator');
 const logjs = require('logjsx');
 const logger = new logjs();
 logger.init({
     level: "DEBUG"
 });
+
+String.prototype.replaceAll = function (search, replacement) {
+    let target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
 
 const SLASH = "/";
 const router = express.Router();
@@ -18,6 +26,7 @@ const queue = SN.createQueue();
 
 const database = new JsonDB("database", true, true);
 let data = database.getData(SLASH);
+let dataVal = {};
 
 let action = {
     /**
@@ -47,19 +56,54 @@ let action = {
         }
     },
 
-    reindex: function(object) {
-        let temp = {};
-        let keys = Object.keys(object);
-        for (let k in keys) {
-            let key = keys[k];
-            let t = object[key];
-            if (Object.keys(t) > 0) {
-                temp[key] = this.reindex(object[key]);
-            } else {
-                temp[key] = object[key];
+    reindexVal: function(object, path) {
+        for(let {parent, node, key, path, deep} of new RecursiveIterator(object)) {
+            if (typeof node !== "object") {
+                if (dataVal[node] === undefined) {
+                    dataVal[node] = [];
+                }
+                dataVal[node].push("/" + path.join("/"));
             }
         }
-        return temp;
+    },
+
+    updateValDB: function(value, object) {
+        // remove previous values
+        let obj = action.getObject(value);
+        action.recursiveUnset(obj, value);
+
+        // store new values
+        action.recursiveSet(object, value);
+    },
+
+    recursiveUnset: function(object, pa) {
+        for(let {parent, node, key, path, deep} of new RecursiveIterator(object)) {
+            if (typeof node !== "object") {
+                if (dataVal[node] === undefined) {
+                    dataVal[node] = [];
+                }
+                let toRemove = pa + "/" + path.join("/");
+                if (dataVal[node].indexOf(toRemove) > -1) {
+                    logger.debug("removing: " + node);
+                    dataVal[node].slice(dataVal[node].indexOf(toRemove), 1)
+                }
+            }
+        }
+    },
+
+    recursiveSet: function(object, pa) {
+        for(let {parent, node, key, path, deep} of new RecursiveIterator(object)) {
+            if (typeof node !== "object") {
+                if (dataVal[node] === undefined) {
+                    dataVal[node] = [];
+                }
+                let toAdd = pa + "/" + path.join("/");
+                if (dataVal[node].indexOf(toAdd) === -1) {
+                    logger.debug("adding: " + node);
+                    dataVal[node].push(toAdd)
+                }
+            }
+        }
     },
 
     /**
@@ -80,17 +124,18 @@ let action = {
                     continue;
                 }
                 if (branch === "*") {
-                    let found = false;
-                    let keys = Object.keys(object);
+                    let keys = Object.keys(query);
                     for (let k in keys) {
                         let key = keys[k];
-                        let temp = object[key];
-                        if (this.validateObject(temp, query)) {
-                            result.push(temp);
-                            found = true;
+                        if (dataVal[query[key]] !== undefined) {
+                            for (let p in dataVal[query[key]]) {
+                                if (dataVal[query[key]][p].indexOf(value.replace(/\*/g, '')) > -1) {
+                                    let valid = dataVal[query[key]][p].replaceAll("/" + key, "");
+                                    result.push(action.getObject(valid));
+                                }
+                            }
                         }
                     }
-                    // * should be the last char
                     break;
                 } else {
                     if (object[branch] === undefined || object[branch] === null) {
@@ -99,7 +144,15 @@ let action = {
                     object = object[branch];
                 }
             }
-            return result
+            let res = [];
+            for (let obj in result) {
+                if (action.validateObject(result[obj], query)) {
+                    if (!action.containsObject(res, result[obj])) {
+                        res.push(result[obj])
+                    }
+                }
+            }
+            return res
         } else if (value.startsWith(SLASH) && value.length === SLASH.length) {
             return data;
         } else {
@@ -114,6 +167,7 @@ let action = {
      * @returns {*}
      */
     saveObject: function (value, object) {
+        action.updateValDB(value, object);
         if (object == null || JSON.stringify(object) === "{}") {
             data = unset(data, [value])
         } else if (value.startsWith(SLASH) && value.length > SLASH.length) {
@@ -144,8 +198,34 @@ let action = {
             }
         }
         return valid
+    },
+
+    containsObject: function(array, toCheck) {
+        if (array === null || array.length === 0) {
+            return false
+        } else if (toCheck === undefined) {
+            return false
+        }
+        let isContained = true;
+        for (let index in array) {
+            let item = array[index];
+            let fields = Object.keys(toCheck);
+            for (let f in fields) {
+                let field = fields[f];
+                if (item[field] === undefined || item[field] !== toCheck[field]) {
+                    isContained = false;
+                    break;
+                }
+            }
+        }
+        return isContained
     }
 };
+
+
+action.reindexVal(data, "");
+logger.debug("databases ready: " + Object.keys(dataVal).length + " entries");
+
 
 /**
  * backup every 5 seconds
@@ -154,7 +234,7 @@ let count = 0;
 Interval.run(function () {
     queue.pushJob(function () {
         count++;
-        data = action.reindex(data);
+        // data = action.reindex(data);
         try {
             database.push(SLASH, data);
         } catch (e) {

@@ -121,7 +121,8 @@ for (let i = 0; i < numReq; i++) {
         method: "query",
         path: userToCheck,
         query: {
-            name: randomString()
+            name: "cFu",
+            age: 45
         }
     };
 
