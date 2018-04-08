@@ -43,47 +43,6 @@ Map with 100.000 entries and 90.000 different values (aprox):
 | POST  | 52.6 s. | 54.4 s. | x10000
 | QUERY  | 416 s. | 36.4 s. | x10000
 
-
-### GraphQL x1000
-```bash
-getting x1000 times
-getting x1000 times -> finished in: 37.696 secs
-setting x1000 times
-setting x1000 times -> finished in: 2.523 secs
-querying x1000 times
-querying x1000 times -> finished in: 46.932 secs
-```
-
-### Turbine x1000
-```bash
-getting x1000 times
-getting x1000 times -> finished in: 2.773 secs
-setting x1000 times
-setting x1000 times -> finished in: 2.187 secs
-querying x1000 times
-querying x1000 times -> finished in: 2.101 secs
-```
-
-### GraphQL x10000
-```bash
-getting x10000 times
-getting x10000 times -> finished in: 652.858 secs
-setting x10000 times
-setting x10000 times -> finished in: 52.642 secs
-querying x10000 times
-querying x10000 times -> finished in: 416.016 secs
-```
-
-### Turbine x10000
-```bash
-getting x10000 times
-getting x10000 times -> finished in: 80.863 secs
-setting x10000 times
-setting x10000 times -> finished in: 54.426 secs
-querying x10000 times
-querying x10000 times -> finished in: 36.485 secs
-```
-
 ## Run tests
 Run this test on your PC by cloning this repo and running on `/benchmark` folder:
 ```bash
