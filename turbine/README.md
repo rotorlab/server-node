@@ -91,46 +91,35 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const timeout = require('connect-timeout');
 const Turbine = require('@rotor-server/turbine');
+
 let turbine = new Turbine({
     "turbine_port": 4004,
     "turbine_ip": "http://localhost",
     "db_name": "database",
     "debug": true
 });
+
 let port = 3003;
 
 if (cluster.isMaster) {
-
     // start server
     turbine.init();
 
-
     let workers = [];
-
-    let spawn = function (i) {
+    for (let i = 0; i < numCPUs; i++) {
         workers[i] = cluster.fork();
         workers[i].on('exit', function (code, signal) {
             logger.debug('respawning worker ' + i);
             spawn(i);
         });
-    };
-
-    for (let i = 0; i < numCPUs; i++) {
-        spawn(i);
     }
-
 } else {
-
     var app = express();
-
-    app.use(bodyParser.urlencoded({
-        extended: true
-    }));
-
+    app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json({limit: '50mb'}));
     app.use(timeout('120s'));
-
     app.route('/')
+        // turbine server has been started, start managing data
         .get(async function (req, res) {
             if (req.body.query !== undefined) {
                 let object = await turbine.query(req.body.path, req.body.query);
@@ -144,11 +133,9 @@ if (cluster.isMaster) {
             await turbine.post(req.body.path, req.body.content);
             res.json({});
         });
-
     app.listen(port, function () {
         logger.info("cluster started on port " + port + " | worker => " + cluster.worker.id);
     });
-
 }
 
 ```
