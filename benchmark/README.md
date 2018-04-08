@@ -31,7 +31,11 @@ It will return all users named "Mark".
 
 Map with 100.000 entries and 90.000 different values (aprox):
 
-|Action|GrapqhQL|Turbine|
+|Action  |GrapqhQL  |Turbine|
+|---|---|---|
+| GET  | 56 | 56 |
+
+
 |---|
 |   x1000 times  |
 |---|---|---|
