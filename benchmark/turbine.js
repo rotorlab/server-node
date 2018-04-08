@@ -243,6 +243,8 @@ Interval.run(function () {
         if (processed > 0) {
             log((processed / 5) + " op/sec");
             processed = 0;
+        } else {
+            log("0 op/sec");
         }
         try {
             database.push(SLASH, data);

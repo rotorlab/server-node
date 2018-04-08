@@ -37,8 +37,8 @@ getting 1000 times
 getting 1000 times -> finished in: 37.696 secs
 setting 1000 times
 setting 1000 times -> finished in: 2.523 secs
-quering 1000 times
-quering 1000 times -> finished in: 46.932 secs
+querying 1000 times
+querying 1000 times -> finished in: 46.932 secs
 ```
 
 ### Turbine x1000
@@ -57,8 +57,8 @@ getting 10000 times
 getting 10000 times -> finished in: 652.858 secs
 setting 10000 times
 setting 10000 times -> finished in: 52.642 secs
-quering 10000 times
-quering 10000 times -> finished in: 416.016 secs
+querying 10000 times
+querying 10000 times -> finished in: 416.016 secs
 ```
 
 ### Turbine x10000
@@ -74,7 +74,7 @@ querying 10000 times -> finished in: 36.485 secs
 ## Run tests
 Run this test on your PC by cloning this repo and running on `/benchmark` folder:
 ```bash
-node turbine.js
+node --stack_size=1200 turbine.js
 node turbine_puncher.js
 ```
 ```bash
