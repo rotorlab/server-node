@@ -109,7 +109,7 @@ if (cluster.isMaster) {
     let spawn = function (i) {
         workers[i] = cluster.fork();
         workers[i].on('exit', function (code, signal) {
-            logger.debug('respawning worker ' + i);
+            console.log('respawning worker ' + i);
             spawn(i);
         });
     };
@@ -137,7 +137,7 @@ if (cluster.isMaster) {
             res.json({});
         });
     app.listen(port, function () {
-        logger.info("cluster started on port " + port + " | worker => " + cluster.worker.id);
+        console.log("cluster started on port " + port + " | worker => " + cluster.worker.id);
     });
 }
 
