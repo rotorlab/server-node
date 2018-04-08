@@ -422,7 +422,7 @@ var action = {
             if (connection.path.indexOf("\.") === -1) {
                 if (connection.path.indexOf("/") === 0) {
                     if (paths.ref !== undefined) {
-                        return new Reference(paths, connection, dbMaster, debug.toString());
+                        return new Reference(paths, connection, dbMaster, debug.toString(), turbine_port.toString());
                     } else {
                         error = "holder_not_found_on" + key;
                     }
@@ -445,7 +445,7 @@ var action = {
                 k = k.substring(1, k.length)
             }
             k = "/paths/" + k;
-            return new DatabaseHandler("paths", k, turbine_port);
+            return new DatabaseHandler("paths", k, turbine_port.toString());
         } else {
             return null
         }

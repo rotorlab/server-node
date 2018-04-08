@@ -24,15 +24,16 @@ const ACTION_NO_UPDATE        = "no_update";
  * @param dbg
  * @constructor
  */
-function Reference(pathReference, connection, database, dbg, redis) {
+function Reference(pathReference, connection, database, dbg, port) {
 
     // object reference
     var object = this;
 
     this.path = connection.path; //
     this.database = database;
+    this.port = port;
     this.pathReference = pathReference;
-    this.DH = new DatabaseHandler(this.database, this.path);
+    this.DH = new DatabaseHandler(this.database, this.path, this.port);
     this.DH.syncFromDatabase().then(function () {
 
     });

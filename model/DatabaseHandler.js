@@ -35,10 +35,10 @@ function DatabaseHandler(database, path, port) {
 
     // object reference
     var object = this;
-    this.url = 'mongodb://localhost:27017';
 
     // debug
     this.debugVal = true;
+    this.port = port;
 
     // os
     this.OS = {};
@@ -67,15 +67,14 @@ function DatabaseHandler(database, path, port) {
      * TODO change to mongoDB
      */
     this.syncFromDatabase = async function() {
-
         try {
             let data = {};
             data.path = path;
             data.method = "get";
             data.database = database;
-            object.ref = await this.ask('http://localhost:' + port + '/', data);
+            object.ref = await this.ask('http://localhost:' + object.port + '/', data);
         } catch(e) {
-            logger.error("error asking: " + e)
+            logger.error("error getting from turbine: " + e)
         }
     };
 
@@ -110,7 +109,7 @@ function DatabaseHandler(database, path, port) {
             data.value = JSON.stringify(object.ref);
             await this.ask('http://localhost:' + port + '/', data);
         } catch(e) {
-            logger.error("error sending: " + e)
+            logger.error("error sending to turbine: " + e)
         }
     };
 

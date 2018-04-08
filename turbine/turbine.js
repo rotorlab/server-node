@@ -361,7 +361,7 @@ router.post('/', function (req, res) {
             if (msg.database === undefined && mode === "simple") {
                 msg.database = null;
             } else if (msg.database === undefined && mode !== "simple") {
-                logger.error("database param not found");
+                console.log("database param not found");
                 res.status(500).send("database param not found");
                 return
             }
