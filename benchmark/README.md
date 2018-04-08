@@ -32,9 +32,9 @@ It will return all users named "Mark".
 Map with 100.000 entries and 90.000 different values (aprox):
 
 |Action|GrapqhQL|Turbine|
-|-----------------------|
-|------|   x1000 times  |
-|------|--------|-------|
+|---|
+|   x1000 times  |
+|---|---|---|
 | GET  | 56 | 56 |
 ### GraphQL x1000
 ```bash
