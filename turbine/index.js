@@ -3,10 +3,6 @@ const rp = require('request-promise');
 const logjs = require('logjsx');
 const logger = new logjs();
 
-logger.init({
-    level: "DEBUG"
-});
-
 function Turbine(callback) {
 
     this.callback = callback;
@@ -37,6 +33,12 @@ function Turbine(callback) {
         if (this.callback.config.turbine_mode !== undefined && this.callback.config.turbine_mode) {
             this.turbine_mode = this.callback.config.turbine_mode;
         }
+    }
+
+    if (this.debug) {
+        logger.init({
+            level: "DEBUG"
+        });
     }
 
     /**
@@ -72,7 +74,7 @@ function Turbine(callback) {
 
         let child = forever.start('./turbine.js', config);
         child.on('start', function (code) {
-            logger.info(config.args);
+            logger.debug(config.args);
         });
     };
 
