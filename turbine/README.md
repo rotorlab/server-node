@@ -106,12 +106,15 @@ if (cluster.isMaster) {
     turbine.init();
 
     let workers = [];
-    for (let i = 0; i < numCPUs; i++) {
+    let spawn = function (i) {
         workers[i] = cluster.fork();
         workers[i].on('exit', function (code, signal) {
             logger.debug('respawning worker ' + i);
             spawn(i);
         });
+    };
+    for (let i = 0; i < numCPUs; i++) {
+        spawn(i);
     }
 } else {
     var app = express();
