@@ -1,5 +1,6 @@
 {
     "turbine_port": 4004,
+    "turbine_ip": "http://localhost",
     "db_name": "database",
     "mode": "simple",
     "debug": true

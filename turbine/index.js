@@ -10,6 +10,7 @@ logger.init({
 function Turbine(callback) {
 
     this.callback = callback;
+    this.turbine_ip = "http://localhost";
     this.turbine_port = 7285;
     this.db_name = "database";
     this.uid = "turbine";
@@ -23,6 +24,9 @@ function Turbine(callback) {
         }
         if (this.callback.config.turbine_port !== undefined && this.callback.config.turbine_port > 0) {
             this.turbine_port = this.callback.config.turbine_port;
+        }
+        if (this.callback.config.turbine_ip !== undefined) {
+            this.turbine_ip = this.callback.config.turbine_ip;
         }
         if (this.callback.config.debug !== undefined && this.callback.config.debug) {
             this.debug = this.callback.config.debug;
@@ -100,7 +104,7 @@ function Turbine(callback) {
             method: "get",
             path: path
         };
-        return await this.ask("http://localhost:" + this.turbine_port + "/", data)
+        return await this.ask(this.turbine_ip + ":" + this.turbine_port + "/", data)
     };
 
     /**
@@ -115,7 +119,7 @@ function Turbine(callback) {
             path: path,
             value: value
         };
-        await this.ask("http://localhost:" + this.turbine_port + "/", data)
+        await this.ask(this.turbine_ip + ":" + this.turbine_port + "/", data)
     };
 
     /**
@@ -130,7 +134,7 @@ function Turbine(callback) {
             path: path,
             query: query
         };
-        return await this.ask("http://localhost:" + this.turbine_port + "/", data)
+        return await this.ask(this.turbine_ip + ":" + this.turbine_port + "/", data)
     };
 
 }

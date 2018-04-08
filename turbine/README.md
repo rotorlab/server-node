@@ -31,14 +31,15 @@ npm install @rotor-server/turbine --save
 const Turbine = require('@rotor-server/turbine');
 let turbine = new Turbine({
     "turbine_port": 4004,
+    "turbine_ip": "http://localhost",
     "db_name": "database",
     "debug": true
 });
 
-// start server (if needed)
+// use as server
 turbine.init();
 
-// give some seconds to server
+// use as client (give some seconds to server)
 setTimeout(function() {
     // get objects
     turbine.get("/users/usersA").then(function(user) {

@@ -12,7 +12,7 @@ setTimeout(async function () {
     await turbine.post("/users/usersA", user);
     console.log("stored");
 
-    let users = await turbine.query("/users/*", { name: "Matt" });
+    let users = await turbine.query("/users/*", { name: "Matt", age: 24 });
     if (users.length === 0) {
         console.log("no items found")
     }
