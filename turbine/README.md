@@ -55,7 +55,7 @@ setTimeout(function() {
             // query users
             turbine.query("/users/*", { name: "Matt" }).then(function(users) {
                 for (let user in users) {
-                    console.log(JSON.stringify(user))
+                    console.log(JSON.stringify(users[user]))
                 }
             });
         });
