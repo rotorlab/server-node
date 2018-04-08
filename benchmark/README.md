@@ -34,7 +34,7 @@ Map with 100.000 entries and 90.000 different values (aprox):
 |Action  |GrapqhQL  |Turbine| Times |
 |---|---|---|---|
 | GET  | 37.6 s. | 2.7 s. | x1000
-| GET  | 80.8 s. | 652.8 s. | x10000
+| GET  | 652.8 s. | 80.8 s. | x10000
 | POST  | 2.5 s. | 2.1 s. | x1000
 | POST  | 52.6 s. | 54.4 s. | x10000
 | QUERY  | 46.9 s. | 2.1 s. | x1000
