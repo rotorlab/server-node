@@ -29,13 +29,57 @@ npm install @rotor-server/turbine --save
 ### Usage
 ```javascript
 const Turbine = require('@rotor-server/turbine');
-let turbine = new Turbine();
-turbine.init({
+let turbine = new Turbine({
     "turbine_port": 4004,
     "db_name": "database",
-    "mode": "simple",
     "debug": true
 });
+
+// start server (if needed)
+turbine.init();
+
+// give some seconds to server
+setTimeout(function() {
+    // get objects
+    turbine.get("/users/usersA").then(function(user) {
+        console.log(JSON.stringify(user))
+    });
+
+    // update or delete(passing null) objects
+    let user = {};
+    user.name = "Matt";
+    user.age = 24;
+    turbine.post("/users/usersA", user).then(function() {
+        console.log("stored")
+    });
+
+    // query users
+    turbine.query("/users/*", { name: "Matt" }).then(function(users) {
+        for (let user in users) {
+            console.log(JSON.stringify(user))
+        }
+    });
+}, 2000);
+
+// or async/await style
+setTimeout(function() {
+    let user = await turbine.get("/users/usersA");
+    console.log(JSON.stringify(user));
+
+    user = {};
+    user.name = "Matt";
+    user.age = 24;
+    await turbine.post("/users/usersA", user);
+    console.log("stored");
+
+    let users = await turbine.query("/users/*", { name: "Matt" });
+    if (users.length === 0) {
+        console.log("no items found")
+    }
+    for (let user in users) {
+        console.log("item: " + JSON.stringify(users[user]))
+    }
+}, 2000);
 ```
 
 

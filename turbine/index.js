@@ -1,43 +1,50 @@
-const forever =            require('forever-monitor');
-const logjs =              require('logjsx');
+const forever = require('forever-monitor');
+const rp = require('request-promise');
+const logjs = require('logjsx');
 const logger = new logjs();
 
 logger.init({
-    level : "DEBUG"
+    level: "DEBUG"
 });
 
-function Turbine() {
+function Turbine(callback) {
 
-    this.init = function (callback) {
-        let db_name = "database";
-        let turbine_port = 7285;
-        let uid = "turbine";
-        let turbine_mode = "simple";
-        let log_dir = "";
-        let debug = false;
+    this.callback = callback;
+    this.turbine_port = 7285;
+    this.db_name = "database";
+    this.uid = "turbine";
+    this.turbine_mode = "simple";
+    this.log_dir = "";
+    this.debug = false;
 
-        if (callback.config !== undefined) {
-            if (callback.config.db_name !== undefined && callback.config.db_name.length > 0) {
-                db_name = callback.config.db_name;
-            }
-            if (callback.config.turbine_port !== undefined && callback.config.turbine_port > 0) {
-                turbine_port = callback.config.turbine_port;
-            }
-            if (callback.config.debug !== undefined && callback.config.debug) {
-                debug = callback.config.debug;
-            }
-            if (callback.config.log_dir !== undefined && callback.config.log_dir) {
-                log_dir = callback.config.log_dir;
-            }
-            if (callback.config.turbine_mode !== undefined && callback.config.turbine_mode) {
-                turbine_mode = callback.config.turbine_mode;
-            }
+    if (this.callback.config !== undefined) {
+        if (this.callback.config.db_name !== undefined && this.callback.config.db_name.length > 0) {
+            this.db_name = this.callback.config.db_name;
         }
+        if (this.callback.config.turbine_port !== undefined && this.callback.config.turbine_port > 0) {
+            this.turbine_port = this.callback.config.turbine_port;
+        }
+        if (this.callback.config.debug !== undefined && this.callback.config.debug) {
+            this.debug = this.callback.config.debug;
+        }
+        if (this.callback.config.log_dir !== undefined && this.callback.config.log_dir) {
+            this.log_dir = this.callback.config.log_dir;
+        }
+        if (this.callback.config.turbine_mode !== undefined && this.callback.config.turbine_mode) {
+            this.turbine_mode = this.callback.config.turbine_mode;
+        }
+    }
+
+    /**
+     * Initializes Turbine process
+     * @param callback
+     */
+    this.init = function () {
 
         let config = {
             silent: false,
-            uid: uid,
-            pidFile: "./" + uid + ".pid",
+            uid: this.uid,
+            pidFile: "./" + this.uid + ".pid",
             max: 10,
             killTree: true,
 
@@ -46,7 +53,7 @@ function Turbine() {
 
             sourceDir: __dirname,
 
-            args:    ['DATABASE_NAME=' + db_name, 'TURBINE_PORT=' + turbine_port, 'MODE=' + turbine_mode, 'DEBUG=' + debug.toString()],
+            args: ['DATABASE_NAME=' + this.db_name, 'TURBINE_PORT=' + this.turbine_port, 'MODE=' + this.turbine_mode, 'DEBUG=' + this.debug.toString()],
 
             watch: false,
             watchIgnoreDotFiles: null,
@@ -54,15 +61,76 @@ function Turbine() {
             watchDirectory: null,
 
 
-            logFile: __dirname + "/" + log_dir + "logFile.log",
-            outFile: __dirname + "/" + log_dir + "outFile.log",
-            errFile: __dirname + "/" + log_dir + "errFile.log"
+            logFile: __dirname + "/" + this.log_dir + "logFile.log",
+            outFile: __dirname + "/" + this.log_dir + "outFile.log",
+            errFile: __dirname + "/" + this.log_dir + "errFile.log"
         };
 
         let child = forever.start('./turbine.js', config);
-        child.on('start', function(code) {
+        child.on('start', function (code) {
             logger.info(config.args);
         });
+    };
+
+    this.ask = function (url, data) {
+        return new Promise(function (resolve, reject) {
+            let options = {
+                method: 'POST',
+                uri: url,
+                body: data,
+                json: true
+            };
+            rp(options)
+                .then(function (parsedBody) {
+                    resolve(parsedBody)
+                })
+                .catch(function (err) {
+                    reject(err)
+                });
+        });
+    };
+
+    /**
+     * Returns the object of the given path
+     * @param path
+     * @returns {Promise<*>}
+     */
+    this.get = async function(path) {
+        let data = {
+            method: "get",
+            path: path
+        };
+        return await this.ask("http://localhost:" + this.turbine_port + "/", data)
+    };
+
+    /**
+     * Stores data in the given path. Removes if data is null or empty
+     * @param path
+     * @param value
+     * @returns {Promise<void>}
+     */
+    this.post = async function(path, value) {
+        let data = {
+            method: "post",
+            path: path,
+            value: value
+        };
+        await this.ask("http://localhost:" + this.turbine_port + "/", data)
+    };
+
+    /**
+     * Returns a list of objects that contains the given fields and values
+     * @param path -> /users/*
+     * @param query -> { name: "Mark" }
+     * @returns {Promise<*>}
+     */
+    this.query = async function(path, query) {
+        let data = {
+            method: "query",
+            path: path,
+            query: query
+        };
+        return await this.ask("http://localhost:" + this.turbine_port + "/", data)
     };
 
 }
