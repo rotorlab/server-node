@@ -7,7 +7,7 @@ I have multiple clusters working with the same data. For them it isn't an effort
 Multiple processes working with the same file can produce writing errors. Imagine the consequences.
 
 ### The solution
-Turbine is a single process that manages a JSON database for you. It avoids fatal errors at runtime while manages data so quickly. It has been designed for Rotor framework but can be used as a query engine.
+Turbine is a single process that manages a JSON database for you. It allows to work with the same data on different clusters or processes avoiding fatal errors writing on database. It has been designed for Rotor framework but can be used as a query engine.
 
 ### Benchmark
 For check how fast is Turbine, there is a performance comparision with GrahpQL engine. Both are used as servers that receive requests and do some process.
@@ -83,4 +83,68 @@ setTimeout(async function() {
 }, 2000);
 ```
 
+### Usage on clusters
+```node
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
+const express = require('express');
+const bodyParser = require('body-parser');
+const timeout = require('connect-timeout');
+const Turbine = require('@rotor-server/turbine');
+let turbine = new Turbine({
+    "turbine_port": 4004,
+    "turbine_ip": "http://localhost",
+    "db_name": "database",
+    "debug": true
+});
 
+if (cluster.isMaster) {
+
+    // start server
+    turbine.init();
+
+
+    let workers = [];
+
+    let spawn = function (i) {
+        workers[i] = cluster.fork();
+        workers[i].on('exit', function (code, signal) {
+            logger.debug('respawning worker ' + i);
+            spawn(i);
+        });
+    };
+
+    for (let i = 0; i < numCPUs; i++) {
+        spawn(i);
+    }
+
+} else {
+
+    var app = express();
+
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+
+    app.use(bodyParser.json({limit: '50mb'}));
+    app.use(timeout('120s'));
+
+    app.route('/')
+        .get(async function (req, res) {
+            // do whatever
+            let object = await turbine.get(req.body.path);
+            res.json(object);
+        })
+        .post(async function (req, res) {
+            // do whatever
+            await turbine.post(req.body.path, req.body.content);
+            res.json({});
+        });
+
+    app.listen(3003, function () {
+        logger.info("rotor cluster started on port " + 3003 + " | worker => " + cluster.worker.id);
+    });
+
+}
+
+```
