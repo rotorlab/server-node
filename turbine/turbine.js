@@ -1,5 +1,6 @@
 const JsonDB = require('node-json-db');
 const express = require('express');
+const fs = require('fs');
 const Interval = require('Interval');
 const setIn = require('set-in');
 const unset = require('unset');
@@ -58,8 +59,28 @@ const dbData = new JsonDB(db_name, true, true);
 /**
  * instanced objects: data - paths
  */
-let paths = dbPath.getData(SLASH);
-let data = dbData.getData(SLASH);
+let paths = null;
+let data = null;
+if (mode !== "simple") {
+    try {
+        paths = dbPath.getData(SLASH);
+    } catch (e) {
+        paths = {};
+        fs.writeFile('paths.json', "{}", (err) => {
+            if (err) throw err;
+            console.log("Database paths created");
+        });
+    }
+}
+try {
+    data = dbData.getData(SLASH);
+} catch (e) {
+    data = {};
+    fs.writeFile(db_name + '.json', "{}", (err) => {
+        if (err) throw err;
+        console.log("Database " + db_name + " created");
+    });
+}
 
 let dataVal = {};
 
@@ -214,8 +235,14 @@ let action = {
      */
     saveObject: function (database, value, object) {
         processed++;
-        action.updateValDB(database, value, object);
-        if (object == null || JSON.stringify(object) === "{}") {
+        let store = null;
+        if (typeof object === "string") {
+            store = JSON.parse(object)
+        } else {
+            store = object;
+        }
+        action.updateValDB(database, value, store);
+        if (store == null || JSON.stringify(store) === "{}") {
             if (database !== null && database === "paths") {
                 paths = unset(paths, [value])
             } else {
@@ -231,15 +258,16 @@ let action = {
             }
 
             if (database !== null && database === "paths") {
-                paths = setIn(paths, branchs, object);
+                paths = setIn(paths, branchs, store);
             } else {
-                data = setIn(data, branchs, object);
+                data = setIn(data, branchs, store);
             }
+
         } else if (value.startsWith(SLASH) && value.length === SLASH.length) {
             if (database !== null && database === "paths") {
-                paths = object;
+                paths = store;
             } else {
-                data = object;
+                data = store;
             }
         }
     },
@@ -333,7 +361,9 @@ router.post('/', function (req, res) {
             if (msg.database === undefined && mode === "simple") {
                 msg.database = null;
             } else if (msg.database === undefined && mode !== "simple") {
-                res.status(500).send("database param not found")
+                logger.error("database param not found");
+                res.status(500).send("database param not found");
+                return
             }
 
             if (msg.method === "get") {

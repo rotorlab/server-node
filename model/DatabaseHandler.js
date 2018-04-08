@@ -75,7 +75,7 @@ function DatabaseHandler(database, path, port) {
             data.database = database;
             object.ref = await this.ask('http://localhost:' + port + '/', data);
         } catch(e) {
-            logger.error("error: " + e)
+            logger.error("error asking: " + e)
         }
     };
 
@@ -110,7 +110,7 @@ function DatabaseHandler(database, path, port) {
             data.value = JSON.stringify(object.ref);
             await this.ask('http://localhost:' + port + '/', data);
         } catch(e) {
-            logger.error("error: " + e)
+            logger.error("error sending: " + e)
         }
     };
 
