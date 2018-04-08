@@ -97,6 +97,7 @@ let turbine = new Turbine({
     "db_name": "database",
     "debug": true
 });
+let port = 3003;
 
 if (cluster.isMaster) {
 
@@ -131,18 +132,21 @@ if (cluster.isMaster) {
 
     app.route('/')
         .get(async function (req, res) {
-            // do whatever
-            let object = await turbine.get(req.body.path);
-            res.json(object);
+            if (req.body.query !== undefined) {
+                let object = await turbine.query(req.body.path, req.body.query);
+                res.json(object);
+            } else {
+                let object = await turbine.get(req.body.path);
+                res.json(object);
+            }
         })
         .post(async function (req, res) {
-            // do whatever
             await turbine.post(req.body.path, req.body.content);
             res.json({});
         });
 
-    app.listen(3003, function () {
-        logger.info("rotor cluster started on port " + 3003 + " | worker => " + cluster.worker.id);
+    app.listen(port, function () {
+        logger.info("cluster started on port " + port + " | worker => " + cluster.worker.id);
     });
 
 }
