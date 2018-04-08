@@ -44,21 +44,21 @@ setTimeout(function() {
     // get objects
     turbine.get("/users/usersA").then(function(user) {
         console.log(JSON.stringify(user))
-    });
 
-    // update or delete(passing null) objects
-    let user = {};
-    user.name = "Matt";
-    user.age = 24;
-    turbine.post("/users/usersA", user).then(function() {
-        console.log("stored")
-    });
+        // update or delete(passing null) objects
+        let newUser = {};
+        newUser.name = "Matt";
+        newUser.age = 24;
+        turbine.post("/users/usersB", newUser).then(function() {
+            console.log("stored")
 
-    // query users
-    turbine.query("/users/*", { name: "Matt" }).then(function(users) {
-        for (let user in users) {
-            console.log(JSON.stringify(user))
-        }
+            // query users
+            turbine.query("/users/*", { name: "Matt" }).then(function(users) {
+                for (let user in users) {
+                    console.log(JSON.stringify(user))
+                }
+            });
+        });
     });
 }, 2000);
 
