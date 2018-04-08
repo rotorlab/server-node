@@ -62,7 +62,7 @@ setTimeout(function() {
 }, 2000);
 
 // or async/await style
-setTimeout(function() {
+setTimeout(async function() {
     let user = await turbine.get("/users/usersA");
     console.log(JSON.stringify(user));
 
