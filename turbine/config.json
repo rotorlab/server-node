@@ -1,0 +1,6 @@
+{
+    "turbine_port": 4004,
+    "db_name": "database",
+    "mode": "simple",
+    "debug": true
+}

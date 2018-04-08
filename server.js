@@ -20,14 +20,16 @@ String.prototype.replaceAll = function (search, replacement) {
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-var expectedDBNEnvVar = "DATABASE_NAME";
-var expectedPORTEnvVar = "DATABASE_PORT";
-var expectedRPORTEnvVar = "REDIS_PORT";
-var expectedDebugKeyEnvVar = "DEBUG";
-var dbMaster = null;
-var server_port = null;
-var redis_port = null;
-var debug = null;
+const expectedDBNEnvVar = "DATABASE_NAME";
+const expectedPORTEnvVar = "DATABASE_PORT";
+const expectedRPORTEnvVar = "REDIS_PORT";
+const expectedTPORTEnvVar = "TURBINE_PORT";
+const expectedDebugKeyEnvVar = "DEBUG";
+let dbMaster = null;
+let server_port = null;
+let redis_port = null;
+let turbine_port = null;
+let debug = null;
 
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedDBNEnvVar) > -1) {
@@ -41,6 +43,9 @@ process.argv.forEach(function (val, index, array) {
     }
     if (val.indexOf(expectedRPORTEnvVar) > -1) {
         redis_port = val.replaceAll(expectedRPORTEnvVar + "=", "");
+    }
+    if (val.indexOf(expectedTPORTEnvVar) > -1) {
+        turbine_port = val.replaceAll(expectedTPORTEnvVar + "=", "");
     }
 });
 
@@ -440,7 +445,7 @@ var action = {
                 k = k.substring(1, k.length)
             }
             k = "/paths/" + k;
-            return new DatabaseHandler("paths", k);
+            return new DatabaseHandler("paths", k, turbine_port);
         } else {
             return null
         }

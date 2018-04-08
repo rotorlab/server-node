@@ -6,7 +6,7 @@ const logger = new logjs();
 logger.init({
     level: "DEBUG"
 });
-const url = "http://localhost:3000/";
+const url = "http://localhost:4004/";
 const numReq = 1000;
 const EMPTY_OBJECT = {};
 

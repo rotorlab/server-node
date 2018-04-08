@@ -31,7 +31,7 @@ const ACTION_SIMPLE_UPDATE    = "simple_update";
 const ACTION_SLICE_UPDATE     = "slice_update";
 const ACTION_NO_UPDATE        = "no_update";
 
-function DatabaseHandler(database, path) {
+function DatabaseHandler(database, path, port) {
 
     // object reference
     var object = this;
@@ -73,7 +73,7 @@ function DatabaseHandler(database, path) {
             data.path = path;
             data.method = "get";
             data.database = database;
-            object.ref = await this.ask('http://localhost:3000/', data);
+            object.ref = await this.ask('http://localhost:' + port + '/', data);
         } catch(e) {
             logger.error("error: " + e)
         }
@@ -108,7 +108,7 @@ function DatabaseHandler(database, path) {
             data.database = database;
             data.method = "post";
             data.value = JSON.stringify(object.ref);
-            await this.ask('http://localhost:3000/', data);
+            await this.ask('http://localhost:' + port + '/', data);
         } catch(e) {
             logger.error("error: " + e)
         }
