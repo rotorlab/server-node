@@ -26,4 +26,16 @@ For more details, check [Benchmark](https://github.com/rotorlab/server-node/tree
 npm install @rotor-server/turbine --save
 ```
 
+### Usage
+```javascript
+const Turbine = require('@rotor-server/turbine');
+let turbine = new Turbine();
+turbine.init({
+    "turbine_port": 4004,
+    "db_name": "database",
+    "mode": "simple",
+    "debug": true
+});
+```
+
 
