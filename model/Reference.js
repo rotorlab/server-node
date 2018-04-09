@@ -1,6 +1,7 @@
-// var DatabaseHandler =     require("flamebase-database-node");
-var DatabaseHandler =     require("./DatabaseHandler.js");
+const DatabaseHandler =     require("./DatabaseHandler.js");
 const logjs =                 require('logjsx');
+const sha1 =                  require('sha1');
+
 
 JSON.stringifyAligned = require('json-align');
 
@@ -10,21 +11,32 @@ logger.init({
     level : "DEBUG"
 });
 
-let TAG =                   "PATH CLUSTER";
-let ACTION_SIMPLE_UPDATE    = "simple_update";
-let ACTION_SLICE_UPDATE     = "slice_update";
-let ACTION_NO_UPDATE        = "no_update";
+const TAG =                   "PATH CLUSTER";
+const ACTION_SIMPLE_UPDATE    = "simple_update";
+const ACTION_SLICE_UPDATE     = "slice_update";
+const ACTION_NO_UPDATE        = "no_update";
 
-function Path(pathReference, connection, database, dbg) {
+/**
+ * Reference for
+ * @param pathReference
+ * @param connection
+ * @param database
+ * @param dbg
+ * @constructor
+ */
+function Reference(pathReference, connection, database, dbg, port) {
 
     // object reference
     var object = this;
 
     this.path = connection.path; //
     this.database = database;
+    this.port = port;
     this.pathReference = pathReference;
-    this.FD = new DatabaseHandler(this.database, this.path);
-    this.FD.syncFromDatabase();
+    this.DH = new DatabaseHandler(this.database, this.path, this.port);
+    this.DH.syncFromDatabase().then(function () {
+
+    });
 
     var config = {};
 
@@ -33,14 +45,12 @@ function Path(pathReference, connection, database, dbg) {
      * to slice big JSON changes for android or ios push notifications
      */
     config.devices = function() {
-        let path = connection.path.replaceAll("/", "\.");
-        path = path.substr(1, path.length - 1);
-        var devices = [];
-        var keys = Object.keys(object.pathReference.ref[path].tokens);
-        for (var i = 0; i < keys.length; i++) {
-            var devic = object.pathReference.ref[path].tokens[keys[i]];
+        let devices = [];
+        let keys = Object.keys(object.pathReference.ref.tokens);
+        for (let i = 0; i < keys.length; i++) {
+            let devic = object.pathReference.ref.tokens[keys[i]];
 
-            var device = {};
+            let device = {};
             device.token = keys[i];
             device.os = devic.os;
 
@@ -71,46 +81,57 @@ function Path(pathReference, connection, database, dbg) {
         return null;
     };
 
-    this.FD.setSyncConfig(config);
-    this.FD.debug(dbg === "true");
+    this.DH.setSyncConfig(config);
+    this.DH.debug(dbg);
 
-    this.sendUpdateByContent = function (before, device, callback, connection) {
-        this.FD.sendDifferencesForClient(before, device, callback, connection);
+    /**
+     * Sends differences of received content (older) with stored content
+     * @param before
+     * @param device
+     * @param callback
+     * @param connection
+     */
+    this.sendUpdateByContent = async function (before, device, callback, connection) {
+        await this.DH.sendDifferencesForClient(before, device, callback, connection);
     };
 
-    this.addDifferencesToQueue = function (connection) {
-        this.pathReference.syncFromDatabase();
+    /**
+     * Adds received differences on their path's queue
+     * @param connection
+     */
+    this.addDifferencesToQueue = async function (connection) {
+        await this.pathReference.syncFromDatabase();
 
-        let path = connection.path.replaceAll("/", "\.");
-        path = path.substr(1, path.length - 1);
-
-        let keys = Object.keys(this.pathReference.ref[path].tokens);
+        let keys = Object.keys(this.pathReference.ref.tokens);
         let date = new Date().getTime() + "";
         for (let key in keys) {
-            this.pathReference.ref[path].tokens[keys[key]].queue[date] = JSON.parse(connection.differences);
+            this.pathReference.ref.tokens[keys[key]].queue[date] = JSON.parse(connection.differences);
         }
 
-        this.pathReference.syncToDatabase()
+        await this.pathReference.syncToDatabase()
     };
 
-    this.sendQueues = function(connection, action) {
-        let path = connection.path.replaceAll("/", "\.");
-        path = path.substr(1, path.length - 1);
-
+    /**
+     * sends all queues
+     * TODO check (for performance) if should be better only send specific path's tokens
+     * @param connection
+     * @param action
+     */
+    this.sendQueues = async function(connection, action) {
         // logger.debug("synchronizing with devices for path: " + path);
 
-        this.pathReference.syncFromDatabase();
+        await this.pathReference.syncFromDatabase();
 
-        if (this.pathReference.ref[path].tokens !== undefined) {
+        if (this.pathReference.ref.tokens !== undefined) {
             let referenceId = connection.path;
             let tag = connection.path + "_sync";
 
-            let tokens = Object.keys(this.pathReference.ref[path].tokens);
+            let tokens = Object.keys(this.pathReference.ref.tokens);
 
             for (let i in tokens) {
                 let tok = tokens[i];
 
-                let token = this.pathReference.ref[path].tokens[tok];
+                let token = this.pathReference.ref.tokens[tok];
                 let os = token.os;
                 let queue = token.queue;
 
@@ -119,7 +140,7 @@ function Path(pathReference, connection, database, dbg) {
                 for (let t in changes) {
                     let id = changes[t];
 
-                    let dataToSend = this.FD.getParts(os, JSON.stringify(queue[id]));
+                    let dataToSend = this.DH.getParts(os, JSON.stringify(queue[id]));
 
                     /**
                      * single part, ACTION_SIMPLE_UPDATE
@@ -132,16 +153,17 @@ function Path(pathReference, connection, database, dbg) {
                         data.action = ACTION_SIMPLE_UPDATE;
                         data.size = dataToSend.parts.length;
                         data.index = 0;
+                        data.sha1 = this.sha1Reference();
                         let send = {};
                         send.data = data;
                         send.tokens = [tok];
-                        this.FD.sendPushMessage(send,
+                        await this.DH.sendPushMessage(send,
                             /**
                              * success
                              */
-                            function () {
+                            function() {
                                 logger.info("success event");
-                                object.removeQueue(path, tok, id);
+                                object.removeQueue(connection.path, tok, id)
                             },
                             /**
                              * fail
@@ -160,23 +182,24 @@ function Path(pathReference, connection, database, dbg) {
                             data.tag = tag;
                             data.reference = dataToSend.parts[i];
                             data.action = ACTION_SLICE_UPDATE;
+                            data.sha1 = this.sha1Reference();
                             data.index = i;
                             data.size = dataToSend.parts.length;
                             let send = {};
                             send.data = data;
                             send.tokens = [tok];
-                            this.FD.sendPushMessage(send,
+                            await this.DH.sendPushMessage(send,
                                 /**
                                  * success
                                  */
-                                function () {
-                                    object.removeQueue(path, tok, id);
+                                function() {
+                                    object.removeQueue(connection.path, tok, id)
                                 },
                                 /**
                                  * fail
                                  * @param error
                                  */
-                                function (error) {
+                                function(error) {
                                     // logger.error(error);
                                 }, connection);
                         }
@@ -189,20 +212,21 @@ function Path(pathReference, connection, database, dbg) {
                         data.tag = tag;
                         data.action = ACTION_NO_UPDATE;
                         let send = {};
+                        data.sha1 = this.sha1Reference();
                         send.data = data;
                         send.tokens = [tok];
-                        this.FD.sendPushMessage(send,
+                        await this.DH.sendPushMessage(send,
                             /**
                              * success
                              */
-                            function () {
-                                object.removeQueue(path, tok, id);
+                            function() {
+                                object.removeQueue(connection.path, tok, id)
                             },
                             /**
                              * fail
                              * @param error
                              */
-                            function (error) {
+                            function(error) {
                                 // logger.error(error);
                             }, connection);
                     }
@@ -212,7 +236,8 @@ function Path(pathReference, connection, database, dbg) {
                 }
             }
 
-            this.pathReference.syncToDatabase();
+            await this.pathReference.syncToDatabase();
+
             action.success();
         } else {
             logger.error("no tokens found for path: " + path);
@@ -220,33 +245,53 @@ function Path(pathReference, connection, database, dbg) {
 
     };
 
-    this.removeToken = function (token) {
-        this.pathReference.syncFromDatabase();
+    /**
+     * Removes a token from paths database
+     * @param token
+     */
+    this.removeToken = async function (token) {
+        await this.pathReference.syncFromDatabase();
 
-        let paths = Object.keys(this.pathReference.ref);
-        for (let i in paths) {
-            let tokens = Object.keys(this.pathReference.ref[paths[i]].tokens);
-            for (let p in tokens) {
-                if (tokens[p] === token) {
-                    delete this.pathReference.ref[paths[i]].tokens[tokens[p]];
-                }
+        let tokens = Object.keys(this.pathReference.ref.tokens);
+        for (let p in tokens) {
+            if (tokens[p] === token) {
+                delete this.pathReference.ref.tokens[tokens[p]];
             }
         }
 
-        this.pathReference.syncToDatabase()
+        await this.pathReference.syncToDatabase()
     };
 
+    /**
+     * Removes a queue (id) in a specific token listening the given path
+     * @param path
+     * @param token
+     * @param id
+     */
     this.removeQueue = function (path, token, id) {
-        this.pathReference.syncFromDatabase();
         logger.info("removing queue of " + token);
 
-        if (this.pathReference.ref[path].tokens !== undefined && this.pathReference.ref[path].tokens[token] !== undefined && this.pathReference.ref[path].tokens[token].queue !== undefined && this.pathReference.ref[path].tokens[token].queue[id] !== undefined) {
-            delete this.pathReference.ref[path].tokens[token].queue[id];
-            this.pathReference.syncToDatabase()
+        if (this.pathReference.ref.tokens !== undefined &&
+            this.pathReference.ref.tokens[token] !== undefined &&
+            this.pathReference.ref.tokens[token].queue !== undefined &&
+            this.pathReference.ref.tokens[token].queue[id] !== undefined) {
+
+            delete this.pathReference.ref.tokens[token].queue[id];
+            logger.info("removed queue of " + token);
+        } else {
+            logger.info("error removing queue of " + token);
         }
+    };
+
+    /**
+     * Returns object SHA-1
+     * @param token
+     */
+    this.sha1Reference = function () {
+        return sha1(JSON.stringify(this.DH.ref))
     };
 
 
 }
 
-module.exports = Path;
+module.exports = Reference;

@@ -1,7 +1,6 @@
 .idea/
 node_modules/
-logs/*
+*.log
 package-lock.json
 database.json
 paths.json
-dump.rdb

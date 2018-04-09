@@ -1,18 +1,19 @@
 const forever =            require('forever-monitor');
+const Turbine =            require('./turbine/index.js');
 const logjs =              require('logjsx');
 const logger = new logjs();
 
-logger.init({
-    level : "DEBUG"
-});
+function RotorServer(callback) {
 
-function RotorServer() {
+    this.start = function () {
+        let turbine = new Turbine(callback);
+        turbine.init();
 
-    this.initCluster = function (callback) {
         let db_name = "database";
         let server_port = 1507;
         let redis_port = 6379;
-        let uid = "flamebase-database";
+        let turbine_port = 5876;
+        let uid = "rotor-server";
         let log_dir = "logs/";
         let debug = false;
 
@@ -32,6 +33,15 @@ function RotorServer() {
             if (callback.config.log_dir !== undefined && callback.config.log_dir) {
                 log_dir = callback.config.log_dir;
             }
+            if (callback.config.turbine_port !== undefined && callback.config.turbine_port) {
+                turbine_port = callback.config.turbine_port;
+            }
+        }
+
+        if (debug) {
+            logger.init({
+                level : "DEBUG"
+            });
         }
 
         let config = {
@@ -46,7 +56,7 @@ function RotorServer() {
 
             sourceDir: __dirname,
 
-            args:    ['DATABASE_NAME=' + db_name, 'DATABASE_PORT=' + server_port, 'REDIS_PORT=' + redis_port, 'DEBUG=' + debug.toString()],
+            args:    ['DATABASE_NAME=' + db_name, 'DATABASE_PORT=' + server_port, 'REDIS_PORT=' + redis_port, 'TURBINE_PORT=' + turbine_port, 'MODE=complex', 'DEBUG=' + debug.toString()],
 
             watch: false,
             watchIgnoreDotFiles: null,
@@ -62,7 +72,6 @@ function RotorServer() {
         let child = forever.start('./server.js', config);
         child.on('start', function(code) {
             logger.info(config.args);
-            callback.start();
         });
     }
 

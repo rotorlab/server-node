@@ -2,93 +2,47 @@
 <p align="center"><img width="10%" vspace="20" src="https://github.com/rotorlab/database-kotlin/raw/develop/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"></p>
 
 # Rotor Server for Node
-Server cluster to hold a realtime JSON database.
 
-### Setup
+Rotor is a communication framework for work with remote objects from different devices. It makes the API development task easier removing all getter/setter requests. Client data changes are replicated in all devices listening the same object.
 
-Prepare Redis server
+[1. Redis](https://github.com/rotorlab/server-node/wiki/Redis)
 
-OSX:
-```bash
-// install
-brew install redis
+[2. Implementation and start](https://github.com/rotorlab/server-node/wiki/Implementation-and-start)
+
+[3. Paths and models](https://github.com/rotorlab/server-node/wiki/Paths-and-models)
+
+[4. Libraries](https://github.com/rotorlab/server-node/wiki/Libraries)
+
+[5. Configuration](https://github.com/rotorlab/server-node/wiki/Configuration)
+
+[6. Queries]()
  
-// run
-redis-server
+[7. Benchmarks]()
 
-// for testing with physical devices
-redis-server --protected-mode no
- 
-// logs
-redis-cli monitor
- 
-// test channels (sub/pub)
-redis-cli PUBLISH d7bec76dac4e holi // redis-cli PUBLISH <Flamebase.id> message
-```
-Ubuntu:
-```bash 
-// install
-sudo apt-get install redis-server
- 
-// run
-sudo service redis-server status
-```
+Here you can find all info about how to build a simple API with few lines.
 
-Install Flamebase:
-```bash
-npm install rotor-server --save
-```
+**Rotor philosophy** states that the only needed requests are those that change data on databases. That means that the rest of requests you are imaging are replaced.
 
-Create a server cluster to hold all realtime changes.
+![schema](https://github.com/rotorlab/server-node/raw/feature/mongodb/schema.png)
 
-```javascript
-var RotorServer = require('rotor-server');
-var server = new RotorServer();
-server.initCluster({
-    start: function () {
-        console.log("rotor server ready")
-    },
-    config: {
-        server_port: 1507,
-        redis_port: 6379,
-        db_name: "database",
-        log_dir: "logs/",
-        debug: true
-    }
-});
-```
-Alternatively you can start the server cluster by cloning this repo and launch on terminal:
-```bash
-node launcher.js 
-```
-Console Output:
-```bash
-rotor server ready
-rotor cluster started on port 1507 | worker => 3
-rotor cluster started on port 1507 | worker => 6
-rotor cluster started on port 1507 | worker => 2
-rotor cluster started on port 1507 | worker => 1
-rotor cluster started on port 1507 | worker => 5
-rotor cluster started on port 1507 | worker => 7
-rotor cluster started on port 1507 | worker => 4
-rotor cluster started on port 1507 | worker => 8
+Rotor libraries are connected to Rotor and Redis servers. The first one controls object sharing queues, devices waiting for changes and all data edition on remote database. The second gives us Pub/Sub messaging pattern for data changes replication.
 
-```
+When devices make changes in objects, client libraries send generated differences to Rotor server. This differences are applied in database and replicated on the rest of devices which are listening the same object.
 
-### Libraries and packages
-Client to work with Rotor server:
+Check [paths page](https://github.com/rotorlab/server-node/wiki/Paths-and-models) for more info.
 
-- [Android](https://github.com/rotorlab/database-kotlin)
-```groovy
-// gradle
-def rotor_version =  "0.1.0"
-dependencies {
-    implementation ("com.rotor:core:$rotor_version@aar") {
-        transitive = true
-    }
-    implementation ("com.rotor:database:$rotor_version@aar") {
-        transitive = true
-    }
-}
-```
+License
+-------
+    Copyright 2018 RotorLab Organization
 
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
