@@ -48,10 +48,13 @@ Map with 100.000 entries and 90.000 different values (aprox), ~ 6 MB on Disk:
 ## Run tests
 Run this test on your PC by cloning this repo and running:
 ```bash
-node --stack_size=1200 /turbine/launcher.js
-node /benchmark/turbine_puncher.js
+/turbine
+node --stack_size=1200 launcher.js
+/benchmark
+node turbine_puncher.js
 ```
 ```bash
-node /benchmark/graphql.js
-node /benchmark/graphql_puncher.js
+/benchmark
+node graphql.js
+node graphql_puncher.js
 ```
