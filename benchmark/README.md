@@ -1,6 +1,6 @@
-# Benchmarks -> Turbine vs GraphQL
+# Benchmarks
 
-Results of 3 common actions on Turbine and GraphQL with a JSON database.
+Results of 3 common actions on [Turbine](https://github.com/rotorlab/server-node/tree/master/turbine) and [GraphQL](http://graphql.org) with a JSON database.
 
 `get` actions looks for an object on the given path.
 ```bash
