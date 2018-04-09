@@ -7,13 +7,13 @@ I have multiple clusters working with the same data. For them it isn't an effort
 Multiple processes working with the same file can produce writing errors. Imagine the consequences.
 
 ### The solution
-Turbine is a single process that manages a JSON database for you. It allows to work with the same data on different clusters or processes avoiding fatal errors writing on database. It has been designed for Rotor framework but can be used as a query engine.
+Turbine is a single process that manages a JSON database for you. It allows to work with the same data on different clusters or processes avoiding fatal errors writing on database. It has been designed for [Rotor server](https://github.com/rotorlab/server-node) but can be used as a query engine.
 
 ### Benchmark
-For check how fast is Turbine, there is a performance comparision with GrahpQL engine. Both are used as servers that receive requests and do some process.
+For check how fast is Turbine, there is a performance comparision with [GraphQL engine](http://graphql.org). Both are used as servers that receive requests and do some process.
 Additionally, both servers work with pre-loaded data.
 
-|Action  |GrapqhQL  |Turbine| Times |
+|Action  |GraphQL  |Turbine| Times |
 |---|---|---|---|
 | GET  | 37.6 s. | 2.7 s. | x1000
 | POST  | 2.5 s. | 2.1 s. | x1000
@@ -28,7 +28,7 @@ npm install @rotor-server/turbine --save
 
 ### Usage
 The idea is to start a server (in Process A) and all processes (Process A, Cluster A, Cluster B, Process B, Process C) are able to ask for data.
-<p align="center"><img width="60%" vspace="20" src="https://raw.githubusercontent.com/rotorlab/server-node/develop/images/TurbineSchema.png"></p>
+<p align="center"><img width="60%" vspace="20" src="https://raw.githubusercontent.com/rotorlab/server-node/master/images/TurbineSchema.png"></p>
 
 #### prepare Turbine
 ```javascript
