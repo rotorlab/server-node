@@ -90,6 +90,7 @@ let processed = 0;
 let action = {
     /**
      * Returns an object from a instance for the given path (value)
+     * @param database
      * @param value
      * @returns {*}
      */
@@ -174,7 +175,9 @@ let action = {
 
     /**
      * Returns an object from a instance for the given query and path (value)
+     * @param database
      * @param value
+     * @param query
      * @returns {*}
      */
     getObjectFromQuery: function (database, value, query) {
@@ -229,6 +232,7 @@ let action = {
 
     /**
      * Stores an object in the instance for the given type and path (value)
+     * @param database
      * @param value ->  "/notifications/998476354
      * @param object -> object to store
      * @returns {*}

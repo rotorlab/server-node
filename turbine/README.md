@@ -45,6 +45,19 @@ Starts Turbine server on a different process. This should be called first when y
 ```javascript
 turbine.server();
 ```
+```bash
+╭───────────────────╮
+│                   │
+│                   │
+│      turbine      │
+│                   │
+│                   │
+╰───────────────────╯
+starting ..
+Indexed 22793.
+started on 4005 (15.749 secs)
+0 op/sec
+```
 Once Turbine is started, you can use client methods.
 #### get
 Client method that looks for an object on the given path.

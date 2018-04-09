@@ -2,6 +2,7 @@ const Turbine = require('./index.js');
 let turbine = new Turbine({config: require("./config.json")});
 turbine.server();
 
+/*
 setTimeout(async function () {
     let user = await turbine.get("/users/usersA");
     console.log(JSON.stringify(user));
@@ -19,6 +20,7 @@ setTimeout(async function () {
     for (let user in users) {
         console.log("item: " + JSON.stringify(users[user]))
     }
-}, 2000);
+}, 20000);
+*/
 
 
