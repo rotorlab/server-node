@@ -1,22 +1,20 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var timeout = require('connect-timeout');
-var logjs = require('logjsx');
-var cluster = require('cluster');
-var Redis = require('ioredis');
-var numCPUs = require('os').cpus().length;
-var DatabaseHandler = require("./model/DatabaseHandler.js");
-var Reference = require("./model/Reference.js");
-var apply = require('rus-diff').apply;
-var logger = new logjs();
+const express = require('express');
+const bodyParser = require('body-parser');
+const timeout = require('connect-timeout');
+const logjs = require('logjsx');
+const cluster = require('cluster');
+const Redis = require('ioredis');
+const numCPUs = require('os').cpus().length;
+const DatabaseHandler = require("./model/DatabaseHandler.js");
+const Reference = require("./model/Reference.js");
+const apply = require('rus-diff').apply;
+const boxen = require('boxen');
+const logger = new logjs();
 
 JSON.stringifyAligned = require('json-align');
-logger.init({
-    level: "DEBUG"
-});
 
 String.prototype.replaceAll = function (search, replacement) {
-    var target = this;
+    let target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
@@ -49,25 +47,25 @@ process.argv.forEach(function (val, index, array) {
     }
 });
 
-var redis = new Redis(redis_port);
+logger.init({
+    level: debug ? "DEBUG" :  "INFO"
+});
 
-var VARS = {
+let redis = new Redis(redis_port);
+
+const VARS = {
     USER_AGENT: "user-agent",
     APPLICATION_JSON: "application/json",
     WORKER: "worker",
     RESPONSE_KO: "KO"
 };
 
-var ERROR = {
-    MISSING_PARAMS: "there vas an error on the connection instance creation: no_params"
-};
-
-var ERROR_REQUEST = {
+const ERROR_REQUEST = {
     MISSING_PARAMS: "missing_params",
     MISSING_WRONG_PARAMS: "missing_or_wrong_params"
 };
 
-var ERROR_RESPONSE = {
+const ERROR_RESPONSE = {
     GET_UPDATES: "_error_getting_updates",
     GET_UPDATES_MSG: "_error_getting_updates",
     UPDATE_DATA: "_error_updating_data",
@@ -78,7 +76,7 @@ var ERROR_RESPONSE = {
     REMOVE_LISTENER_MSG: "_error_removing_listener"
 };
 
-var KEY_REQUEST = {
+const KEY_REQUEST = {
     METHOD: "method",
     PATH: "path",
     SHA1: "sha1",
@@ -93,7 +91,7 @@ var KEY_REQUEST = {
     RECEIVERS: "receivers"
 };
 
-var action = {
+let action = {
     response: function (connection, data, error) {
         let result = {
             status: (data === null || error !== null ? "KO" : "OK"),
@@ -464,7 +462,7 @@ var action = {
             let message = req.body;
             let connection = {};     // connection element
 
-            // logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
+            logger.debug(VARS.USER_AGENT + ": " + req.headers[VARS.USER_AGENT]);
             logger.debug(VARS.WORKER + ": " + cluster.worker.id);
 
             let keys = Object.keys(message); // keys
@@ -483,12 +481,12 @@ var action = {
 
                     case KEY_REQUEST.SHA1:
                         connection[key] = message[key];
-                        // logger.debug(KEY_REQUEST.SHA1 + ": " + connection[key]);
+                        logger.debug(KEY_REQUEST.SHA1 + ": " + connection[key]);
                         break;
 
                     case KEY_REQUEST.TOKEN:
                         connection[key] = message[key];
-                        // logger.debug(KEY_REQUEST.TOKEN + ": " + connection[key]);
+                        logger.debug(KEY_REQUEST.TOKEN + ": " + connection[key]);
                         break;
 
                     case KEY_REQUEST.DIFFERENCES:
@@ -503,12 +501,12 @@ var action = {
 
                     case KEY_REQUEST.LEN:
                         connection[key] = message[key];
-                        // logger.debug(KEY_REQUEST.LEN + ": " + connection[key]);
+                        logger.debug(KEY_REQUEST.LEN + ": " + connection[key]);
                         break;
 
                     case KEY_REQUEST.OS:
                         connection[key] = message[key];
-                        // logger.debug(KEY_REQUEST.OS + ": " + connection[key]);
+                        logger.debug(KEY_REQUEST.OS + ": " + connection[key]);
                         break;
 
                     case KEY_REQUEST.CLEAN:
@@ -518,7 +516,7 @@ var action = {
 
                     case KEY_REQUEST.UUID:
                         connection[key] = message[key];
-                        // logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
+                        logger.debug(KEY_REQUEST.CLEAN + ": " + connection[key]);
                         break;
 
                     case KEY_REQUEST.NOTIFICATION_ID:
@@ -550,7 +548,7 @@ var action = {
                     try {
                         await this.listen(connection);
                     } catch (e) {
-                        this.printError("there was an error parsing request from listen: " + e.stack);
+                        logger.error("there was an error parsing request from listen: " + e.stack);
                         this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.ADD_LISTENER);
                     }
                     break;
@@ -618,6 +616,8 @@ var action = {
 
 if (cluster.isMaster) {
 
+    console.log(boxen('rotor', {padding: 2, borderColor: "white",borderStyle: 'round'}));
+
     let workers = [];
 
     let spawn = function (i) {
@@ -633,33 +633,27 @@ if (cluster.isMaster) {
     }
 
 } else {
-
-    var app = express();
-
-    app.use(bodyParser.urlencoded({
-        extended: true
-    }));
-
+    let app = express();
+    app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json({limit: '50mb'}));
     app.use(timeout('120s'));
-
     app.route('/')
         .get(function (req, res) {
             res.send("hi :)");
         })
         .post(async function (req, res) {
             await action.parseRequest(req, async function (token, result, success, fail) {
-                logger.info("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
-                logger.info("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
+                logger.debug("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
+                logger.debug("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
                 let r = await redis.publish(token, JSON.stringify(result));
-                logger.info("result: " + r);
+                logger.debug("result: " + r);
                 if (r > 0) {
-                    logger.info("SUCCESS publish result");
+                    logger.debug("SUCCESS publish result");
                     if (success !== undefined) {
                         success();
                     }
                 } else {
-                    logger.error("FAILED publish result");
+                    logger.debug("FAILED publish result");
                     if (fail !== undefined) {
                         fail();
                     }
@@ -667,9 +661,7 @@ if (cluster.isMaster) {
             });
             res.send("{}")
         });
-
     app.listen(server_port, function () {
-        logger.info("rotor cluster started on port " + server_port + " | worker => " + cluster.worker.id);
+        logger.debug("rotor cluster started on port " + server_port + " | worker => " + cluster.worker.id);
     });
-
 }

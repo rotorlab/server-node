@@ -7,7 +7,7 @@ logger.init({
     level: "DEBUG"
 });
 const url = "http://localhost:4004/";
-const numReq = 1000;
+const numReq = 5000;
 const EMPTY_OBJECT = {};
 
 function ask(url, data) {

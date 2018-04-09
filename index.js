@@ -3,15 +3,11 @@ const Turbine =            require('./turbine/index.js');
 const logjs =              require('logjsx');
 const logger = new logjs();
 
-logger.init({
-    level : "DEBUG"
-});
+function RotorServer(callback) {
 
-function RotorServer() {
-
-    this.start = function (callback) {
-        let turbine = new Turbine();
-        turbine.init(callback);
+    this.start = function () {
+        let turbine = new Turbine(callback);
+        turbine.init();
 
         let db_name = "database";
         let server_port = 1507;
@@ -42,6 +38,12 @@ function RotorServer() {
             }
         }
 
+        if (debug) {
+            logger.init({
+                level : "DEBUG"
+            });
+        }
+
         let config = {
             silent: false,
             uid: uid,
@@ -70,7 +72,6 @@ function RotorServer() {
         let child = forever.start('./server.js', config);
         child.on('start', function(code) {
             logger.info(config.args);
-            callback.ready();
         });
     }
 

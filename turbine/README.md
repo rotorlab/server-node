@@ -1,5 +1,5 @@
 # Turbine
-Turbine allows different process to work with the same JSON database. It works as a service receiving requests and returning, storing or querying data as quick as possible.
+Turbine allows different processes to work with the same JSON database. It works as a service receiving requests and returning, storing or querying data as quick as possible.
 
 ### The problem
 I have multiple clusters working with the same data. For them it isn't an effort to read from a JSON database and work with data. The problem appears when those clusters **try** to store data on database at the same time.
@@ -27,7 +27,7 @@ npm install @rotor-server/turbine --save
 ```
 
 ### Usage
-Turbine
+The idea is to start a server (that works with db) in a
 #### prepare Turbine
 ```javascript
 const Turbine = require('@rotor-server/turbine');
