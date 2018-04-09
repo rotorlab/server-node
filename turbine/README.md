@@ -29,6 +29,7 @@ npm install @rotor-server/turbine --save
 ### Usage
 
 #### prepare Turbine
+
 ```javascript
 const Turbine = require('@rotor-server/turbine');
 let turbine = new Turbine({
@@ -40,26 +41,28 @@ let turbine = new Turbine({
 ```
 
 #### server
+Starts Turbine on a different process. This should be called first when your API is starting.
 ```javascript
 turbine.init();
 ```
+Once Turbine is started, you can use client methods.
 #### get
-Looks for an object on the given path.
+Client method that looks for an object on the given path.
 ```javascript
 turbine.get("/users/usersA").then(function(user) {
     console.log(JSON.stringify(user))
 }
 ```
 #### post
-Updates or removes an object on the given path passing another object or null.
+Client method that updates or removes an object on the given path passing another object or null.
 ```javascript
 turbine.post("/users/usersB", newUser).then(function() {
     console.log("stored")
 }
 ```
 #### query
+Client method that looks for an object on the given path for the conditions passed.
 ```javascript
-Looks for an object on the given path for the conditions passed.
 turbine.query("/users/*", { name: "Matt" }).then(function(users) {
     for (let user in users) {
         console.log(JSON.stringify(users[user]))
