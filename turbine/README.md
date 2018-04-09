@@ -27,6 +27,8 @@ npm install @rotor-server/turbine --save
 ```
 
 ### Usage
+
+#### prepare Turbine
 ```javascript
 const Turbine = require('@rotor-server/turbine');
 let turbine = new Turbine({
@@ -34,53 +36,32 @@ let turbine = new Turbine({
     "turbine_ip": "http://localhost",
     "db_name": "database",
     "debug": true
-});
+});```
 
-// use as server
+#### server
+```javascript
 turbine.init();
+```
 
-// use as client (give some seconds to server)
-setTimeout(function() {
-    // get objects
-    turbine.get("/users/usersA").then(function(user) {
-        console.log(JSON.stringify(user))
-
-        // update or delete(passing null) objects
-        let newUser = {};
-        newUser.name = "Matt";
-        newUser.age = 24;
-        turbine.post("/users/usersB", newUser).then(function() {
-            console.log("stored")
-
-            // query users
-            turbine.query("/users/*", { name: "Matt" }).then(function(users) {
-                for (let user in users) {
-                    console.log(JSON.stringify(users[user]))
-                }
-            });
-        });
-    });
-}, 2000);
-
-// or async/await style
-setTimeout(async function() {
-    let user = await turbine.get("/users/usersA");
-    console.log(JSON.stringify(user));
-
-    user = {};
-    user.name = "Matt";
-    user.age = 24;
-    await turbine.post("/users/usersA", user);
-    console.log("stored");
-
-    let users = await turbine.query("/users/*", { name: "Matt" });
-    if (users.length === 0) {
-        console.log("no items found")
-    }
+#### get
+```javascript
+turbine.get("/users/usersA").then(function(user) {
+    console.log(JSON.stringify(user))
+}
+```
+#### post
+```javascript
+turbine.post("/users/usersB", newUser).then(function() {
+    console.log("stored")
+}
+```
+#### query
+```javascript
+turbine.query("/users/*", { name: "Matt" }).then(function(users) {
     for (let user in users) {
-        console.log("item: " + JSON.stringify(users[user]))
+        console.log(JSON.stringify(users[user]))
     }
-}, 2000);
+});
 ```
 
 ### Usage on clusters
