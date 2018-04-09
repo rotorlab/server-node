@@ -1,5 +1,5 @@
 # Turbine
-Turbine is a handler for JSON databases. Works as a service receiving requests and returning, storing or querying data as quick as possible.
+Turbine allows different process to work with the same JSON database. It works as a service receiving requests and returning, storing or querying data as quick as possible.
 
 ### The problem
 I have multiple clusters working with the same data. For them it isn't an effort to read from a JSON database and work with data. The problem appears when those clusters **try** to store data on database at the same time.
@@ -27,9 +27,8 @@ npm install @rotor-server/turbine --save
 ```
 
 ### Usage
-
+Turbine
 #### prepare Turbine
-
 ```javascript
 const Turbine = require('@rotor-server/turbine');
 let turbine = new Turbine({
@@ -39,11 +38,10 @@ let turbine = new Turbine({
     "debug": true
 });
 ```
-
 #### server
-Starts Turbine on a different process. This should be called first when your API is starting.
+Starts Turbine server on a different process. This should be called first when your API is starting.
 ```javascript
-turbine.init();
+turbine.server();
 ```
 Once Turbine is started, you can use client methods.
 #### get
@@ -89,8 +87,7 @@ let turbine = new Turbine({
 let port = 3003;
 
 if (cluster.isMaster) {
-    // start server
-    turbine.init();
+    turbine.server();
 
     let workers = [];
     let spawn = function (i) {
@@ -129,3 +126,19 @@ if (cluster.isMaster) {
 }
 
 ```
+
+License
+-------
+    Copyright 2018 RotorLab Organization
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.

@@ -45,7 +45,7 @@ function Turbine(callback) {
      * Initializes Turbine process
      * @param callback
      */
-    this.init = function () {
+    this.server = function () {
 
         let config = {
             silent: false,

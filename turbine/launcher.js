@@ -1,6 +1,6 @@
 const Turbine = require('./index.js');
 let turbine = new Turbine({config: require("./config.json")});
-turbine.init();
+turbine.server();
 
 setTimeout(async function () {
     let user = await turbine.get("/users/usersA");
