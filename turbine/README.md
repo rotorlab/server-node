@@ -27,7 +27,9 @@ npm install @rotor-server/turbine --save
 ```
 
 ### Usage
-The idea is to start a server (that works with db) in a
+The idea is to start a server (in Process A) and all processes (Process A, Cluster A, Cluster B, Process B, Process C) are able to ask for data.
+![schema](https://raw.githubusercontent.com/rotorlab/server-node/develop/images/TurbineSchema.png)
+
 #### prepare Turbine
 ```javascript
 const Turbine = require('@rotor-server/turbine');
