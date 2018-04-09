@@ -46,12 +46,12 @@ Map with 100.000 entries and 90.000 different values (aprox), ~ 6 MB on Disk:
 | QUERY  | 416 s. | 36.4 s. | x10000
 
 ## Run tests
-Run this test on your PC by cloning this repo and running on `/benchmark` folder:
+Run this test on your PC by cloning this repo and running:
 ```bash
-node --stack_size=1200 turbine.js
-node turbine_puncher.js
+node --stack_size=1200 /turbine/launcher.js
+node /benchmark/turbine_puncher.js
 ```
 ```bash
-node graphql.js
-node graphql_puncher.js
+node /benchmark/graphql.js
+node /benchmark/graphql_puncher.js
 ```
