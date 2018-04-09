@@ -36,20 +36,22 @@ let turbine = new Turbine({
     "turbine_ip": "http://localhost",
     "db_name": "database",
     "debug": true
-});```
+});
+```
 
 #### server
 ```javascript
 turbine.init();
 ```
-
 #### get
+Looks for an object on the given path.
 ```javascript
 turbine.get("/users/usersA").then(function(user) {
     console.log(JSON.stringify(user))
 }
 ```
 #### post
+Updates or removes an object on the given path passing another object or null.
 ```javascript
 turbine.post("/users/usersB", newUser).then(function() {
     console.log("stored")
@@ -57,6 +59,7 @@ turbine.post("/users/usersB", newUser).then(function() {
 ```
 #### query
 ```javascript
+Looks for an object on the given path for the conditions passed.
 turbine.query("/users/*", { name: "Matt" }).then(function(users) {
     for (let user in users) {
         console.log(JSON.stringify(users[user]))
