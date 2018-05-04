@@ -23,6 +23,7 @@
     "recursive-iterator": "^3.3.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
+    "@efraespada/turbine": ">=0.0.1",
     "set-in": "^2.0.0",
     "single-line-log": "^1.1.2",
     "sync-node": "^1.3.1",

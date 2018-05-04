@@ -52,6 +52,10 @@ logger.init({
 });
 
 let redis = new Redis(redis_port);
+redis.on("error", function(err) {
+    console.error("err: " + err)
+});
+
 
 const VARS = {
     USER_AGENT: "user-agent",

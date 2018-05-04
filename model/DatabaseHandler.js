@@ -4,17 +4,14 @@
 
 // server database
 const JsonDB =                  require('node-json-db');
-const BSON =                    require('bson');
 const rp =                      require('request-promise');
 const sha1 =                    require('sha1');
 
-const bson = new BSON();
-
 // returns JSON differences
-const diff =                  require('rus-diff').diff;
+const diff =                    require('rus-diff').diff;
 
 // logs
-const logjs =                 require('logjsx');
+const logjs =                   require('logjsx');
 const logger = new logjs();
 logger.init({
     level : "DEBUG"
