@@ -53,7 +53,14 @@ function RotorServer(callback) {
             if (callback.turbine_port !== undefined && callback.turbine_port > 0) {
               this.turbine_port = callback.turbine_port;
             } else {
-              logger.error("no port defined for rotor IDE, using default: " + this.turbine_port);
+              logger.error("no port defined for turbine, using default: " + this.turbine_port);
+            }
+
+            // ide port
+            if (callback.ide_port !== undefined && callback.ide_port > 0) {
+                this.ide_port = callback.ide_port;
+            } else {
+                logger.error("no port defined for rotor IDE, using default: " + this.ide_port);
             }
 
             // debug

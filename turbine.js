@@ -99,5 +99,5 @@ router.post('/', function (req, res) {
 
 app.use('/', router);
 app.listen(turbine_port, function () {
-    logger.info("Rotor database started " + turbine_port);
+    logger.info("Rotor database started (" + turbine_port + ")");
 });
