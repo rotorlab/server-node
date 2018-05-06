@@ -15,6 +15,7 @@ import { DataService } from "./services/DataService";
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginComponent } from './components/pages/login/login.component';
 import {AuthService} from "./services/auth.service";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {AuthService} from "./services/auth.service";
   imports: [
       BrowserModule,
       AngularFireModule.initializeApp(environment.firebase),
-      APP_ROUTING
+      APP_ROUTING,
+      HttpClientModule
   ],
   providers: [
       AuthService,

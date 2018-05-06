@@ -460,7 +460,7 @@ let action = {
         }
         return messages;
     },
-    parseRequest: async function (req, res) {
+    parseRequest: async function (req, res, callback) {
 
         try {
             let message = req.body;
@@ -544,7 +544,7 @@ let action = {
             connection.id = new Date().getTime();
             connection.worker = cluster.worker.id;
             connection.request = req;
-            connection.callback = res;
+            connection.callback = callback;
 
             switch (connection.method) {
 
@@ -603,6 +603,25 @@ let action = {
                     }
                     break;
 
+
+                // ide methods
+                case "get_admin":
+
+                    break;
+
+
+                case "get":
+
+                    break;
+
+                case "post":
+
+                    break;
+
+                case "query":
+
+                    break;
+
                 default:
                     //
                     break;
@@ -613,7 +632,7 @@ let action = {
             logger.error("there was an error parsing request: " + e.toString());
 
             let result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_WRONG_PARAMS};
-            res(req.token, result);
+            callback(req.token, result);
         }
     }
 };
@@ -646,7 +665,7 @@ if (cluster.isMaster) {
             res.send("hi :)");
         })
         .post(async function (req, res) {
-            await action.parseRequest(req, async function (token, result, success, fail) {
+            await action.parseRequest(req, res, async function (token, result, success, fail) {
                 logger.debug("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.debug("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
                 let r = await redis.publish(token, JSON.stringify(result));
