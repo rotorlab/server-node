@@ -1,1 +1,54 @@
-{}
+{
+    "paths": {
+        "chats.ttt": {
+            "path": "/chats/ttt",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526228334425
+                }
+            }
+        },
+        "chats.aaa": {
+            "path": "/chats/aaa",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526228239072
+                }
+            }
+        },
+        "chats.aaaa": {
+            "path": "/chats/aaaa",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526228367850
+                }
+            }
+        },
+        "contacts": {
+            "path": "/contacts",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526228327737
+                }
+            }
+        },
+        "chats.ji": {
+            "path": "/chats/ji",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526228259241
+                }
+            }
+        }
+    }
+}

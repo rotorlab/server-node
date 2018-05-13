@@ -28,7 +28,7 @@ function Utils() {
      * @returns {*}
      */
     this.mergeObjects = function(objects, interf) {
-        let inter = Object.keys(interf).length > 0 ? interf : false;
+        let inter = interf !== undefined && Object.keys(interf).length > 0 ? interf : false;
         let object = {};
         if (objects.parts !== undefined && objects.parts.length > 1) {
             for (let p in objects.parts) {

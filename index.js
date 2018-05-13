@@ -126,10 +126,10 @@ function RotorServer(callback) {
             child.on('start', function(code) {
                 logger.info("Rotor server started (" + o.server_port + ")");
                 let turbine = new Turbine({
-                  turbine_port: o.turbine_port,
-                  debug: o.debug,
-                  log_dir: o.log_dir,
-                  databases: o.databases
+                    turbine_port: o.turbine_port,
+                    debug: o.debug,
+                    log_dir: o.log_dir,
+                    databases: o.databases
                 });
                 turbine.server();
             });

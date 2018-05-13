@@ -3,8 +3,6 @@
  * */
 
 // server database
-const JsonDB =                  require('node-json-db');
-const rp =                      require('request-promise');
 const sha1 =                    require('sha1');
 
 // returns JSON differences
@@ -17,9 +15,6 @@ logger.init({
     level : "DEBUG"
 });
 
-// queue
-const SN =                    require('sync-node');
-
 // JSON pretty print
 JSON.stringifyAligned = require('json-align');
 
@@ -28,14 +23,13 @@ const ACTION_SIMPLE_UPDATE    = "simple_update";
 const ACTION_SLICE_UPDATE     = "slice_update";
 const ACTION_NO_UPDATE        = "no_update";
 
-function DatabaseHandler(database, path, port) {
+function DatabaseHandler(turbine, database, path) {
 
     // object reference
     var object = this;
 
     // debug
     this.debugVal = true;
-    this.port = port;
 
     // os
     this.OS = {};
@@ -48,12 +42,6 @@ function DatabaseHandler(database, path, port) {
     this.lengthLimit.ANDROID = (4096 - lengthMargin);
     this.lengthLimit.IOS = (2048 - lengthMargin);
 
-    // sync queue
-    this.queue = SN.createQueue();
-
-    // database
-    this.db = new JsonDB(database, true, true);
-
     // db reference
     this.ref = {};
 
@@ -61,50 +49,23 @@ function DatabaseHandler(database, path, port) {
 
     /**
      * loads the DB object reference of the given path on object.ref
-     * TODO change to mongoDB
      */
     this.syncFromDatabase = async function() {
         try {
-            let data = {};
-            data.path = path;
-            data.method = "get";
-            data.database = database;
-            object.ref = await this.ask('http://localhost:' + object.port + '/', data);
+          logger.debug("database 1: " + database)
+          object.ref = await turbine.get(database, path);
         } catch(e) {
             logger.error("error getting from turbine: " + e)
         }
     };
 
-    this.ask = async function(url, data) {
-        return new Promise(function(resolve, reject) {
-            let options = {
-                method: 'POST',
-                uri: url,
-                body: data,
-                json: true
-            };
-            rp(options)
-                .then(function (parsedBody) {
-                    resolve(parsedBody)
-                })
-                .catch(function (err) {
-                    reject(err)
-                });
-        });
-    };
-
     /**
      * stores object on server database
-     * TODO change to mongoDB
      */
     this.syncToDatabase = async function() {
         try {
-            let data = {};
-            data.path = path;
-            data.database = database;
-            data.method = "post";
-            data.value = JSON.stringify(object.ref);
-            await this.ask('http://localhost:' + port + '/', data);
+            logger.debug("database 1: " + database)
+            await turbine.post(database, path, object.ref);
         } catch(e) {
             logger.error("error sending to turbine: " + e)
         }

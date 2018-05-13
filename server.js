@@ -7,6 +7,7 @@ const Redis = require('ioredis');
 const numCPUs = require('os').cpus().length;
 const DatabaseHandler = require("./model/DatabaseHandler.js");
 const Reference = require("./model/Reference.js");
+const Turbine = require('./turbine_index.js');
 const apply = require('rus-diff').apply;
 const boxen = require('boxen');
 const logger = new logjs();
@@ -54,6 +55,12 @@ logger.init({
 let redis = new Redis(redis_port);
 redis.on("error", function(err) {
     console.error("err: " + err)
+});
+
+let turbine = new Turbine({
+    "turbine_port": turbine_port,
+    "turbine_ip": "http://localhost",
+    "debug": debug
 });
 
 
@@ -142,7 +149,7 @@ let action = {
      * @param connection
      */
     listen: async function (connection) {
-        let paths = action.getPath(connection);
+        let paths = action.getPathHandler(connection);
         /**
          * work with path database
          */
@@ -258,7 +265,7 @@ let action = {
         }
     },
     unlisten: async function (connection) {
-        let paths = action.getPath(connection);
+        let paths = action.getPathHandler(connection);
         await paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
@@ -289,7 +296,7 @@ let action = {
      */
     updateTime: async function (connection) {
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-            let paths = action.getPath(connection);
+            let paths = action.getPathHandler(connection);
 
             await paths.syncFromDatabase();
 
@@ -416,7 +423,7 @@ let action = {
         }
     },
     getReference: async function (connection) {
-        let paths = action.getPath(connection);
+        let paths = action.getPathHandler(connection);
         await paths.syncFromDatabase();
         let error = null;
 
@@ -424,7 +431,7 @@ let action = {
             if (connection.path.indexOf("\.") === -1) {
                 if (connection.path.indexOf("/") === 0) {
                     if (paths.ref !== undefined) {
-                        return new Reference(paths, connection, dbMaster, debug.toString(), turbine_port.toString());
+                        return new Reference(turbine, paths, connection, "database", debug.toString());
                     } else {
                         error = "holder_not_found_on" + key;
                     }
@@ -440,14 +447,14 @@ let action = {
         logger.error(error);
         return error;
     },
-    getPath: function (connection) {
+    getPathHandler: function (connection) {
         if (connection.path !== undefined) {
             let k = connection.path.replaceAll("/", "\.");
             if (k.startsWith(".")) {
                 k = k.substring(1, k.length)
             }
             k = "/paths/" + k;
-            return new DatabaseHandler("paths", k, turbine_port.toString());
+            return new DatabaseHandler(turbine, "paths", k);
         } else {
             return null
         }

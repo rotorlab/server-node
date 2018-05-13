@@ -106,6 +106,7 @@ function DatabasesManager(configuration) {
         this.processed++;
         if (value.startsWith(SLASH) && value.length > SLASH.length) {
             let branchs = value.split(SLASH);
+            console.log("database: " + database);
             let collections = this.databases[database].collectionKeys();
             let parts = [];
             if (collection === undefined || collection.length === 0) {
