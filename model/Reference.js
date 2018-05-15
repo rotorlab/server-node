@@ -25,14 +25,14 @@ const ACTION_NO_UPDATE        = "no_update";
  * @param dbg
  * @constructor
  */
-function Reference(turbine, pathReference, connection, database, dbg) {
+function Reference(turbine, pathReference, connection, dbg) {
 
     // object reference
     var object = this;
 
     this.path = connection.path; //
     this.pathReference = pathReference;
-    this.DH = new DatabaseHandler(turbine, database, this.path);
+    this.DH = new DatabaseHandler(turbine, connection.database, this.path);
     this.DH.syncFromDatabase().then(function () {
 
     });

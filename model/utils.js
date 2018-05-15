@@ -77,6 +77,22 @@ function Utils() {
         return size;
     };
 
+    this.getPathsOfQuery = function(query){
+        let paths = {};
+        for (let {parent, node, key, path, deep} of new RecursiveIterator(query)) {
+            if (typeof node !== "object") {
+                if (!paths[node]) {
+                    paths[node] = [];
+                }
+                let builded = "/" + path.join("/");
+                console.log("build path: " + builded + " for " + node);
+                paths[node].push(builded)
+            }
+        }
+        console.log("paths: " + JSON.stringify(paths));
+        return paths;
+    };
+
     this.containsObject = function (array, toCheck) {
         if (array === null || array.length === 0) {
             return false

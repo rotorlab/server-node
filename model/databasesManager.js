@@ -184,45 +184,35 @@ function DatabasesManager(configuration) {
             return value + " don't start with slash (/)"
         } else if (value.startsWith(SLASH) && value.length > SLASH.length) {
             let result = [];
+            let metaQuery = utils.getPathsOfQuery(query);
+            let keysQuery = Object.keys(metaQuery);
             let branchs = value.split(SLASH);
             let collections = this.databases[database].collectionKeys();
+            let found = 0;
+            let suggestedReferences = {};
             for (let c in collections) {
                 let object = this.databases[database].collection(collections[c]).data;
                 for (let b in branchs) {
                     if (branchs[b] === "*") {
-                        let keys = Object.keys(query);
-                        for (let k in keys) {
-                            let key = keys[k];
-                            if ('[object Array]' === Object.prototype.toString.apply(query[key])) {
-                                for (let i = 0; i < query[key].length; i++) {
-                                    if (this.databases[database].collection(collections[c]).values[query[key][i]] !== undefined) {
-                                        for (let p in this.databases[database].collection(collections[c]).values[query[key][i]]) {
-                                            if (this.databases[database].collection(collections[c]).values[query[key][i]][p].endsWith("-list")) {
-                                                let valid = this.databases[database].collection(collections[c]).values[query[key][i]][p].replaceAll("\\/" + key + ".*.-list$", "");
-                                                let r = this.getObject(database, valid);
-                                                if (typeof r === "string") {
-                                                    return r
-                                                } else {
-                                                    result.push(r);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                if (typeof query[key] === "string") {
-                                    query[key] = query[key].toLowerCase();
-                                }
-                                if (this.databases[database].collection(collections[c]).values[query[key]] !== undefined) {
-                                    for (let p in this.databases[database].collection(collections[c]).values[query[key]]) {
-                                        if (this.databases[database].collection(collections[c]).values[query[key]][p].indexOf(value.replace(/\*/g, '')) > -1) {
-                                            let valid = this.databases[database].collection(collections[c]).values[query[key]][p].replaceAll("/" + key, "");
-                                            let r = this.getObject(database, valid);
-                                            if (typeof r === "string") {
-                                                return r
-                                            } else {
-                                                result.push(r);
-                                            }
+                        for (let kQ in keysQuery) {
+                            let key = typeof keysQuery[kQ] === "string" ? keysQuery[kQ].toLowerCase() : keysQuery[kQ];
+                            let pathsToCheck = this.databases[database].collection(collections[c]).values[key];
+                            for (let p in pathsToCheck) {
+                                for (let innerPath in metaQuery[keysQuery[kQ]]) {
+                                    let orPath = value.replace("*","");
+                                    if (pathsToCheck[p].indexOf(metaQuery[keysQuery[kQ]][innerPath]) > -1
+                                        && pathsToCheck[p].indexOf(orPath) > -1) {
+                                        let valid = pathsToCheck[p].replace(metaQuery[keysQuery[kQ]][innerPath], "");
+
+                                        if (!suggestedReferences[valid]) {
+                                            let refe = this.getObject(database, valid, collections[c]);
+                                            suggestedReferences[valid] = {};
+                                            suggestedReferences[valid].found = 1;
+                                            suggestedReferences[valid].metafound = [metaQuery[keysQuery[kQ]][innerPath]];
+                                            suggestedReferences[valid].value = refe;
+                                        } else if (suggestedReferences[valid].metafound.indexOf(metaQuery[keysQuery[kQ]][innerPath]) == -1) {
+                                            suggestedReferences[valid].metafound.push(metaQuery[keysQuery[kQ]][innerPath]);
+                                            suggestedReferences[valid].found = suggestedReferences[valid].found + 1;
                                         }
                                     }
                                 }
@@ -235,14 +225,13 @@ function DatabasesManager(configuration) {
                 }
             }
             let res = [];
-            for (let obj in result) {
-                if (utils.validateObject(result[obj], query)) {
-                    if (!utils.containsObject(res, result[obj])) {
-                        res.push(result[obj])
-                    }
+            let refsKeys = Object.keys(suggestedReferences);
+            for (let i in refsKeys) {
+                let reference = suggestedReferences[refsKeys[i]];
+                if (reference.found == keysQuery.length) {
+                    res.push(reference.value)
                 }
             }
-            console.log("interface: " + interf);
             return res;
         } else if (value.startsWith(SLASH) && value.length === SLASH.length) {
             return this.getObject(database, value);

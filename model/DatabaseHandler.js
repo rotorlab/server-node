@@ -121,10 +121,6 @@ function DatabaseHandler(turbine, database, path) {
             android_tokens.push(device.token);
         }
 
-        logger.debug("stored: " + JSON.stringify(this.ref));
-        logger.debug("arrived: " + before);
-
-
         if (android_tokens.length > 0) {
             let data_android = this.getPartsFor(this.OS.ANDROID, JSON.parse(before), this.ref);
             if (object.debugVal) {

@@ -83,12 +83,16 @@ const ERROR_RESPONSE = {
     UPDATE_DATA_MSG: "_error_updating_data",
     ADD_LISTENER: "_error_creating_listener",
     ADD_LISTENER_MSG: "_error_creating_listener",
+    PENDING_NOTIFICATIONS: "_error_getting_pending_notifications",
+    SEND_NOTIFICATION: "_error_sending_notification",
+    REMOVE_REFERENCE: "_error_removing_reference",
     REMOVE_LISTENER: "_error_removing_listener",
     REMOVE_LISTENER_MSG: "_error_removing_listener"
 };
 
 const KEY_REQUEST = {
     METHOD: "method",
+    DATABASE: "database",
     PATH: "path",
     SHA1: "sha1",
     TOKEN: "token",
@@ -369,6 +373,26 @@ let action = {
         }
     },
 
+    pendingNotifications: async function(connection) {
+        let ids = connection[KEY_REQUEST.RECEIVERS];
+
+        for (let id in ids) {
+            let query = {};
+            logger.debug("id: " + ids[id]);
+            query.receivers = {};
+            query.receivers[ids[id]] = {};
+            query.receivers[ids[id]].id = ids[id];
+
+            let notifi = await turbine.query("notifications", "/notifications/*", query);
+
+            for (let o in notifi) {
+                let notifications = {};
+                notifications.id = notifi[o].id;
+                notifications.method = "add";
+                action.notify(connection, ids[id], notifications, null)
+            }
+        }
+    },
     /**
      * Removes reference in database
      * @param connection
@@ -431,7 +455,7 @@ let action = {
             if (connection.path.indexOf("\.") === -1) {
                 if (connection.path.indexOf("/") === 0) {
                     if (paths.ref !== undefined) {
-                        return new Reference(turbine, paths, connection, "database", debug.toString());
+                        return new Reference(turbine, paths, connection, debug.toString());
                     } else {
                         error = "holder_not_found_on" + key;
                     }
@@ -467,7 +491,7 @@ let action = {
         }
         return messages;
     },
-    parseRequest: async function (req, res, callback) {
+    parseRequest: async function (req, callback) {
 
         try {
             let message = req.body;
@@ -483,6 +507,11 @@ let action = {
                     case KEY_REQUEST.METHOD:
                         connection[key] = message[key];
                         logger.debug(KEY_REQUEST.METHOD + ": " + connection[key]);
+                        break;
+
+                    case KEY_REQUEST.DATABASE:
+                        connection[key] = message[key];
+                        logger.debug(KEY_REQUEST.DATABASE + ": " + connection[key]);
                         break;
 
                     case KEY_REQUEST.PATH:
@@ -588,7 +617,7 @@ let action = {
                         await this.remove(connection);
                     } catch (e) {
                         logger.error("there was an error parsing request from remove: " + e.toString());
-                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.REMOVE_REFERENCE);
                     }
                     break;
 
@@ -606,7 +635,7 @@ let action = {
                         this.sendNotifications(connection);
                     } catch (e) {
                         logger.error("there was an error parsing request from send_notifications: " + e.toString());
-                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.SEND_NOTIFICATION);
                     }
                     break;
 
@@ -627,6 +656,15 @@ let action = {
 
                 case "query":
 
+                    break;
+
+                case "pending_notifications":
+                    try {
+                        await this.pendingNotifications(connection);
+                    } catch (e) {
+                        logger.error("there was an error parsing request from pendingNotifications: " + e.toString());
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.PENDING_NOTIFICATIONS);
+                    }
                     break;
 
                 default:
@@ -669,10 +707,11 @@ if (cluster.isMaster) {
     app.use(timeout('120s'));
     app.route('/')
         .get(function (req, res) {
-            res.send("hi :)");
+            res.send("{}");
         })
         .post(async function (req, res) {
-            await action.parseRequest(req, res, async function (token, result, success, fail) {
+            res.send("{}");
+            await action.parseRequest(req, async function (token, result, success, fail) {
                 logger.debug("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.debug("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
                 let r = await redis.publish(token, JSON.stringify(result));
@@ -689,7 +728,6 @@ if (cluster.isMaster) {
                     }
                 }
             });
-            res.send("{}")
         });
     app.listen(server_port, function () {
         logger.debug("rotor cluster started on port " + server_port + " | worker => " + cluster.worker.id);

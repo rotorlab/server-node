@@ -3,14 +3,13 @@ const logger = new logjs();
 logger.init({
     level: "DEBUG"
 });
-const numReq = 10;
+const numReq = 1;
 const EMPTY_OBJECT = "{}";
 
-const Turbine = require('../index.js');
+const Turbine = require('../turbine_index.js');
 let turbine = new Turbine({
-    "turbine_port": 4005,
+    "turbine_port": 1510,
     "turbine_ip": "http://localhost",
-    "databases": ["database","paths"],
     "debug": true
 });
 
@@ -28,8 +27,8 @@ function randomInt(max) {
 
 async function get(i = 0) {
     if (i < numReq) {
-        let user = await turbine.get("database", "/users/" + randomString());
-        // if (user && JSON.stringify(user) !== EMPTY_OBJECT) console.log(JSON.stringify(user));
+        let notifications = await turbine.get("notifications", "/notifications/1526231920494");
+        if (notifications && JSON.stringify(notifications) !== EMPTY_OBJECT) console.log(JSON.stringify(notifications));
         await get(i + 1)
     }
 }
@@ -46,10 +45,20 @@ async function post(i = 0) {
 
 async function query(i = 0) {
     if (i < numReq) {
-        let users = await turbine.query("database", "/users/*", {
-            name: randomString()
+        let q = {};
+        let pp = "42e9c151fa3ba850";
+        logger.debug("id: " + pp);
+        q.receivers = {};
+        q.receivers[pp] = {};
+        q.receivers[pp].id = pp;
+        let notifications = await turbine.query("notifications", "/notifications/*", {
+            content: {
+                room: "test"
+            },
+            time: 1526231920496
         });
-        await query(i + 1)
+      if (notifications && JSON.stringify(notifications) !== EMPTY_OBJECT) console.log(JSON.stringify(notifications));
+      await query(i + 1)
     }
 }
 
@@ -65,10 +74,10 @@ async function test() {
     duration = new Date() - started;
     logger.info("query " + numReq + " times [" + (duration/1000) + " secs]");
 
-    started = new Date();
-    await post();
-    duration = new Date() - started;
-    logger.info("set " + numReq + " times [" + (duration/1000) + " secs]");
+    //started = new Date();
+    //await post();
+    //duration = new Date() - started;
+    //logger.info("set " + numReq + " times [" + (duration/1000) + " secs]");
 }
 
 test().then(function() {
