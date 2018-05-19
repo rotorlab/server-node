@@ -27,7 +27,7 @@ function randomInt(max) {
 
 async function get(i = 0) {
     if (i < numReq) {
-        let notifications = await turbine.get("notifications", "/notifications/1526231920494");
+        let notifications = await turbine.get("notifications", "/notifications/1526231920496");
         if (notifications && JSON.stringify(notifications) !== EMPTY_OBJECT) console.log(JSON.stringify(notifications));
         await get(i + 1)
     }
@@ -47,7 +47,7 @@ async function query(i = 0) {
     if (i < numReq) {
         let q = {};
         let pp = "42e9c151fa3ba850";
-        logger.debug("id: " + pp);
+        // logger.debug("id: " + pp);
         q.receivers = {};
         q.receivers[pp] = {};
         q.receivers[pp].id = pp;
@@ -56,6 +56,11 @@ async function query(i = 0) {
                 room: "test"
             },
             time: 1526231920496
+        },{
+            id: "",
+            content: {
+                channelDescription: ""
+            }
         });
       if (notifications && JSON.stringify(notifications) !== EMPTY_OBJECT) console.log(JSON.stringify(notifications));
       await query(i + 1)

@@ -106,7 +106,6 @@ function DatabasesManager(configuration) {
         this.processed++;
         if (value.startsWith(SLASH) && value.length > SLASH.length) {
             let branchs = value.split(SLASH);
-            console.log("database: " + database);
             let collections = this.databases[database].collectionKeys();
             let parts = [];
             if (collection === undefined || collection.length === 0) {
@@ -115,10 +114,8 @@ function DatabasesManager(configuration) {
                     let found = false;
                     for (let b in branchs) {
                         if (branchs[b].length > 0 && object[branchs[b]] !== undefined) {
-                            console.log("branchs[b]: " + branchs[b]);
                             object = object[branchs[b]];
                             if (b == (branchs.length - 1)) {
-                                console.log("found: " + branchs[b]);
                                 found = true;
                             }
                         }
@@ -144,18 +141,13 @@ function DatabasesManager(configuration) {
             }
             return parts.length === 0 ? {} : utils.mergeObjects({parts: parts}, interf);
         } else if (value === SLASH) {
-            console.log("value: " + value)
             let parts = [];
             if (collection === undefined || collection.length === 0) {
-                console.log("value2: " + value)
                 let collections = this.databases[database].collectionKeys();
-                console.log("value3: " + value)
                 for (let c in collections) {
-                    console.log("collection: " + c)
                     parts.push(this.databases[database].collection(collections[c]).data);
                 }
             } else {
-                console.log("collection: " + collection)
                 parts.push(this.databases[database].collection(collection).data);
             }
 
@@ -228,8 +220,16 @@ function DatabasesManager(configuration) {
             let refsKeys = Object.keys(suggestedReferences);
             for (let i in refsKeys) {
                 let reference = suggestedReferences[refsKeys[i]];
-                if (reference.found == keysQuery.length) {
-                    res.push(reference.value)
+                if (reference.found == keysQuery.length && reference.value !== {}) {
+                    if (typeof interf === "string" && interf !== "{}") {
+                        let obj = utils.maskObject(reference.value, JSON.parse(interf));
+                        res.push(obj)
+                    } if (typeof interf === "object" && JSON.stringify(interf) !== "{}") {
+                        let obj = utils.maskObject(reference.value, interf);
+                        res.push(obj)
+                    } else {
+                        res.push(reference.value)
+                    }
                 }
             }
             return res;

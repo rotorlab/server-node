@@ -1,28 +1,5 @@
 {
     "notifications": {
-        "1526231920494": {
-            "content": {
-                "body": "petru: Holi!",
-                "channel": "myChannel",
-                "channelDescription": "Test channel",
-                "id": "1526231920494",
-                "requestCode": 4532,
-                "room": "test",
-                "title": "test"
-            },
-            "id": "1526231920494",
-            "receivers": {
-                "42e9c151fa3ba850": {
-                    "id": "42e9c151fa3ba850",
-                    "viewed": 1526395614445
-                }
-            },
-            "sender": {
-                "id": "4b0647240e603805",
-                "moment": 1526231920494
-            },
-            "time": 1526231920496
-        },
         "1526231920496": {
             "content": {
                 "body": "petru: Holaaaa!",

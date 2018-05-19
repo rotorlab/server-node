@@ -2,13 +2,7 @@
     "paths": {
         "chats.ttt": {
             "path": "/chats/ttt",
-            "tokens": {
-                "4b0647240e603805": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1526395849175
-                }
-            }
+            "tokens": {}
         },
         "chats.aaa": {
             "path": "/chats/aaa",
@@ -26,7 +20,12 @@
                 "42e9c151fa3ba850": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526395872413
+                    "time": 1526751349520
+                },
+                "4b0647240e603805": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526753506807
                 }
             }
         },
@@ -36,12 +35,12 @@
                 "42e9c151fa3ba850": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526395872534
+                    "time": 1526750718896
                 },
                 "4b0647240e603805": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526395720760
+                    "time": 1526751329203
                 }
             }
         },
@@ -61,36 +60,22 @@
                 "42e9c151fa3ba850": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526395872450
+                    "time": 1526751260783
                 },
                 "4b0647240e603805": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526395720727
+                    "time": 1526751328238
                 }
             }
         },
         "notifications.1526231920494": {
             "path": "/notifications/1526231920494",
             "tokens": {
-                "4b0647240e603805": {
-                    "os": "android",
-                    "queue": {
-                        "1526395657894": {
-                            "$set": {
-                                "content.requestCode": 4532,
-                                "receivers.42e9c151fa3ba850.viewed": 1526395614445,
-                                "sender.moment": 1526231920494,
-                                "time": 1526231920496
-                            }
-                        }
-                    },
-                    "time": 1526231921207
-                },
                 "42e9c151fa3ba850": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526395872658
+                    "time": 1526720681263
                 }
             }
         },
@@ -108,9 +93,28 @@
                 "42e9c151fa3ba850": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526395872736
+                    "time": 1526750718958
                 }
             }
+        },
+        "chats.lll": {
+            "path": "/chats/lll",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526750718872
+                },
+                "4b0647240e603805": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526751328595
+                }
+            }
+        },
+        "notifications.1526751316648": {
+            "path": "/notifications/1526751316648",
+            "tokens": {}
         }
     }
 }
