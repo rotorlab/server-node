@@ -335,7 +335,21 @@
                 "name": "petru",
                 "os": "android",
                 "token": "4b0647240e603805"
+            },
+            "56dfd160-b322-455d-a0f4-b4afa6a0e060": {
+                "id": "56dfd160-b322-455d-a0f4-b4afa6a0e060",
+                "name": "hkjhv",
+                "os": "android",
+                "token": "42e9c151fa3ba850"
             }
+        }
+    },
+    "users": {
+        "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
+            "email": "efraespada@gmail.com",
+            "name": "Efra Espada",
+            "photo": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
+            "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"
         }
     }
 }

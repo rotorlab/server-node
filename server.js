@@ -639,22 +639,10 @@ let action = {
                     }
                     break;
 
+                case "login":
 
                 // ide methods
                 case "get_admin":
-
-                    break;
-
-
-                case "get":
-
-                    break;
-
-                case "post":
-
-                    break;
-
-                case "query":
 
                     break;
 
@@ -706,8 +694,38 @@ if (cluster.isMaster) {
     app.use(bodyParser.json({limit: '50mb'}));
     app.use(timeout('120s'));
     app.route('/')
-        .get(function (req, res) {
-            res.send("{}");
+        .get(async function (req, res) {
+            if (req.query.database && req.query.path) {
+                if (req.query.query) {
+                    let qu = typeof req.query.query === "string" ? JSON.parse(req.query.query) : req.query.query;
+                    let mask = req.query.mask || {};
+                    mask = typeof mask === "string" ? JSON.parse(mask) : mask;
+                    let object = await turbine.query(req.query.database, req.query.path, qu, mask);
+                    res.json(object);
+                } else {
+                    if (req.query.path.indexOf("*") == -1) {
+                        let mask = req.query.mask || {};
+                        mask = typeof mask === "string" ? JSON.parse(mask) : mask;
+                        let object = await turbine.get(req.query.database, req.query.path, mask);
+                        res.json(object);
+                    } else {
+                        let response = {};
+                        response.message = [];
+                        response.message.push("query_not_defined");
+                        res.status(400).json(response);
+                    }
+                }
+            } else {
+                let response = {};
+                response.message = [];
+                if (!req.body.database) {
+                    response.message.push("database_not_defined")
+                }
+                if (!req.body.database) {
+                    response.message.push("path_not_defined")
+                }
+                res.status(400).json(response);
+            }
         })
         .post(async function (req, res) {
             res.send("{}");
