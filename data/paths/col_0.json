@@ -2,7 +2,13 @@
     "paths": {
         "chats.ttt": {
             "path": "/chats/ttt",
-            "tokens": {}
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526863093874
+                }
+            }
         },
         "chats.aaa": {
             "path": "/chats/aaa",
@@ -35,7 +41,7 @@
                 "42e9c151fa3ba850": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526842858583
+                    "time": 1526863126440
                 },
                 "4b0647240e603805": {
                     "os": "android",
@@ -93,7 +99,7 @@
                 "42e9c151fa3ba850": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526842858796
+                    "time": 1526863126593
                 }
             }
         },
@@ -122,7 +128,57 @@
                 "42e9c151fa3ba850": {
                     "os": "android",
                     "queue": {},
-                    "time": 1526842858607
+                    "time": 1526863126418
+                }
+            }
+        },
+        "chats.1526859258402": {
+            "path": "/chats/1526859258402",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526859311683
+                }
+            }
+        },
+        "chats.1526859619758": {
+            "path": "/chats/1526859619758",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526863129518
+                }
+            }
+        },
+        "chats.1526859641925": {
+            "path": "/chats/1526859641925",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526863129540
+                }
+            }
+        },
+        "chats.1526862942262": {
+            "path": "/chats/1526862942262",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526863108552
+                }
+            }
+        },
+        "chats.null": {
+            "path": "/chats/null",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1526863129557
                 }
             }
         }

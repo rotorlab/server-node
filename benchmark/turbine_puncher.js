@@ -51,16 +51,14 @@ async function query(i = 0) {
         q.receivers = {};
         q.receivers[pp] = {};
         q.receivers[pp].id = pp;
-        let notifications = await turbine.query("notifications", "/notifications/*", {
-            content: {
-                room: "test"
-            },
-            time: 1526231920496
-        },{
-            id: "",
-            content: {
-                channelDescription: ""
+        let notifications = await turbine.query("database", "/chats/*", {
+            members: {
+                UB9D5Lx8AqTO4EoyLcx4y6GB19w2: {
+                    uid : "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"
+                }
             }
+        },{
+            id: ""
         });
       if (notifications && JSON.stringify(notifications) !== EMPTY_OBJECT) console.log(JSON.stringify(notifications));
       await query(i + 1)

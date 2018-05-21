@@ -60,10 +60,10 @@ router.post('/', function (req, res) {
     queue.pushJob(function () {
         if (req.body.method !== undefined && req.body.path !== undefined && req.body.database !== undefined) {
             if (req.body.method === "get") {
-                let interf = req.body.interface || {};
+                let interf = req.body.mask || {};
                 let object = databaseManager.getObject(req.body.database, req.body.path, "", interf);
                 if (typeof object === "string") {
-                    console.error(object)
+                    console.error(object);
                     res.status(406).send(object);
                 } else {
                     res.json(object)
@@ -72,14 +72,14 @@ router.post('/', function (req, res) {
                 console.log(JSON.stringify(req.body));
                 databaseManager.saveObject(req.body.database, req.body.path, req.body.value === null ? null : req.body.value).then(function (result) {
                     if (typeof result === "string") {
-                        console.error(result)
+                        console.error(result);
                         res.status(406).send(result);
                     } else {
                         res.json({})
                     }
                 });
             } else if (req.body.method === "query" && req.body.query !== undefined) {
-                let interf = req.body.interface || {};
+                let interf = req.body.mask || {};
                 console.log(JSON.stringify(req.body));
                 let object = databaseManager.getObjectFromQuery(req.body.database, req.body.path, req.body.query, interf);
                 if (typeof object === "string") {

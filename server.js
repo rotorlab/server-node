@@ -697,6 +697,7 @@ if (cluster.isMaster) {
         .get(async function (req, res) {
             if (req.query.database && req.query.path) {
                 if (req.query.query) {
+                    console.log("req.query.query: " + req.query.query);
                     let qu = typeof req.query.query === "string" ? JSON.parse(req.query.query) : req.query.query;
                     let mask = req.query.mask || {};
                     mask = typeof mask === "string" ? JSON.parse(mask) : mask;

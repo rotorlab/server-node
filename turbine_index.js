@@ -150,7 +150,7 @@ function Turbine(config) {
             database: database,
             path: path,
             query: query,
-            interface: interf
+            mask: interf
         };
         return await this.ask(this.turbine_ip + ":" + this.turbine_port + "/", data)
     };
