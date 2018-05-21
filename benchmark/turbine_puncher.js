@@ -54,11 +54,9 @@ async function query(i = 0) {
         let notifications = await turbine.query("database", "/chats/*", {
             members: {
                 UB9D5Lx8AqTO4EoyLcx4y6GB19w2: {
-                    uid : "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"
+                    uid: "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"
                 }
             }
-        },{
-            id: ""
         });
       if (notifications && JSON.stringify(notifications) !== EMPTY_OBJECT) console.log(JSON.stringify(notifications));
       await query(i + 1)

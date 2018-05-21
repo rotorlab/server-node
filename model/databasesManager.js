@@ -11,6 +11,12 @@ const Interval = require('Interval');
 const SN = require('sync-node');
 const queue = SN.createQueue();
 
+const logjs =                   require('logjsx');
+const logger = new logjs();
+logger.init({
+  level : "DEBUG"
+});
+
 const utils = new Utils();
 const SLASH = "/";
 
@@ -319,6 +325,9 @@ function DatabasesManager(configuration) {
     this.recursiveUnset = function (database, collection, pa, object) {
         for (let {parent, node, key, path, deep} of new RecursiveIterator(object)) {
             if (typeof node !== "object") {
+                if (typeof node === "string") {
+                    node = node.toLowerCase();
+                }
                 if (this.databases[database].collection(collection).values[node] === undefined) {
                     this.databases[database].collection(collection).values[node] = [];
                 }
@@ -340,11 +349,14 @@ function DatabasesManager(configuration) {
     this.recursiveSet = function (database, collection, pa, object) {
         for (let {parent, node, key, path, deep} of new RecursiveIterator(object)) {
             if (typeof node !== "object") {
+                if (typeof node === "string") {
+                    node = node.toLowerCase();
+                }
                 if (this.databases[database].collection(collection).values[node] === undefined) {
                     this.databases[database].collection(collection).values[node] = [];
                 }
                 let toAdd = pa + "/" + path.join("/");
-                if (this.databases[database].collection(collection).values[node].indexOf(toAdd) === -1) {
+                if (this.databases[database].collection(collection).values[node].indexOf(toAdd) == -1) {
                     this.databases[database].collection(collection).values[node].push(toAdd)
                 }
             }

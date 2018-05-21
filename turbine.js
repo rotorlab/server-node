@@ -69,7 +69,6 @@ router.post('/', function (req, res) {
                     res.json(object)
                 }
             } else if (req.body.method === "post" && req.body.value !== undefined) {
-                console.log(JSON.stringify(req.body));
                 databaseManager.saveObject(req.body.database, req.body.path, req.body.value === null ? null : req.body.value).then(function (result) {
                     if (typeof result === "string") {
                         console.error(result);
@@ -80,7 +79,6 @@ router.post('/', function (req, res) {
                 });
             } else if (req.body.method === "query" && req.body.query !== undefined) {
                 let interf = req.body.mask || {};
-                console.log(JSON.stringify(req.body));
                 let object = databaseManager.getObjectFromQuery(req.body.database, req.body.path, req.body.query, interf);
                 if (typeof object === "string") {
                     console.error(object)
