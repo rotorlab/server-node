@@ -287,6 +287,8 @@ function Reference(turbine, pathReference, connection, dbg) {
      * @param token
      */
     this.sha1Reference = function () {
+        console.log("sha1 FOR : " + JSON.stringify(this.DH.ref));
+        console.log("sha1 : " + sha1(JSON.stringify(this.DH.ref)));
         return sha1(JSON.stringify(this.DH.ref))
     };
 

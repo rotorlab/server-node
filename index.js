@@ -162,7 +162,7 @@ function RotorServer(callback) {
 
         await this.createDir(o.log_dir + process + "/");
 
-        let app = forever.start(["redis-server", "--port", o.redis_port + ""], redis_config);
+        let app = forever.start(["redis-server", "--port", o.redis_port + "", "--protected-mode", "no"], redis_config);
         app.on('start', function (code) {
             logger.info("Redis server started (" + o.redis_port + ")");
         });

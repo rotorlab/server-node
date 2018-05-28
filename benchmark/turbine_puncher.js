@@ -57,6 +57,9 @@ async function query(i = 0) {
                     uid: "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"
                 }
             }
+        },{
+          id: "",
+          name: ""
         });
       if (notifications && JSON.stringify(notifications) !== EMPTY_OBJECT) console.log(JSON.stringify(notifications));
       await query(i + 1)
