@@ -101,12 +101,15 @@ function Turbine(config) {
 
     /**
      * Returns the object of the given path
+     * @param token -> rotor id
      * @param database -> myDatabase
      * @param path
+     * @param interf
      * @returns {Promise<*>}
      */
-    this.get = async function(database, path, interf = {}) {
+    this.get = async function(token, database, path, interf = {}) {
         let data = {
+            token: token,
             method: "get",
             database: database,
             path: path,
@@ -117,13 +120,15 @@ function Turbine(config) {
 
     /**
      * Stores data in the given path. Removes if data is null or empty
+     * @param token -> rotor id
      * @param database -> myDatabase
      * @param path
      * @param value
      * @returns {Promise<void>}
      */
-    this.post = async function(database, path, value) {
+    this.post = async function(token, database, path, value) {
         let data = {
+            token: token,
             method: "post",
             database: database,
             path: path,
@@ -138,14 +143,16 @@ function Turbine(config) {
 
     /**
      * Returns a list of objects that contains the given fields and values
+     * @param token -> rotor id
      * @param database -> myDatabase
      * @param path -> /users/*
      * @param query -> { name: "Mark" }
      * @param interf -> { name: type("string) }
      * @returns {Promise<*>}
      */
-    this.query = async function(database, path, query, interf = {}) {
+    this.query = async function(token, database, path, query, interf = {}) {
         let data = {
+            token: token,
             method: "query",
             database: database,
             path: path,

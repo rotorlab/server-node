@@ -117,10 +117,11 @@ function RotorServer(callback) {
         redis.on("ready", async function () {
             await o.createDir(o.log_dir + o.uid);
             logger.info("Redis server already started (" + o.redis_port + ")");
+            /*
             let app = new App({log_dir:o.log_dir});
             app.start(o.ide_port).then(function () {
                 // nothing to do here
-            });
+            });*/
 
             let child = forever.start('./server.js', config);
             child.on('start', function(code) {

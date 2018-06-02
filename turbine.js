@@ -58,6 +58,13 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(timeout('120s'));
 router.post('/', function (req, res) {
     queue.pushJob(function () {
+        if (!req.body.token) {
+            let response = {};
+            response.message = [];
+            response.message.push("token_not_defined");
+            res.status(400).json(response);
+            return;
+        }
         if (req.body.method !== undefined && req.body.path !== undefined && req.body.database !== undefined) {
             if (req.body.method === "get") {
                 let interf = req.body.mask || {};

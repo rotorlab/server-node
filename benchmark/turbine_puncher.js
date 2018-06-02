@@ -27,7 +27,7 @@ function randomInt(max) {
 
 async function get(i = 0) {
     if (i < numReq) {
-        let notifications = await turbine.get("notifications", "/notifications/1526231920496");
+        let notifications = await turbine.get("toooookeeeeenn", "notifications", "/notifications/1526231920496");
         if (notifications && JSON.stringify(notifications) !== EMPTY_OBJECT) console.log(JSON.stringify(notifications));
         await get(i + 1)
     }
@@ -35,7 +35,7 @@ async function get(i = 0) {
 
 async function post(i = 0) {
     if (i < numReq) {
-        await turbine.post("database", "/users/" + randomString(), {
+        await turbine.post("toooookeeeeenn", "database", "/users/" + randomString(), {
             name: randomString(),
             age: randomInt(100)
         });
@@ -51,7 +51,7 @@ async function query(i = 0) {
         q.receivers = {};
         q.receivers[pp] = {};
         q.receivers[pp].id = pp;
-        let notifications = await turbine.query("database", "/chats/*", {
+        let notifications = await turbine.query("toooookeeeeenn", "database", "/chats/*", {
             members: {
                 UB9D5Lx8AqTO4EoyLcx4y6GB19w2: {
                     uid: "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"

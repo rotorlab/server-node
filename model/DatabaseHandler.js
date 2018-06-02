@@ -23,7 +23,7 @@ const ACTION_SIMPLE_UPDATE    = "simple_update";
 const ACTION_SLICE_UPDATE     = "slice_update";
 const ACTION_NO_UPDATE        = "no_update";
 
-function DatabaseHandler(turbine, database, path) {
+function DatabaseHandler(token, turbine, database, path) {
 
     // object reference
     var object = this;
@@ -46,13 +46,14 @@ function DatabaseHandler(turbine, database, path) {
     this.ref = {};
 
     this.pushConfig = null;
+    this.token = token;
 
     /**
      * loads the DB object reference of the given path on object.ref
      */
     this.syncFromDatabase = async function() {
         try {
-          object.ref = await turbine.get(database, path);
+          object.ref = await turbine.get(this.token, database, path);
         } catch(e) {
             logger.error("error getting from turbine: " + e)
         }
@@ -63,7 +64,7 @@ function DatabaseHandler(turbine, database, path) {
      */
     this.syncToDatabase = async function() {
         try {
-            await turbine.post(database, path, object.ref);
+            await turbine.post(this.token, database, path, object.ref);
         } catch(e) {
             logger.error("error sending to turbine: " + e)
         }

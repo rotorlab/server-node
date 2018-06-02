@@ -227,8 +227,6 @@ let action = {
                         token: connection.token,
                         os: connection.os
                     };
-                    logger.debug("sha: " + connection.sha1);
-                    logger.debug("sha cached: " + object.sha1Reference());
 
                     if (connection.sha1 === object.sha1Reference()) {
                         let k = Object.keys(paths.ref.tokens[connection.token].queue);
@@ -383,7 +381,7 @@ let action = {
             query.receivers[ids[id]] = {};
             query.receivers[ids[id]].id = ids[id];
 
-            let notifi = await turbine.query("notifications", "/notifications/*", query);
+            let notifi = await turbine.query(connection.token, "notifications", "/notifications/*", query);
 
             for (let o in notifi) {
                 let notifications = {};
@@ -582,6 +580,15 @@ let action = {
             connection.request = req;
             connection.callback = callback;
 
+            if (!connection.token) {
+                this.response(connection, null, "cluster_" + cluster.worker.id + "_token_not_defined");
+                return;
+            }
+            if (!connection.method) {
+                this.response(connection, null, "cluster_" + cluster.worker.id + "_method_not_defined");
+                return;
+            }
+
             switch (connection.method) {
 
                 case "listen_reference":
@@ -695,19 +702,26 @@ if (cluster.isMaster) {
     app.use(timeout('120s'));
     app.route('/')
         .get(async function (req, res) {
+            if (!req.query.token) {
+                let response = {};
+                response.message = [];
+                response.message.push("token_not_defined");
+                res.status(400).json(response);
+                return;
+            }
             if (req.query.database && req.query.path) {
                 if (req.query.query) {
                     console.log("req.query.query: " + req.query.query);
                     let qu = typeof req.query.query === "string" ? JSON.parse(req.query.query) : req.query.query;
                     let mask = req.query.mask || {};
                     mask = typeof mask === "string" ? JSON.parse(mask) : mask;
-                    let object = await turbine.query(req.query.database, req.query.path, qu, mask);
+                    let object = await turbine.query(req.token, req.query.database, req.query.path, qu, mask);
                     res.json(object);
                 } else {
                     if (req.query.path.indexOf("*") == -1) {
                         let mask = req.query.mask || {};
                         mask = typeof mask === "string" ? JSON.parse(mask) : mask;
-                        let object = await turbine.get(req.query.database, req.query.path, mask);
+                        let object = await turbine.get(req.token, req.query.database, req.query.path, mask);
                         res.json(object);
                     } else {
                         let response = {};
