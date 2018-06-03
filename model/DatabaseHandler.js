@@ -15,6 +15,11 @@ logger.init({
     level : "DEBUG"
 });
 
+String.prototype.replaceAll = function (search, replacement) {
+  let target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 // JSON pretty print
 JSON.stringifyAligned = require('json-align');
 
@@ -53,7 +58,7 @@ function DatabaseHandler(token, turbine, database, path) {
      */
     this.syncFromDatabase = async function() {
         try {
-          object.ref = await turbine.get(this.token, database, path);
+            object.ref = await turbine.get(this.token, database, path);
         } catch(e) {
             logger.error("error getting from turbine: " + e)
         }
@@ -120,6 +125,8 @@ function DatabaseHandler(token, turbine, database, path) {
             android_tokens.push(device.token);
         }
 
+        let sha1 = await this.sha1Reference();
+
         if (android_tokens.length > 0) {
             let data_android = this.getPartsFor(this.OS.ANDROID, JSON.parse(before), this.ref);
             if (object.debugVal) {
@@ -133,7 +140,7 @@ function DatabaseHandler(token, turbine, database, path) {
                 data.reference = data_android.parts[0];
                 data.action = ACTION_SIMPLE_UPDATE;
                 data.size = data_android.parts.length;
-                data.sha1 = this.sha1Reference();
+                data.sha1 = sha1;
                 data.index = 0;
                 let send = {};
                 send.data = data;
@@ -155,7 +162,7 @@ function DatabaseHandler(token, turbine, database, path) {
                     data.tag = this.pushConfig.tag();
                     data.reference = data_android.parts[i];
                     data.action = ACTION_SLICE_UPDATE;
-                    data.sha1 = this.sha1Reference();
+                    data.sha1 = sha1;
                     data.index = i;
                     data.size = data_android.parts.length;
                     let send = {};
@@ -176,7 +183,7 @@ function DatabaseHandler(token, turbine, database, path) {
                 let data = {};
                 data.id = id;
                 data.tag = this.pushConfig.tag();
-                data.sha1 = this.sha1Reference();
+                data.sha1 = sha1;
                 data.action = ACTION_NO_UPDATE;
                 let send = {};
                 send.data = data;
@@ -207,7 +214,7 @@ function DatabaseHandler(token, turbine, database, path) {
                 data.reference = data_ios.parts[0];
                 data.action = ACTION_SIMPLE_UPDATE;
                 data.size = data_ios.parts.length;
-                data.sha1 = this.sha1Reference();
+                data.sha1 = sha1;
                 data.index = 0;
                 let send = {};
                 send.data = data;
@@ -223,7 +230,7 @@ function DatabaseHandler(token, turbine, database, path) {
                     data.tag = this.pushConfig.tag();
                     data.reference = data_ios.parts[i];
                     data.action = ACTION_SLICE_UPDATE;
-                    data.sha1 = this.sha1Reference();
+                    data.sha1 = sha1;
                     data.index = i;
                     data.size = data_ios.parts.length;
                     let send = {};
@@ -403,8 +410,20 @@ function DatabaseHandler(token, turbine, database, path) {
      * Returns object SHA-1
      * @param token
      */
-    this.sha1Reference = function () {
-        return sha1(JSON.stringify(this.ref))
+    this.sha1Reference = async function () {
+        await this.syncFromDatabase();
+        let src = JSON.stringify(this.ref).replaceAll(/\\\\u/, "\\u");
+        let srcArr = src.split('');
+        let hashValue = 0;
+        for (let i = 0; i < src.length; i++) {
+            hashValue += src.charCodeAt(i);
+        }
+        // console.log("srcArr.length: " + srcArr.length);
+        // console.log("hashValue: " + hashValue);
+        let sha1Value = sha1(hashValue + "");
+        // console.log("CONTENT: " + src);
+        // console.log("sha1: " + sha1Value);
+        return sha1Value;
     };
 }
 

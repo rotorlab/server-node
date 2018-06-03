@@ -2,408 +2,302 @@
     "users": {
         "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
             "email": "efraespada@gmail.com",
-            "locations": {},
             "name": "Efra Espada",
             "os": "android",
             "photo": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
-            "steps": 0,
-            "token": "42e9c151fa3ba850",
-            "type": "",
-            "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"
+            "steps": 726,
+            "token": "1c8c6b1e5a7c8300",
+            "type": "sit",
+            "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+            "locations": {
+                "1527974462454": {
+                    "altitude": 664.5,
+                    "latitude": 40.41089833333333,
+                    "longitude": -3.7050333333333336,
+                    "speed": 0.26559666
+                },
+                "1527974462458": {
+                    "altitude": 652.1,
+                    "latitude": 40.41104333333333,
+                    "longitude": -3.7049299999999996
+                },
+                "1527974462456": {
+                    "accuracy": 3.7,
+                    "altitude": 651.9,
+                    "latitude": 40.41096833333334,
+                    "longitude": -3.7050116666666666
+                },
+                "1527977897943": {
+                    "accuracy": 3.1,
+                    "altitude": 642.7,
+                    "id": "1527977897943",
+                    "latitude": 40.41115333333333,
+                    "longitude": -3.705316666666667,
+                    "speed": 0,
+                    "steps": 176,
+                    "type": "sit"
+                },
+                "1528018875086": {
+                    "accuracy": 7.6,
+                    "altitude": 659.6,
+                    "id": "1528018875086",
+                    "latitude": 40.410983333333334,
+                    "longitude": -3.7048699999999997,
+                    "speed": 0,
+                    "steps": 343,
+                    "type": "sit"
+                },
+                "1528022493087": {
+                    "accuracy": 1.2,
+                    "altitude": 643.5,
+                    "id": "1528022493087",
+                    "latitude": 40.41106666666667,
+                    "longitude": -3.70495,
+                    "speed": 0,
+                    "steps": 714,
+                    "type": "sit"
+                }
+            }
         }
     },
     "chats": {
-        "1527446349919": {
-            "creation": 1527446349919,
-            "id": "1527446349919",
+        "1527976431184": {
+            "creation": 1527976431184,
+            "id": "1527976431184",
             "members": {
                 "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
-                    "email": "efraespada@gmail.com",
-                    "locations": {},
-                    "name": "Efra Espada",
-                    "os": "android",
-                    "photo": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
-                    "steps": 3,
-                    "token": "a330a5036501e8c0",
-                    "type": "sit",
-                    "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"
+                    "id": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "rol": "admin",
+                    "date": 1527976431185
                 }
             },
             "messages": {
-                "1527446357773": {
+                "1527976455678": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "ghyyytgtf"
+                    "text": "gggg"
                 },
-                "1527446360110": {
+                "1527976718220": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "yyyy"
+                    "text": "ggggikjfd"
                 },
-                "1527446362490": {
+                "1527976865353": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "hhhhh"
+                    "text": "yjdjdjejdi"
                 },
-                "1527446381795": {
+                "1527976866956": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "jjjj"
+                    "text": "jdisjd"
                 },
-                "1527446383869": {
+                "1527976868924": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "vvvv"
+                    "text": "hdiejdjjd"
                 },
-                "1527446388761": {
+                "1527976871194": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "hhhff"
+                    "text": "jdjsjsienxj"
                 },
-                "1527460152338": {
+                "1527976873176": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "\\uD83D\\uDE1C"
+                    "text": "jdjebdidj"
                 },
-                "1527460199911": {
+                "1527976876182": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "zdfvadfv zdv  \\uD83D\\uDE1C"
+                    "text": "djdiej"
                 },
-                "1527460229547": {
+                "1527976884592": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "ggggg"
+                    "text": ",\\uD83D\\uDE1A\\uD83D\\uDE02\\uD83D\\uDE02\\uD83D\\uDE0E\\uD83D\\uDE0A"
                 },
-                "1527460231625": {
+                "1527976932309": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "hhhh"
+                    "text": "ghhydry"
                 },
-                "1527460307717": {
+                "1527976938902": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "\\uD83D\\uDE1C"
+                    "text": "hgg,\\uD83D\\uDE0D\\uD83D\\uDE18\\uD83D\\uDE05\\uD83D\\uDE04"
                 },
-                "1527460324758": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "vvvvvv"
-                },
-                "1527460326764": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "kkkk"
-                },
-                "1527460641433": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dddd"
-                },
-                "1527460696336": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "nnnn"
-                },
-                "1527463366619": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "ddd"
-                }
-            },
-            "name": "yujop"
-        },
-        "1527446908153": {
-            "creation": 1527446908153,
-            "id": "1527446908153",
-            "members": {
-                "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
-                    "email": "efraespada@gmail.com",
-                    "locations": {},
-                    "name": "Efra Espada",
-                    "os": "android",
-                    "photo": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
-                    "steps": 0,
-                    "token": "42e9c151fa3ba850",
-                    "type": "",
-                    "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"
-                }
-            },
-            "messages": {
-                "1527446914781": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "hehehe"
-                },
-                "1527447411732": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "ljhliukgli"
-                },
-                "1527447417710": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "tttfff"
-                },
-                "1527447419678": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "hhhh"
-                },
-                "1527447421625": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "hhhhh"
-                },
-                "1527447426648": {
+                "1527976961455": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
                     "text": "ggg"
                 },
-                "1527447430550": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "yyy"
-                },
-                "1527448049991": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "qefqefcqaef"
-                },
-                "1527448051593": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "werfqerf"
-                },
-                "1527448117161": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "fqerfqerf"
-                },
-                "1527448121841": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "weeeeeeeee"
-                },
-                "1527461402975": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dfacefaewf"
-                },
-                "1527461473991": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "f"
-                },
-                "1527462322732": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "jjjj"
-                }
-            },
-            "name": "joiii"
-        },
-        "1527887900006": {
-            "creation": 1527887900006,
-            "id": "1527887900006",
-            "members": {
-                "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
-                    "email": "efraespada@gmail.com",
-                    "locations": {},
-                    "name": "Efra Espada",
-                    "os": "android",
-                    "photo": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
-                    "steps": 0,
-                    "token": "42e9c151fa3ba850",
-                    "type": "",
-                    "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2"
-                }
-            },
-            "messages": {
-                "1527887969621": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "gggg "
-                },
-                "1527888012226": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "ggggg"
-                },
-                "1527888022992": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dddd"
-                },
-                "1527888031156": {
+                "1527976962670": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
                     "text": "ggg"
                 },
-                "1527888033644": {
+                "1527976964311": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "oooo"
+                    "text": "ghh"
                 },
-                "1527888035675": {
+                "1527977017006": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "kkkkk"
+                    "text": "ggggg"
                 },
-                "1527888037697": {
+                "1527977035276": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ggy"
+                },
+                "1528020798034": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hola"
+                },
+                "1528020801306": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "kdjaiaj"
+                },
+                "1528020803333": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jsiwjsiwn"
+                },
+                "1528020805552": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jsisjsi"
+                },
+                "1528020807729": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "dhsisjsi"
+                },
+                "1528020809869": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "nejwbsij"
+                },
+                "1528020811873": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "nzisjsb"
+                },
+                "1528020813686": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "nsjwizj"
+                },
+                "1528020816472": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jj"
+                },
+                "1528020820363": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hdiebxi"
+                },
+                "1528020830097": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": ",\\uD83D\\uDE02\\uD83D\\uDE0E\\uD83D\\uDE0D\\uD83D\\uDE10\\uD83D\\uDE0B\\uD83D\\uDE0A\\uD83D\\uDE0D"
+                },
+                "1528020834426": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jxoskx"
+                },
+                "1528020836516": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "janzjzn"
+                },
+                "1528020841241": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "\\uD83D\\uDE18\\uD83D\\uDE0A\\uD83D\\uDE36\\uD83D\\uDE1A\\uD83D\\uDE0A\\uD83D\\uDE18\\uD83D\\uDE1A"
+                },
+                "1528020855043": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hhhh"
+                },
+                "1528020866970": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
                     "text": "ssss"
                 },
-                "1527888039494": {
+                "1528020893506": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "yyy"
+                    "text": "g"
                 },
-                "1527888041633": {
+                "1528020952592": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "uuuu"
+                    "text": "vggg"
                 },
-                "1527888043649": {
+                "1528020952627": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "uuu"
+                    "text": "vggg"
                 },
-                "1527888046775": {
+                "1528020952653": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "kkkk"
+                    "text": "vggg"
                 },
-                "1527888090673": {
+                "1528020955043": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": ",hhhh"
+                    "text": "vgggggvygg"
                 },
-                "1527888092696": {
+                "1528020957055": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "jjjj"
+                    "text": "hhy"
                 },
-                "1527888094408": {
+                "1528020971096": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "ggg"
+                    "text": "r"
                 },
-                "1527888096458": {
+                "1528020981370": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "jjjj"
+                    "text": "t"
                 },
-                "1527888098328": {
+                "1528021720227": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "yyyy"
+                    "text": "ffff"
                 },
-                "1527888259225": {
+                "1528021862984": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "gggg"
+                    "text": "I yg"
                 },
-                "1527888281850": {
+                "1528022054971": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "rgsrtgwrg"
+                    "text": "fggg"
                 },
-                "1527888282604": {
+                "1528022291402": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "rtgwr"
+                    "text": "hggg"
                 },
-                "1527888283630": {
+                "1528022321119": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "gwrtgwrt"
+                    "text": "vggg"
                 },
-                "1527888284745": {
+                "1528022363848": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "gvwrtgvwrt"
+                    "text": "\\uD83D\\uDE0B\\uD83D\\uDE0D\\uD83D\\uDE0D\\u263A"
                 },
-                "1527888378241": {
+                "1528022389916": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "sdfvadfv"
+                    "text": "ygeyh"
                 },
-                "1527888379590": {
+                "1528022392122": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dfvadfv"
+                    "text": "gfrghyf"
                 },
-                "1527888380489": {
+                "1528022394142": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "fdvadf"
+                    "text": "ggfdgh"
                 },
-                "1527888381195": {
+                "1528022396373": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adfv"
+                    "text": "ggffgtg"
                 },
-                "1527888382228": {
+                "1528022402882": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adfvad"
+                    "text": "\\uD83D\\uDE03\\uD83D\\uDE0E\\uD83D\\uDE0D\\uD83D\\uDE0D\\uD83D\\uDE0D\\uD83D\\uDE0B\\uD83D\\uDE0A\\uD83D\\uDE02\\uD83D\\uDE0D\\uD83D\\uDE18"
                 },
-                "1527888382808": {
+                "1528022404585": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "vad"
+                    "text": "jhgj"
                 },
-                "1527888383448": {
+                "1528022405925": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "vadf"
+                    "text": "ghu"
                 },
-                "1527888384523": {
+                "1528022408055": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "vadfvadf"
+                    "text": "hhyyjf"
                 },
-                "1527888385281": {
+                "1528022409758": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adfv"
+                    "text": "yfs"
                 },
-                "1527888385850": {
+                "1528022411968": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dfv"
-                },
-                "1527888386472": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dfv"
-                },
-                "1527888387542": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dfvadfv"
-                },
-                "1527888388543": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adfvadf"
-                },
-                "1527888389778": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "vadvadv"
-                },
-                "1527888390656": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adfva"
-                },
-                "1527888391758": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "fvadv"
-                },
-                "1527888392444": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dfv"
-                },
-                "1527888394356": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adfvadfvqadfv"
-                },
-                "1527888395841": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adfvadsva"
-                },
-                "1527888397365": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dfvadfvadf"
-                },
-                "1527888398074": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adf"
-                },
-                "1527888402191": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adadvadv"
-                },
-                "1527888403441": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dvadfv"
-                },
-                "1527888404472": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "dfvadv"
-                },
-                "1527888466130": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "adv"
-                },
-                "1527888469774": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "ddddd"
-                },
-                "1527888570514": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "gggg"
-                },
-                "1527888572724": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "uuuu"
-                },
-                "1527888574879": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "rrr"
-                },
-                "1527888576941": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "oooo"
-                },
-                "1527888579435": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "sss"
-                },
-                "1527888581436": {
-                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-                    "text": "hhhh"
+                    "text": "ffhkht"
                 }
             },
-            "name": "ddd"
+            "name": "yy"
         }
     }
 }

@@ -228,7 +228,8 @@ let action = {
                         os: connection.os
                     };
 
-                    if (connection.sha1 === object.sha1Reference()) {
+                    if (connection.sha1 === await object.sha1Reference()) {
+                        console.log("SAME_OBJECT");
                         let k = Object.keys(paths.ref.tokens[connection.token].queue);
                         for (let key in k) {
                             delete paths.ref.tokens[connection.token].queue[k[key]]
@@ -237,6 +238,7 @@ let action = {
                         data.info = "queue_ready";
                         action.response(connection, data, null);
                     } else {
+                        console.log("DIFFERENT_OBJECT");
                         let keys = Object.keys(paths.ref.tokens[connection.token].queue);
                         if (keys.length > 0) {
                             object.sendQueues(connection, {
@@ -476,7 +478,7 @@ let action = {
                 k = k.substring(1, k.length)
             }
             k = "/paths/" + k;
-            return new DatabaseHandler(turbine, "paths", k);
+            return new DatabaseHandler(connection.token, turbine, "paths", k);
         } else {
             return null
         }
@@ -702,26 +704,25 @@ if (cluster.isMaster) {
     app.use(timeout('120s'));
     app.route('/')
         .get(async function (req, res) {
-            if (!req.query.token) {
+            if (req.query.token === undefined) {
                 let response = {};
                 response.message = [];
                 response.message.push("token_not_defined");
-                res.status(400).json(response);
+                res.json(response);
                 return;
             }
-            if (req.query.database && req.query.path) {
-                if (req.query.query) {
-                    console.log("req.query.query: " + req.query.query);
+            if (req.query.database !== undefined && req.query.path !== undefined) {
+                if (req.query.query !== undefined) {
                     let qu = typeof req.query.query === "string" ? JSON.parse(req.query.query) : req.query.query;
                     let mask = req.query.mask || {};
                     mask = typeof mask === "string" ? JSON.parse(mask) : mask;
-                    let object = await turbine.query(req.token, req.query.database, req.query.path, qu, mask);
+                    let object = await turbine.query(req.query.token, req.query.database, req.query.path, qu, mask);
                     res.json(object);
                 } else {
                     if (req.query.path.indexOf("*") == -1) {
                         let mask = req.query.mask || {};
                         mask = typeof mask === "string" ? JSON.parse(mask) : mask;
-                        let object = await turbine.get(req.token, req.query.database, req.query.path, mask);
+                        let object = await turbine.get(req.query.token, req.query.database, req.query.path, mask);
                         res.json(object);
                     } else {
                         let response = {};
@@ -733,10 +734,10 @@ if (cluster.isMaster) {
             } else {
                 let response = {};
                 response.message = [];
-                if (!req.body.database) {
+                if (req.query.database === undefined) {
                     response.message.push("database_not_defined")
                 }
-                if (!req.body.database) {
+                if (req.query.path === undefined) {
                     response.message.push("path_not_defined")
                 }
                 res.status(400).json(response);
@@ -745,17 +746,17 @@ if (cluster.isMaster) {
         .post(async function (req, res) {
             res.send("{}");
             await action.parseRequest(req, async function (token, result, success, fail) {
-                logger.debug("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
+                // logger.debug("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.debug("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
                 let r = await redis.publish(token, JSON.stringify(result));
-                logger.debug("result: " + r);
+                // logger.debug("result: " + r);
                 if (r > 0) {
-                    logger.debug("SUCCESS publish result");
+                    // logger.debug("SUCCESS publish result");
                     if (success !== undefined) {
                         success();
                     }
                 } else {
-                    logger.debug("FAILED publish result");
+                    // logger.debug("couldn't publish on " + token);
                     if (fail !== undefined) {
                         fail();
                     }

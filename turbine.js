@@ -40,6 +40,10 @@ let config = {
     databases: databaseNames
 };
 
+const MAX_REQUEST = 15;
+
+let tokens = {};
+
 /**
  * check if given databases has own folder and collections, if not they are created.
  * also loads databases as associative arrays
@@ -58,46 +62,63 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(timeout('120s'));
 router.post('/', function (req, res) {
     queue.pushJob(function () {
-        if (!req.body.token) {
+        if (req.body.token === undefined) {
             let response = {};
             response.message = [];
             response.message.push("token_not_defined");
-            res.status(400).json(response);
-            return;
-        }
-        if (req.body.method !== undefined && req.body.path !== undefined && req.body.database !== undefined) {
-            if (req.body.method === "get") {
-                let interf = req.body.mask || {};
-                let object = databaseManager.getObject(req.body.database, req.body.path, "", interf);
-                if (typeof object === "string") {
-                    console.error(object);
-                    res.status(406).send(object);
+            res.json(response);
+        } else {
+            if (tokens[req.body.token] === undefined || tokens[req.body.token] < MAX_REQUEST) {
+                if (tokens[req.body.token] === undefined) {
+                    tokens[req.body.token] = 1;
                 } else {
-                    res.json(object)
+                    tokens[req.body.token] = tokens[req.body.token] + 1;
                 }
-            } else if (req.body.method === "post" && req.body.value !== undefined) {
-                databaseManager.saveObject(req.body.database, req.body.path, req.body.value === null ? null : req.body.value).then(function (result) {
-                    if (typeof result === "string") {
-                        console.error(result);
-                        res.status(406).send(result);
+                if (req.body.method !== undefined && req.body.path !== undefined && req.body.database !== undefined) {
+                    if (req.body.method === "get") {
+                        let interf = req.body.mask || {};
+                        let object = databaseManager.getObject(req.body.database, req.body.path, "", interf);
+                        if (typeof object === "string") {
+                            console.error(object);
+                            tokens[req.body.token] = tokens[req.body.token] - 1;
+                            res.status(406).send(object);
+                        } else {
+                            tokens[req.body.token] = tokens[req.body.token] - 1;
+                            res.json(object)
+                        }
+                    } else if (req.body.method === "post" && req.body.value !== undefined) {
+                        databaseManager.saveObject(req.body.database, req.body.path, req.body.value === null ? null : req.body.value).then(function (result) {
+                            if (typeof result === "string") {
+                                console.error(result);
+                                tokens[req.body.token] = tokens[req.body.token] - 1;
+                                res.status(406).send(result);
+                            } else {
+                                tokens[req.body.token] = tokens[req.body.token] - 1;
+                                res.json({})
+                            }
+                        });
+                    } else if (req.body.method === "query" && req.body.query !== undefined) {
+                        let interf = req.body.mask || {};
+                        let object = databaseManager.getObjectFromQuery(req.body.database, req.body.path, req.body.query, interf);
+                        if (typeof object === "string") {
+                            console.error(object);
+                            tokens[req.body.token] = tokens[req.body.token] - 1;
+                            res.status(406).send(object);
+                        } else {
+                            tokens[req.body.token] = tokens[req.body.token] - 1;
+                            res.json(object)
+                        }
                     } else {
-                        res.json({})
+                        tokens[req.body.token] = tokens[req.body.token] - 1;
+                        res.status(500).send("💥");
                     }
-                });
-            } else if (req.body.method === "query" && req.body.query !== undefined) {
-                let interf = req.body.mask || {};
-                let object = databaseManager.getObjectFromQuery(req.body.database, req.body.path, req.body.query, interf);
-                if (typeof object === "string") {
-                    console.error(object)
-                    res.status(406).send(object);
                 } else {
-                    res.json(object)
+                    tokens[req.body.token] = tokens[req.body.token] - 1;
+                    res.status(500).send("💥");
                 }
             } else {
-                res.status(500).send("💥");
+                res.status(500).send("too much request " + tokens[req.body.token] + " 🤯");
             }
-        } else {
-            res.status(500).send("💥");
         }
     });
 });
