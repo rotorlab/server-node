@@ -1,1 +1,51 @@
-{}
+{
+    "notifications": {
+        "1528053419153": {
+            "content": {
+                "body": "Cristina Fraile: jjhhg",
+                "channel": "myChannel",
+                "channelDescription": "Test channel",
+                "id": "1528053419153",
+                "photoSmall": "https://lh6.googleusercontent.com/-qeAdoFEs0eg/AAAAAAAAAAI/AAAAAAAAAAA/AB6qoq0CE5lzNKhwNH2dn9spYPJ_jc5oXQ/s96-c/photo.jpg",
+                "room": "yy",
+                "title": "yy",
+                "requestCode": 4532
+            },
+            "id": "1528053419153",
+            "receivers": {
+                "a330a5036501e8c0": {
+                    "id": "a330a5036501e8c0",
+                    "viewed": 1528054161194
+                }
+            },
+            "sender": {
+                "id": "1c8c6b1e5a7c8300",
+                "moment": 1528053419153
+            },
+            "time": 1528053419153
+        },
+        "1528058156612": {
+            "content": {
+                "body": "Has sido a\\u00F1adido a test",
+                "channel": "myChannel",
+                "channelDescription": "Test channel",
+                "id": "1528058156612",
+                "photoSmall": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
+                "requestCode": 4532,
+                "room": "1528040771071",
+                "title": "Nuevo grupo"
+            },
+            "id": "1528058156612",
+            "receivers": {
+                "95mu4CuRVrMovqmEZEd1wAznIR03": {
+                    "id": "95mu4CuRVrMovqmEZEd1wAznIR03"
+                }
+            },
+            "sender": {
+                "id": "a330a5036501e8c0",
+                "moment": 1528058156612
+            },
+            "time": 1528058156612
+        }
+    }
+}

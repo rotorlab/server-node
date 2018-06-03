@@ -582,11 +582,11 @@ let action = {
             connection.request = req;
             connection.callback = callback;
 
-            if (!connection.token) {
+            if (connection.token === undefined) {
                 this.response(connection, null, "cluster_" + cluster.worker.id + "_token_not_defined");
                 return;
             }
-            if (!connection.method) {
+            if (!connection.method === undefined) {
                 this.response(connection, null, "cluster_" + cluster.worker.id + "_method_not_defined");
                 return;
             }
