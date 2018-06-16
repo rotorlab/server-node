@@ -1,6 +1,6 @@
 {
   "name": "rotor-server",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Rotor server to work with JSON queues and Redis",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,6 @@
     "type": "git",
     "url": "git+https://github.com/rotorlab/server-node.git"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^6.0.0",
     "@angular/common": "^6.0.0",
