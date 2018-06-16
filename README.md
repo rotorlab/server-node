@@ -21,11 +21,11 @@ Here you can find all info about how to build a simple API with few lines.
 
 **Rotor philosophy** states that the only needed requests are those that change data on remote database. 
 
-![schema](https://github.com/rotorlab/server-node/raw/feature/mongodb/schema.png)
+![schema](https://github.com/rotorlab/server-node/raw/develop/images/shema_rotor.png)
 
 Rotor libraries are connected to Rotor and Redis servers. The first one controls object sharing queues, devices waiting for changes and all data edition on remote database. The second gives us Pub/Sub messaging pattern for data changes replication.
 
-When devices make changes in objects, client libraries send generated differences to Rotor server. This differences are applied in database and replicated on the rest of devices which are listening the same object.
+When devices make changes in objects, client libraries send generated differences to Rotor server. This differences are applied in the database and replicated on the rest of devices which are listening the same object.
 
 Check [paths page](https://github.com/rotorlab/server-node/wiki/Paths-and-models) for more info.
 
