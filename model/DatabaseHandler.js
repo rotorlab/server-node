@@ -58,7 +58,7 @@ function DatabaseHandler(token, turbine, database, path) {
      */
     this.syncFromDatabase = async function() {
         try {
-            object.ref = await turbine.get(this.token, database, path);
+            object.ref = await turbine.get(database, path);
         } catch(e) {
             logger.error("error getting from turbine: " + e)
         }
@@ -69,7 +69,7 @@ function DatabaseHandler(token, turbine, database, path) {
      */
     this.syncToDatabase = async function() {
         try {
-            await turbine.post(this.token, database, path, object.ref);
+            await turbine.post(database, path, object.ref);
         } catch(e) {
             logger.error("error sending to turbine: " + e)
         }

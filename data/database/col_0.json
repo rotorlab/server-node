@@ -192,5 +192,48 @@
             }
         }
     },
-    "chats": {}
+    "chats": {
+        "1529150233702": {
+            "creation": 1529150233702,
+            "id": "1529150233702",
+            "members": {
+                "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
+                    "date": 1529150233702,
+                    "id": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "rol": "admin"
+                }
+            },
+            "messages": {
+                "1529150238977": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "efafqefa"
+                },
+                "1529150240689": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "dfcaefcaef"
+                },
+                "1529150241857": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "aesdfcqaf"
+                },
+                "1529150242774": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "aerfcqe"
+                },
+                "1529150243800": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "fqefqc"
+                },
+                "1529151942526": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "WDCadscDS"
+                },
+                "1529151945221": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hsddsvad"
+                }
+            },
+            "name": "jjjj"
+        }
+    }
 }

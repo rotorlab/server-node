@@ -7,7 +7,8 @@ const Redis = require('ioredis');
 const numCPUs = require('os').cpus().length;
 const DatabaseHandler = require("./model/DatabaseHandler.js");
 const Reference = require("./model/Reference.js");
-const Turbine = require('./turbine_index.js');
+// const Turbine = require('./turbine_index.js');
+const Turbine = require('@efraespada/turbine');
 const apply = require('rus-diff').apply;
 const boxen = require('boxen');
 const logger = new logjs();
@@ -60,6 +61,7 @@ redis.on("error", function(err) {
 let turbine = new Turbine({
     "turbine_port": turbine_port,
     "turbine_ip": "http://localhost",
+    "log_dir": "../",
     "debug": debug
 });
 
@@ -383,7 +385,7 @@ let action = {
             query.receivers[ids[id]] = {};
             query.receivers[ids[id]].id = ids[id];
 
-            let notifi = await turbine.query(connection.token, "notifications", "/notifications/*", query);
+            let notifi = await turbine.query("notifications", "/notifications/*", query);
 
             for (let o in notifi) {
                 let notifications = {};
@@ -704,25 +706,18 @@ if (cluster.isMaster) {
     app.use(timeout('120s'));
     app.route('/')
         .get(async function (req, res) {
-            if (req.query.token === undefined) {
-                let response = {};
-                response.message = [];
-                response.message.push("token_not_defined");
-                res.json(response);
-                return;
-            }
             if (req.query.database !== undefined && req.query.path !== undefined) {
                 if (req.query.query !== undefined) {
                     let qu = typeof req.query.query === "string" ? JSON.parse(req.query.query) : req.query.query;
                     let mask = req.query.mask || {};
                     mask = typeof mask === "string" ? JSON.parse(mask) : mask;
-                    let object = await turbine.query(req.query.token, req.query.database, req.query.path, qu, mask);
+                    let object = await turbine.query(req.query.database, req.query.path, qu, mask);
                     res.json(object);
                 } else {
                     if (req.query.path.indexOf("*") == -1) {
                         let mask = req.query.mask || {};
                         mask = typeof mask === "string" ? JSON.parse(mask) : mask;
-                        let object = await turbine.get(req.query.token, req.query.database, req.query.path, mask);
+                        let object = await turbine.get(req.query.database, req.query.path, mask);
                         res.json(object);
                     } else {
                         let response = {};

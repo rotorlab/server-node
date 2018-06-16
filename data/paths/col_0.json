@@ -16,7 +16,7 @@
                 "42e9c151fa3ba850": {
                     "os": "android",
                     "queue": {},
-                    "time": 1528138699528
+                    "time": 1529151934676
                 }
             }
         },
@@ -275,6 +275,16 @@
         "notifications.1528058239942": {
             "path": "/notifications/1528058239942",
             "tokens": {}
+        },
+        "chats.1529150233702": {
+            "path": "/chats/1529150233702",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1529151945522
+                }
+            }
         }
     }
 }

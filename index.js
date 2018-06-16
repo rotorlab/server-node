@@ -1,5 +1,6 @@
 const forever =             require('forever-monitor');
-const Turbine =             require('./turbine_index.js');
+// const Turbine =             require('./turbine_index.js');
+const Turbine =             require('@efraespada/turbine');
 const App =                 require('./ide_index.js');
 const logjs =               require('logjsx');
 const Redis =               require('ioredis');

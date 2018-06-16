@@ -1,6 +1,5 @@
 .idea/
 node_modules/
 logs/
+data/
 package-lock.json
-database.json
-paths.json
