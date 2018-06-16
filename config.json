@@ -1,8 +1,7 @@
 {
     "server_port": 1508,
+    "turbine_port": 1510,
     "redis_port": 6379,
-    "turbine_port": 4444,
-    "turbine_mode": "complex",
-    "db_name": "database",
-    "debug": false
+    "databases": ["database"],
+    "debug": true
 }

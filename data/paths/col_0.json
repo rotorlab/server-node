@@ -1,0 +1,290 @@
+{
+    "paths": {
+        "users.UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
+            "path": "/users/UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528058307523
+                },
+                "a330a5036501e8c0": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528180336982
+                },
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1529151934676
+                }
+            }
+        },
+        "chats.1527976431184": {
+            "path": "/chats/1527976431184",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528058296450
+                },
+                "a330a5036501e8c0": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528058134922
+                },
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528138739680
+                }
+            }
+        },
+        "chats.1528039404949": {
+            "path": "/chats/1528039404949",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528039434538
+                }
+            }
+        },
+        "chats.null": {
+            "path": "/chats/null",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528140009559
+                },
+                "a330a5036501e8c0": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528139837090
+                },
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528139763914
+                }
+            }
+        },
+        "chats.1528039497732": {
+            "path": "/chats/1528039497732",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528039501382
+                }
+            }
+        },
+        "chats.1528039816323": {
+            "path": "/chats/1528039816323",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528039815845
+                }
+            }
+        },
+        "chats.1528039953386": {
+            "path": "/chats/1528039953386",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528039952750
+                }
+            }
+        },
+        "chats.1528040735622": {
+            "path": "/chats/1528040735622",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528040735003
+                }
+            }
+        },
+        "chats.1528040771071": {
+            "path": "/chats/1528040771071",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528058305192
+                },
+                "a330a5036501e8c0": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528058154650
+                },
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528138702720
+                }
+            }
+        },
+        "users.95mu4CuRVrMovqmEZEd1wAznIR03": {
+            "path": "/users/95mu4CuRVrMovqmEZEd1wAznIR03",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528181635490
+                },
+                "a330a5036501e8c0": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528058154743
+                },
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528138736709
+                }
+            }
+        },
+        "notifications.1528052614089": {
+            "path": "/notifications/1528052614089",
+            "tokens": {}
+        },
+        "notifications.1528052643481": {
+            "path": "/notifications/1528052643481",
+            "tokens": {}
+        },
+        "notifications.1528052956366": {
+            "path": "/notifications/1528052956366",
+            "tokens": {}
+        },
+        "notifications.1528053419153": {
+            "path": "/notifications/1528053419153",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528053418627
+                },
+                "a330a5036501e8c0": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528058131527
+                }
+            }
+        },
+        "chats.yy": {
+            "path": "/chats/yy",
+            "tokens": {
+                "1c8c6b1e5a7c8300": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528055870636
+                },
+                "a330a5036501e8c0": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528056220696
+                }
+            }
+        },
+        "notifications.1528054220891": {
+            "path": "/notifications/1528054220891",
+            "tokens": {}
+        },
+        "notifications.1528054393078": {
+            "path": "/notifications/1528054393078",
+            "tokens": {}
+        },
+        "notifications.1528054740755": {
+            "path": "/notifications/1528054740755",
+            "tokens": {}
+        },
+        "notifications.1528054876652": {
+            "path": "/notifications/1528054876652",
+            "tokens": {}
+        },
+        "notifications.1528055269903": {
+            "path": "/notifications/1528055269903",
+            "tokens": {}
+        },
+        "notifications.1528055651729": {
+            "path": "/notifications/1528055651729",
+            "tokens": {}
+        },
+        "notifications.1528055822403": {
+            "path": "/notifications/1528055822403",
+            "tokens": {}
+        },
+        "notifications.1528055867683": {
+            "path": "/notifications/1528055867683",
+            "tokens": {}
+        },
+        "notifications.1528056214499": {
+            "path": "/notifications/1528056214499",
+            "tokens": {}
+        },
+        "notifications.1528056231111": {
+            "path": "/notifications/1528056231111",
+            "tokens": {}
+        },
+        "notifications.1528056373763": {
+            "path": "/notifications/1528056373763",
+            "tokens": {}
+        },
+        "notifications.1528056390706": {
+            "path": "/notifications/1528056390706",
+            "tokens": {}
+        },
+        "notifications.1528056415703": {
+            "path": "/notifications/1528056415703",
+            "tokens": {}
+        },
+        "notifications.1528056489859": {
+            "path": "/notifications/1528056489859",
+            "tokens": {}
+        },
+        "notifications.1528056508566": {
+            "path": "/notifications/1528056508566",
+            "tokens": {}
+        },
+        "notifications.1528057210859": {
+            "path": "/notifications/1528057210859",
+            "tokens": {
+                "a330a5036501e8c0": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528057209184
+                }
+            }
+        },
+        "notifications.1528058156612": {
+            "path": "/notifications/1528058156612",
+            "tokens": {
+                "a330a5036501e8c0": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1528058154933
+                }
+            }
+        },
+        "notifications.1528058239942": {
+            "path": "/notifications/1528058239942",
+            "tokens": {}
+        },
+        "chats.1529150233702": {
+            "path": "/chats/1529150233702",
+            "tokens": {
+                "42e9c151fa3ba850": {
+                    "os": "android",
+                    "queue": {},
+                    "time": 1529151945522
+                }
+            }
+        }
+    }
+}

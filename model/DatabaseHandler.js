@@ -3,25 +3,22 @@
  * */
 
 // server database
-const JsonDB =                  require('node-json-db');
-const BSON =                    require('bson');
-const rp =                      require('request-promise');
 const sha1 =                    require('sha1');
 
-const bson = new BSON();
-
 // returns JSON differences
-const diff =                  require('rus-diff').diff;
+const diff =                    require('rus-diff').diff;
 
 // logs
-const logjs =                 require('logjsx');
+const logjs =                   require('logjsx');
 const logger = new logjs();
 logger.init({
     level : "DEBUG"
 });
 
-// queue
-const SN =                    require('sync-node');
+String.prototype.replaceAll = function (search, replacement) {
+  let target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
+};
 
 // JSON pretty print
 JSON.stringifyAligned = require('json-align');
@@ -31,14 +28,13 @@ const ACTION_SIMPLE_UPDATE    = "simple_update";
 const ACTION_SLICE_UPDATE     = "slice_update";
 const ACTION_NO_UPDATE        = "no_update";
 
-function DatabaseHandler(database, path, port) {
+function DatabaseHandler(token, turbine, database, path) {
 
     // object reference
     var object = this;
 
     // debug
     this.debugVal = true;
-    this.port = port;
 
     // os
     this.OS = {};
@@ -51,63 +47,29 @@ function DatabaseHandler(database, path, port) {
     this.lengthLimit.ANDROID = (4096 - lengthMargin);
     this.lengthLimit.IOS = (2048 - lengthMargin);
 
-    // sync queue
-    this.queue = SN.createQueue();
-
-    // database
-    this.db = new JsonDB(database, true, true);
-
     // db reference
     this.ref = {};
 
     this.pushConfig = null;
+    this.token = token;
 
     /**
      * loads the DB object reference of the given path on object.ref
-     * TODO change to mongoDB
      */
     this.syncFromDatabase = async function() {
         try {
-            let data = {};
-            data.path = path;
-            data.method = "get";
-            data.database = database;
-            object.ref = await this.ask('http://localhost:' + object.port + '/', data);
+            object.ref = await turbine.get(database, path);
         } catch(e) {
             logger.error("error getting from turbine: " + e)
         }
     };
 
-    this.ask = async function(url, data) {
-        return new Promise(function(resolve, reject) {
-            let options = {
-                method: 'POST',
-                uri: url,
-                body: data,
-                json: true
-            };
-            rp(options)
-                .then(function (parsedBody) {
-                    resolve(parsedBody)
-                })
-                .catch(function (err) {
-                    reject(err)
-                });
-        });
-    };
-
     /**
      * stores object on server database
-     * TODO change to mongoDB
      */
     this.syncToDatabase = async function() {
         try {
-            let data = {};
-            data.path = path;
-            data.database = database;
-            data.method = "post";
-            data.value = JSON.stringify(object.ref);
-            await this.ask('http://localhost:' + port + '/', data);
+            await turbine.post(database, path, object.ref);
         } catch(e) {
             logger.error("error sending to turbine: " + e)
         }
@@ -163,9 +125,7 @@ function DatabaseHandler(database, path, port) {
             android_tokens.push(device.token);
         }
 
-        logger.debug("stored: " + JSON.stringify(this.ref));
-        logger.debug("arrived: " + before);
-
+        let sha1 = await this.sha1Reference();
 
         if (android_tokens.length > 0) {
             let data_android = this.getPartsFor(this.OS.ANDROID, JSON.parse(before), this.ref);
@@ -180,7 +140,7 @@ function DatabaseHandler(database, path, port) {
                 data.reference = data_android.parts[0];
                 data.action = ACTION_SIMPLE_UPDATE;
                 data.size = data_android.parts.length;
-                data.sha1 = this.sha1Reference();
+                data.sha1 = sha1;
                 data.index = 0;
                 let send = {};
                 send.data = data;
@@ -202,7 +162,7 @@ function DatabaseHandler(database, path, port) {
                     data.tag = this.pushConfig.tag();
                     data.reference = data_android.parts[i];
                     data.action = ACTION_SLICE_UPDATE;
-                    data.sha1 = this.sha1Reference();
+                    data.sha1 = sha1;
                     data.index = i;
                     data.size = data_android.parts.length;
                     let send = {};
@@ -223,7 +183,7 @@ function DatabaseHandler(database, path, port) {
                 let data = {};
                 data.id = id;
                 data.tag = this.pushConfig.tag();
-                data.sha1 = this.sha1Reference();
+                data.sha1 = sha1;
                 data.action = ACTION_NO_UPDATE;
                 let send = {};
                 send.data = data;
@@ -254,7 +214,7 @@ function DatabaseHandler(database, path, port) {
                 data.reference = data_ios.parts[0];
                 data.action = ACTION_SIMPLE_UPDATE;
                 data.size = data_ios.parts.length;
-                data.sha1 = this.sha1Reference();
+                data.sha1 = sha1;
                 data.index = 0;
                 let send = {};
                 send.data = data;
@@ -270,7 +230,7 @@ function DatabaseHandler(database, path, port) {
                     data.tag = this.pushConfig.tag();
                     data.reference = data_ios.parts[i];
                     data.action = ACTION_SLICE_UPDATE;
-                    data.sha1 = this.sha1Reference();
+                    data.sha1 = sha1;
                     data.index = i;
                     data.size = data_ios.parts.length;
                     let send = {};
@@ -450,8 +410,20 @@ function DatabaseHandler(database, path, port) {
      * Returns object SHA-1
      * @param token
      */
-    this.sha1Reference = function () {
-        return sha1(JSON.stringify(this.ref))
+    this.sha1Reference = async function () {
+        await this.syncFromDatabase();
+        let src = JSON.stringify(this.ref).replaceAll(/\\\\u/, "\\u");
+        let srcArr = src.split('');
+        let hashValue = 0;
+        for (let i = 0; i < src.length; i++) {
+            hashValue += src.charCodeAt(i);
+        }
+        // console.log("srcArr.length: " + srcArr.length);
+        // console.log("hashValue: " + hashValue);
+        let sha1Value = sha1(hashValue + "");
+        // console.log("CONTENT: " + src);
+        // console.log("sha1: " + sha1Value);
+        return sha1Value;
     };
 }
 

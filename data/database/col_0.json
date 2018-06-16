@@ -1,0 +1,239 @@
+{
+    "users": {
+        "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
+            "email": "efraespada@gmail.com",
+            "name": "Efra Espada",
+            "os": "android",
+            "photo": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
+            "steps": 386,
+            "token": "a330a5036501e8c0",
+            "type": "walking",
+            "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+            "locations": {
+                "1527974462454": {
+                    "altitude": 664.5,
+                    "latitude": 40.41089833333333,
+                    "longitude": -3.7050333333333336,
+                    "speed": 0.26559666
+                },
+                "1527974462458": {
+                    "altitude": 652.1,
+                    "latitude": 40.41104333333333,
+                    "longitude": -3.7049299999999996
+                },
+                "1527974462456": {
+                    "accuracy": 3.7,
+                    "altitude": 651.9,
+                    "latitude": 40.41096833333334,
+                    "longitude": -3.7050116666666666
+                },
+                "1527977897943": {
+                    "accuracy": 3.1,
+                    "altitude": 642.7,
+                    "id": "1527977897943",
+                    "latitude": 40.41115333333333,
+                    "longitude": -3.705316666666667,
+                    "speed": 0,
+                    "steps": 176,
+                    "type": "sit"
+                },
+                "1528018875086": {
+                    "accuracy": 7.6,
+                    "altitude": 659.6,
+                    "id": "1528018875086",
+                    "latitude": 40.410983333333334,
+                    "longitude": -3.7048699999999997,
+                    "speed": 0,
+                    "steps": 343,
+                    "type": "sit"
+                },
+                "1528022493087": {
+                    "accuracy": 1.2,
+                    "altitude": 643.5,
+                    "id": "1528022493087",
+                    "latitude": 40.41106666666667,
+                    "longitude": -3.70495,
+                    "speed": 0,
+                    "steps": 714,
+                    "type": "sit"
+                },
+                "1528023303054": {
+                    "accuracy": 3.7,
+                    "altitude": 642.1,
+                    "id": "1528023303054",
+                    "latitude": 40.411138333333334,
+                    "longitude": -3.7051149999999997,
+                    "speed": 0,
+                    "steps": 958,
+                    "type": "sit"
+                },
+                "1528038250065": {
+                    "accuracy": 5.9,
+                    "altitude": 611.5,
+                    "id": "1528038250065",
+                    "latitude": 40.41108166666667,
+                    "longitude": -3.705166666666667,
+                    "speed": 0,
+                    "steps": 61,
+                    "type": ""
+                },
+                "1528038310073": {
+                    "accuracy": 3,
+                    "altitude": 609.3,
+                    "id": "1528038310073",
+                    "latitude": 40.41115166666667,
+                    "longitude": -3.705081666666666,
+                    "speed": 0,
+                    "steps": 66,
+                    "type": ""
+                },
+                "1528040067104": {
+                    "accuracy": 4.7,
+                    "altitude": 534,
+                    "id": "1528040067104",
+                    "latitude": 40.41084166666667,
+                    "longitude": -3.705028333333333,
+                    "speed": 0,
+                    "steps": 24,
+                    "type": ""
+                },
+                "1528045195111": {
+                    "accuracy": 6.9,
+                    "altitude": 651.2,
+                    "id": "1528045195111",
+                    "latitude": 40.41098,
+                    "longitude": -3.70491,
+                    "speed": 0,
+                    "steps": 255,
+                    "type": ""
+                },
+                "1528052605142": {
+                    "accuracy": 5.7,
+                    "altitude": 654.3,
+                    "id": "1528052605142",
+                    "latitude": 40.410995,
+                    "longitude": -3.705045,
+                    "speed": 0,
+                    "steps": 87,
+                    "type": ""
+                },
+                "1528053355067": {
+                    "accuracy": 2.2,
+                    "altitude": 648,
+                    "id": "1528053355067",
+                    "latitude": 40.411055000000005,
+                    "longitude": -3.7050066666666672,
+                    "speed": 0.28000888,
+                    "steps": 109,
+                    "type": ""
+                },
+                "1528058165036": {
+                    "accuracy": 2.4,
+                    "altitude": 662.2,
+                    "id": "1528058165036",
+                    "latitude": 40.411098333333335,
+                    "longitude": -3.70491,
+                    "speed": 0.13125417,
+                    "steps": 230,
+                    "type": "walking"
+                },
+                "1528138921190": {
+                    "accuracy": 18.1,
+                    "altitude": 668.8,
+                    "id": "1528138921190",
+                    "latitude": 40.411065,
+                    "longitude": -3.7049733333333337,
+                    "speed": 0.03963361,
+                    "steps": 309,
+                    "type": "walking"
+                },
+                "1528167900210": {
+                    "accuracy": 20.6,
+                    "altitude": 693,
+                    "id": "1528167900210",
+                    "latitude": 40.41176166666666,
+                    "longitude": -3.705096666666666,
+                    "speed": 0.20897722,
+                    "steps": 380,
+                    "type": "walking"
+                }
+            }
+        },
+        "95mu4CuRVrMovqmEZEd1wAznIR03": {
+            "email": "efracris@gmail.com",
+            "name": "Cristina Fraile",
+            "os": "android",
+            "photo": "https://lh6.googleusercontent.com/-qeAdoFEs0eg/AAAAAAAAAAI/AAAAAAAAAAA/AB6qoq0CE5lzNKhwNH2dn9spYPJ_jc5oXQ/s96-c/photo.jpg",
+            "steps": 441,
+            "token": "1c8c6b1e5a7c8300",
+            "type": "walking",
+            "uid": "95mu4CuRVrMovqmEZEd1wAznIR03",
+            "locations": {
+                "1528056471057": {
+                    "accuracy": 4.8,
+                    "altitude": 668.7,
+                    "id": "1528056471057",
+                    "latitude": 40.41095333333333,
+                    "longitude": -3.7049700000000003,
+                    "speed": 0,
+                    "steps": 89,
+                    "type": ""
+                },
+                "1528058341059": {
+                    "accuracy": 4.3,
+                    "altitude": 661,
+                    "id": "1528058341059",
+                    "latitude": 40.41121666666666,
+                    "longitude": -3.704908333333334,
+                    "speed": 0,
+                    "steps": 232,
+                    "type": ""
+                }
+            }
+        }
+    },
+    "chats": {
+        "1529150233702": {
+            "creation": 1529150233702,
+            "id": "1529150233702",
+            "members": {
+                "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
+                    "date": 1529150233702,
+                    "id": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "rol": "admin"
+                }
+            },
+            "messages": {
+                "1529150238977": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "efafqefa"
+                },
+                "1529150240689": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "dfcaefcaef"
+                },
+                "1529150241857": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "aesdfcqaf"
+                },
+                "1529150242774": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "aerfcqe"
+                },
+                "1529150243800": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "fqefqc"
+                },
+                "1529151942526": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "WDCadscDS"
+                },
+                "1529151945221": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hsddsvad"
+                }
+            },
+            "name": "jjjj"
+        }
+    }
+}

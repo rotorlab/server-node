@@ -7,6 +7,8 @@ const Redis = require('ioredis');
 const numCPUs = require('os').cpus().length;
 const DatabaseHandler = require("./model/DatabaseHandler.js");
 const Reference = require("./model/Reference.js");
+// const Turbine = require('./turbine_index.js');
+const Turbine = require('@efraespada/turbine');
 const apply = require('rus-diff').apply;
 const boxen = require('boxen');
 const logger = new logjs();
@@ -52,6 +54,17 @@ logger.init({
 });
 
 let redis = new Redis(redis_port);
+redis.on("error", function(err) {
+    console.error("err: " + err)
+});
+
+let turbine = new Turbine({
+    "turbine_port": turbine_port,
+    "turbine_ip": "http://localhost",
+    "log_dir": "../",
+    "debug": debug
+});
+
 
 const VARS = {
     USER_AGENT: "user-agent",
@@ -72,12 +85,16 @@ const ERROR_RESPONSE = {
     UPDATE_DATA_MSG: "_error_updating_data",
     ADD_LISTENER: "_error_creating_listener",
     ADD_LISTENER_MSG: "_error_creating_listener",
+    PENDING_NOTIFICATIONS: "_error_getting_pending_notifications",
+    SEND_NOTIFICATION: "_error_sending_notification",
+    REMOVE_REFERENCE: "_error_removing_reference",
     REMOVE_LISTENER: "_error_removing_listener",
     REMOVE_LISTENER_MSG: "_error_removing_listener"
 };
 
 const KEY_REQUEST = {
     METHOD: "method",
+    DATABASE: "database",
     PATH: "path",
     SHA1: "sha1",
     TOKEN: "token",
@@ -138,7 +155,7 @@ let action = {
      * @param connection
      */
     listen: async function (connection) {
-        let paths = action.getPath(connection);
+        let paths = action.getPathHandler(connection);
         /**
          * work with path database
          */
@@ -212,10 +229,9 @@ let action = {
                         token: connection.token,
                         os: connection.os
                     };
-                    logger.debug("sha: " + connection.sha1);
-                    logger.debug("sha cached: " + object.sha1Reference());
 
-                    if (connection.sha1 === object.sha1Reference()) {
+                    if (connection.sha1 === await object.sha1Reference()) {
+                        console.log("SAME_OBJECT");
                         let k = Object.keys(paths.ref.tokens[connection.token].queue);
                         for (let key in k) {
                             delete paths.ref.tokens[connection.token].queue[k[key]]
@@ -224,6 +240,7 @@ let action = {
                         data.info = "queue_ready";
                         action.response(connection, data, null);
                     } else {
+                        console.log("DIFFERENT_OBJECT");
                         let keys = Object.keys(paths.ref.tokens[connection.token].queue);
                         if (keys.length > 0) {
                             object.sendQueues(connection, {
@@ -254,7 +271,7 @@ let action = {
         }
     },
     unlisten: async function (connection) {
-        let paths = action.getPath(connection);
+        let paths = action.getPathHandler(connection);
         await paths.syncFromDatabase();
 
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
@@ -285,7 +302,7 @@ let action = {
      */
     updateTime: async function (connection) {
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-            let paths = action.getPath(connection);
+            let paths = action.getPathHandler(connection);
 
             await paths.syncFromDatabase();
 
@@ -358,6 +375,26 @@ let action = {
         }
     },
 
+    pendingNotifications: async function(connection) {
+        let ids = connection[KEY_REQUEST.RECEIVERS];
+
+        for (let id in ids) {
+            let query = {};
+            logger.debug("id: " + ids[id]);
+            query.receivers = {};
+            query.receivers[ids[id]] = {};
+            query.receivers[ids[id]].id = ids[id];
+
+            let notifi = await turbine.query("notifications", "/notifications/*", query);
+
+            for (let o in notifi) {
+                let notifications = {};
+                notifications.id = notifi[o].id;
+                notifications.method = "add";
+                action.notify(connection, ids[id], notifications, null)
+            }
+        }
+    },
     /**
      * Removes reference in database
      * @param connection
@@ -412,7 +449,7 @@ let action = {
         }
     },
     getReference: async function (connection) {
-        let paths = action.getPath(connection);
+        let paths = action.getPathHandler(connection);
         await paths.syncFromDatabase();
         let error = null;
 
@@ -420,7 +457,7 @@ let action = {
             if (connection.path.indexOf("\.") === -1) {
                 if (connection.path.indexOf("/") === 0) {
                     if (paths.ref !== undefined) {
-                        return new Reference(paths, connection, dbMaster, debug.toString(), turbine_port.toString());
+                        return new Reference(turbine, paths, connection, debug.toString());
                     } else {
                         error = "holder_not_found_on" + key;
                     }
@@ -436,14 +473,14 @@ let action = {
         logger.error(error);
         return error;
     },
-    getPath: function (connection) {
+    getPathHandler: function (connection) {
         if (connection.path !== undefined) {
             let k = connection.path.replaceAll("/", "\.");
             if (k.startsWith(".")) {
                 k = k.substring(1, k.length)
             }
             k = "/paths/" + k;
-            return new DatabaseHandler("paths", k, turbine_port.toString());
+            return new DatabaseHandler(connection.token, turbine, "paths", k);
         } else {
             return null
         }
@@ -456,7 +493,7 @@ let action = {
         }
         return messages;
     },
-    parseRequest: async function (req, res) {
+    parseRequest: async function (req, callback) {
 
         try {
             let message = req.body;
@@ -472,6 +509,11 @@ let action = {
                     case KEY_REQUEST.METHOD:
                         connection[key] = message[key];
                         logger.debug(KEY_REQUEST.METHOD + ": " + connection[key]);
+                        break;
+
+                    case KEY_REQUEST.DATABASE:
+                        connection[key] = message[key];
+                        logger.debug(KEY_REQUEST.DATABASE + ": " + connection[key]);
                         break;
 
                     case KEY_REQUEST.PATH:
@@ -540,7 +582,16 @@ let action = {
             connection.id = new Date().getTime();
             connection.worker = cluster.worker.id;
             connection.request = req;
-            connection.callback = res;
+            connection.callback = callback;
+
+            if (connection.token === undefined) {
+                this.response(connection, null, "cluster_" + cluster.worker.id + "_token_not_defined");
+                return;
+            }
+            if (!connection.method === undefined) {
+                this.response(connection, null, "cluster_" + cluster.worker.id + "_method_not_defined");
+                return;
+            }
 
             switch (connection.method) {
 
@@ -577,7 +628,7 @@ let action = {
                         await this.remove(connection);
                     } catch (e) {
                         logger.error("there was an error parsing request from remove: " + e.toString());
-                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.REMOVE_REFERENCE);
                     }
                     break;
 
@@ -595,7 +646,23 @@ let action = {
                         this.sendNotifications(connection);
                     } catch (e) {
                         logger.error("there was an error parsing request from send_notifications: " + e.toString());
-                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.UPDATE_DATA);
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.SEND_NOTIFICATION);
+                    }
+                    break;
+
+                case "login":
+
+                // ide methods
+                case "get_admin":
+
+                    break;
+
+                case "pending_notifications":
+                    try {
+                        await this.pendingNotifications(connection);
+                    } catch (e) {
+                        logger.error("there was an error parsing request from pendingNotifications: " + e.toString());
+                        this.response(connection, null, "cluster_" + cluster.worker.id + ERROR_RESPONSE.PENDING_NOTIFICATIONS);
                     }
                     break;
 
@@ -609,7 +676,7 @@ let action = {
             logger.error("there was an error parsing request: " + e.toString());
 
             let result = {status: VARS.RESPONSE_KO, data: null, error: ERROR_REQUEST.MISSING_WRONG_PARAMS};
-            res(req.token, result);
+            callback(req.token, result);
         }
     }
 };
@@ -638,28 +705,58 @@ if (cluster.isMaster) {
     app.use(bodyParser.json({limit: '50mb'}));
     app.use(timeout('120s'));
     app.route('/')
-        .get(function (req, res) {
-            res.send("hi :)");
+        .get(async function (req, res) {
+            if (req.query.database !== undefined && req.query.path !== undefined) {
+                if (req.query.query !== undefined) {
+                    let qu = typeof req.query.query === "string" ? JSON.parse(req.query.query) : req.query.query;
+                    let mask = req.query.mask || {};
+                    mask = typeof mask === "string" ? JSON.parse(mask) : mask;
+                    let object = await turbine.query(req.query.database, req.query.path, qu, mask);
+                    res.json(object);
+                } else {
+                    if (req.query.path.indexOf("*") == -1) {
+                        let mask = req.query.mask || {};
+                        mask = typeof mask === "string" ? JSON.parse(mask) : mask;
+                        let object = await turbine.get(req.query.database, req.query.path, mask);
+                        res.json(object);
+                    } else {
+                        let response = {};
+                        response.message = [];
+                        response.message.push("query_not_defined");
+                        res.status(400).json(response);
+                    }
+                }
+            } else {
+                let response = {};
+                response.message = [];
+                if (req.query.database === undefined) {
+                    response.message.push("database_not_defined")
+                }
+                if (req.query.path === undefined) {
+                    response.message.push("path_not_defined")
+                }
+                res.status(400).json(response);
+            }
         })
         .post(async function (req, res) {
+            res.send("{}");
             await action.parseRequest(req, async function (token, result, success, fail) {
-                logger.debug("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
+                // logger.debug("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
                 logger.debug("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
                 let r = await redis.publish(token, JSON.stringify(result));
-                logger.debug("result: " + r);
+                // logger.debug("result: " + r);
                 if (r > 0) {
-                    logger.debug("SUCCESS publish result");
+                    // logger.debug("SUCCESS publish result");
                     if (success !== undefined) {
                         success();
                     }
                 } else {
-                    logger.debug("FAILED publish result");
+                    // logger.debug("couldn't publish on " + token);
                     if (fail !== undefined) {
                         fail();
                     }
                 }
             });
-            res.send("{}")
         });
     app.listen(server_port, function () {
         logger.debug("rotor cluster started on port " + server_port + " | worker => " + cluster.worker.id);

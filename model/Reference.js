@@ -5,6 +5,11 @@ const sha1 =                  require('sha1');
 
 JSON.stringifyAligned = require('json-align');
 
+String.prototype.replaceAll = function (search, replacement) {
+  let target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 var logger = new logjs();
 
 logger.init({
@@ -18,22 +23,21 @@ const ACTION_NO_UPDATE        = "no_update";
 
 /**
  * Reference for
+ * @param turbine
  * @param pathReference
  * @param connection
  * @param database
  * @param dbg
  * @constructor
  */
-function Reference(pathReference, connection, database, dbg, port) {
+function Reference(turbine, pathReference, connection, dbg) {
 
     // object reference
     var object = this;
 
     this.path = connection.path; //
-    this.database = database;
-    this.port = port;
     this.pathReference = pathReference;
-    this.DH = new DatabaseHandler(this.database, this.path, this.port);
+    this.DH = new DatabaseHandler(connection.token, turbine, connection.database, this.path);
     this.DH.syncFromDatabase().then(function () {
 
     });
@@ -128,6 +132,8 @@ function Reference(pathReference, connection, database, dbg, port) {
 
             let tokens = Object.keys(this.pathReference.ref.tokens);
 
+            let sha1 = await this.sha1Reference();
+
             for (let i in tokens) {
                 let tok = tokens[i];
 
@@ -153,7 +159,7 @@ function Reference(pathReference, connection, database, dbg, port) {
                         data.action = ACTION_SIMPLE_UPDATE;
                         data.size = dataToSend.parts.length;
                         data.index = 0;
-                        data.sha1 = this.sha1Reference();
+                        data.sha1 = sha1;
                         let send = {};
                         send.data = data;
                         send.tokens = [tok];
@@ -182,7 +188,7 @@ function Reference(pathReference, connection, database, dbg, port) {
                             data.tag = tag;
                             data.reference = dataToSend.parts[i];
                             data.action = ACTION_SLICE_UPDATE;
-                            data.sha1 = this.sha1Reference();
+                            data.sha1 = sha1;
                             data.index = i;
                             data.size = dataToSend.parts.length;
                             let send = {};
@@ -212,7 +218,7 @@ function Reference(pathReference, connection, database, dbg, port) {
                         data.tag = tag;
                         data.action = ACTION_NO_UPDATE;
                         let send = {};
-                        data.sha1 = this.sha1Reference();
+                        data.sha1 = sha1;
                         send.data = data;
                         send.tokens = [tok];
                         await this.DH.sendPushMessage(send,
@@ -269,7 +275,7 @@ function Reference(pathReference, connection, database, dbg, port) {
      * @param id
      */
     this.removeQueue = function (path, token, id) {
-        logger.info("removing queue of " + token);
+        // logger.info("removing queue of " + token);
 
         if (this.pathReference.ref.tokens !== undefined &&
             this.pathReference.ref.tokens[token] !== undefined &&
@@ -277,7 +283,7 @@ function Reference(pathReference, connection, database, dbg, port) {
             this.pathReference.ref.tokens[token].queue[id] !== undefined) {
 
             delete this.pathReference.ref.tokens[token].queue[id];
-            logger.info("removed queue of " + token);
+            // logger.info("removed queue of " + token);
         } else {
             logger.info("error removing queue of " + token);
         }
@@ -287,8 +293,20 @@ function Reference(pathReference, connection, database, dbg, port) {
      * Returns object SHA-1
      * @param token
      */
-    this.sha1Reference = function () {
-        return sha1(JSON.stringify(this.DH.ref))
+    this.sha1Reference = async function () {
+        await this.DH.syncFromDatabase();
+        let src = JSON.stringify(this.DH.ref).replaceAll(/\\\\u/, "\\u");
+        let srcArr = src.split('');
+        let hashValue = 0;
+        for (let i = 0; i < src.length; i++) {
+          hashValue += src.charCodeAt(i);
+        }
+        // console.log("srcArr.length: " + srcArr.length);
+        // console.log("hashValue: " + hashValue);
+        let sha1Value = sha1(hashValue + "");
+        // console.log("CONTENT: " + src);
+        // console.log("sha1: " + sha1Value);
+        return sha1Value;
     };
 
 
