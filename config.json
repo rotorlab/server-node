@@ -1,6 +1,7 @@
 {
     "server_port": 1508,
     "turbine_port": 1510,
+    "turbine_ip": "http://195.110.59.51",
     "redis_port": 6379,
     "databases": ["database"],
     "debug": true

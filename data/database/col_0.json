@@ -5,9 +5,9 @@
             "name": "Efra Espada",
             "os": "android",
             "photo": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
-            "steps": 386,
-            "token": "a330a5036501e8c0",
-            "type": "walking",
+            "steps": 849,
+            "token": "8df42168b398cd90",
+            "type": "sit",
             "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
             "locations": {
                 "1527974462454": {
@@ -156,6 +156,16 @@
                     "speed": 0.20897722,
                     "steps": 380,
                     "type": "walking"
+                },
+                "1533526416114": {
+                    "accuracy": 9.648001,
+                    "altitude": 689.478271484375,
+                    "id": "1533526416114",
+                    "latitude": 40.41115989,
+                    "longitude": -3.70505753,
+                    "speed": 0,
+                    "steps": 1363,
+                    "type": "sit"
                 }
             }
         },
@@ -164,9 +174,9 @@
             "name": "Cristina Fraile",
             "os": "android",
             "photo": "https://lh6.googleusercontent.com/-qeAdoFEs0eg/AAAAAAAAAAI/AAAAAAAAAAA/AB6qoq0CE5lzNKhwNH2dn9spYPJ_jc5oXQ/s96-c/photo.jpg",
-            "steps": 441,
-            "token": "1c8c6b1e5a7c8300",
-            "type": "walking",
+            "steps": 2,
+            "token": "a330a5036501e8c0",
+            "type": "sit",
             "uid": "95mu4CuRVrMovqmEZEd1wAznIR03",
             "locations": {
                 "1528056471057": {
@@ -201,6 +211,11 @@
                     "date": 1529150233702,
                     "id": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
                     "rol": "admin"
+                },
+                "95mu4CuRVrMovqmEZEd1wAznIR03": {
+                    "date": 1533576555524,
+                    "id": "95mu4CuRVrMovqmEZEd1wAznIR03",
+                    "rol": "basic"
                 }
             },
             "messages": {
@@ -231,9 +246,54 @@
                 "1529151945221": {
                     "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
                     "text": "hsddsvad"
+                },
+                "1533574937640": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hhh"
+                },
+                "1533574939255": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jjj"
+                },
+                "1533574941026": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hhggfg"
+                },
+                "1533574952003": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "\\uD83D\\uDE0B"
                 }
             },
             "name": "jjjj"
+        },
+        "1533564315835": {
+            "creation": 1533564315835,
+            "id": "1533564315835",
+            "members": {},
+            "messages": {
+                "1533564329457": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ttt"
+                },
+                "1533564351422": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "uuu"
+                }
+            },
+            "name": "test"
+        },
+        "1533575348575": {
+            "creation": 1533575348575,
+            "id": "1533575348575",
+            "members": {
+                "95mu4CuRVrMovqmEZEd1wAznIR03": {
+                    "date": 1533575348578,
+                    "id": "95mu4CuRVrMovqmEZEd1wAznIR03",
+                    "rol": "admin"
+                }
+            },
+            "messages": {},
+            "name": "\\uD83D\\uDE05 jeje"
         }
     }
 }

@@ -711,8 +711,9 @@ if (cluster.isMaster) {
                     let qu = typeof req.query.query === "string" ? JSON.parse(req.query.query) : req.query.query;
                     let mask = req.query.mask || {};
                     mask = typeof mask === "string" ? JSON.parse(mask) : mask;
-                    let object = await turbine.query(req.query.database, req.query.path, qu, mask);
-                    res.json(object);
+                    let response = {};
+                    response.result = await turbine.query(req.query.database, req.query.path, qu, mask);
+                    res.json(response);
                 } else {
                     if (req.query.path.indexOf("*") == -1) {
                         let mask = req.query.mask || {};

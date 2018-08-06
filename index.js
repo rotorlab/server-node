@@ -15,6 +15,7 @@ function RotorServer(callback) {
     this.server_port = 1507;
     this.redis_port = 6379;
     this.turbine_port = 4000;
+    this.turbine_ip = "http://localhost";
     this.ide_port = 5000;
     this.uid = "rotor-server";
     this.log_dir = "logs/";
@@ -55,6 +56,12 @@ function RotorServer(callback) {
               this.turbine_port = callback.turbine_port;
             } else {
               logger.error("no port defined for turbine, using default: " + this.turbine_port);
+            }
+
+            if (callback.turbine_ip !== undefined && callback.turbine_ip.length > 0) {
+                this.turbine_ip = callback.turbine_ip;
+            } else {
+                logger.error("no port defined for turbine, using default: " + this.turbine_port);
             }
 
             // ide port
@@ -129,6 +136,7 @@ function RotorServer(callback) {
                 logger.info("Rotor server started (" + o.server_port + ")");
                 let turbine = new Turbine({
                     turbine_port: o.turbine_port,
+                    turbine_ip: o.turbine_ip,
                     debug: o.debug,
                     log_dir: o.log_dir,
                     databases: o.databases
