@@ -97,7 +97,7 @@ function RotorServer(callback) {
 
             sourceDir: __dirname,
 
-            args:    ['DATABASES=' + this.databases, 'DATABASE_PORT=' + this.server_port, 'REDIS_PORT=' + this.redis_port, 'TURBINE_PORT=' + this.turbine_port, 'DEBUG=' + this.debug.toString()],
+            args:    ['DATABASES=' + this.databases, 'DATABASE_PORT=' + this.server_port, 'REDIS_PORT=' + this.redis_port, 'TURBINE_IP=' + this.turbine_ip, 'TURBINE_PORT=' + this.turbine_port, 'DEBUG=' + this.debug.toString()],
 
             watch: false,
             watchIgnoreDotFiles: null,
