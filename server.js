@@ -24,11 +24,13 @@ const expectedDBNEnvVar = "DATABASE_NAME";
 const expectedPORTEnvVar = "DATABASE_PORT";
 const expectedRPORTEnvVar = "REDIS_PORT";
 const expectedTPORTEnvVar = "TURBINE_PORT";
+const expectedTIPPORTEnvVar = "TURBINE_IP";
 const expectedDebugKeyEnvVar = "DEBUG";
 let dbMaster = null;
 let server_port = null;
 let redis_port = null;
 let turbine_port = null;
+let turbine_ip = null;
 let debug = null;
 
 process.argv.forEach(function (val, index, array) {
@@ -47,6 +49,9 @@ process.argv.forEach(function (val, index, array) {
     if (val.indexOf(expectedTPORTEnvVar) > -1) {
         turbine_port = val.replaceAll(expectedTPORTEnvVar + "=", "");
     }
+    if (val.indexOf(expectedTIPPORTEnvVar) > -1) {
+        turbine_ip = val.replaceAll(expectedTIPPORTEnvVar + "=", "");
+    }
 });
 
 logger.init({
@@ -60,7 +65,7 @@ redis.on("error", function(err) {
 
 let turbine = new Turbine({
     "turbine_port": turbine_port,
-    "turbine_ip": "http://localhost",
+    "turbine_ip": turbine_ip,
     "log_dir": "../",
     "debug": debug
 });
@@ -711,8 +716,9 @@ if (cluster.isMaster) {
                     let qu = typeof req.query.query === "string" ? JSON.parse(req.query.query) : req.query.query;
                     let mask = req.query.mask || {};
                     mask = typeof mask === "string" ? JSON.parse(mask) : mask;
-                    let object = await turbine.query(req.query.database, req.query.path, qu, mask);
-                    res.json(object);
+                    let response = {};
+                    response.result = await turbine.query(req.query.database, req.query.path, qu, mask);
+                    res.json(response);
                 } else {
                     if (req.query.path.indexOf("*") == -1) {
                         let mask = req.query.mask || {};

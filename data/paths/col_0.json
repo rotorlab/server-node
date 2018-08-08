@@ -1,962 +1,290 @@
 {
-    "paths": {
-        "users.UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
-            "path": "/users/UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {
-                        "1533749992579": {
-                            "$set": {
-                                "steps": 1937
-                            }
-                        },
-                        "1533749992591": {
-                            "$set": {
-                                "steps": 1935
-                            }
-                        },
-                        "1533749993425": {
-                            "$set": {
-                                "steps": 1938
-                            }
-                        },
-                        "1533749993657": {
-                            "$set": {
-                                "steps": 1939
-                            }
-                        },
-                        "1533749994889": {
-                            "$set": {
-                                "steps": 1940
-                            }
-                        },
-                        "1533749994925": {
-                            "$set": {
-                                "steps": 1941
-                            }
-                        },
-                        "1533749995915": {
-                            "$set": {
-                                "steps": 1942
-                            }
-                        },
-                        "1533749996138": {
-                            "$set": {
-                                "steps": 1943
-                            }
-                        },
-                        "1533750005094": {
-                            "$set": {
-                                "steps": 1933
-                            }
-                        },
-                        "1533750005803": {
-                            "$set": {
-                                "steps": 1935
-                            }
-                        },
-                        "1533750005837": {
-                            "$set": {
-                                "steps": 1934
-                            }
-                        },
-                        "1533750015197": {
-                            "$set": {
-                                "steps": 1936
-                            }
-                        },
-                        "1533750015364": {
-                            "$set": {
-                                "steps": 1937
-                            }
-                        },
-                        "1533750017624": {
-                            "$set": {
-                                "steps": 1938
-                            }
-                        },
-                        "1533750019368": {
-                            "$set": {
-                                "steps": 1933
-                            }
-                        },
-                        "1533750021666": {
-                            "$set": {
-                                "token": "8df42168b398cd90"
-                            }
-                        },
-                        "1533750021681": {
-                            "$unset": {
-                                "locations.1533526416114": "{accuracy=9.648001, altitude=689.478271484375, id=1533526416114, latitude=40.41115989, longitude=-3.70505753, speed=0, steps=1363, type=sit}",
-                                "locations.1533598162589": "{accuracy=8.576, altitude=713.18505859375, id=1533598162589, latitude=40.4111157, longitude=-3.70498647, speed=0, steps=1080, type=sit}",
-                                "locations.1533733156277": "{accuracy=5.36, altitude=67.670166015625, id=1533733156277, latitude=40.03995553, longitude=0.05490272, speed=0, steps=1811, type=sit}"
-                            },
-                            "$set": {
-                                "steps": 1933,
-                                "type": "walking"
-                            }
-                        },
-                        "1533750021724": {
-                            "$set": {
-                                "token": "8df42168b398cd90"
-                            }
-                        },
-                        "1533750021809": {
-                            "$unset": {
-                                "locations.1533526416114": "{accuracy=9.648001, altitude=689.478271484375, id=1533526416114, latitude=40.41115989, longitude=-3.70505753, speed=0, steps=1363, type=sit}",
-                                "locations.1533598162589": "{accuracy=8.576, altitude=713.18505859375, id=1533598162589, latitude=40.4111157, longitude=-3.70498647, speed=0, steps=1080, type=sit}",
-                                "locations.1533733156277": "{accuracy=5.36, altitude=67.670166015625, id=1533733156277, latitude=40.03995553, longitude=0.05490272, speed=0, steps=1811, type=sit}"
-                            },
-                            "$set": {
-                                "steps": 1933,
-                                "type": "walking"
-                            }
-                        },
-                        "1533750021915": {
-                            "$unset": {
-                                "locations.1533526416114": "{accuracy=9.648001, altitude=689.478271484375, id=1533526416114, latitude=40.41115989, longitude=-3.70505753, speed=0, steps=1363, type=sit}",
-                                "locations.1533598162589": "{accuracy=8.576, altitude=713.18505859375, id=1533598162589, latitude=40.4111157, longitude=-3.70498647, speed=0, steps=1080, type=sit}",
-                                "locations.1533733156277": "{accuracy=5.36, altitude=67.670166015625, id=1533733156277, latitude=40.03995553, longitude=0.05490272, speed=0, steps=1811, type=sit}"
-                            },
-                            "$set": {
-                                "steps": 1933,
-                                "type": "walking"
-                            }
-                        },
-                        "1533750021949": {
-                            "$set": {
-                                "token": "8df42168b398cd90"
-                            }
-                        },
-                        "1533750023368": {
-                            "$set": {
-                                "type": "sit"
-                            }
-                        },
-                        "1533750032289": {
-                            "$set": {
-                                "steps": 1934
-                            }
-                        },
-                        "1533750032817": {
-                            "$set": {
-                                "steps": 1936
-                            }
-                        },
-                        "1533750032827": {
-                            "$set": {
-                                "steps": 1935
-                            }
-                        },
-                        "1533750035573": {
-                            "$set": {
-                                "steps": 1941
-                            }
-                        },
-                        "1533750036062": {
-                            "$set": {
-                                "steps": 1942
-                            }
-                        },
-                        "1533750036180": {
-                            "$set": {
-                                "steps": 1943
-                            }
-                        },
-                        "1533750036397": {
-                            "$set": {
-                                "steps": 1944
-                            }
-                        },
-                        "1533750648413": {
-                            "$set": {
-                                "steps": 1945
-                            }
-                        },
-                        "1533750649324": {
-                            "$set": {
-                                "steps": 1946
-                            }
-                        },
-                        "1533750649463": {
-                            "$set": {
-                                "steps": 1947
-                            }
-                        },
-                        "1533750650665": {
-                            "$set": {
-                                "steps": 1948
-                            }
-                        },
-                        "1533750651691": {
-                            "$set": {
-                                "steps": 1949
-                            }
-                        },
-                        "1533750651721": {
-                            "$set": {
-                                "steps": 1950
-                            }
-                        },
-                        "1533750651959": {
-                            "$set": {
-                                "steps": 1951
-                            }
-                        },
-                        "1533750652511": {
-                            "$set": {
-                                "steps": 1952
-                            }
-                        },
-                        "1533750655988": {
-                            "$set": {
-                                "steps": 1953
-                            }
-                        },
-                        "1533750656239": {
-                            "$set": {
-                                "steps": 1954
-                            }
-                        },
-                        "1533750656358": {
-                            "$set": {
-                                "steps": 1955
-                            }
-                        }
-                    },
-                    "time": 1528058307523
-                },
-                "a330a5036501e8c0": {
-                    "os": "android",
-                    "queue": {
-                        "1533749992579": {
-                            "$set": {
-                                "steps": 1937
-                            }
-                        },
-                        "1533749992591": {
-                            "$set": {
-                                "steps": 1935
-                            }
-                        },
-                        "1533749993425": {
-                            "$set": {
-                                "steps": 1938
-                            }
-                        },
-                        "1533749993657": {
-                            "$set": {
-                                "steps": 1939
-                            }
-                        },
-                        "1533749994889": {
-                            "$set": {
-                                "steps": 1940
-                            }
-                        },
-                        "1533749994925": {
-                            "$set": {
-                                "steps": 1941
-                            }
-                        },
-                        "1533749995915": {
-                            "$set": {
-                                "steps": 1942
-                            }
-                        },
-                        "1533749996138": {
-                            "$set": {
-                                "steps": 1943
-                            }
-                        },
-                        "1533750005094": {
-                            "$set": {
-                                "steps": 1933
-                            }
-                        },
-                        "1533750005803": {
-                            "$set": {
-                                "steps": 1935
-                            }
-                        },
-                        "1533750005837": {
-                            "$set": {
-                                "steps": 1934
-                            }
-                        },
-                        "1533750015197": {
-                            "$set": {
-                                "steps": 1936
-                            }
-                        },
-                        "1533750015364": {
-                            "$set": {
-                                "steps": 1937
-                            }
-                        },
-                        "1533750017624": {
-                            "$set": {
-                                "steps": 1938
-                            }
-                        },
-                        "1533750019368": {
-                            "$set": {
-                                "steps": 1933
-                            }
-                        },
-                        "1533750021666": {
-                            "$set": {
-                                "token": "8df42168b398cd90"
-                            }
-                        },
-                        "1533750021681": {
-                            "$unset": {
-                                "locations.1533526416114": "{accuracy=9.648001, altitude=689.478271484375, id=1533526416114, latitude=40.41115989, longitude=-3.70505753, speed=0, steps=1363, type=sit}",
-                                "locations.1533598162589": "{accuracy=8.576, altitude=713.18505859375, id=1533598162589, latitude=40.4111157, longitude=-3.70498647, speed=0, steps=1080, type=sit}",
-                                "locations.1533733156277": "{accuracy=5.36, altitude=67.670166015625, id=1533733156277, latitude=40.03995553, longitude=0.05490272, speed=0, steps=1811, type=sit}"
-                            },
-                            "$set": {
-                                "steps": 1933,
-                                "type": "walking"
-                            }
-                        },
-                        "1533750021724": {
-                            "$set": {
-                                "token": "8df42168b398cd90"
-                            }
-                        },
-                        "1533750021809": {
-                            "$unset": {
-                                "locations.1533526416114": "{accuracy=9.648001, altitude=689.478271484375, id=1533526416114, latitude=40.41115989, longitude=-3.70505753, speed=0, steps=1363, type=sit}",
-                                "locations.1533598162589": "{accuracy=8.576, altitude=713.18505859375, id=1533598162589, latitude=40.4111157, longitude=-3.70498647, speed=0, steps=1080, type=sit}",
-                                "locations.1533733156277": "{accuracy=5.36, altitude=67.670166015625, id=1533733156277, latitude=40.03995553, longitude=0.05490272, speed=0, steps=1811, type=sit}"
-                            },
-                            "$set": {
-                                "steps": 1933,
-                                "type": "walking"
-                            }
-                        },
-                        "1533750021915": {
-                            "$unset": {
-                                "locations.1533526416114": "{accuracy=9.648001, altitude=689.478271484375, id=1533526416114, latitude=40.41115989, longitude=-3.70505753, speed=0, steps=1363, type=sit}",
-                                "locations.1533598162589": "{accuracy=8.576, altitude=713.18505859375, id=1533598162589, latitude=40.4111157, longitude=-3.70498647, speed=0, steps=1080, type=sit}",
-                                "locations.1533733156277": "{accuracy=5.36, altitude=67.670166015625, id=1533733156277, latitude=40.03995553, longitude=0.05490272, speed=0, steps=1811, type=sit}"
-                            },
-                            "$set": {
-                                "steps": 1933,
-                                "type": "walking"
-                            }
-                        },
-                        "1533750021949": {
-                            "$set": {
-                                "token": "8df42168b398cd90"
-                            }
-                        },
-                        "1533750023368": {
-                            "$set": {
-                                "type": "sit"
-                            }
-                        },
-                        "1533750032289": {
-                            "$set": {
-                                "steps": 1934
-                            }
-                        },
-                        "1533750032817": {
-                            "$set": {
-                                "steps": 1936
-                            }
-                        },
-                        "1533750032827": {
-                            "$set": {
-                                "steps": 1935
-                            }
-                        },
-                        "1533750035573": {
-                            "$set": {
-                                "steps": 1941
-                            }
-                        },
-                        "1533750036062": {
-                            "$set": {
-                                "steps": 1942
-                            }
-                        },
-                        "1533750036180": {
-                            "$set": {
-                                "steps": 1943
-                            }
-                        },
-                        "1533750036397": {
-                            "$set": {
-                                "steps": 1944
-                            }
-                        },
-                        "1533750648413": {
-                            "$set": {
-                                "steps": 1945
-                            }
-                        },
-                        "1533750649324": {
-                            "$set": {
-                                "steps": 1946
-                            }
-                        },
-                        "1533750649463": {
-                            "$set": {
-                                "steps": 1947
-                            }
-                        },
-                        "1533750650665": {
-                            "$set": {
-                                "steps": 1948
-                            }
-                        },
-                        "1533750651691": {
-                            "$set": {
-                                "steps": 1949
-                            }
-                        },
-                        "1533750651721": {
-                            "$set": {
-                                "steps": 1950
-                            }
-                        },
-                        "1533750651959": {
-                            "$set": {
-                                "steps": 1951
-                            }
-                        },
-                        "1533750652511": {
-                            "$set": {
-                                "steps": 1952
-                            }
-                        },
-                        "1533750655988": {
-                            "$set": {
-                                "steps": 1953
-                            }
-                        },
-                        "1533750656239": {
-                            "$set": {
-                                "steps": 1954
-                            }
-                        },
-                        "1533750656358": {
-                            "$set": {
-                                "steps": 1955
-                            }
-                        }
-                    },
-                    "time": 1528180336982
-                },
-                "42e9c151fa3ba850": {
-                    "os": "android",
-                    "queue": {
-                        "1533749992579": {
-                            "$set": {
-                                "steps": 1937
-                            }
-                        },
-                        "1533749992591": {
-                            "$set": {
-                                "steps": 1935
-                            }
-                        },
-                        "1533749993425": {
-                            "$set": {
-                                "steps": 1938
-                            }
-                        },
-                        "1533749993657": {
-                            "$set": {
-                                "steps": 1939
-                            }
-                        },
-                        "1533749994889": {
-                            "$set": {
-                                "steps": 1940
-                            }
-                        },
-                        "1533749994925": {
-                            "$set": {
-                                "steps": 1941
-                            }
-                        },
-                        "1533749995915": {
-                            "$set": {
-                                "steps": 1942
-                            }
-                        },
-                        "1533749996138": {
-                            "$set": {
-                                "steps": 1943
-                            }
-                        },
-                        "1533750005094": {
-                            "$set": {
-                                "steps": 1933
-                            }
-                        },
-                        "1533750005803": {
-                            "$set": {
-                                "steps": 1935
-                            }
-                        },
-                        "1533750005837": {
-                            "$set": {
-                                "steps": 1934
-                            }
-                        },
-                        "1533750015197": {
-                            "$set": {
-                                "steps": 1936
-                            }
-                        },
-                        "1533750015364": {
-                            "$set": {
-                                "steps": 1937
-                            }
-                        },
-                        "1533750017624": {
-                            "$set": {
-                                "steps": 1938
-                            }
-                        },
-                        "1533750019368": {
-                            "$set": {
-                                "steps": 1933
-                            }
-                        },
-                        "1533750021666": {
-                            "$set": {
-                                "token": "8df42168b398cd90"
-                            }
-                        },
-                        "1533750021681": {
-                            "$unset": {
-                                "locations.1533526416114": "{accuracy=9.648001, altitude=689.478271484375, id=1533526416114, latitude=40.41115989, longitude=-3.70505753, speed=0, steps=1363, type=sit}",
-                                "locations.1533598162589": "{accuracy=8.576, altitude=713.18505859375, id=1533598162589, latitude=40.4111157, longitude=-3.70498647, speed=0, steps=1080, type=sit}",
-                                "locations.1533733156277": "{accuracy=5.36, altitude=67.670166015625, id=1533733156277, latitude=40.03995553, longitude=0.05490272, speed=0, steps=1811, type=sit}"
-                            },
-                            "$set": {
-                                "steps": 1933,
-                                "type": "walking"
-                            }
-                        },
-                        "1533750021724": {
-                            "$set": {
-                                "token": "8df42168b398cd90"
-                            }
-                        },
-                        "1533750021809": {
-                            "$unset": {
-                                "locations.1533526416114": "{accuracy=9.648001, altitude=689.478271484375, id=1533526416114, latitude=40.41115989, longitude=-3.70505753, speed=0, steps=1363, type=sit}",
-                                "locations.1533598162589": "{accuracy=8.576, altitude=713.18505859375, id=1533598162589, latitude=40.4111157, longitude=-3.70498647, speed=0, steps=1080, type=sit}",
-                                "locations.1533733156277": "{accuracy=5.36, altitude=67.670166015625, id=1533733156277, latitude=40.03995553, longitude=0.05490272, speed=0, steps=1811, type=sit}"
-                            },
-                            "$set": {
-                                "steps": 1933,
-                                "type": "walking"
-                            }
-                        },
-                        "1533750021915": {
-                            "$unset": {
-                                "locations.1533526416114": "{accuracy=9.648001, altitude=689.478271484375, id=1533526416114, latitude=40.41115989, longitude=-3.70505753, speed=0, steps=1363, type=sit}",
-                                "locations.1533598162589": "{accuracy=8.576, altitude=713.18505859375, id=1533598162589, latitude=40.4111157, longitude=-3.70498647, speed=0, steps=1080, type=sit}",
-                                "locations.1533733156277": "{accuracy=5.36, altitude=67.670166015625, id=1533733156277, latitude=40.03995553, longitude=0.05490272, speed=0, steps=1811, type=sit}"
-                            },
-                            "$set": {
-                                "steps": 1933,
-                                "type": "walking"
-                            }
-                        },
-                        "1533750021949": {
-                            "$set": {
-                                "token": "8df42168b398cd90"
-                            }
-                        },
-                        "1533750023368": {
-                            "$set": {
-                                "type": "sit"
-                            }
-                        },
-                        "1533750032289": {
-                            "$set": {
-                                "steps": 1934
-                            }
-                        },
-                        "1533750032817": {
-                            "$set": {
-                                "steps": 1936
-                            }
-                        },
-                        "1533750032827": {
-                            "$set": {
-                                "steps": 1935
-                            }
-                        },
-                        "1533750035573": {
-                            "$set": {
-                                "steps": 1941
-                            }
-                        },
-                        "1533750036062": {
-                            "$set": {
-                                "steps": 1942
-                            }
-                        },
-                        "1533750036180": {
-                            "$set": {
-                                "steps": 1943
-                            }
-                        },
-                        "1533750036397": {
-                            "$set": {
-                                "steps": 1944
-                            }
-                        },
-                        "1533750648413": {
-                            "$set": {
-                                "steps": 1945
-                            }
-                        },
-                        "1533750649324": {
-                            "$set": {
-                                "steps": 1946
-                            }
-                        },
-                        "1533750649463": {
-                            "$set": {
-                                "steps": 1947
-                            }
-                        },
-                        "1533750650665": {
-                            "$set": {
-                                "steps": 1948
-                            }
-                        },
-                        "1533750651691": {
-                            "$set": {
-                                "steps": 1949
-                            }
-                        },
-                        "1533750651721": {
-                            "$set": {
-                                "steps": 1950
-                            }
-                        },
-                        "1533750651959": {
-                            "$set": {
-                                "steps": 1951
-                            }
-                        },
-                        "1533750652511": {
-                            "$set": {
-                                "steps": 1952
-                            }
-                        },
-                        "1533750655988": {
-                            "$set": {
-                                "steps": 1953
-                            }
-                        },
-                        "1533750656239": {
-                            "$set": {
-                                "steps": 1954
-                            }
-                        },
-                        "1533750656358": {
-                            "$set": {
-                                "steps": 1955
-                            }
-                        }
-                    },
-                    "time": 1529151934676
-                },
-                "8df42168b398cd90": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1533750656370
-                }
-            }
+  "paths": {
+    "users.UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
+      "path": "/users/UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528058307523
         },
-        "chats.1527976431184": {
-            "path": "/chats/1527976431184",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528058296450
-                },
-                "a330a5036501e8c0": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528058134922
-                },
-                "42e9c151fa3ba850": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528138739680
-                }
-            }
+        "a330a5036501e8c0": {
+          "os": "android",
+          "queue": {},
+          "time": 1528180336982
         },
-        "chats.1528039404949": {
-            "path": "/chats/1528039404949",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528039434538
-                }
-            }
-        },
-        "chats.null": {
-            "path": "/chats/null",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528140009559
-                },
-                "a330a5036501e8c0": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528139837090
-                },
-                "42e9c151fa3ba850": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528139763914
-                }
-            }
-        },
-        "chats.1528039497732": {
-            "path": "/chats/1528039497732",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528039501382
-                }
-            }
-        },
-        "chats.1528039816323": {
-            "path": "/chats/1528039816323",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528039815845
-                }
-            }
-        },
-        "chats.1528039953386": {
-            "path": "/chats/1528039953386",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528039952750
-                }
-            }
-        },
-        "chats.1528040735622": {
-            "path": "/chats/1528040735622",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528040735003
-                }
-            }
-        },
-        "chats.1528040771071": {
-            "path": "/chats/1528040771071",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528058305192
-                },
-                "a330a5036501e8c0": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528058154650
-                },
-                "42e9c151fa3ba850": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528138702720
-                }
-            }
-        },
-        "users.95mu4CuRVrMovqmEZEd1wAznIR03": {
-            "path": "/users/95mu4CuRVrMovqmEZEd1wAznIR03",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528181635490
-                },
-                "a330a5036501e8c0": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528058154743
-                },
-                "42e9c151fa3ba850": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528138736709
-                }
-            }
-        },
-        "notifications.1528052614089": {
-            "path": "/notifications/1528052614089",
-            "tokens": {}
-        },
-        "notifications.1528052643481": {
-            "path": "/notifications/1528052643481",
-            "tokens": {}
-        },
-        "notifications.1528052956366": {
-            "path": "/notifications/1528052956366",
-            "tokens": {}
-        },
-        "notifications.1528053419153": {
-            "path": "/notifications/1528053419153",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528053418627
-                },
-                "a330a5036501e8c0": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528058131527
-                }
-            }
-        },
-        "chats.yy": {
-            "path": "/chats/yy",
-            "tokens": {
-                "1c8c6b1e5a7c8300": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528055870636
-                },
-                "a330a5036501e8c0": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528056220696
-                }
-            }
-        },
-        "notifications.1528054220891": {
-            "path": "/notifications/1528054220891",
-            "tokens": {}
-        },
-        "notifications.1528054393078": {
-            "path": "/notifications/1528054393078",
-            "tokens": {}
-        },
-        "notifications.1528054740755": {
-            "path": "/notifications/1528054740755",
-            "tokens": {}
-        },
-        "notifications.1528054876652": {
-            "path": "/notifications/1528054876652",
-            "tokens": {}
-        },
-        "notifications.1528055269903": {
-            "path": "/notifications/1528055269903",
-            "tokens": {}
-        },
-        "notifications.1528055651729": {
-            "path": "/notifications/1528055651729",
-            "tokens": {}
-        },
-        "notifications.1528055822403": {
-            "path": "/notifications/1528055822403",
-            "tokens": {}
-        },
-        "notifications.1528055867683": {
-            "path": "/notifications/1528055867683",
-            "tokens": {}
-        },
-        "notifications.1528056214499": {
-            "path": "/notifications/1528056214499",
-            "tokens": {}
-        },
-        "notifications.1528056231111": {
-            "path": "/notifications/1528056231111",
-            "tokens": {}
-        },
-        "notifications.1528056373763": {
-            "path": "/notifications/1528056373763",
-            "tokens": {}
-        },
-        "notifications.1528056390706": {
-            "path": "/notifications/1528056390706",
-            "tokens": {}
-        },
-        "notifications.1528056415703": {
-            "path": "/notifications/1528056415703",
-            "tokens": {}
-        },
-        "notifications.1528056489859": {
-            "path": "/notifications/1528056489859",
-            "tokens": {}
-        },
-        "notifications.1528056508566": {
-            "path": "/notifications/1528056508566",
-            "tokens": {}
-        },
-        "notifications.1528057210859": {
-            "path": "/notifications/1528057210859",
-            "tokens": {
-                "a330a5036501e8c0": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528057209184
-                }
-            }
-        },
-        "notifications.1528058156612": {
-            "path": "/notifications/1528058156612",
-            "tokens": {
-                "a330a5036501e8c0": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1528058154933
-                }
-            }
-        },
-        "notifications.1528058239942": {
-            "path": "/notifications/1528058239942",
-            "tokens": {}
-        },
-        "chats.1529150233702": {
-            "path": "/chats/1529150233702",
-            "tokens": {
-                "42e9c151fa3ba850": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1529151945522
-                }
-            }
-        },
-        "notifications.1533576555537": {
-            "path": "/notifications/1533576555537",
-            "tokens": {
-                "8df42168b398cd90": {
-                    "os": "android",
-                    "queue": {},
-                    "time": 1533750642743
-                }
-            }
+        "42e9c151fa3ba850": {
+          "os": "android",
+          "queue": {},
+          "time": 1529151934676
         }
+      }
+    },
+    "chats.1527976431184": {
+      "path": "/chats/1527976431184",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528058296450
+        },
+        "a330a5036501e8c0": {
+          "os": "android",
+          "queue": {},
+          "time": 1528058134922
+        },
+        "42e9c151fa3ba850": {
+          "os": "android",
+          "queue": {},
+          "time": 1528138739680
+        }
+      }
+    },
+    "chats.1528039404949": {
+      "path": "/chats/1528039404949",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528039434538
+        }
+      }
+    },
+    "chats.null": {
+      "path": "/chats/null",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528140009559
+        },
+        "a330a5036501e8c0": {
+          "os": "android",
+          "queue": {},
+          "time": 1528139837090
+        },
+        "42e9c151fa3ba850": {
+          "os": "android",
+          "queue": {},
+          "time": 1528139763914
+        }
+      }
+    },
+    "chats.1528039497732": {
+      "path": "/chats/1528039497732",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528039501382
+        }
+      }
+    },
+    "chats.1528039816323": {
+      "path": "/chats/1528039816323",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528039815845
+        }
+      }
+    },
+    "chats.1528039953386": {
+      "path": "/chats/1528039953386",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528039952750
+        }
+      }
+    },
+    "chats.1528040735622": {
+      "path": "/chats/1528040735622",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528040735003
+        }
+      }
+    },
+    "chats.1528040771071": {
+      "path": "/chats/1528040771071",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528058305192
+        },
+        "a330a5036501e8c0": {
+          "os": "android",
+          "queue": {},
+          "time": 1528058154650
+        },
+        "42e9c151fa3ba850": {
+          "os": "android",
+          "queue": {},
+          "time": 1528138702720
+        }
+      }
+    },
+    "users.95mu4CuRVrMovqmEZEd1wAznIR03": {
+      "path": "/users/95mu4CuRVrMovqmEZEd1wAznIR03",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528181635490
+        },
+        "a330a5036501e8c0": {
+          "os": "android",
+          "queue": {},
+          "time": 1528058154743
+        },
+        "42e9c151fa3ba850": {
+          "os": "android",
+          "queue": {},
+          "time": 1528138736709
+        }
+      }
+    },
+    "notifications.1528052614089": {
+      "path": "/notifications/1528052614089",
+      "tokens": {}
+    },
+    "notifications.1528052643481": {
+      "path": "/notifications/1528052643481",
+      "tokens": {}
+    },
+    "notifications.1528052956366": {
+      "path": "/notifications/1528052956366",
+      "tokens": {}
+    },
+    "notifications.1528053419153": {
+      "path": "/notifications/1528053419153",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528053418627
+        },
+        "a330a5036501e8c0": {
+          "os": "android",
+          "queue": {},
+          "time": 1528058131527
+        }
+      }
+    },
+    "chats.yy": {
+      "path": "/chats/yy",
+      "tokens": {
+        "1c8c6b1e5a7c8300": {
+          "os": "android",
+          "queue": {},
+          "time": 1528055870636
+        },
+        "a330a5036501e8c0": {
+          "os": "android",
+          "queue": {},
+          "time": 1528056220696
+        }
+      }
+    },
+    "notifications.1528054220891": {
+      "path": "/notifications/1528054220891",
+      "tokens": {}
+    },
+    "notifications.1528054393078": {
+      "path": "/notifications/1528054393078",
+      "tokens": {}
+    },
+    "notifications.1528054740755": {
+      "path": "/notifications/1528054740755",
+      "tokens": {}
+    },
+    "notifications.1528054876652": {
+      "path": "/notifications/1528054876652",
+      "tokens": {}
+    },
+    "notifications.1528055269903": {
+      "path": "/notifications/1528055269903",
+      "tokens": {}
+    },
+    "notifications.1528055651729": {
+      "path": "/notifications/1528055651729",
+      "tokens": {}
+    },
+    "notifications.1528055822403": {
+      "path": "/notifications/1528055822403",
+      "tokens": {}
+    },
+    "notifications.1528055867683": {
+      "path": "/notifications/1528055867683",
+      "tokens": {}
+    },
+    "notifications.1528056214499": {
+      "path": "/notifications/1528056214499",
+      "tokens": {}
+    },
+    "notifications.1528056231111": {
+      "path": "/notifications/1528056231111",
+      "tokens": {}
+    },
+    "notifications.1528056373763": {
+      "path": "/notifications/1528056373763",
+      "tokens": {}
+    },
+    "notifications.1528056390706": {
+      "path": "/notifications/1528056390706",
+      "tokens": {}
+    },
+    "notifications.1528056415703": {
+      "path": "/notifications/1528056415703",
+      "tokens": {}
+    },
+    "notifications.1528056489859": {
+      "path": "/notifications/1528056489859",
+      "tokens": {}
+    },
+    "notifications.1528056508566": {
+      "path": "/notifications/1528056508566",
+      "tokens": {}
+    },
+    "notifications.1528057210859": {
+      "path": "/notifications/1528057210859",
+      "tokens": {
+        "a330a5036501e8c0": {
+          "os": "android",
+          "queue": {},
+          "time": 1528057209184
+        }
+      }
+    },
+    "notifications.1528058156612": {
+      "path": "/notifications/1528058156612",
+      "tokens": {
+        "a330a5036501e8c0": {
+          "os": "android",
+          "queue": {},
+          "time": 1528058154933
+        }
+      }
+    },
+    "notifications.1528058239942": {
+      "path": "/notifications/1528058239942",
+      "tokens": {}
+    },
+    "chats.1529150233702": {
+      "path": "/chats/1529150233702",
+      "tokens": {
+        "42e9c151fa3ba850": {
+          "os": "android",
+          "queue": {},
+          "time": 1529151945522
+        }
+      }
     }
+  }
 }

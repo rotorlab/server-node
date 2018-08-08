@@ -46,6 +46,29 @@
                 "moment": 1528058156612
             },
             "time": 1528058156612
+        },
+        "1533576555537": {
+            "content": {
+                "body": "Has sido a\\u00F1adido a jjjj",
+                "channel": "myChannel",
+                "channelDescription": "Test channel",
+                "id": "1533576555537",
+                "photoSmall": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
+                "requestCode": 4532,
+                "room": "1529150233702",
+                "title": "Nuevo grupo"
+            },
+            "id": "1533576555537",
+            "receivers": {
+                "95mu4CuRVrMovqmEZEd1wAznIR03": {
+                    "id": "95mu4CuRVrMovqmEZEd1wAznIR03"
+                }
+            },
+            "sender": {
+                "id": "8df42168b398cd90",
+                "moment": 1533576555537
+            },
+            "time": 1533576555537
         }
     }
 }
