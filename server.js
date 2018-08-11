@@ -172,8 +172,6 @@ let action = {
 
         // valid path
         if (connection.path.indexOf("\.") === -1 && connection.path.indexOf("/") === 0) {
-            logger.debug("ref: " + paths.ref);
-
             if (paths.ref.path === undefined) {
                 paths.ref.path = connection.path;
             }
@@ -748,7 +746,7 @@ if (cluster.isMaster) {
             res.send("{}");
             await action.parseRequest(req, async function (token, result, success, fail) {
                 // logger.debug("worker " + cluster.worker.id + ": socket.io emit() -> " + token);
-                logger.debug("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
+                // logger.debug("worker " + cluster.worker.id + ": sending -> " + JSON.stringifyAligned(result));
                 let r = await redis.publish(token, JSON.stringify(result));
                 // logger.debug("result: " + r);
                 if (r > 0) {

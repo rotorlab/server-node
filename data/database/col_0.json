@@ -1,657 +1,1125 @@
 {
-  "users": {
-    "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
-      "email": "efraespada@gmail.com",
-      "name": "Efra Espada",
-      "os": "android",
-      "photo": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
-      "steps": 1932,
-      "token": "8df42168b398cd90",
-      "type": "sit",
-      "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-      "locations": {
-        "1527974462454": {
-          "altitude": 664.5,
-          "latitude": 40.41089833333333,
-          "longitude": -3.7050333333333336,
-          "speed": 0.26559666
-        },
-        "1527974462458": {
-          "altitude": 652.1,
-          "latitude": 40.41104333333333,
-          "longitude": -3.7049299999999996
-        },
-        "1527974462456": {
-          "accuracy": 3.7,
-          "altitude": 651.9,
-          "latitude": 40.41096833333334,
-          "longitude": -3.7050116666666666
-        },
-        "1527977897943": {
-          "accuracy": 3.1,
-          "altitude": 642.7,
-          "id": "1527977897943",
-          "latitude": 40.41115333333333,
-          "longitude": -3.705316666666667,
-          "speed": 0,
-          "steps": 176,
-          "type": "sit"
-        },
-        "1528018875086": {
-          "accuracy": 7.6,
-          "altitude": 659.6,
-          "id": "1528018875086",
-          "latitude": 40.410983333333334,
-          "longitude": -3.7048699999999997,
-          "speed": 0,
-          "steps": 343,
-          "type": "sit"
-        },
-        "1528022493087": {
-          "accuracy": 1.2,
-          "altitude": 643.5,
-          "id": "1528022493087",
-          "latitude": 40.41106666666667,
-          "longitude": -3.70495,
-          "speed": 0,
-          "steps": 714,
-          "type": "sit"
-        },
-        "1528023303054": {
-          "accuracy": 3.7,
-          "altitude": 642.1,
-          "id": "1528023303054",
-          "latitude": 40.411138333333334,
-          "longitude": -3.7051149999999997,
-          "speed": 0,
-          "steps": 958,
-          "type": "sit"
-        },
-        "1528038250065": {
-          "accuracy": 5.9,
-          "altitude": 611.5,
-          "id": "1528038250065",
-          "latitude": 40.41108166666667,
-          "longitude": -3.705166666666667,
-          "speed": 0,
-          "steps": 61,
-          "type": ""
-        },
-        "1528038310073": {
-          "accuracy": 3,
-          "altitude": 609.3,
-          "id": "1528038310073",
-          "latitude": 40.41115166666667,
-          "longitude": -3.705081666666666,
-          "speed": 0,
-          "steps": 66,
-          "type": ""
-        },
-        "1528040067104": {
-          "accuracy": 4.7,
-          "altitude": 534,
-          "id": "1528040067104",
-          "latitude": 40.41084166666667,
-          "longitude": -3.705028333333333,
-          "speed": 0,
-          "steps": 24,
-          "type": ""
-        },
-        "1528045195111": {
-          "accuracy": 6.9,
-          "altitude": 651.2,
-          "id": "1528045195111",
-          "latitude": 40.41098,
-          "longitude": -3.70491,
-          "speed": 0,
-          "steps": 255,
-          "type": ""
-        },
-        "1528052605142": {
-          "accuracy": 5.7,
-          "altitude": 654.3,
-          "id": "1528052605142",
-          "latitude": 40.410995,
-          "longitude": -3.705045,
-          "speed": 0,
-          "steps": 87,
-          "type": ""
-        },
-        "1528053355067": {
-          "accuracy": 2.2,
-          "altitude": 648,
-          "id": "1528053355067",
-          "latitude": 40.411055000000005,
-          "longitude": -3.7050066666666672,
-          "speed": 0.28000888,
-          "steps": 109,
-          "type": ""
-        },
-        "1528058165036": {
-          "accuracy": 2.4,
-          "altitude": 662.2,
-          "id": "1528058165036",
-          "latitude": 40.411098333333335,
-          "longitude": -3.70491,
-          "speed": 0.13125417,
-          "steps": 230,
-          "type": "walking"
-        },
-        "1528138921190": {
-          "accuracy": 18.1,
-          "altitude": 668.8,
-          "id": "1528138921190",
-          "latitude": 40.411065,
-          "longitude": -3.7049733333333337,
-          "speed": 0.03963361,
-          "steps": 309,
-          "type": "walking"
-        },
-        "1528167900210": {
-          "accuracy": 20.6,
-          "altitude": 693,
-          "id": "1528167900210",
-          "latitude": 40.41176166666666,
-          "longitude": -3.705096666666666,
-          "speed": 0.20897722,
-          "steps": 380,
-          "type": "walking"
-        },
-        "1533526416114": {
-          "accuracy": 9.648001,
-          "altitude": 689.478271484375,
-          "id": "1533526416114",
-          "latitude": 40.41115989,
-          "longitude": -3.70505753,
-          "speed": 0,
-          "steps": 1363,
-          "type": "sit"
-        },
-        "1533598162589": {
-          "accuracy": 8.576,
-          "altitude": 713.18505859375,
-          "id": "1533598162589",
-          "latitude": 40.4111157,
-          "longitude": -3.70498647,
-          "speed": 0,
-          "steps": 1080,
-          "type": "sit"
-        },
-        "1533733156277": {
-          "accuracy": 5.36,
-          "altitude": 67.670166015625,
-          "id": "1533733156277",
-          "latitude": 40.03995553,
-          "longitude": 0.05490272,
-          "speed": 0,
-          "steps": 1811,
-          "type": "sit"
-        }
-      }
-    },
-    "95mu4CuRVrMovqmEZEd1wAznIR03": {
-      "email": "efracris@gmail.com",
-      "name": "Cristina Fraile",
-      "os": "android",
-      "photo": "https://lh6.googleusercontent.com/-qeAdoFEs0eg/AAAAAAAAAAI/AAAAAAAAAAA/AB6qoq0CE5lzNKhwNH2dn9spYPJ_jc5oXQ/s96-c/photo.jpg",
-      "steps": 42,
-      "token": "a330a5036501e8c0",
-      "type": "sit",
-      "uid": "95mu4CuRVrMovqmEZEd1wAznIR03",
-      "locations": {
-        "1528056471057": {
-          "accuracy": 4.8,
-          "altitude": 668.7,
-          "id": "1528056471057",
-          "latitude": 40.41095333333333,
-          "longitude": -3.7049700000000003,
-          "speed": 0,
-          "steps": 89,
-          "type": ""
-        },
-        "1528058341059": {
-          "accuracy": 4.3,
-          "altitude": 661,
-          "id": "1528058341059",
-          "latitude": 40.41121666666666,
-          "longitude": -3.704908333333334,
-          "speed": 0,
-          "steps": 232,
-          "type": ""
-        },
-        "1533605443383": {
-          "accuracy": 1.6,
-          "altitude": 663.5,
-          "id": "1533605443383",
-          "latitude": 40.41106666666667,
-          "longitude": -3.704933333333333,
-          "speed": 0,
-          "steps": 40,
-          "type": "walking"
-        }
-      }
-    },
-    "f2QhzZbUEVfYEMPMDNMcJFe5kNL2": {
-      "email": "cristinafrailesaenzlopez@gmail.com",
-      "name": "Cristina Fraile",
-      "os": "android",
-      "photo": "https://lh4.googleusercontent.com/-tfqgQMrH_Pw/AAAAAAAAAAI/AAAAAAAAABs/cGvM_42HNCc/s96-c/photo.jpg",
-      "steps": 656,
-      "token": "3745d691b75bba67",
-      "type": "jogging",
-      "uid": "f2QhzZbUEVfYEMPMDNMcJFe5kNL2",
-      "locations": {
-        "1533664648828": {
-          "accuracy": 7.6,
-          "altitude": 27.4,
-          "id": "1533664648828",
-          "latitude": 40.039695,
-          "longitude": 0.05497,
-          "speed": 0,
-          "steps": 47,
-          "type": "walking"
-        },
-        "1533664705848": {
-          "accuracy": 7.6,
-          "altitude": -23.5,
-          "id": "1533664705848",
-          "latitude": 40.039815,
-          "longitude": 0.054775000000000004,
-          "speed": 0,
-          "steps": 129,
-          "type": "walking"
-        },
-        "1533664771862": {
-          "accuracy": 7.7,
-          "altitude": -17.3,
-          "id": "1533664771862",
-          "latitude": 40.039815,
-          "longitude": 0.05467666666666667,
-          "speed": 0,
-          "steps": 157,
-          "type": "sit"
-        },
-        "1533664909866": {
-          "accuracy": 7.5,
-          "altitude": 6.2,
-          "id": "1533664909866",
-          "latitude": 40.04004333333333,
-          "longitude": 0.054643333333333335,
-          "speed": 0.50031,
-          "steps": 212,
-          "type": "sit"
-        },
-        "1533664909880": {
-          "accuracy": 7.5,
-          "altitude": 6.2,
-          "id": "1533664909880",
-          "latitude": 40.04004333333333,
-          "longitude": 0.054643333333333335,
-          "speed": 0.50031,
-          "steps": 212,
-          "type": "sit"
-        },
-        "1533664995833": {
-          "accuracy": 7.6,
-          "altitude": 8.7,
-          "id": "1533664995833",
-          "latitude": 40.03993666666667,
-          "longitude": 0.05509666666666667,
-          "speed": 0,
-          "steps": 226,
-          "type": "sit"
-        },
-        "1533665030836": {
-          "accuracy": 7.5,
-          "altitude": 9.7,
-          "id": "1533665030836",
-          "latitude": 40.03989833333333,
-          "longitude": 0.055015,
-          "speed": 1.4962975,
-          "steps": 250,
-          "type": "sit"
-        },
-        "1533665123109": {
-          "accuracy": 7.6,
-          "altitude": 16.6,
-          "id": "1533665123109",
-          "latitude": 40.04006833333334,
-          "longitude": 0.054625,
-          "speed": 0,
-          "steps": 348,
-          "type": "sit"
-        },
-        "1533665211836": {
-          "accuracy": 7.7,
-          "altitude": 26,
-          "id": "1533665211836",
-          "latitude": 40.040016666666666,
-          "longitude": 0.054515,
-          "speed": 0,
-          "steps": 434,
-          "type": "sit"
-        },
-        "1533665241824": {
-          "accuracy": 7.6,
-          "altitude": 26.1,
-          "id": "1533665241824",
-          "latitude": 40.04001,
-          "longitude": 0.05483833333333333,
-          "speed": 1.8107928,
-          "steps": 445,
-          "type": "sit"
-        },
-        "1533665301925": {
-          "accuracy": 7.5,
-          "altitude": 29.7,
-          "id": "1533665301925",
-          "latitude": 40.040078333333334,
-          "longitude": 0.05469333333333334,
-          "speed": 0,
-          "steps": 510,
-          "type": "sit"
-        },
-        "1533669998777": {
-          "accuracy": 7.5,
-          "altitude": 38.1,
-          "id": "1533669998777",
-          "latitude": 40.039750000000005,
-          "longitude": 0.05504666666666667,
-          "speed": 0.57443,
-          "steps": 637,
-          "type": "walking"
-        },
-        "1533670454017": {
-          "accuracy": 7.5,
-          "altitude": 30.4,
-          "id": "1533670454017",
-          "latitude": 40.04011833333333,
-          "longitude": 0.054558333333333334,
-          "speed": 2.4336066,
-          "steps": 637,
-          "type": "walking"
-        }
-      }
-    }
-  },
-  "chats": {
-    "1529150233702": {
-      "creation": 1529150233702,
-      "id": "1529150233702",
-      "members": {
+    "users": {
         "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
-          "date": 1529150233702,
-          "id": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "rol": "admin"
+            "email": "efraespada@gmail.com",
+            "name": "Efra Espada",
+            "os": "android",
+            "photo": "https://lh4.googleusercontent.com/-Ynmq9xxHmIk/AAAAAAAAAAI/AAAAAAAALcM/LkQv23S5zGg/s96-c/photo.jpg",
+            "steps": 2549,
+            "token": "8df42168b398cd90",
+            "type": "car",
+            "uid": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+            "locations": {
+                "1527974462454": {
+                    "altitude": 664.5,
+                    "latitude": 40.41089833333333,
+                    "longitude": -3.7050333333333336,
+                    "speed": 0.26559666
+                },
+                "1527974462458": {
+                    "altitude": 652.1,
+                    "latitude": 40.41104333333333,
+                    "longitude": -3.7049299999999996
+                },
+                "1527974462456": {
+                    "accuracy": 3.7,
+                    "altitude": 651.9,
+                    "latitude": 40.41096833333334,
+                    "longitude": -3.7050116666666666
+                },
+                "1527977897943": {
+                    "accuracy": 3.1,
+                    "altitude": 642.7,
+                    "id": "1527977897943",
+                    "latitude": 40.41115333333333,
+                    "longitude": -3.705316666666667,
+                    "speed": 0,
+                    "steps": 176,
+                    "type": "sit"
+                },
+                "1528018875086": {
+                    "accuracy": 7.6,
+                    "altitude": 659.6,
+                    "id": "1528018875086",
+                    "latitude": 40.410983333333334,
+                    "longitude": -3.7048699999999997,
+                    "speed": 0,
+                    "steps": 343,
+                    "type": "sit"
+                },
+                "1528022493087": {
+                    "accuracy": 1.2,
+                    "altitude": 643.5,
+                    "id": "1528022493087",
+                    "latitude": 40.41106666666667,
+                    "longitude": -3.70495,
+                    "speed": 0,
+                    "steps": 714,
+                    "type": "sit"
+                },
+                "1528023303054": {
+                    "accuracy": 3.7,
+                    "altitude": 642.1,
+                    "id": "1528023303054",
+                    "latitude": 40.411138333333334,
+                    "longitude": -3.7051149999999997,
+                    "speed": 0,
+                    "steps": 958,
+                    "type": "sit"
+                },
+                "1528038250065": {
+                    "accuracy": 5.9,
+                    "altitude": 611.5,
+                    "id": "1528038250065",
+                    "latitude": 40.41108166666667,
+                    "longitude": -3.705166666666667,
+                    "speed": 0,
+                    "steps": 61,
+                    "type": ""
+                },
+                "1528038310073": {
+                    "accuracy": 3,
+                    "altitude": 609.3,
+                    "id": "1528038310073",
+                    "latitude": 40.41115166666667,
+                    "longitude": -3.705081666666666,
+                    "speed": 0,
+                    "steps": 66,
+                    "type": ""
+                },
+                "1528040067104": {
+                    "accuracy": 4.7,
+                    "altitude": 534,
+                    "id": "1528040067104",
+                    "latitude": 40.41084166666667,
+                    "longitude": -3.705028333333333,
+                    "speed": 0,
+                    "steps": 24,
+                    "type": ""
+                },
+                "1528045195111": {
+                    "accuracy": 6.9,
+                    "altitude": 651.2,
+                    "id": "1528045195111",
+                    "latitude": 40.41098,
+                    "longitude": -3.70491,
+                    "speed": 0,
+                    "steps": 255,
+                    "type": ""
+                },
+                "1528052605142": {
+                    "accuracy": 5.7,
+                    "altitude": 654.3,
+                    "id": "1528052605142",
+                    "latitude": 40.410995,
+                    "longitude": -3.705045,
+                    "speed": 0,
+                    "steps": 87,
+                    "type": ""
+                },
+                "1528053355067": {
+                    "accuracy": 2.2,
+                    "altitude": 648,
+                    "id": "1528053355067",
+                    "latitude": 40.411055000000005,
+                    "longitude": -3.7050066666666672,
+                    "speed": 0.28000888,
+                    "steps": 109,
+                    "type": ""
+                },
+                "1528058165036": {
+                    "accuracy": 2.4,
+                    "altitude": 662.2,
+                    "id": "1528058165036",
+                    "latitude": 40.411098333333335,
+                    "longitude": -3.70491,
+                    "speed": 0.13125417,
+                    "steps": 230,
+                    "type": "walking"
+                },
+                "1528138921190": {
+                    "accuracy": 18.1,
+                    "altitude": 668.8,
+                    "id": "1528138921190",
+                    "latitude": 40.411065,
+                    "longitude": -3.7049733333333337,
+                    "speed": 0.03963361,
+                    "steps": 309,
+                    "type": "walking"
+                },
+                "1528167900210": {
+                    "accuracy": 20.6,
+                    "altitude": 693,
+                    "id": "1528167900210",
+                    "latitude": 40.41176166666666,
+                    "longitude": -3.705096666666666,
+                    "speed": 0.20897722,
+                    "steps": 380,
+                    "type": "walking"
+                },
+                "1533526416114": {
+                    "accuracy": 9.648001,
+                    "altitude": 689.478271484375,
+                    "id": "1533526416114",
+                    "latitude": 40.41115989,
+                    "longitude": -3.70505753,
+                    "speed": 0,
+                    "steps": 1363,
+                    "type": "sit"
+                },
+                "1533598162589": {
+                    "accuracy": 8.576,
+                    "altitude": 713.18505859375,
+                    "id": "1533598162589",
+                    "latitude": 40.4111157,
+                    "longitude": -3.70498647,
+                    "speed": 0,
+                    "steps": 1080,
+                    "type": "sit"
+                },
+                "1533733156277": {
+                    "accuracy": 5.36,
+                    "altitude": 67.670166015625,
+                    "id": "1533733156277",
+                    "latitude": 40.03995553,
+                    "longitude": 0.05490272,
+                    "speed": 0,
+                    "steps": 1811,
+                    "type": "sit"
+                },
+                "1534021067482": {
+                    "accuracy": 7.504,
+                    "altitude": 713.85986328125,
+                    "id": "1534021067482",
+                    "latitude": 40.41106354,
+                    "longitude": -3.70493624,
+                    "speed": 2.19,
+                    "steps": 2251,
+                    "type": "sit"
+                },
+                "1534021134488": {
+                    "accuracy": 9.648001,
+                    "altitude": 717.208984375,
+                    "id": "1534021134488",
+                    "latitude": 40.41110726,
+                    "longitude": -3.70491258,
+                    "speed": 0,
+                    "steps": 2260,
+                    "type": "sit"
+                },
+                "1534021240475": {
+                    "accuracy": 8.576,
+                    "altitude": 716.342041015625,
+                    "id": "1534021240475",
+                    "latitude": 40.41107968,
+                    "longitude": -3.70490492,
+                    "speed": 0,
+                    "steps": 2266,
+                    "type": "sit"
+                },
+                "1534021291485": {
+                    "accuracy": 9.648001,
+                    "altitude": 717.87060546875,
+                    "id": "1534021291485",
+                    "latitude": 40.41108666,
+                    "longitude": -3.7048998,
+                    "speed": 0,
+                    "steps": 2266,
+                    "type": "sit"
+                },
+                "1534021425479": {
+                    "accuracy": 24.656,
+                    "altitude": 715.6539306640625,
+                    "id": "1534021425479",
+                    "latitude": 40.41112439,
+                    "longitude": -3.70490417,
+                    "speed": 0,
+                    "steps": 2276,
+                    "type": "sit"
+                },
+                "1534021479479": {
+                    "accuracy": 9.648001,
+                    "altitude": 710.13232421875,
+                    "id": "1534021479479",
+                    "latitude": 40.41110468,
+                    "longitude": -3.70492944,
+                    "speed": 0,
+                    "steps": 2279,
+                    "type": "sit"
+                },
+                "1534021980479": {
+                    "accuracy": 13.936001,
+                    "altitude": 711.8807373046875,
+                    "id": "1534021980479",
+                    "latitude": 40.41101304,
+                    "longitude": -3.70492567,
+                    "speed": 0.77,
+                    "steps": 2297,
+                    "type": "sit"
+                },
+                "1534022015477": {
+                    "accuracy": 11.792,
+                    "altitude": 721.4940185546875,
+                    "id": "1534022015477",
+                    "latitude": 40.41101814,
+                    "longitude": -3.70496829,
+                    "speed": 0.6,
+                    "steps": 2297,
+                    "type": "walking"
+                },
+                "1534022290478": {
+                    "accuracy": 11.792,
+                    "altitude": 712.9599609375,
+                    "id": "1534022290478",
+                    "latitude": 40.41088436,
+                    "longitude": -3.70488272,
+                    "speed": 1.24,
+                    "steps": 2297,
+                    "type": "walking"
+                },
+                "1534022320477": {
+                    "accuracy": 10.72,
+                    "altitude": 711.03369140625,
+                    "id": "1534022320477",
+                    "latitude": 40.41089363,
+                    "longitude": -3.7049231,
+                    "speed": 0.52,
+                    "steps": 2297,
+                    "type": "walking"
+                },
+                "1534022415477": {
+                    "accuracy": 10.72,
+                    "altitude": 726.75830078125,
+                    "id": "1534022415477",
+                    "latitude": 40.4110785,
+                    "longitude": -3.70494207,
+                    "speed": 0.32,
+                    "steps": 2297,
+                    "type": "sit"
+                },
+                "1534022445477": {
+                    "accuracy": 12.864,
+                    "altitude": 718.205810546875,
+                    "id": "1534022445477",
+                    "latitude": 40.41110615,
+                    "longitude": -3.70488133,
+                    "speed": 0.7,
+                    "steps": 2297,
+                    "type": "walking"
+                },
+                "1534022455482": {
+                    "accuracy": 12.864,
+                    "altitude": 717.121337890625,
+                    "id": "1534022455482",
+                    "latitude": 40.41104635,
+                    "longitude": -3.70486954,
+                    "speed": 1.17,
+                    "steps": 2297,
+                    "type": "walking"
+                },
+                "1534022494477": {
+                    "accuracy": 8.576,
+                    "altitude": 707.289306640625,
+                    "id": "1534022494477",
+                    "latitude": 40.41113354,
+                    "longitude": -3.70493332,
+                    "speed": 0,
+                    "steps": 2299,
+                    "type": "walking"
+                },
+                "1534022524474": {
+                    "accuracy": 10.72,
+                    "altitude": 717.8870849609375,
+                    "id": "1534022524474",
+                    "latitude": 40.41110995,
+                    "longitude": -3.70490328,
+                    "speed": 0,
+                    "steps": 2299,
+                    "type": "sit"
+                },
+                "1534023329309": {
+                    "accuracy": 8.576,
+                    "altitude": 715.46240234375,
+                    "id": "1534023329309",
+                    "latitude": 40.41110815,
+                    "longitude": -3.70490089,
+                    "speed": 0,
+                    "steps": 2313,
+                    "type": "sit"
+                },
+                "1534023631483": {
+                    "accuracy": 10.72,
+                    "altitude": 715.0731201171875,
+                    "id": "1534023631483",
+                    "latitude": 40.41115305,
+                    "longitude": -3.70489376,
+                    "speed": 0.9,
+                    "steps": 2321,
+                    "type": "sit"
+                },
+                "1534023716473": {
+                    "accuracy": 12.864,
+                    "altitude": 710.256591796875,
+                    "id": "1534023716473",
+                    "latitude": 40.41108273,
+                    "longitude": -3.70497792,
+                    "speed": 0,
+                    "steps": 2321,
+                    "type": "sit"
+                },
+                "1534023786473": {
+                    "accuracy": 7.504,
+                    "altitude": 712.481689453125,
+                    "id": "1534023786473",
+                    "latitude": 40.4111121,
+                    "longitude": -3.70496987,
+                    "speed": 0,
+                    "steps": 2323,
+                    "type": "sit"
+                },
+                "1534023934473": {
+                    "accuracy": 15.008,
+                    "altitude": 707.9901123046875,
+                    "id": "1534023934473",
+                    "latitude": 40.41109175,
+                    "longitude": -3.70496046,
+                    "speed": 0,
+                    "steps": 2329,
+                    "type": "sit"
+                },
+                "1534023939483": {
+                    "accuracy": 18.224,
+                    "altitude": 709.533203125,
+                    "id": "1534023939483",
+                    "latitude": 40.41109224,
+                    "longitude": -3.70496036,
+                    "speed": 0,
+                    "steps": 2329,
+                    "type": "sit"
+                },
+                "1534025056800": {
+                    "accuracy": 8.576,
+                    "altitude": 711.0965576171875,
+                    "id": "1534025056800",
+                    "latitude": 40.41105044,
+                    "longitude": -3.70493542,
+                    "speed": 0,
+                    "steps": 2362,
+                    "type": "sit"
+                },
+                "1534025078365": {
+                    "accuracy": 8.576,
+                    "altitude": 711.0965576171875,
+                    "id": "1534025078365",
+                    "latitude": 40.41105044,
+                    "longitude": -3.70493542,
+                    "speed": 0,
+                    "steps": 2362,
+                    "type": "sit"
+                },
+                "1534025081047": {
+                    "accuracy": 8.576,
+                    "altitude": 711.0965576171875,
+                    "id": "1534025081047",
+                    "latitude": 40.41105044,
+                    "longitude": -3.70493542,
+                    "speed": 0,
+                    "steps": 2362,
+                    "type": "sit"
+                },
+                "1534025939625": {
+                    "accuracy": 28.944,
+                    "altitude": 712.052734375,
+                    "id": "1534025939625",
+                    "latitude": 40.41105785,
+                    "longitude": -3.70493558,
+                    "speed": 0,
+                    "steps": 2400,
+                    "type": "sit"
+                },
+                "1534026895631": {
+                    "accuracy": 24.656,
+                    "altitude": 734.332763671875,
+                    "id": "1534026895631",
+                    "latitude": 40.41117153,
+                    "longitude": -3.70492281,
+                    "speed": 0,
+                    "steps": 2470,
+                    "type": "car"
+                },
+                "1534026925645": {
+                    "accuracy": 9.648001,
+                    "altitude": 721.7261962890625,
+                    "id": "1534026925645",
+                    "latitude": 40.41114685,
+                    "longitude": -3.70489898,
+                    "speed": 0,
+                    "steps": 2470,
+                    "type": "car"
+                },
+                "1534027172625": {
+                    "accuracy": 13.936001,
+                    "altitude": 722.27099609375,
+                    "id": "1534027172625",
+                    "latitude": 40.41111362,
+                    "longitude": -3.70492247,
+                    "speed": 0,
+                    "steps": 2518,
+                    "type": "car"
+                }
+            }
         },
         "95mu4CuRVrMovqmEZEd1wAznIR03": {
-          "date": 1533576555524,
-          "id": "95mu4CuRVrMovqmEZEd1wAznIR03",
-          "rol": "basic"
-        }
-      },
-      "messages": {
-        "1529150238977": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "efafqefa"
+            "email": "efracris@gmail.com",
+            "name": "Cristina Fraile",
+            "os": "android",
+            "photo": "https://lh6.googleusercontent.com/-qeAdoFEs0eg/AAAAAAAAAAI/AAAAAAAAAAA/AB6qoq0CE5lzNKhwNH2dn9spYPJ_jc5oXQ/s96-c/photo.jpg",
+            "steps": 42,
+            "token": "a330a5036501e8c0",
+            "type": "sit",
+            "uid": "95mu4CuRVrMovqmEZEd1wAznIR03",
+            "locations": {
+                "1528056471057": {
+                    "accuracy": 4.8,
+                    "altitude": 668.7,
+                    "id": "1528056471057",
+                    "latitude": 40.41095333333333,
+                    "longitude": -3.7049700000000003,
+                    "speed": 0,
+                    "steps": 89,
+                    "type": ""
+                },
+                "1528058341059": {
+                    "accuracy": 4.3,
+                    "altitude": 661,
+                    "id": "1528058341059",
+                    "latitude": 40.41121666666666,
+                    "longitude": -3.704908333333334,
+                    "speed": 0,
+                    "steps": 232,
+                    "type": ""
+                },
+                "1533605443383": {
+                    "accuracy": 1.6,
+                    "altitude": 663.5,
+                    "id": "1533605443383",
+                    "latitude": 40.41106666666667,
+                    "longitude": -3.704933333333333,
+                    "speed": 0,
+                    "steps": 40,
+                    "type": "walking"
+                }
+            }
         },
-        "1529150240689": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "dfcaefcaef"
-        },
-        "1529150241857": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "aesdfcqaf"
-        },
-        "1529150242774": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "aerfcqe"
-        },
-        "1529150243800": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "fqefqc"
-        },
-        "1529151942526": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "WDCadscDS"
-        },
-        "1529151945221": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "hsddsvad"
-        },
-        "1533574937640": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "hhh"
-        },
-        "1533574939255": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jjj"
-        },
-        "1533574941026": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "hhggfg"
-        },
-        "1533574952003": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "\\uD83D\\uDE0B"
-        },
-        "1533595809828": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jelou"
-        },
-        "1533595839067": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jjjj"
-        },
-        "1533595841101": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "ububib"
-        },
-        "1533595844267": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "loo"
-        },
-        "1533595855741": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "l"
-        },
-        "1533596209354": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jejeje"
-        },
-        "1533596211742": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jdiduejd"
-        },
-        "1533596213161": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jzudjf"
-        },
-        "1533596219251": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "ggg"
-        },
-        "1533596247452": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "lelele"
-        },
-        "1533596261830": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "hhhh"
-        },
-        "1533596285650": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "u"
-        },
-        "1533596453665": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jjajaj"
-        },
-        "1533596462845": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "hyhskfjd"
-        },
-        "1533596465538": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jdidndk"
-        },
-        "1533596467257": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jeiejd"
-        },
-        "1533596468608": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "ndiekd"
-        },
-        "1533596475658": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "holi"
-        },
-        "1533596479474": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "\\uD83D\\uDE01"
-        },
-        "1533596504758": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "yuuuju"
-        },
-        "1533596518142": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "lekeke"
-        },
-        "1533596566624": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "juuu"
-        },
-        "1533596632952": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "test"
-        },
-        "1533596710862": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "gysngkd"
-        },
-        "1533596714852": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "\\uD83D\\uDE0B\\uD83D\\uDE03"
-        },
-        "1533596716993": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jxudjd"
-        },
-        "1533597120122": {
-          "author": "95mu4CuRVrMovqmEZEd1wAznIR03",
-          "text": "nkkkik"
-        },
-        "1533597349812": {
-          "author": "95mu4CuRVrMovqmEZEd1wAznIR03",
-          "text": "gvggf"
-        },
-        "1533598265803": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "holi"
-        },
-        "1533598621739": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jejeje"
-        },
-        "1533598641501": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jijijiji di"
-        },
-        "1533598643709": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jdkdjdj"
-        },
-        "1533598645313": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jsidjfje"
-        },
-        "1533598647170": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "sidnxudjx"
-        },
-        "1533598702234": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "ggggg"
-        },
-        "1533598749971": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "vnxjdje"
-        },
-        "1533598755426": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "kgfjxjgsjggs"
-        },
-        "1533663810699": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jdidnxk"
-        },
-        "1533663812837": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "jxienf"
-        }
-      },
-      "name": "jjjj"
-    },
-    "1533564315835": {
-      "creation": 1533564315835,
-      "id": "1533564315835",
-      "members": {},
-      "messages": {
-        "1533564329457": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "ttt"
-        },
-        "1533564351422": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "uuu"
-        }
-      },
-      "name": "test"
-    },
-    "1533575348575": {
-      "creation": 1533575348575,
-      "id": "1533575348575",
-      "members": {
-        "95mu4CuRVrMovqmEZEd1wAznIR03": {
-          "date": 1533575348578,
-          "id": "95mu4CuRVrMovqmEZEd1wAznIR03",
-          "rol": "admin"
-        }
-      },
-      "messages": {},
-      "name": "\\uD83D\\uDE05 jeje"
-    },
-    "1533664662523": {
-      "creation": 1533664662523,
-      "id": "1533664662523",
-      "members": {
         "f2QhzZbUEVfYEMPMDNMcJFe5kNL2": {
-          "date": 1533664662524,
-          "id": "f2QhzZbUEVfYEMPMDNMcJFe5kNL2",
-          "rol": "admin"
+            "email": "cristinafrailesaenzlopez@gmail.com",
+            "name": "Cristina Fraile",
+            "os": "android",
+            "photo": "https://lh4.googleusercontent.com/-tfqgQMrH_Pw/AAAAAAAAAAI/AAAAAAAAABs/cGvM_42HNCc/s96-c/photo.jpg",
+            "steps": 656,
+            "token": "3745d691b75bba67",
+            "type": "jogging",
+            "uid": "f2QhzZbUEVfYEMPMDNMcJFe5kNL2",
+            "locations": {
+                "1533664648828": {
+                    "accuracy": 7.6,
+                    "altitude": 27.4,
+                    "id": "1533664648828",
+                    "latitude": 40.039695,
+                    "longitude": 0.05497,
+                    "speed": 0,
+                    "steps": 47,
+                    "type": "walking"
+                },
+                "1533664705848": {
+                    "accuracy": 7.6,
+                    "altitude": -23.5,
+                    "id": "1533664705848",
+                    "latitude": 40.039815,
+                    "longitude": 0.054775000000000004,
+                    "speed": 0,
+                    "steps": 129,
+                    "type": "walking"
+                },
+                "1533664771862": {
+                    "accuracy": 7.7,
+                    "altitude": -17.3,
+                    "id": "1533664771862",
+                    "latitude": 40.039815,
+                    "longitude": 0.05467666666666667,
+                    "speed": 0,
+                    "steps": 157,
+                    "type": "sit"
+                },
+                "1533664909866": {
+                    "accuracy": 7.5,
+                    "altitude": 6.2,
+                    "id": "1533664909866",
+                    "latitude": 40.04004333333333,
+                    "longitude": 0.054643333333333335,
+                    "speed": 0.50031,
+                    "steps": 212,
+                    "type": "sit"
+                },
+                "1533664909880": {
+                    "accuracy": 7.5,
+                    "altitude": 6.2,
+                    "id": "1533664909880",
+                    "latitude": 40.04004333333333,
+                    "longitude": 0.054643333333333335,
+                    "speed": 0.50031,
+                    "steps": 212,
+                    "type": "sit"
+                },
+                "1533664995833": {
+                    "accuracy": 7.6,
+                    "altitude": 8.7,
+                    "id": "1533664995833",
+                    "latitude": 40.03993666666667,
+                    "longitude": 0.05509666666666667,
+                    "speed": 0,
+                    "steps": 226,
+                    "type": "sit"
+                },
+                "1533665030836": {
+                    "accuracy": 7.5,
+                    "altitude": 9.7,
+                    "id": "1533665030836",
+                    "latitude": 40.03989833333333,
+                    "longitude": 0.055015,
+                    "speed": 1.4962975,
+                    "steps": 250,
+                    "type": "sit"
+                },
+                "1533665123109": {
+                    "accuracy": 7.6,
+                    "altitude": 16.6,
+                    "id": "1533665123109",
+                    "latitude": 40.04006833333334,
+                    "longitude": 0.054625,
+                    "speed": 0,
+                    "steps": 348,
+                    "type": "sit"
+                },
+                "1533665211836": {
+                    "accuracy": 7.7,
+                    "altitude": 26,
+                    "id": "1533665211836",
+                    "latitude": 40.040016666666666,
+                    "longitude": 0.054515,
+                    "speed": 0,
+                    "steps": 434,
+                    "type": "sit"
+                },
+                "1533665241824": {
+                    "accuracy": 7.6,
+                    "altitude": 26.1,
+                    "id": "1533665241824",
+                    "latitude": 40.04001,
+                    "longitude": 0.05483833333333333,
+                    "speed": 1.8107928,
+                    "steps": 445,
+                    "type": "sit"
+                },
+                "1533665301925": {
+                    "accuracy": 7.5,
+                    "altitude": 29.7,
+                    "id": "1533665301925",
+                    "latitude": 40.040078333333334,
+                    "longitude": 0.05469333333333334,
+                    "speed": 0,
+                    "steps": 510,
+                    "type": "sit"
+                },
+                "1533669998777": {
+                    "accuracy": 7.5,
+                    "altitude": 38.1,
+                    "id": "1533669998777",
+                    "latitude": 40.039750000000005,
+                    "longitude": 0.05504666666666667,
+                    "speed": 0.57443,
+                    "steps": 637,
+                    "type": "walking"
+                },
+                "1533670454017": {
+                    "accuracy": 7.5,
+                    "altitude": 30.4,
+                    "id": "1533670454017",
+                    "latitude": 40.04011833333333,
+                    "longitude": 0.054558333333333334,
+                    "speed": 2.4336066,
+                    "steps": 637,
+                    "type": "walking"
+                }
+            }
         }
-      },
-      "messages": {
-        "1533664687219": {
-          "author": "f2QhzZbUEVfYEMPMDNMcJFe5kNL2",
-          "text": "hola"
+    },
+    "chats": {
+        "1529150233702": {
+            "creation": 1529150233702,
+            "id": "1529150233702",
+            "members": {
+                "UB9D5Lx8AqTO4EoyLcx4y6GB19w2": {
+                    "date": 1529150233702,
+                    "id": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "rol": "admin"
+                },
+                "95mu4CuRVrMovqmEZEd1wAznIR03": {
+                    "date": 1533576555524,
+                    "id": "95mu4CuRVrMovqmEZEd1wAznIR03",
+                    "rol": "basic"
+                }
+            },
+            "messages": {
+                "1529150238977": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "efafqefa"
+                },
+                "1529150240689": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "dfcaefcaef"
+                },
+                "1529150241857": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "aesdfcqaf"
+                },
+                "1529150242774": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "aerfcqe"
+                },
+                "1529150243800": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "fqefqc"
+                },
+                "1529151942526": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "WDCadscDS"
+                },
+                "1529151945221": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hsddsvad"
+                },
+                "1533574937640": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hhh"
+                },
+                "1533574939255": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jjj"
+                },
+                "1533574941026": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hhggfg"
+                },
+                "1533574952003": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "\\uD83D\\uDE0B"
+                },
+                "1533595809828": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jelou"
+                },
+                "1533595839067": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jjjj"
+                },
+                "1533595841101": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ububib"
+                },
+                "1533595844267": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "loo"
+                },
+                "1533595855741": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "l"
+                },
+                "1533596209354": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jejeje"
+                },
+                "1533596211742": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jdiduejd"
+                },
+                "1533596213161": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jzudjf"
+                },
+                "1533596219251": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ggg"
+                },
+                "1533596247452": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "lelele"
+                },
+                "1533596261830": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hhhh"
+                },
+                "1533596285650": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "u"
+                },
+                "1533596453665": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jjajaj"
+                },
+                "1533596462845": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hyhskfjd"
+                },
+                "1533596465538": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jdidndk"
+                },
+                "1533596467257": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jeiejd"
+                },
+                "1533596468608": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ndiekd"
+                },
+                "1533596475658": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "holi"
+                },
+                "1533596479474": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "\\uD83D\\uDE01"
+                },
+                "1533596504758": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "yuuuju"
+                },
+                "1533596518142": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "lekeke"
+                },
+                "1533596566624": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "juuu"
+                },
+                "1533596632952": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "test"
+                },
+                "1533596710862": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "gysngkd"
+                },
+                "1533596714852": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "\\uD83D\\uDE0B\\uD83D\\uDE03"
+                },
+                "1533596716993": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jxudjd"
+                },
+                "1533597120122": {
+                    "author": "95mu4CuRVrMovqmEZEd1wAznIR03",
+                    "text": "nkkkik"
+                },
+                "1533597349812": {
+                    "author": "95mu4CuRVrMovqmEZEd1wAznIR03",
+                    "text": "gvggf"
+                },
+                "1533598265803": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "holi"
+                },
+                "1533598621739": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jejeje"
+                },
+                "1533598641501": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jijijiji di"
+                },
+                "1533598643709": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jdkdjdj"
+                },
+                "1533598645313": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jsidjfje"
+                },
+                "1533598647170": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "sidnxudjx"
+                },
+                "1533598702234": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ggggg"
+                },
+                "1533598749971": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "vnxjdje"
+                },
+                "1533598755426": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "kgfjxjgsjggs"
+                },
+                "1533663810699": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jdidnxk"
+                },
+                "1533663812837": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jxienf"
+                },
+                "1534004886146": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hggh"
+                },
+                "1534004889152": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "bjljj"
+                },
+                "1534004892495": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "j he khhh"
+                },
+                "1534004895101": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ijggyjbh"
+                },
+                "1534004897657": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "kjgghjhj"
+                },
+                "1534004899526": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "j JK kjh"
+                },
+                "1534004901784": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jlnhyk"
+                },
+                "1534004904289": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jjmnbjll"
+                },
+                "1534005775060": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "holi"
+                },
+                "1534006088611": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ghhhg"
+                },
+                "1534006091146": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "kjhhh"
+                },
+                "1534006095277": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ijgh"
+                },
+                "1534006096814": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jgh"
+                },
+                "1534006098334": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "bh"
+                },
+                "1534006887132": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jgghjj"
+                },
+                "1534006889036": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jhgjj"
+                },
+                "1534006891058": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hggjjj"
+                },
+                "1534006893163": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jjvghk"
+                },
+                "1534006895325": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ujjhgh"
+                },
+                "1534006897491": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jbgtjj"
+                },
+                "1534006899179": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "yhjj"
+                },
+                "1534006900633": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hhh"
+                },
+                "1534013512016": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ljggjj"
+                },
+                "1534013514820": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "gghhj"
+                },
+                "1534013517010": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "cghjjc"
+                },
+                "1534013519132": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "viihgg"
+                },
+                "1534013521185": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hkihf"
+                },
+                "1534013523259": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hhh"
+                },
+                "1534023492070": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "kbivjv"
+                },
+                "1534023494571": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "blbivuvuft"
+                },
+                "1534023495777": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "vk k"
+                },
+                "1534026233573": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jcjcjcux"
+                },
+                "1534026245308": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jcjcjcux"
+                },
+                "1534026248372": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ivivug"
+                },
+                "1534026251213": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jxu jc"
+                },
+                "1534026958028": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hxidkkx"
+                },
+                "1534026959410": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hxidkkxk"
+                },
+                "1534026961273": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "djdjdbd"
+                },
+                "1534026965227": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jskdnf"
+                },
+                "1534026967762": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "bfkdie"
+                },
+                "1534026969694": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "bekej"
+                },
+                "1534026971436": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "nfixud"
+                },
+                "1534026973526": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "nfidid"
+                },
+                "1534026976829": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "kdkdkd"
+                },
+                "1534026981218": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jfolmenfi"
+                },
+                "1534026983231": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jdo"
+                },
+                "1534026986226": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "jdieken"
+                }
+            },
+            "name": "jjjj"
         },
-        "1533664789382": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "hola madre"
+        "1533564315835": {
+            "creation": 1533564315835,
+            "id": "1533564315835",
+            "members": {},
+            "messages": {
+                "1533564329457": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "ttt"
+                },
+                "1533564351422": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "uuu"
+                }
+            },
+            "name": "test"
         },
-        "1533664841839": {
-          "author": "f2QhzZbUEVfYEMPMDNMcJFe5kNL2",
-          "text": "hola hijo"
+        "1533575348575": {
+            "creation": 1533575348575,
+            "id": "1533575348575",
+            "members": {
+                "95mu4CuRVrMovqmEZEd1wAznIR03": {
+                    "date": 1533575348578,
+                    "id": "95mu4CuRVrMovqmEZEd1wAznIR03",
+                    "rol": "admin"
+                }
+            },
+            "messages": {},
+            "name": "\\uD83D\\uDE05 jeje"
         },
-        "1533664866637": {
-          "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
-          "text": "hola?"
+        "1533664662523": {
+            "creation": 1533664662523,
+            "id": "1533664662523",
+            "members": {
+                "f2QhzZbUEVfYEMPMDNMcJFe5kNL2": {
+                    "date": 1533664662524,
+                    "id": "f2QhzZbUEVfYEMPMDNMcJFe5kNL2",
+                    "rol": "admin"
+                }
+            },
+            "messages": {
+                "1533664687219": {
+                    "author": "f2QhzZbUEVfYEMPMDNMcJFe5kNL2",
+                    "text": "hola"
+                },
+                "1533664789382": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hola madre"
+                },
+                "1533664841839": {
+                    "author": "f2QhzZbUEVfYEMPMDNMcJFe5kNL2",
+                    "text": "hola hijo"
+                },
+                "1533664866637": {
+                    "author": "UB9D5Lx8AqTO4EoyLcx4y6GB19w2",
+                    "text": "hola?"
+                }
+            },
+            "name": "Familia \\uD83C\\uDF49"
         }
-      },
-      "name": "Familia \\uD83C\\uDF49"
     }
-  }
 }
