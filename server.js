@@ -12,6 +12,7 @@ const Turbine = require('@efraespada/turbine');
 const apply = require('rus-diff').apply;
 const boxen = require('boxen');
 const logger = new logjs();
+const zlib = require('zlib');
 
 JSON.stringifyAligned = require('json-align');
 
@@ -433,13 +434,41 @@ let action = {
                 os: connection.os
             };
             await object.DH.syncFromDatabase();
-            await object.sendUpdateByContent(connection.content, device, function () {
+            console.log("CONTENTTT tttttttt");
+            let buffer = Buffer.from(connection.content, 'base64');
+            zlib.unzip(buffer, (err, buffer) => {
+                if (!err) {
+                    console.log(buffer.toString());
+                } else {
+                    // handle error
+                }
+            });
+            console.log("AAAAAAAA ");
+            // let content = connection.content;
+            let content = await this.decompress(connection);
+            // console.log(content);
+            console.log("BBBBBBBB");
+            await object.sendUpdateByContent(content, device, function () {
                 let data = {};
                 data.info = "queue_ready";
                 action.response(connection, data, null);
             }, connection);
 
         }
+    },
+    decompress: function(connection) {
+        let buffer = Buffer.from(connection.content, 'base64');
+        //  console.log("buffer: " + buffer);
+        return new Promise(function(resolve, reject) {
+            console.log("bufferrrrr");
+            zlib.unzip(buffer, (err, buffer) => {
+                if (!err) {
+                    resolve(buffer.toString());
+                } else {
+                    reject(err);
+                }
+            });
+        });
     },
     sendNotifications: function (connection) {
         let receivers = connection[KEY_REQUEST.RECEIVERS];
@@ -541,7 +570,7 @@ let action = {
 
                     case KEY_REQUEST.CONTENT:
                         connection[key] = message[key];
-                        logger.debug(KEY_REQUEST.CONTENT + ": " + connection[key]);
+                        //logger.debug(KEY_REQUEST.CONTENT + ": " + connection[key]);
                         break;
 
                     case KEY_REQUEST.LEN:
